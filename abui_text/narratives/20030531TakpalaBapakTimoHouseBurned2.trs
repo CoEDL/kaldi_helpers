@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030531TakpalaBapakTimoHouseBurned2" version="1" version_date="081020">
+<Speakers>
+<Speaker id="spk1" name="Timoteus Lanma" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="54.92">
+<Turn startTime="0" endTime="54.92" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="19.671"/>
+yal ne homi mia,# na dikang bataa fiyai tahai#
+<Sync time="24.461"/>
+dikang nala ti wan yang tung kar ayoku hewal.#
+<Sync time="30.405"/>
+henil hu,# yal wala na mi ba dur ba nala homi dong we do,# ko yaa ama hebuku mia ba ko tafuda,# nitanga bika ya buku mia min damoida.#
+<Sync time="42.285"/>
+ara ye,# no'aradi,# ming ayokda.#
+<Sync time="47.225"/>
+henir ba dikang ya namoi bika mi nala homi dong wok,# ko ama hebukung yaa ba ko te wida damoida.#
+<Sync time="52.315"/>
+&lt;silence&gt;
+</Turn>
+</Section>
+</Episode>
+</Trans>

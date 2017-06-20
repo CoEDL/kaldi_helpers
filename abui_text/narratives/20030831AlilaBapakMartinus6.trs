@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030831AlilaBapakMartinus6" version="1" version_date="081107">
+<Speakers>
+<Speaker id="spk1" name="Martinus Maufani" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="83.72">
+<Turn startTime="0" endTime="45.897" speaker="spk1">
+<Sync time="0"/>
+do# aremang ba pido, Aila seerang do.#
+<Sync time="4.222"/>
+eh,# el Kamana dong mareiye, ta na hefangi yo hedi.#
+<Sync time="8.078"/>
+dikang hane ko nienglaka naha, haba nuku oro Mali dong wei nu.#
+<Sync time="12.639"/>
+Mali nu baai hen baai mayol naha,# hen neng.#
+<Sync time="17.241"/>
+oro iti Falakiyewal dong we.#
+<Sync time="21.696"/>
+Falakiyewal,# Falakiyewal dong we nu,# Melangfur.#
+<Sync time="28.591"/>
+hen yaadi te, Ataame la we nu,# hen hedi.#
+<Sync time="31.944"/>
+&lt;silence&gt;
+<Sync time="35.837"/>
+ya Kamanang marei ba ee ta na hefanga henu,# di hen mia tawaali, yal pi# mara ba ya wo nang iti,# Apui mia,# melang hane nala do baai do.#
+</Turn>
+<Turn startTime="45.897" endTime="64.068">
+<Sync time="45.897"/>
+&lt;silence&gt;
+</Turn>
+<Turn speaker="spk1" startTime="64.068" endTime="83.72">
+<Sync time="64.068"/>
+ya wo Lamangtaha,# melang o Lamangtaha.#
+<Sync time="67.515"/>
+hen mia, iti Pada'alwo mia takii ya, nala hu,# di wong mara mi, yal di hefangi Lamangtaha, pido Lamangwo.#
+<Sync time="75.292"/>
+hen ya hane hopuna marei.#
+<Sync time="77.855"/>
+hmm!# hmm!#
+<Sync time="81.474"/>
+kaanri to!#
+<Sync time="82.474"/>
+&lt;silence&gt;
+</Turn>
+</Section>
+</Episode>
+</Trans>

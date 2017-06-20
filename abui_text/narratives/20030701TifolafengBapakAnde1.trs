@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030701TifolafengBapakAnde1" version="1" version_date="081020">
+<Speakers>
+<Speaker id="spk1" name="Andirias Padafani" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="148.2">
+<Turn startTime="0" endTime="148.2" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="1.737"/>
+ni,# iya ba heyeting-ayoku ni yaa,# pun name.#
+<Sync time="9.371"/>
+helo maiye ni ni'aduo hamin taahi,# ni yaa pun namei.#
+<Sync time="15.509"/>
+ni yaa kupai tek-bateti, arari, kiiki-paling kaanra maiye ni'ayak-nifaat mi yaang taakdi.#
+<Sync time="25.06"/>
+ni,# hepun henamei,# hepadung-hepaaka di maada maiye,# ni# yaa faki-paleli mi sei lik-ayaating mia ti,# ni buut neei,# ni'isi di rowa-walangai henil maiye,# ni ni'aduo hamin taahi.#
+<Sync time="48.71"/>
+henil ti, ni mi ba sei nilik-nifala miadi.#  
+<Sync time="54.159"/>
+kaanri,# nilik-nifala# hebeeka maada ti ni mi ba# heteling hemanehi,# di kaandia.#
+<Sync time="68.767"/>
+henil ti,#
+<Sync time="70.144"/>
+&lt;silence&gt;
+<Sync time="74.965"/>
+ni,# nifala he'ameng di beekadi ni yaa,# ameng tahai mi se hemanehi.#
+<Sync time="82.181"/>
+hetoku beeka ti ni# hetahaa mi ba sei,# tahaati tifa mi se hemanehi.#
+<Sync time="89.397"/>
+di rumaidi se heni mi homi mia,# ni# min taa.#
+<Sync time="95.616"/>
+mia ni,# min tadei, ni yaa pun namei,# rihi-muria,# bataako hu ni muria re baleei hu ni muria,# naha fiyai hu ni muria.#
+<Sync time="108.983"/>
+henil ti, ni kul yaa he'isi naha te hepadung hieng,# fiyai si ni mia hebel-hebaliki mi ba ni buut ni nee hohareng,# mi ni siya nimeng hohareng,# ni sui meng,# henil ti.#
+<Sync time="130.54"/>
+ni sui meng kaanra henil ti ni,# mi ba yaa,# nifeela-nitayaai hopa mia.# 
+<Sync time="140.356"/>
+ni nala hu he'ananra-ananra hen mia do kaani.#
+</Turn>
+</Section>
+</Episode>
+</Trans>
