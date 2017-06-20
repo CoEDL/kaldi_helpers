@@ -13,6 +13,7 @@ from distutils import spawn
 
 import json
 import platform
+import uuid
 
 #g_sampleRate = 8000
 #g_sampleRateHq = 48000
@@ -161,7 +162,8 @@ def processTurn(fileName, turnNode, waveName, tree):
     speakerName = ""
     if speakerNameNode != None:
         speakerName = speakerNameNode.attrib['name']
-
+    else:
+        speakerName = str(uuid.uuid4())
     items = [(ch.attrib['time'], ch.tail.strip()) for ch in turnNode.findall("./Sync")]
 
     #create subDir in output
