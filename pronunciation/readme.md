@@ -1,5 +1,13 @@
 # Pronunciation team
 
+## `convert.py` usage
+
+```
+python convert.py --words "abui_words.txt" --config "Abui_Letter_to_Sound" --output_file "test-abui-args.txt"
+```
+
+**Note.** See demo folder for test files
+
 ## Expected input (Komnzo)
 
 Sample taken from `words` tier from ELAN file `tci20110810CDa-01.eaf`.
