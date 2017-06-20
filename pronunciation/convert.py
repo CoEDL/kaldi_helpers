@@ -26,21 +26,24 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 
 		mapping = filter(None, line.strip().split(' '))
 
-		if (len(mapping) > 0):
+		if (len(mapping) > 1):
 			sound_mappings.append((mapping[0], mapping[1]))
 
-
 	config_file.close()
+
+	# sort the sound mappings by length of sound mapping
+	sound_mappings.sort(key=lambda x: len(x[0]), reverse=True)
 
 	output_file = open(output_file_name, 'w+')
 	for token in input_tokens:
 		cur = 0
 		res = [token]
+		token_lower = token.lower()
 
-		while (cur < len(token)):
+		while (cur < len(token_lower)):
 			found = False
 			for maps in sound_mappings:
-				if (token.find(maps[0], cur) == cur):
+				if (token_lower.find(maps[0], cur) == cur):
 					found = True
 					res.append(maps[1])
 					cur += len(maps[0])
@@ -48,7 +51,7 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 
 			if (not found):
 				# unknown sound
-				res.append('(' + token[cur] + ')')
+				res.append('(' + token_lower[cur] + ')')
 				cur+=1
 
 
