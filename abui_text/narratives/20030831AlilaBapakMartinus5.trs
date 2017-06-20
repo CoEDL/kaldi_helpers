@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030831AlilaBapakMartinus5" version="1" version_date="081107">
+<Speakers>
+<Speaker id="spk1" name="Martinus Maufani" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="58.8">
+<Turn startTime="0" endTime="58.8" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="1.219"/>
+nuku yo,# hel baai dara Pada'alwo mia,# pi'aremang ba iti Aila serang do.#
+<Sync time="7.307"/>
+henu, hen mia,# kalieta loku deruwol# nala ruwol bira pei kawai.#
+<Sync time="13.288"/>
+ruwol bira# pei kawai ya, hen mia,# kalieta yo nuku ma# mara mi wo Kamana dong yaari yo.#
+<Sync time="21.347"/>
+yal pi haluol, haluol ya mara nu hedi.#
+<Sync time="23.263"/>
+ee deruwol bira ba pei kawai ya,# mayol ee marei naha, neng ee marei.#
+<Sync time="28.293"/>
+&lt;silence&gt;
+<Sync time="31.736"/>
+hane yo,# iti,# di# Lutangfur.#
+<Sync time="37.783"/>
+henil di wong mara si,# Takalutang e Mabilutang heyadi.#
+<Sync time="42.034"/>
+hmm!#
+<Sync time="45.656"/>
+hare pido# aremang ba henu# maa hefanga ba wo hen wiil mayol henir he ha,# pi la nuku.#
+<Sync time="54.135"/>
+hel bui wala to, kaanri to.#
+<Sync time="55.875"/>
+&lt;silence&gt;
+</Turn>
+</Section>
+</Episode>
+</Trans>

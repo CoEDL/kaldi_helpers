@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030529Abui3TakalelangBapakPeniMarriageOfTheSon" version="1" version_date="081016">
+<Speakers>
+<Speaker id="spk1" name="Piter Lema" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="203.64">
+<Turn startTime="0" endTime="203.64" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="66.467"/>
+newiil do,# wan neng abetdi.#
+<Sync time="72.608"/>
+na kul yaa hemayol tanga.#
+<Sync time="76.608"/>
+henil nu,# heteitu re na fu-meeting taboike.#
+<Sync time="83.524"/>
+ama hekaang hefanga maiye,# ni ming tapei saaki,# tikak fake.#
+<Sync time="91.399"/>
+tikak faki ba nar kaanra maiye,# newiil nu na mi awering ming hatang,# neng hefalang yaa.#
+<Sync time="101.519"/>
+kaanra maiye,# hen mia ba,# tikak bang hane yaar do,# hemaada hei nu,# ama mi sei natang homing ii,# napuna ba nelik-nefala ming siyei.#
+<Sync time="121.408"/>
+fu-meeting ba ama mi sei nu, na hemi yaa nu,# ama kul ruwol nuku hiyeri na neei se.#
+<Sync time="130.48"/>
+do wan,# ama di siyei ba,# dewiil mayol nu hado ba sei lik-fala nu miadia maiye,# na kul fe hiel,# kafiyei hiyel.#
+<Sync time="145.483"/>
+henidi mi ba amakaang nu,# mi ba,# hobuut honee.#
+<Sync time="153.733"/>
+kaanra maiye,# heya-hemaama hekabala nu,# keng re,# noowang re,# di maada maiye, na kul mi bang hada samadi se.#
+<Sync time="167.097"/>
+naha,# lung-pei-mit nu hen deitu kul ming hada samadi se.#
+<Sync time="173.444"/>
+kaanra maiye,# hel newiil neng-mayol do# di kul dapaada faladi se.#
+<Sync time="181.139"/>
+henil maiye, dining ayoku dikang# di hetaming mitdi ya# defala tifa nuku oni,# di pun namei,# hafei hataani,# kata lik-fala nu kul akui nu dotaka naha, fat ming i se.#
+<Sync time="198.907"/>
+&lt;silence&gt;
+</Turn>
+</Section>
+</Episode>
+</Trans>

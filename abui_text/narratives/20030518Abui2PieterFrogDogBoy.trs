@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030518Abui2PieterFrogDogBoy" version="1" version_date="081015">
+<Speakers>
+<Speaker id="spk1" name="Piter Lema" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="166.88">
+<Turn startTime="0" endTime="166.88" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="8.383"/>
+war nuku homi mia,# amakaang nuku,# hekaai nuku,# yakora-kora nuku,# dining sua demui-muila.#
+<Sync time="25.906"/>
+akun nuku homi mia,# dining sua di laake.#
+<Sync time="39.02"/>
+di fala homi mia,# kaai do depikaai mi botol dong saai.#
+<Sync time="50.607"/>
+sampe firai ba dakil dawai si beeka mi uisaha dong wei,# botol hayei ba poku.#
+<Sync time="60.044"/>
+dikang hen mi di laak-laak ba yaa,# yaa ti mutang bataa hong tilaka.#
+<Sync time="68.936"/>
+kaai do di he'ahel mara.#
+<Sync time="74.092"/>
+hen mi mutang dikang tohaloi,# dining sua tarang furei.#
+<Sync time="81.935"/>
+furaai ba yaa,# amakaang mi ba lu dong saai,# yakora-kora ya kaai baai mi ba ya-wal dong saai.#
+<Sync time="93.532"/>
+ding daruida,# di mara ti,# ayut hamuk nuku do dom pang mai bataa henile.#
+<Sync time="102.005"/>
+amakaang do di firai ba hel ayut hamuk do hemara.# 
+<Sync time="105.987"/>
+ayut homin diyei, amakaang wan ayut hamuk tahang iti.#
+<Sync time="113.352"/>
+kaanra mi ayut di hel keti ya,# amakaang mi ba,# bung wo dong saai.#
+<Sync time="122.065"/>
+me,# hen mia dolut di ming daruidi,# di yakora-kora do mi dabang taha hatang ba yaa.#
+<Sync time="138.299"/>
+di yaa bataa tuku hong mia,# kaai mahii naha,# yakora-kora mahi naha, dotafuda hedo mia,# dekaai hada mui-muila.#
+<Sync time="150.742"/>
+yakora-kora he...,# yakora-kora do hewiil loku baai faring.#
+<Sync time="157.658"/>
+it do mia,# di doyaa henil mi, di yakora-kora nuku mi datang homing hatan ba yaa.#
+</Turn>
+</Section>
+</Episode>
+</Trans>

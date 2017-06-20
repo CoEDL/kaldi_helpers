@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030520Abui2BapakTimoBuildingAHouse" version="1" version_date="081016">
+<Speakers>
+<Speaker id="spk1" name="Timoteus Lanma" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="63.6">
+<Turn startTime="0" endTime="63.6" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="21.377"/>
+pi fala ong,# fala foka ong,# tahaa buti deitu natia, natet tahaa talama deitu natia.#
+<Sync time="31.237"/>
+el dikang faala ma haba,# dikang mara,# beng mi ba,# tai hawel.#
+<Sync time="40.85"/>
+tukda i ya,# hel te ya,# akui foka,# akui kiding,# pi tafuda paneang.#
+<Sync time="50.757"/>
+el kaanra maiye, pi sei wai maiye, wai kaanra maiye pi lang taa.#
+<Sync time="56.461"/>
+&lt;silence&gt;
+</Turn>
+</Section>
+</Episode>
+</Trans>

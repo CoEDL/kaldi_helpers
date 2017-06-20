@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030701TifolafengPeni1" version="2" version_date="081020">
+<Speakers>
+<Speaker id="spk1" name="Piter Padafani" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="42.040">
+<Turn startTime="0" endTime="42.040" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="2.063"/>
+afeida Fani we,# Fani nining ayoku,# Fani nining yeting,# miti Abui marani.#
+<Sync time="8.383"/>
+mok tawar ba mia awel kaanri,# marang mur ba ming aweli mur neei.#
+<Sync time="13.263"/>
+Fani di mur yeting neei,# kaanri ya,# henidi dikang abui marani.#
+<Sync time="22.545"/>
+henidi,# ni iti Fani niming tabra abui marani.#
+<Sync time="28.627"/>
+ni marani ni miti,# Fani we lo masi war-afeidi.#
+<Sync time="34.076"/>
+kaanri ya,# war-afeida mai,# niran ba tadei.#
+<Sync time="37.998"/>
+kaanri.#
+</Turn>
+</Section>
+</Episode>
+</Trans>

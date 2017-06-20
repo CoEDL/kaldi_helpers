@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ANNOTATION_DOCUMENT AUTHOR="FKRATOCHVIL" DATE="2017-04-19T13:34:34+08:00" FORMAT="2.8" VERSION="2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.mpi.nl/tools/elan/EAFv2.8.xsd">
+    <HEADER MEDIA_FILE="" TIME_UNITS="milliseconds">
+        <MEDIA_DESCRIPTOR MEDIA_URL="file:///Users/T2Video/Corpora/Alor-Pantar/Abui/Audio/2012.Bayooka liik.wav" MIME_TYPE="audio/x-wav" RELATIVE_MEDIA_URL="./2012.Bayooka liik.wav"/>
+        <PROPERTY NAME="URN">urn:nl-mpi-tools-elan-eaf:ad464168-1498-43a3-adc8-9877296271a1</PROPERTY>
+        <PROPERTY NAME="lastUsedAnnotationId">116</PROPERTY>
+    </HEADER>
+    <TIME_ORDER>
+        <TIME_SLOT TIME_SLOT_ID="ts1" TIME_VALUE="0"/>
+        <TIME_SLOT TIME_SLOT_ID="ts2" TIME_VALUE="0"/>
+        <TIME_SLOT TIME_SLOT_ID="ts3" TIME_VALUE="2478"/>
+        <TIME_SLOT TIME_SLOT_ID="ts4" TIME_VALUE="2478"/>
+        <TIME_SLOT TIME_SLOT_ID="ts5" TIME_VALUE="2478"/>
+        <TIME_SLOT TIME_SLOT_ID="ts6" TIME_VALUE="3237"/>
+        <TIME_SLOT TIME_SLOT_ID="ts7" TIME_VALUE="3237"/>
+        <TIME_SLOT TIME_SLOT_ID="ts8" TIME_VALUE="3237"/>
+        <TIME_SLOT TIME_SLOT_ID="ts9" TIME_VALUE="6844"/>
+        <TIME_SLOT TIME_SLOT_ID="ts10" TIME_VALUE="6844"/>
+        <TIME_SLOT TIME_SLOT_ID="ts11" TIME_VALUE="6844"/>
+        <TIME_SLOT TIME_SLOT_ID="ts12" TIME_VALUE="9634"/>
+        <TIME_SLOT TIME_SLOT_ID="ts13" TIME_VALUE="9634"/>
+        <TIME_SLOT TIME_SLOT_ID="ts14" TIME_VALUE="9634"/>
+        <TIME_SLOT TIME_SLOT_ID="ts15" TIME_VALUE="10929"/>
+        <TIME_SLOT TIME_SLOT_ID="ts16" TIME_VALUE="10929"/>
+        <TIME_SLOT TIME_SLOT_ID="ts17" TIME_VALUE="10929"/>
+        <TIME_SLOT TIME_SLOT_ID="ts18" TIME_VALUE="13331"/>
+        <TIME_SLOT TIME_SLOT_ID="ts19" TIME_VALUE="13331"/>
+        <TIME_SLOT TIME_SLOT_ID="ts20" TIME_VALUE="13331"/>
+        <TIME_SLOT TIME_SLOT_ID="ts21" TIME_VALUE="13880"/>
+        <TIME_SLOT TIME_SLOT_ID="ts22" TIME_VALUE="13880"/>
+        <TIME_SLOT TIME_SLOT_ID="ts23" TIME_VALUE="13880"/>
+        <TIME_SLOT TIME_SLOT_ID="ts24" TIME_VALUE="15219"/>
+        <TIME_SLOT TIME_SLOT_ID="ts25" TIME_VALUE="15219"/>
+        <TIME_SLOT TIME_SLOT_ID="ts26" TIME_VALUE="15219"/>
+        <TIME_SLOT TIME_SLOT_ID="ts27" TIME_VALUE="15554"/>
+        <TIME_SLOT TIME_SLOT_ID="ts28" TIME_VALUE="15554"/>
+        <TIME_SLOT TIME_SLOT_ID="ts29" TIME_VALUE="15554"/>
+        <TIME_SLOT TIME_SLOT_ID="ts30" TIME_VALUE="18902"/>
+        <TIME_SLOT TIME_SLOT_ID="ts31" TIME_VALUE="18902"/>
+        <TIME_SLOT TIME_SLOT_ID="ts32" TIME_VALUE="29661"/>
+        <TIME_SLOT TIME_SLOT_ID="ts33" TIME_VALUE="29661"/>
+        <TIME_SLOT TIME_SLOT_ID="ts34" TIME_VALUE="33635"/>
+        <TIME_SLOT TIME_SLOT_ID="ts35" TIME_VALUE="33635"/>
+        <TIME_SLOT TIME_SLOT_ID="ts36" TIME_VALUE="42644"/>
+        <TIME_SLOT TIME_SLOT_ID="ts37" TIME_VALUE="42644"/>
+        <TIME_SLOT TIME_SLOT_ID="ts38" TIME_VALUE="48126"/>
+        <TIME_SLOT TIME_SLOT_ID="ts39" TIME_VALUE="48126"/>
+        <TIME_SLOT TIME_SLOT_ID="ts40" TIME_VALUE="59278"/>
+        <TIME_SLOT TIME_SLOT_ID="ts41" TIME_VALUE="59278"/>
+        <TIME_SLOT TIME_SLOT_ID="ts42" TIME_VALUE="64291"/>
+        <TIME_SLOT TIME_SLOT_ID="ts43" TIME_VALUE="64291"/>
+        <TIME_SLOT TIME_SLOT_ID="ts44" TIME_VALUE="74247"/>
+        <TIME_SLOT TIME_SLOT_ID="ts45" TIME_VALUE="74247"/>
+        <TIME_SLOT TIME_SLOT_ID="ts46" TIME_VALUE="89662"/>
+        <TIME_SLOT TIME_SLOT_ID="ts47" TIME_VALUE="89662"/>
+        <TIME_SLOT TIME_SLOT_ID="ts48" TIME_VALUE="103620"/>
+        <TIME_SLOT TIME_SLOT_ID="ts49" TIME_VALUE="103620"/>
+        <TIME_SLOT TIME_SLOT_ID="ts50" TIME_VALUE="112482"/>
+        <TIME_SLOT TIME_SLOT_ID="ts51" TIME_VALUE="112482"/>
+        <TIME_SLOT TIME_SLOT_ID="ts52" TIME_VALUE="119928"/>
+        <TIME_SLOT TIME_SLOT_ID="ts53" TIME_VALUE="119928"/>
+        <TIME_SLOT TIME_SLOT_ID="ts54" TIME_VALUE="125174"/>
+        <TIME_SLOT TIME_SLOT_ID="ts55" TIME_VALUE="125174"/>
+        <TIME_SLOT TIME_SLOT_ID="ts56" TIME_VALUE="129919"/>
+        <TIME_SLOT TIME_SLOT_ID="ts57" TIME_VALUE="129919"/>
+        <TIME_SLOT TIME_SLOT_ID="ts58" TIME_VALUE="133014"/>
+        <TIME_SLOT TIME_SLOT_ID="ts59" TIME_VALUE="133014"/>
+        <TIME_SLOT TIME_SLOT_ID="ts60" TIME_VALUE="134724"/>
+        <TIME_SLOT TIME_SLOT_ID="ts61" TIME_VALUE="134724"/>
+        <TIME_SLOT TIME_SLOT_ID="ts62" TIME_VALUE="136702"/>
+        <TIME_SLOT TIME_SLOT_ID="ts63" TIME_VALUE="136702"/>
+        <TIME_SLOT TIME_SLOT_ID="ts64" TIME_VALUE="140175"/>
+        <TIME_SLOT TIME_SLOT_ID="ts65" TIME_VALUE="140175"/>
+        <TIME_SLOT TIME_SLOT_ID="ts66" TIME_VALUE="144416"/>
+        <TIME_SLOT TIME_SLOT_ID="ts67" TIME_VALUE="144416"/>
+        <TIME_SLOT TIME_SLOT_ID="ts68" TIME_VALUE="151461"/>
+        <TIME_SLOT TIME_SLOT_ID="ts69" TIME_VALUE="151461"/>
+        <TIME_SLOT TIME_SLOT_ID="ts70" TIME_VALUE="156117"/>
+        <TIME_SLOT TIME_SLOT_ID="ts71" TIME_VALUE="156117"/>
+        <TIME_SLOT TIME_SLOT_ID="ts72" TIME_VALUE="165604"/>
+        <TIME_SLOT TIME_SLOT_ID="ts73" TIME_VALUE="165604"/>
+        <TIME_SLOT TIME_SLOT_ID="ts74" TIME_VALUE="169144"/>
+        <TIME_SLOT TIME_SLOT_ID="ts75" TIME_VALUE="169144"/>
+        <TIME_SLOT TIME_SLOT_ID="ts76" TIME_VALUE="174881"/>
+        <TIME_SLOT TIME_SLOT_ID="ts77" TIME_VALUE="174881"/>
+        <TIME_SLOT TIME_SLOT_ID="ts78" TIME_VALUE="178399"/>
+        <TIME_SLOT TIME_SLOT_ID="ts79" TIME_VALUE="178399"/>
+        <TIME_SLOT TIME_SLOT_ID="ts80" TIME_VALUE="185689"/>
+        <TIME_SLOT TIME_SLOT_ID="ts81" TIME_VALUE="185689"/>
+        <TIME_SLOT TIME_SLOT_ID="ts82" TIME_VALUE="194752"/>
+        <TIME_SLOT TIME_SLOT_ID="ts83" TIME_VALUE="194752"/>
+        <TIME_SLOT TIME_SLOT_ID="ts84" TIME_VALUE="209944"/>
+        <TIME_SLOT TIME_SLOT_ID="ts85" TIME_VALUE="209944"/>
+        <TIME_SLOT TIME_SLOT_ID="ts86" TIME_VALUE="222658"/>
+        <TIME_SLOT TIME_SLOT_ID="ts87" TIME_VALUE="222658"/>
+        <TIME_SLOT TIME_SLOT_ID="ts88" TIME_VALUE="228596"/>
+        <TIME_SLOT TIME_SLOT_ID="ts89" TIME_VALUE="228596"/>
+        <TIME_SLOT TIME_SLOT_ID="ts90" TIME_VALUE="236109"/>
+        <TIME_SLOT TIME_SLOT_ID="ts91" TIME_VALUE="236109"/>
+        <TIME_SLOT TIME_SLOT_ID="ts92" TIME_VALUE="240239"/>
+        <TIME_SLOT TIME_SLOT_ID="ts93" TIME_VALUE="240239"/>
+        <TIME_SLOT TIME_SLOT_ID="ts94" TIME_VALUE="247418"/>
+        <TIME_SLOT TIME_SLOT_ID="ts95" TIME_VALUE="247418"/>
+        <TIME_SLOT TIME_SLOT_ID="ts96" TIME_VALUE="263659"/>
+        <TIME_SLOT TIME_SLOT_ID="ts97" TIME_VALUE="263659"/>
+        <TIME_SLOT TIME_SLOT_ID="ts98" TIME_VALUE="269061"/>
+        <TIME_SLOT TIME_SLOT_ID="ts99" TIME_VALUE="269061"/>
+        <TIME_SLOT TIME_SLOT_ID="ts100" TIME_VALUE="279432"/>
+        <TIME_SLOT TIME_SLOT_ID="ts101" TIME_VALUE="279432"/>
+        <TIME_SLOT TIME_SLOT_ID="ts102" TIME_VALUE="289267"/>
+        <TIME_SLOT TIME_SLOT_ID="ts103" TIME_VALUE="289267"/>
+        <TIME_SLOT TIME_SLOT_ID="ts104" TIME_VALUE="301200"/>
+        <TIME_SLOT TIME_SLOT_ID="ts105" TIME_VALUE="301200"/>
+        <TIME_SLOT TIME_SLOT_ID="ts106" TIME_VALUE="314562"/>
+        <TIME_SLOT TIME_SLOT_ID="ts107" TIME_VALUE="314562"/>
+        <TIME_SLOT TIME_SLOT_ID="ts108" TIME_VALUE="327678"/>
+        <TIME_SLOT TIME_SLOT_ID="ts109" TIME_VALUE="327678"/>
+        <TIME_SLOT TIME_SLOT_ID="ts110" TIME_VALUE="333861"/>
+        <TIME_SLOT TIME_SLOT_ID="ts111" TIME_VALUE="333861"/>
+        <TIME_SLOT TIME_SLOT_ID="ts112" TIME_VALUE="340256"/>
+        <TIME_SLOT TIME_SLOT_ID="ts113" TIME_VALUE="340256"/>
+        <TIME_SLOT TIME_SLOT_ID="ts114" TIME_VALUE="353269"/>
+        <TIME_SLOT TIME_SLOT_ID="ts115" TIME_VALUE="353269"/>
+        <TIME_SLOT TIME_SLOT_ID="ts116" TIME_VALUE="367876"/>
+        <TIME_SLOT TIME_SLOT_ID="ts117" TIME_VALUE="367876"/>
+        <TIME_SLOT TIME_SLOT_ID="ts118" TIME_VALUE="375109"/>
+        <TIME_SLOT TIME_SLOT_ID="ts119" TIME_VALUE="375109"/>
+        <TIME_SLOT TIME_SLOT_ID="ts120" TIME_VALUE="384341"/>
+        <TIME_SLOT TIME_SLOT_ID="ts121" TIME_VALUE="384341"/>
+        <TIME_SLOT TIME_SLOT_ID="ts122" TIME_VALUE="387622"/>
+        <TIME_SLOT TIME_SLOT_ID="ts123" TIME_VALUE="387622"/>
+        <TIME_SLOT TIME_SLOT_ID="ts124" TIME_VALUE="391341"/>
+        <TIME_SLOT TIME_SLOT_ID="ts125" TIME_VALUE="391341"/>
+        <TIME_SLOT TIME_SLOT_ID="ts126" TIME_VALUE="399792"/>
+        <TIME_SLOT TIME_SLOT_ID="ts127" TIME_VALUE="399792"/>
+        <TIME_SLOT TIME_SLOT_ID="ts128" TIME_VALUE="417171"/>
+        <TIME_SLOT TIME_SLOT_ID="ts129" TIME_VALUE="417171"/>
+        <TIME_SLOT TIME_SLOT_ID="ts130" TIME_VALUE="421256"/>
+        <TIME_SLOT TIME_SLOT_ID="ts131" TIME_VALUE="421256"/>
+        <TIME_SLOT TIME_SLOT_ID="ts132" TIME_VALUE="426394"/>
+        <TIME_SLOT TIME_SLOT_ID="ts133" TIME_VALUE="426394"/>
+        <TIME_SLOT TIME_SLOT_ID="ts134" TIME_VALUE="432332"/>
+        <TIME_SLOT TIME_SLOT_ID="ts135" TIME_VALUE="432332"/>
+        <TIME_SLOT TIME_SLOT_ID="ts136" TIME_VALUE="441519"/>
+        <TIME_SLOT TIME_SLOT_ID="ts137" TIME_VALUE="441519"/>
+        <TIME_SLOT TIME_SLOT_ID="ts138" TIME_VALUE="446162"/>
+        <TIME_SLOT TIME_SLOT_ID="ts139" TIME_VALUE="446162"/>
+        <TIME_SLOT TIME_SLOT_ID="ts140" TIME_VALUE="447703"/>
+        <TIME_SLOT TIME_SLOT_ID="ts141" TIME_VALUE="447703"/>
+        <TIME_SLOT TIME_SLOT_ID="ts142" TIME_VALUE="453453"/>
+        <TIME_SLOT TIME_SLOT_ID="ts143" TIME_VALUE="453453"/>
+        <TIME_SLOT TIME_SLOT_ID="ts144" TIME_VALUE="458520"/>
+        <TIME_SLOT TIME_SLOT_ID="ts145" TIME_VALUE="458520"/>
+        <TIME_SLOT TIME_SLOT_ID="ts146" TIME_VALUE="465408"/>
+        <TIME_SLOT TIME_SLOT_ID="ts147" TIME_VALUE="465408"/>
+        <TIME_SLOT TIME_SLOT_ID="ts148" TIME_VALUE="470587"/>
+        <TIME_SLOT TIME_SLOT_ID="ts149" TIME_VALUE="470587"/>
+        <TIME_SLOT TIME_SLOT_ID="ts150" TIME_VALUE="472877"/>
+        <TIME_SLOT TIME_SLOT_ID="ts151" TIME_VALUE="472877"/>
+        <TIME_SLOT TIME_SLOT_ID="ts152" TIME_VALUE="478658"/>
+        <TIME_SLOT TIME_SLOT_ID="ts153" TIME_VALUE="478658"/>
+        <TIME_SLOT TIME_SLOT_ID="ts154" TIME_VALUE="481047"/>
+        <TIME_SLOT TIME_SLOT_ID="ts155" TIME_VALUE="481047"/>
+        <TIME_SLOT TIME_SLOT_ID="ts156" TIME_VALUE="495301"/>
+        <TIME_SLOT TIME_SLOT_ID="ts157" TIME_VALUE="495301"/>
+        <TIME_SLOT TIME_SLOT_ID="ts158" TIME_VALUE="499319"/>
+        <TIME_SLOT TIME_SLOT_ID="ts159" TIME_VALUE="499319"/>
+        <TIME_SLOT TIME_SLOT_ID="ts160" TIME_VALUE="509438"/>
+        <TIME_SLOT TIME_SLOT_ID="ts161" TIME_VALUE="509438"/>
+        <TIME_SLOT TIME_SLOT_ID="ts162" TIME_VALUE="523938"/>
+        <TIME_SLOT TIME_SLOT_ID="ts163" TIME_VALUE="523938"/>
+        <TIME_SLOT TIME_SLOT_ID="ts164" TIME_VALUE="526706"/>
+        <TIME_SLOT TIME_SLOT_ID="ts165" TIME_VALUE="526706"/>
+        <TIME_SLOT TIME_SLOT_ID="ts166" TIME_VALUE="531407"/>
+        <TIME_SLOT TIME_SLOT_ID="ts167" TIME_VALUE="531407"/>
+        <TIME_SLOT TIME_SLOT_ID="ts168" TIME_VALUE="535773"/>
+        <TIME_SLOT TIME_SLOT_ID="ts169" TIME_VALUE="535773"/>
+        <TIME_SLOT TIME_SLOT_ID="ts170" TIME_VALUE="549188"/>
+        <TIME_SLOT TIME_SLOT_ID="ts171" TIME_VALUE="549188"/>
+        <TIME_SLOT TIME_SLOT_ID="ts172" TIME_VALUE="557292"/>
+        <TIME_SLOT TIME_SLOT_ID="ts173" TIME_VALUE="557292"/>
+        <TIME_SLOT TIME_SLOT_ID="ts174" TIME_VALUE="562305"/>
+        <TIME_SLOT TIME_SLOT_ID="ts175" TIME_VALUE="562305"/>
+        <TIME_SLOT TIME_SLOT_ID="ts176" TIME_VALUE="565230"/>
+        <TIME_SLOT TIME_SLOT_ID="ts177" TIME_VALUE="565230"/>
+        <TIME_SLOT TIME_SLOT_ID="ts178" TIME_VALUE="568659"/>
+        <TIME_SLOT TIME_SLOT_ID="ts179" TIME_VALUE="568659"/>
+        <TIME_SLOT TIME_SLOT_ID="ts180" TIME_VALUE="575302"/>
+        <TIME_SLOT TIME_SLOT_ID="ts181" TIME_VALUE="575302"/>
+        <TIME_SLOT TIME_SLOT_ID="ts182" TIME_VALUE="581141"/>
+        <TIME_SLOT TIME_SLOT_ID="ts183" TIME_VALUE="581141"/>
+        <TIME_SLOT TIME_SLOT_ID="ts184" TIME_VALUE="594601"/>
+        <TIME_SLOT TIME_SLOT_ID="ts185" TIME_VALUE="594601"/>
+        <TIME_SLOT TIME_SLOT_ID="ts186" TIME_VALUE="603097"/>
+        <TIME_SLOT TIME_SLOT_ID="ts187" TIME_VALUE="603097"/>
+        <TIME_SLOT TIME_SLOT_ID="ts188" TIME_VALUE="616659"/>
+        <TIME_SLOT TIME_SLOT_ID="ts189" TIME_VALUE="616659"/>
+        <TIME_SLOT TIME_SLOT_ID="ts190" TIME_VALUE="622865"/>
+        <TIME_SLOT TIME_SLOT_ID="ts191" TIME_VALUE="622865"/>
+        <TIME_SLOT TIME_SLOT_ID="ts192" TIME_VALUE="622865"/>
+        <TIME_SLOT TIME_SLOT_ID="ts193" TIME_VALUE="626115"/>
+        <TIME_SLOT TIME_SLOT_ID="ts194" TIME_VALUE="626115"/>
+        <TIME_SLOT TIME_SLOT_ID="ts195" TIME_VALUE="626115"/>
+        <TIME_SLOT TIME_SLOT_ID="ts196" TIME_VALUE="629753"/>
+        <TIME_SLOT TIME_SLOT_ID="ts197" TIME_VALUE="629753"/>
+        <TIME_SLOT TIME_SLOT_ID="ts198" TIME_VALUE="637499"/>
+        <TIME_SLOT TIME_SLOT_ID="ts199" TIME_VALUE="637499"/>
+        <TIME_SLOT TIME_SLOT_ID="ts200" TIME_VALUE="640914"/>
+        <TIME_SLOT TIME_SLOT_ID="ts201" TIME_VALUE="640914"/>
+        <TIME_SLOT TIME_SLOT_ID="ts202" TIME_VALUE="640914"/>
+        <TIME_SLOT TIME_SLOT_ID="ts203" TIME_VALUE="641339"/>
+        <TIME_SLOT TIME_SLOT_ID="ts204" TIME_VALUE="641339"/>
+        <TIME_SLOT TIME_SLOT_ID="ts205" TIME_VALUE="641339"/>
+        <TIME_SLOT TIME_SLOT_ID="ts206" TIME_VALUE="643839"/>
+        <TIME_SLOT TIME_SLOT_ID="ts207" TIME_VALUE="643839"/>
+        <TIME_SLOT TIME_SLOT_ID="ts208" TIME_VALUE="652343"/>
+        <TIME_SLOT TIME_SLOT_ID="ts209" TIME_VALUE="652343"/>
+        <TIME_SLOT TIME_SLOT_ID="ts210" TIME_VALUE="652343"/>
+        <TIME_SLOT TIME_SLOT_ID="ts211" TIME_VALUE="654263"/>
+        <TIME_SLOT TIME_SLOT_ID="ts212" TIME_VALUE="654263"/>
+        <TIME_SLOT TIME_SLOT_ID="ts213" TIME_VALUE="654263"/>
+        <TIME_SLOT TIME_SLOT_ID="ts214" TIME_VALUE="655714"/>
+        <TIME_SLOT TIME_SLOT_ID="ts215" TIME_VALUE="655714"/>
+        <TIME_SLOT TIME_SLOT_ID="ts216" TIME_VALUE="660423"/>
+        <TIME_SLOT TIME_SLOT_ID="ts217" TIME_VALUE="660423"/>
+    </TIME_ORDER>
+    <TIER DEFAULT_LOCALE="us" LINGUISTIC_TYPE_REF="TurnType" PARENT_REF="Sections" TIER_ID="Turns">
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a1" TIME_SLOT_REF1="ts1" TIME_SLOT_REF2="ts3">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a2" TIME_SLOT_REF1="ts3" TIME_SLOT_REF2="ts6">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a3" TIME_SLOT_REF1="ts6" TIME_SLOT_REF2="ts9">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a4" TIME_SLOT_REF1="ts9" TIME_SLOT_REF2="ts12">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a5" TIME_SLOT_REF1="ts12" TIME_SLOT_REF2="ts15">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a6" TIME_SLOT_REF1="ts15" TIME_SLOT_REF2="ts18">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a7" TIME_SLOT_REF1="ts18" TIME_SLOT_REF2="ts21">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a8" TIME_SLOT_REF1="ts21" TIME_SLOT_REF2="ts24">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a9" TIME_SLOT_REF1="ts24" TIME_SLOT_REF2="ts27">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a10" TIME_SLOT_REF1="ts27" TIME_SLOT_REF2="ts190">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a11" TIME_SLOT_REF1="ts190" TIME_SLOT_REF2="ts193">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a12" TIME_SLOT_REF1="ts193" TIME_SLOT_REF2="ts200">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a13" TIME_SLOT_REF1="ts200" TIME_SLOT_REF2="ts203">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a14" TIME_SLOT_REF1="ts203" TIME_SLOT_REF2="ts208">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a15" TIME_SLOT_REF1="ts208" TIME_SLOT_REF2="ts211">
+                <ANNOTATION_VALUE>Benidiktus Delpada</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a16" TIME_SLOT_REF1="ts211" TIME_SLOT_REF2="ts216">
+                <ANNOTATION_VALUE>Anselmus Yetimauh</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+    </TIER>
+    <TIER DEFAULT_LOCALE="us" LINGUISTIC_TYPE_REF="UtteranceType" PARTICIPANT="Anselmus Yetimauh" TIER_ID="Anselmus Yetimauh">
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a18" TIME_SLOT_REF1="ts5" TIME_SLOT_REF2="ts7">
+                <ANNOTATION_VALUE>iya.&lt;INDO&gt;iya.&lt;Malay&gt;iya.  &lt;@ENG yes&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a20" TIME_SLOT_REF1="ts11" TIME_SLOT_REF2="ts13">
+                <ANNOTATION_VALUE>masi bayooka liik hu deitur te!&lt;INDO&gt;kalau begitu, bale-bale bayooka itu yang diceritakan lebih dahulu!&lt;Malay&gt;itu na bale-bale bayooka itu yang duluan dulu! &lt;@ENG If you want that, I will have to tell you about the Bayooka platform first.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a22" TIME_SLOT_REF1="ts17" TIME_SLOT_REF2="ts19">
+                <ANNOTATION_VALUE>hene adat ba e iti we heteitu ha.&lt;INDO&gt;itulah adat yang terdahulu.&lt;Malay&gt;itu yang adat yang pertama punya. &lt;@ENG It's about the original customs.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a24" TIME_SLOT_REF1="ts23" TIME_SLOT_REF2="ts25">
+                <ANNOTATION_VALUE>kapala kiika nu heayoku&lt;INDO&gt;Kepala Merah itu kedua&lt;Malay&gt;kepala merah punya tu kedua &lt;@ENG The Red Head comes after that.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a26" TIME_SLOT_REF1="ts29" TIME_SLOT_REF2="ts30">
+                <ANNOTATION_VALUE>yaa hen parenta.&lt;INDO&gt;saat itu disebut masa pemerintahan.&lt;Malay&gt;itu waktu pemerintahan.  &lt;@ENG That's called the government period.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a27" TIME_SLOT_REF1="ts31" TIME_SLOT_REF2="ts32">
+                <ANNOTATION_VALUE>hare we afe we ba dara mi ba etungtung loku hehadosanra ba nala maiye hen ama hefangi ya e kalieta ba heel loku nu hen akun-akan heamakaang.&lt;INDO&gt;jadi, waktu itu menurut nenek moyang mereka, sebagaimana kata orang, leluhur mereka itu merupakan manusia dunia gelap.&lt;Malay&gt;jadi dulu ko masi ikut lu punya nenek moyang dorang ko apa, begitu na itu orang omong bilang itu moyang dorang tu itu orang dunia gelap.  &lt;@ENG So, when we used to follow the customs of our ancesters, when people refer to that, they usually say that was when the world was still dark.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a28" TIME_SLOT_REF1="ts33" TIME_SLOT_REF2="ts34">
+                <ANNOTATION_VALUE>akun-akan heamakaang hee henir ba ama ming ananra.&lt;INDO&gt;manusia dunia gelap, begitulah kata orang.&lt;Malay&gt;orang dunia gelap itu yang begitu ko orang cerita. &lt;@ENG People of the dark age, that's how people refer to it.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a29" TIME_SLOT_REF1="ts35" TIME_SLOT_REF2="ts36">
+                <ANNOTATION_VALUE>ming ananri ba hen mia ba el wan me heel akun-akan ba hefanga nu henu e niido nikuta we.&lt;INDO&gt;demikianlah kata orang tentang dunia gelap itu adalah mengarah kepada leluhur-leluhur dari kami.&lt;Malay&gt;cerita begitu ko dari situ omong bilang itu dunia gelap tu itu kami punya nenek dorang. &lt;@ENG When people talk about that, they talk about our own ancestors.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a30" TIME_SLOT_REF1="ts37" TIME_SLOT_REF2="ts38">
+                <ANNOTATION_VALUE>nukuta we ba Makanakan kalieta henu hen wan akun-akan heamakaang.&lt;INDO&gt;leluhur-leluhur kami yang salahsatunya Makanakan itu sudah termasuk orang pada masa dunia gelap.&lt;Malay&gt;kami punya nenek yang nenek Makanakan itu sudah dunia gelap punya orang. &lt;@ENG For example, the old Makanakan, our ancestor, he was already a person of the dark age.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a31" TIME_SLOT_REF1="ts39" TIME_SLOT_REF2="ts40">
+                <ANNOTATION_VALUE>akun-akan heamakaang ba nala henu hu e di moni ya kata hesarang karnuku tafuda panen ba me hetilipang mia ba nala mai hen bayooka liik, hen do heetilipang.&lt;INDO&gt;Makanakan yang disebut orang dunia gelap itu ketika dia mati, orang-orang mengadakan semua acara dukanya. selanjutnya disebut bale-bale bayooka pada penghujungnya.&lt;Malay&gt;dunia gelap punya orang itu yang itu waktu dia mati, itu na buat dia punya pesta semua ko datang di dia punya ujung ko apa na itu bake-bale bayooka.  &lt;@ENG When anybody died in the dark age, people from all sides came and made a big funeral party and in that party they erected a bayooka platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a32" TIME_SLOT_REF1="ts41" TIME_SLOT_REF2="ts42">
+                <ANNOTATION_VALUE>hene lek foka ba paneng hen hetilipango bayooka liik hasuonra. hmm.&lt;INDO&gt;di saat itulah akhir pesta besar mendorong bale-bale bayooka.&lt;Malay&gt;itu yang buat pesta besar itu punya ujung tu tolak bale-bale bayooka. &lt;@ENG So at the end of that funeral ceremony, they pushed the Bayooka platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a33" TIME_SLOT_REF1="ts43" TIME_SLOT_REF2="ts44">
+                <ANNOTATION_VALUE>henir ba nar ba hare helek kiding foka do ama tafuda wan iti adat haluol hare, ma fuokung huwor ariidi afeida.&lt;INDO&gt;demikianlah pesta besar-kecilnya diadakan karena kebiasaan adat. orang-orang mendengungkan gong setiap saat.&lt;Malay&gt;begitu ko bikin bilang jadi, dia punya pesta kecil besar ni orang semua sudah ikut adat punya jadi, habis pukul gong siang malam. &lt;@ENG That's how the ceremonies were held, following the custom. People were playing the gogns all day long. &gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a34" TIME_SLOT_REF1="ts45" TIME_SLOT_REF2="ts46">
+                <ANNOTATION_VALUE>fuokung huwol ariidi afeida ba nala yo wan yaa hen hesik ba nala mai hen mia ba e yaa hen yal do wan lek ba kiding foka yo hen wan tafuda hasiki yal do wan yaa wan yaa he hefoka miadi yo.&lt;INDO&gt;setelah dengungan gong berakhir, diakhirinya pula semua pesta besar-kecil yang berhubugnan, tibalah pada saatnya yang luar biasa.&lt;Malay&gt;pukul gong siang malam begitu apa itu sudah selesai ko apa  begitu na dari situ ko pigi itu, sekarang ni sudah pesta yang kecil besar tu sudah kasi selesai semua, sekarang ni sudah sampai di dia punya besar itu.  &lt;@ENG The gongs were played the whole day and other smaller and bigger ceremonies were held, but nowadays, we just have one big ceremony.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a35" TIME_SLOT_REF1="ts47" TIME_SLOT_REF2="ts48">
+                <ANNOTATION_VALUE>hepui yo miadi hare hane ba e kokda fing re aai-aremang ba wiil neng wiil mayol tafuda ba sei hewaalra nu, tafuda ri sei hewaalri te ko bayooka liik do hasuonra yo!&lt;INDO&gt;karena sudah sampai pada penghujungnya, kakak-beradik atau sanak-saudara, semuanya yang disebut sebagai anak laki-laki, anak perempuan, semuanya datang berkumpul baru kemudian melakukan pesta mendorong bale-bale bayooka.&lt;Malay&gt;sudah sampai di dia pung terakhir jadi yang namanya bungsu sulung ko keluarga yang anak laki-laki anak perempuan semua yang turun kerumun tu, semua kamu turun ko sudah kerumun dulu baru nanti bale-bale bayooka ni tolak o! &lt;@ENG Because the ceremony was almost ending, everybody, those referred to as the oldest and the youngest and the 'female child' and 'male child', all of them had ot be present and then everybody went and pushed the bayooka platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a36" TIME_SLOT_REF1="ts49" TIME_SLOT_REF2="ts50">
+                <ANNOTATION_VALUE>henir ba nala, ama tafuda sei iti el Lumelang, e melang karia hare wan ama heto wir ba tafuda hewaalra.&lt;INDO&gt;demikian orag-orang mendatangi kampung Lumelang, kampung yang sempit, namun orang-orang datang ke sana dan mengerumuni bale-bale bayooka.&lt;Malay&gt;begitu ko apa, orang semua turun di itu waktu Lumelang, itu waktu kampung sempit jadi, sudah orang begitu ko semua kerumun itu. &lt;@ENG And so everybody used to go then to Lumelang, which was a very small and narrow place then, and everybody gathered there.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a37" TIME_SLOT_REF1="ts51" TIME_SLOT_REF2="ts52">
+                <ANNOTATION_VALUE>hewaalri te hu hen mia ama bayooka liik do wan peeng, tafuda ba sei hoobaleei ba nateti.&lt;INDO&gt;setelah orang-orang datang mendekat bale-bale bayooka tersebut, mereka semua berdiri mengelilinginya.&lt;Malay&gt;sudah kerumun dulu baru di situ orang bale-bale bayooka ni sudah dekat, semua yang turun kuliling di itu ko berdiri. &lt;@ENG Once everybody gathered there, people who came for the bayooka platform ceremony, they all encirceled it and waited&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a38" TIME_SLOT_REF1="ts53" TIME_SLOT_REF2="ts54">
+                <ANNOTATION_VALUE>hoobaleei ba natet nu, e taha ba oro natet nu hen hane arui taha.&lt;INDO&gt;saat mengelilinginya, ada pula tiang yang terpancang di sana yang disebut tiang Abu.&lt;Malay&gt;kuliling di itu ko berdiri tu, tadi tiang yang ada berdiri tu dia pung nama tiang abu. &lt;@ENG They stood around the platform, the post which they stood around there is refered to as the 'ashes' post.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a39" TIME_SLOT_REF1="ts55" TIME_SLOT_REF2="ts56">
+                <ANNOTATION_VALUE>hen arui taha, hen arui taha nu hen wiil fing di hen nateti.&lt;INDO&gt;tiang Abu itu tempat di mana anak laki-laki berdiri di sana.&lt;Malay&gt;itu tiang abu itu tu anak sulung dia berdiri di situ. &lt;@ENG The oldest child had to stand in the place of the 'ashes' post.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a40" TIME_SLOT_REF1="ts57" TIME_SLOT_REF2="ts58">
+                <ANNOTATION_VALUE>e he he heayoku nu uwo nung nateti.&lt;INDO&gt;yang kedua itu sedang berdiri di bagian sana.&lt;Malay&gt;tadi yang kedua tu berdiri diatas itu. &lt;@ENG The second one stood above that.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a41" TIME_SLOT_REF1="ts59" TIME_SLOT_REF2="ts60">
+                <ANNOTATION_VALUE>hesua me uwo nung nateti.&lt;INDO&gt;yang ketiga sedang berdiri di bagian sana.&lt;Malay&gt;yang ketiga datang diatas situ berdiri.  &lt;@ENG the third one stood higher again.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a42" TIME_SLOT_REF1="ts61" TIME_SLOT_REF2="ts62">
+                <ANNOTATION_VALUE>hebuti nu hen dong nateti.&lt;INDO&gt;yang keempat itu sedang berdiri di bagian sini.&lt;Malay&gt;yang keempat itu tu berdiri di sini. &lt;@ENG the fourth one stood here.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a43" TIME_SLOT_REF1="ts63" TIME_SLOT_REF2="ts64">
+                <ANNOTATION_VALUE>henil ba taha nu tafuda kanakdi ba nateti.&lt;INDO&gt;demikian mereka berdiri di dekat setiap tiang.&lt;Malay&gt;begitu ko tiang tu semua baku bagi ko berdiri. &lt;@ENG So they divided the columns among themselves and stood there.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a44" TIME_SLOT_REF1="ts65" TIME_SLOT_REF2="ts66">
+                <ANNOTATION_VALUE>tafuda kanakdi ba natetdi kaanri ya kata ama ming teewahai.&lt;INDO&gt;setelah berdiri di setiap sisi bertiang, mereka berempat saling memandang satu sama lain.&lt;Malay&gt;semua baku bagi ko berdiri habis orang baku lihat.  &lt;@ENG Once they were ready, everybody looked at each other.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a45" TIME_SLOT_REF1="ts67" TIME_SLOT_REF2="ts68">
+                <ANNOTATION_VALUE>e oro arui taha heiyang natet nu tafuda natetdi mai di ming teewahaai kaanra mai ming fooi.&lt;INDO&gt;mereka yang sudah berdiri di dekat setiap tiang Abu itu memandang satu sama lain lalu memberi isyarat dengan menganggukkan kepala mereka masing-masing.&lt;Malay&gt;yang tadi di sana berdiri di tiang abu itu, semua sudah berdiri begitu na dorang baku lihat habis angguk. &lt;@ENG Everybody who stood nest to the four posts was looking at the oldest one next to the 'ashes' post who nodded.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a46" TIME_SLOT_REF1="ts69" TIME_SLOT_REF2="ts70">
+                <ANNOTATION_VALUE>wan di ming fooi mai tafuda wan di taha heuwo dong hapaakda.&lt;INDO&gt;karena semua sudah memberi isyarat dengan menganggukkan kepala, maka mereka semua mulai menebang/memotong pada bagian bawah setiap tiang.&lt;Malay&gt;sudah dorang angguk na semua sudah dorang potong di tiang pung bagian bawa. &lt;@ENG Once he nodded, everybody cut the bottom part of their post.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a47" TIME_SLOT_REF1="ts71" TIME_SLOT_REF2="ts72">
+                <ANNOTATION_VALUE>taha heuwo dong ming hapaakdi ba we wan ko heehawai kaang ba nala yo maiye hen dikang di wan dikang di dikang teewahai.&lt;INDO&gt;ketika dipotong di bagian bawah tiang - dan sudah hampir bisa dipotong pada bagian sebelahnya, maka mereka saling memandang satu sama lain.&lt;Malay&gt;tiang pung bawa ini sudah potong  ko pigi, mungkin sudah bisa lihat ko apa tu begitu na itu lagi dorang baku lihat. &lt;@ENG Once the bottom was cut through, maybe they could see it was about to give away, they looked at heach other again.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a48" TIME_SLOT_REF1="ts73" TIME_SLOT_REF2="ts74">
+                <ANNOTATION_VALUE>teewahaai ba ding fooi maiye hen dikang dotafuda taaha dong mara.&lt;INDO&gt;kalau mereka menganggukan kepala saat berpandangan maka mereka semua berpindah ke bagian sebelahnya yaitu di bagian atasnya.&lt;Malay&gt;baku lihat  ko dorang angguk na itu lagi dorang semua naik di bagian atas.  &lt;@ENG Once everybody looked at each other, they nodded again and everybody climbed on the top of the platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a49" TIME_SLOT_REF1="ts75" TIME_SLOT_REF2="ts76">
+                <ANNOTATION_VALUE>e heel ba pa o hen natet, heel e taha ba tukong nu dowa tanga naha.&lt;INDO&gt;orang-orang yang sedang berdiri di bagian bawah yaitu mereka yang sedang memotong tiang# mereka yang memotong tiang itu tidak berbicara sepatah kata pun.&lt;Malay&gt;tadi itu yang turun di bawa berdiri di situ, itu yang tadi potong tiang tu dorang tidak omong-omong. &lt;@ENG None of them who gathered around the posts and cut them spoke a word.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a50" TIME_SLOT_REF1="ts77" TIME_SLOT_REF2="ts78">
+                <ANNOTATION_VALUE>hen dowa tanga naha ya el teewahaai ming tiyena fooi nu hene heedi.&lt;INDO&gt;mereka tidak berbicara tetapi hanya mengisyaratkan dengan cara berpandangan satu sama lain sambil menganggukkan kepala.&lt;Malay&gt;itu dorang tidak omong-omong tapi tadi baku lihat baku angguk tu yang dia. &lt;@ENG They didn't speak a single word, they just nodded at each other.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a51" TIME_SLOT_REF1="ts79" TIME_SLOT_REF2="ts80">
+                <ANNOTATION_VALUE>hare wan dikang tafuda taaha dong mareei kaanra maiye hen mia sama-sama dikang di uwo hetaaha nung tukong.&lt;INDO&gt;jadi mereka semua berpindah ke sebelah atas, kemudian mereka serentak memotong pada bagian atas.&lt;Malay&gt;jadi semua sudah naik diatas lagi habis na di situ sama-sama lagi potong di dia pung bagian atas itu. &lt;@ENG So everybody climbed on the top and then they started to cut the platform into pieces as well.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a52" TIME_SLOT_REF1="ts81" TIME_SLOT_REF2="ts82">
+                <ANNOTATION_VALUE>hetaaha dong tukon ba wan kawen nung datang sua bukni ba nal maiye hen sama-sama taha do hoopuna ya ming hasuonra yo mai.&lt;INDO&gt;setelah tiga atau empat kali menghentakkan parang pada bagian tersebut, maka mereka kemudian akan mendorong tiang tersebut secara serentak.&lt;Malay&gt;potong di dia pung bagian atas ko parang tu sudah lepas tiga empat kali na sama-sama pegang ini tiang habis tolak begitu. &lt;@ENG They cut three or four times, they together held on the post and then they pushed it.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a53" TIME_SLOT_REF1="ts83" TIME_SLOT_REF2="ts84">
+                <ANNOTATION_VALUE>ming hasuonra yo uwo heel liik taaha nu, bayooka liik taaha nu uwok nuku, fe, fe heui ba tatang tileei dong waha hen dikang tuku nuku henu mi uwok hamiina nung iya.&lt;INDO&gt;saat mendorongnya, ada juga di atas bale-bale tersebut, bale-bale bayooka sedang tersedia sebuah nasi kerucut - juga sepotongan sisi belakang babi seukuran telapak tangan sedang tergeletak di dekat nasi kerucut tersebut.&lt;Malay&gt;tolak itu tu, yang ada diatas tu, diatas bale-bale bayooka tu ada nasi kerucut satu, babi, babi pung belakang yang sama dengan kita punya telapak tangan ni, itu satu potong lagi ambil taru di dekat nasi kerucut tu. &lt;@ENG They pushed it and on the top of the Bayooka platform, there was a rice cone (pile shaped as a cone) and also pieces of pork as large as a palm, and those were placed next to the rice cone.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a54" TIME_SLOT_REF1="ts85" TIME_SLOT_REF2="ts86">
+                <ANNOTATION_VALUE>mi ba uwo uwok hamiina nu ming ii kaanri ya kaanta ama e hoobaleei ba natetdi se hu henu mia ba wan di mara, di: wah, ma ma heemara?&lt;INDO&gt;potongan daging babi tersebut sedang tergeletak di dekat nasi kerucut. sementara orang-orang sedang berdiri mengelilingi tiang, di antaranya ada orang yang mau menaiki bale-bale tersebut. kata seseorang: wah, siapa yang berani memanjat?&lt;Malay&gt;ambil ko ada taru di dekat nasi kerucut habis ko orang tadi orang kuliling ko berdiri habis baru dari situ dia naik, dia bilang: wah, habis siapa yang naik?  &lt;@ENG As the rice cones and pork were placed on top, and the people below were holding the posts, some would climb up and say: "So who is coming above?"&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a55" TIME_SLOT_REF1="ts87" TIME_SLOT_REF2="ts88">
+                <ANNOTATION_VALUE>ma hee mara, masi ama hefanga ti: ai, Fanta Lehi nehe hiyek abet hare hede mara yo!&lt;INDO&gt;"siapa yang berani memanjat?" - maka kata orang-orang: ai, Fanta Lehi itu yang tangkas, jadi dialah yang memanjatnya!&lt;Malay&gt;siapa yang naik? begitu na orang omong bilang: ai, Fanta Lehi itu yang pintar  panjat jadi dia tu yang naik o! &lt;@ENG So who would come up and then people said: "Oh, Fanta Lehi climbs easily (light-ass), so let he climb up!"&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a56" TIME_SLOT_REF1="ts89" TIME_SLOT_REF2="ts90">
+                <ANNOTATION_VALUE>he hedo mara yo mai hen wan datuokdi, kota taaha do mia datuokdi ba uwo liik hong hayeei.&lt;INDO&gt;"iya, dia yang memanjatnya". maka dia pun melompat untuk menaikinya. dia (Fanta Lehi) melompat dari atas susunan batu pembatas ke bale-bale.&lt;Malay&gt;dia, dia tu yang naik begitu na dia sudah sudah lompat, dia lompat dari kota ko ada naik jatuh diatas bale-bale. &lt;@ENG Okay, let he climb up, and then Fanta Lei also climbed up on the top of the stone wall surrounding the platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a57" TIME_SLOT_REF1="ts91" TIME_SLOT_REF2="ts92">
+                <ANNOTATION_VALUE>liik hong hayeei ya hen mia di uwo liik taaha nu ding miti.&lt;INDO&gt;setelah dia menggapai di bale-bale, dia lalu duduk di situ.&lt;Malay&gt;jatuh diatas bale-bale habis itu dia ada duduk diatas bale-bale itu. &lt;@ENG Then he jumped down on the platform and sat there.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a58" TIME_SLOT_REF1="ts93" TIME_SLOT_REF2="ts94">
+                <ANNOTATION_VALUE>ding mit ba lui baai mi peeng ii ba nar hare wan di di uwok nu wan o la kadele.&lt;INDO&gt;dia duduk di bale-bale. di situ sudah tersedia juga pisau di dekat nasi kerucut dan daging babi. dia langsung membelah nasi kerucut itu.&lt;Malay&gt;dia duduk ko pisau juga ambil ko taru ko bikin jadi sudah, dia ambil ko langsung bela itu nasi kerucut tu. &lt;@ENG As he sat down, he took the knife placed next to the rice cone and pork. He took it and split the food.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a59" TIME_SLOT_REF1="ts95" TIME_SLOT_REF2="ts96">
+                <ANNOTATION_VALUE>deuwok nu kadel kaanri ba demahiiting loku nu baai, e wan ama tafuda maar kaang-kaangdise mi peeng ii ba it hare heng uwo hetong miti ba deuwok do kadel ba nee, demahiiting hetadii ba la mi toonee, henil ama heng o taha nu tukong, maama.&lt;INDO&gt;setelah dia membelah nasi kerucut dan juga memotong daging tersebut - makanan tersebut sudah dighidangkan dengan lezatnya diletakan di dekat daging. jadi dia sedang duduk sambil membelah nasi kerucut dan memotong daging yang tersedia dan menikmatinya. sementara itu orang-orang sedang menebang tiang-tiang tersebut, pak.&lt;Malay&gt;dia bela dia pung nasi kerucut itu habis ko dia punya daging dorang tu juga, tadi orang sudah masak semua baru ambil taru di dekat begitu jadi, jadi dia itu ada duduk di situ ko bela dia pung nasi kerucut ko makan. dia potong dia pung daging ko ambil makan dengan nasi saja. begitu orang tu ada di bawa ko potong itu tiang, bapa. &lt;@ENG He cut the rice cone up and the pork as well, all of which was cooked beforehand and placed on the platform, and as he cut it up he ate the pork just like that with some rice. At the same time, the people who were holding the platform posts below continued cutting them.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a60" TIME_SLOT_REF1="ts97" TIME_SLOT_REF2="ts98">
+                <ANNOTATION_VALUE>ama heng o taha nu wan ama e tafuda pei natetdi hare ama tafuda tukong.&lt;INDO&gt;sementara orang-orang sudah sedang berdiri dengan payahnya - sehingga semuanya memotongnya.&lt;Malay&gt;orang di bawa ko tiang tu sudah orang tadi berdiri di dekat semua jadi orang semua potong.  &lt;@ENG everbody was already standing around the platform posts, so they were all cutting.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a61" TIME_SLOT_REF1="ts99" TIME_SLOT_REF2="ts100">
+                <ANNOTATION_VALUE>tafuda tukong ba heel baai heng uwo hefaaling hare wan tafuda tukoni ya wan di taaha dong marang maiye hen wan, heng uwo denala nee haba wan di heetaminang.&lt;INDO&gt;sedang sementara semua orang memotongnya, dia pun memperhatikannya dari atas. ketika mereka hendak memotong pada bagian atas tiang tersebut - walaupun sedang makan, diapun waspada.&lt;Malay&gt;semua potong ko dia juga ada dengar diatas, jadi sudah semua potong habis dorang sudah naik di bagian atas na memang dia ada makan diatas tapi dia ingat-ingat.  &lt;@ENG They were all cutting on the poles so that he would hear them on the top of the platform and then they came up as well and indeed, he was up there eating, but eating cautiously. &gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a62" TIME_SLOT_REF1="ts101" TIME_SLOT_REF2="ts102">
+                <ANNOTATION_VALUE>di heetaminang nu, tafuda marang taaha do dong maran ba wan di heehawai datang ayokdi suidi maiye henu wan deitu uwo nu mia dikang la datuokda.&lt;INDO&gt;dia waspada tentang itu. kalau orang-orang itu sudah menuju ke bagian atas dan menghentakan parang sebanyak dua atau tiga kali, dia lebih dahulu meloncat dari atas.&lt;Malay&gt;dia ingat-ingat tu, semua naik di bagian atas sini ko sudah dorang balas lepas tangan dua ko tiga kali na itu dia sudah ada duluan lompat dari atas langsung. &lt;@ENG He was cautious of that, and when the people climbed up and cut with their swords twice or three times, he just jumped down from the platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a63" TIME_SLOT_REF1="ts103" TIME_SLOT_REF2="ts104">
+                <ANNOTATION_VALUE>datuokdi ba dikang yaa o kota taahang hayei nu, hen mia heyal mia ama bayooka liik nung hasuonri kata e nala karnuku ba uwo taai it nu hen dotaai iti ya pa pa mi o ating dong sei.&lt;INDO&gt;dia meloncat kembali ke bawah ketempatnya semula yaitu di atas susunan batu pembatas - orang-orang mendorong bale-bale bayooka itu. bale-bale bersama dengan segala sesuatu yang terletak di atasnya itu dibiarkan jatuh ke jurang.&lt;Malay&gt;dia lompat lagi ko turun jatuh diatas kota itu, di situ ada di dia pung tempat, orang tolak itu bale-bale bayooka habis tadi semua barang ada taru di atas tu itu kasi tinggal taru di atas turun kasi turun di jurang. &lt;@ENG He jumped down and landed on the walled terrace, where he climbed from and then the people pushed the platform with everything that remained on it into the ravine (just below the terrace).&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a64" TIME_SLOT_REF1="ts105" TIME_SLOT_REF2="ts106">
+                <ANNOTATION_VALUE>pa mi ating dong saai ya e nala, henu mia ba e hen mia wan e heel lek ba paneng-paneng mai hetilipango heel bayooka liik nu hen hetilipang, maama.&lt;INDO&gt;bale-bale itu sudah didorong ke jurang. itulah akhir dari penyelenggaraan pesta yakni pesta bale-bale bayooka, pak.&lt;Malay&gt;turun kasi turun di jurang habis tadi apa, dari situ ko tadi ada di situ sudah tadi itu pesta yang buat-buat tu dia punya ujung tu itu bale-bale bayooka tu itu dia punya ujung, bapa. &lt;@ENG When they pushed the platform into the ravine, that marked the end of the entire ceremony, that is of the Bayooka ceremony, you know.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a65" TIME_SLOT_REF1="ts107" TIME_SLOT_REF2="ts108">
+                <ANNOTATION_VALUE>afe hare e iti e ama yala ba e adat do iti e, e laak-laak nu hen afe we wida maiye hen e yaa hetilipang nu hen yaa bayooka liike. hmm.&lt;INDO&gt;itu dulu. jadi kalau adat yang ada sekarang adalah yang selalu kita adakan itu. sedangkan pada masa dulu itu berakhir pada pesta bale-bale bayooka itu.&lt;Malay&gt;dulu, jadi itu waktu ada tadi orang sekarang ko tadi adat ini ada, tadi jalan-jalan tu itu seperti dulu na itu tadi sampai dia punya ujung tu tu sampai di bale-bale bayooka. &lt;@ENG That's how the ceremony was performed in the past. So nowadays, our custom is the way we practice it, but in the past, the funeral ceremony ended up with the Bayooka platform ritual.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a66" TIME_SLOT_REF1="ts109" TIME_SLOT_REF2="ts110">
+                <ANNOTATION_VALUE>haba e yal do wan hane, ma e adat yo heng iti dei laak to, maama.&lt;INDO&gt;tetapi sekarang ini, yang disebut adat itu sedang berjalan.&lt;Malay&gt;tapi sekarang ni sudah namanya, habis tadi adat itu dia masih ada tetap jalan tu, bapa. &lt;@ENG But nowadays, we use what we refer to as 'adat' or custom.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a67" TIME_SLOT_REF1="ts111" TIME_SLOT_REF2="ts112">
+                <ANNOTATION_VALUE>madi e henu we oro akun-akan hei loku ba ming panengo henu wan naha.&lt;INDO&gt;Lagi, sekarang ini tidak lagi menggunakan sistem-sistem adat seperti pada masa dunia gelap.&lt;Malay&gt;habis tadi itu pigi di dunia gelap sana punya dorang ko buat itu tu sudah tidak. &lt;@ENG So nowadays, we no longer use the ways of the dark age.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a68" TIME_SLOT_REF1="ts113" TIME_SLOT_REF2="ts114">
+                <ANNOTATION_VALUE>hen naha hare afe ba e heelba we akun-akan mai yo hane ba amakaang ba do, ba di mong baai hen hen ama, ama dara peti ong naha.&lt;INDO&gt;sistem-sistem pada masa itu tidak diberlakukan lagi. jadi sistem seperti pada masa dunia gelap itu - ketika orang mati pun tidak dibuatkan peti.&lt;Malay&gt;itu tidak jadi dulu yang tadi itu yang pigi dunia gelap begitu tu yang namanya bilang manusia yang ini, yang dia mati juga itu itu orang, orang belum bikin peti. &lt;@ENG So that ceremony is no longer carried out, so in that ceremony, when someone died, they didn't make a coffin.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a69" TIME_SLOT_REF1="ts115" TIME_SLOT_REF2="ts116">
+                <ANNOTATION_VALUE>hen ama peti ong naha ya ama yaa hatukungdi ba, hatukungdi ba hetoku loku do mi heel toohadaki kaanta hatang do wan mi haluol ii ya kaanra maiye henu hen hen ama tookol nu.&lt;INDO&gt;ketika itu orang tidak membuatkan peti untuk mayat. orang hanya memendekkan jasad mayat - kaki dan tangan mayat dirapatkan pada jasadnya kemudian diikatkan sekalian.&lt;Malay&gt;itu orang tidak bikin peti tapi orang pigi kasi pendek ko, kasi pendek habis ko dia punya kaki dorang ni kasi rapat di dia, habis dia punya tangan ni sudah taru sejajar habis sudah na itu orang baku ikat tu. &lt;@ENG The did not make a coffin, but they just shortened the dead body, they folded the legs and arms to the body and tied them together.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a70" TIME_SLOT_REF1="ts117" TIME_SLOT_REF2="ts118">
+                <ANNOTATION_VALUE>heel henu tookor ba it do wir ba mi haluol ii kaanri mai hatang baai do wiri tookol.&lt;INDO&gt;mayat diikat seperti ini - disejajarkan seperti ini, tangannya juga seperti ini, lalu diikat sekalian.&lt;Malay&gt;itu tu sudah baku ikat ko taru seperti ini ko taru sejajar  habis dia punya tangan juga sudah seperti ini baku ikat. &lt;@ENG The dead body was tied like this - in parallel like this, and the arms also like that and then everything together.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a71" TIME_SLOT_REF1="ts119" TIME_SLOT_REF2="ts120">
+                <ANNOTATION_VALUE>tookor kaanra mai ama hamiina do mia e wan e kenge maiye ama ayoku di hawa nu hepuna.&lt;INDO&gt;setelah diikatkan sekalian maka di dekat mayat orang memegang tepi kain - kalau kain sarung, dua orang memegang tepinya.&lt;Malay&gt;baku ikat habis na orang ada di dekat dia ini, tadi kalau sudah kain sarung na dua orang dia pegang di dia punya mulut. &lt;@ENG After they tied the body, they took a cloth, if it was a sarong, they held both sides to open it.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a72" TIME_SLOT_REF1="ts121" TIME_SLOT_REF2="ts122">
+                <ANNOTATION_VALUE>nuku di me hepuna, nuku di me hepuna ba di ming tileeidi ba iti.&lt;INDO&gt;seseorang memegang pada tepi sebelah, seseorang lagi di sebelahnya sambil menjulurkan kain tersebut.&lt;Malay&gt;satu dia  pegang  di bagian sini, satu dia pegang  di bagiansini ko dorang ada kasi lebar ko taru. &lt;@ENG One person held it on one side, the other on the other side and they opened it up.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a73" TIME_SLOT_REF1="ts123" TIME_SLOT_REF2="ts124">
+                <ANNOTATION_VALUE>tileeidi ba iti ya amakaang nu ama haliel ba mi homi dong sei.&lt;INDO&gt;saat kain terjulur, manusia (mayat) itu dimasukkan ke dalamnya.&lt;Malay&gt;sudah kasi lebar ko taru habis manusia tu orang angkat ko ambil kasi turun didalam. &lt;@ENG When they opened the cloth, the dead body was placed inside.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a74" TIME_SLOT_REF1="ts125" TIME_SLOT_REF2="ts126">
+                <ANNOTATION_VALUE>amakaang nu haliel ba keng homi dong saai kaanra yo hen ama dikang mara uwo hepikai taaha nu hen dikang mi tookol.&lt;INDO&gt;setelah manusia (mayat) itu dimasukkan ke dalam kain sarung, tepi atas pada bagian kepala mayat pun disimpul.&lt;Malay&gt;manusia tu angkat ko kasi turun didalam kain sarung habis tu itu orang lagi ada diatas dia pung kepala tu itu ambil baku ikat lagi. &lt;@ENG After they placed the dead body inside, they made a know on the top of the head.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a75" TIME_SLOT_REF1="ts127" TIME_SLOT_REF2="ts128">
+                <ANNOTATION_VALUE>hepikai taaha nu ama dikang mara hen mia kabala hetilipang do toopun kaanri ba kafe mayetang mi ba heuwo dong hafiki ba, afe we do hen nala ba heedo rumai mahaba e angmona hakolo mai hare hen dikang kul kir dowei se nu, maama.&lt;INDO&gt;ujung atas pada bagian kepala si mayat, tepi kain sudah sudah disimpul dan diikat dengan tali dari bambu. pada masa itu, seharusnya sudah cukup kuat dengan hanya diikat, tetapi karena mengingat dia juga manusia yang sudah meninggal, diselipkan lagi engsel pada kain tersebut.&lt;Malay&gt;diatas dia pung kepala tu orang lagi naik di situ kain  punya ujung  ni baku pegang rapat habis ko ambil tali bambu ko tarik di dia pung bawa bilang, dulu pigi ni itu barang ni kuat tapi karena ikat mayat begitu bilang jadi itu musti kasi pigi dia pung pen dulu tu, bapa. &lt;@ENG They tied the knot with a rope made from bamboo. It would have been strong enough just tied like that, but because they remembered that inside was a human being, they tucked in hinges/pegs, you know.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a76" TIME_SLOT_REF1="ts129" TIME_SLOT_REF2="ts130">
+                <ANNOTATION_VALUE>heel kabala ba ama kol nu sei heuwo do dikang kir mi dong we.&lt;INDO&gt;di bagian bawah pada tepi kain yang diikat tersebut diselipkan lagi dengan engsel.&lt;Malay&gt;itu kain yang orang ikat tu turun di dia pung bawa ni lagi kasi pigi pen dulu. &lt;@ENG Also the bottom part of the cloth was fastened together with the pegs.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a77" TIME_SLOT_REF1="ts131" TIME_SLOT_REF2="ts132">
+                <ANNOTATION_VALUE>kir mi dong wei se hel hel kir hatakang nu henu amang kole.&lt;INDO&gt;setelah engsel diselipkan baru orang kemudian mengikat pada tangkai engsel.&lt;Malay&gt;kasi pigi pen habis baru di itu pen pung batas tu yang orang ikat. &lt;@ENG Once the pegs have been tucked in, they tied their shafts together again.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a78" TIME_SLOT_REF1="ts133" TIME_SLOT_REF2="ts134">
+                <ANNOTATION_VALUE>amang kor kaanri ya e kabala hiyentuku nu...loku nu maha heto wir ba dofaifaila.&lt;INDO&gt;setelah tepi kain disimpulkan dan diikat - sedang bagian ujungnya bergantungan seperti ini.&lt;Malay&gt;orang sudah ikat habis tadi kain pung ujung tu...dorang tu kasi tinggal begitu ko tagoyang-tagoyang. &lt;@ENG After the cloth was tied on both sides, they let the end of the cloth flap around.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a79" TIME_SLOT_REF1="ts135" TIME_SLOT_REF2="ts136">
+                <ANNOTATION_VALUE>dofaifaili ya doit hare wan hen mia ama kor kaanra yo ama di hefanga: wah, ma kaanri do!&lt;INDO&gt;ujung kain dibiarkan bergantungan. jadi setelah orang mengikatnya, seseorang berkata: wah, sudah selesai!&lt;Malay&gt;kasi tinggal begitu ko dia tagoyang-tagoyang, jadi di situ orang ikat habis su selesai tu orang omong: wah, habis sudah selesai ni! &lt;@ENG Let it flap around, and so they left it as it is and they said: Wah, that's it now!&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a80" TIME_SLOT_REF1="ts137" TIME_SLOT_REF2="ts138">
+                <ANNOTATION_VALUE>wan ri o liik taaha mia re naha?&lt;INDO&gt;kalian yang sedang di bawah sudah berada di bale-bale?&lt;Malay&gt;kamu sudah ada di bawa di bale-bale ko tidak? &lt;@ENG So is everybody down there ready on the platform (probably speaking from inside the house where the person passed away).&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a81" TIME_SLOT_REF1="ts139" TIME_SLOT_REF2="ts140">
+                <ANNOTATION_VALUE>ai, ni faada.&lt;INDO&gt;ai, kami ada.&lt;Malay&gt;ai, kami ada.  &lt;@ENG Yes, we are here (but you cannot see us).&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a82" TIME_SLOT_REF1="ts141" TIME_SLOT_REF2="ts142">
+                <ANNOTATION_VALUE>ni faada yo maiye fala homi mia ama haliel wei mi me tietaaha mia nu heetaang.&lt;INDO&gt;kalau mereka menyahut: kami ada, dari dalam rumah orang menyerahkan mayat secara bersambung kepada mereka yang berada di bagian pintu di dalam rumah.&lt;Malay&gt;kami ada, bilang begitu na dari dalam rumah orang angkat pigi ambil datang kasi sama orang yang ada di bagian pintu di dalam. &lt;@ENG If they replied that they were ready, the people inside the house, passed the wrapped dead body to those standing around the door and threshold.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a83" TIME_SLOT_REF1="ts143" TIME_SLOT_REF2="ts144">
+                <ANNOTATION_VALUE>heetaan kaanra mai tietaaha mia dikang di mi o liik taaha mia nu heetaang.&lt;INDO&gt;setelah menyerahkan kepada yang di dekat pintu tersebut, mereka melanjutkannya kepada mereka yang sedang berada di bawah di bale-bale.&lt;Malay&gt;kasi sama dia habis yang di dekat pintu di dalam tu dia ambil kasi sama yang dibawa diatas bale-bale. &lt;@ENG Then the dead body was passed down from the door area down onto the open platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a84" TIME_SLOT_REF1="ts145" TIME_SLOT_REF2="ts146">
+                <ANNOTATION_VALUE>e liik taaha mia nu henu e liik damaya maiye mi nuku habang iya yo, e yal do wir ba daha hebuuk-buukda?&lt;INDO&gt;mereka yang berada di bale-bale itu, jikalau bale-balenya rendah, setelah mayat itu diletakkan di atas bahunya,... - apakah banyak orang mengerumuninya seperti cara masa sekarang ini?&lt;Malay&gt;yang tadi di atas bale-bale tu kalau tadi bale-bale rendah na taru di atas satu pung bahu tu, tadi seperti sekarang ini ko ada kerumun-kerumun itu? &lt;@ENG Those who were below on the open platform, if the platform was low, they put the dead body on someone's shoulders, in the same way as we do now.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a85" TIME_SLOT_REF1="ts147" TIME_SLOT_REF2="ts148">
+                <ANNOTATION_VALUE>e mi maha ama heetaani ama mi dabang taahang iya mai hen e baan ba laaki yo, maama.&lt;INDO&gt;pada waktu itu, setelah menyerahkan mayat itu - setelah diletakkannya mayat tersebut di atas bahunya, maka sudah dibawanya pergi, pak.&lt;Malay&gt;tadi ada ambil ko sudah kasi sama orang, orang ambil taru diatas dia pung bahu na itu tadi pikul ko jalan tu, bapa. &lt;@ENG Those who received the body, they placed it on someone's shoulders who took it away, you know!&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a86" TIME_SLOT_REF1="ts149" TIME_SLOT_REF2="ts150">
+                <ANNOTATION_VALUE>baan ba laak do yaa mi oro uling iya.&lt;INDO&gt;dipikulnya mayat itu untuk diletakkan ke dalam makam.&lt;Malay&gt;pikul ko jalan ni pigi sampe taru di lubang di sana. &lt;@ENG That person took the dead body away and placed it into the grave.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a87" TIME_SLOT_REF1="ts151" TIME_SLOT_REF2="ts152">
+                <ANNOTATION_VALUE>mahaba mi uling iya baai ma e nuku ayoku di iti wei so heto kaanri to.&lt;INDO&gt;selanjutnya memakamkan pun cukup dilakukan oleh satu atau dua orang.&lt;Malay&gt;tapi ambil taru di lubang juga tadi satu dua dia sudah pigi tu itu yang sudah tu.  &lt;@ENG It was enough for just one or two people to go and place the dead body into the grave and bury it.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a88" TIME_SLOT_REF1="ts153" TIME_SLOT_REF2="ts154">
+                <ANNOTATION_VALUE>e baan ba we dikang hepadoika?&lt;INDO&gt;mayat yang sudah dibawa pergi itu apa harus berlama-lama lagi?&lt;Malay&gt;tadi pikul ko pigi tu lama lagi?  &lt;@ENG They took it away right away, what would they be waiting for otherwise?&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a89" TIME_SLOT_REF1="ts155" TIME_SLOT_REF2="ts156">
+                <ANNOTATION_VALUE>la dong lohu yaa e ama anai tehi ba kaanri te hu ama baan ba we hare mi we uling iya yo, ma el wan e nuku ayoku ba wei so wan di maha we hoohayoor kaanri ba e hiyengfar hebuot maiye ma henu wan kaanri.&lt;INDO&gt;setelah tanah/kubur digali, orang langsung membawanya ke kubur tersebut. lagi, cukup hanya satu atau dua orang yang menguburinya. lalu kalau sudah selesai menyusun batu di atas permukaan kuburnya, maka selesailah sudah.&lt;Malay&gt;dia langsung pigi, tadi orang sudah gali tanah habis dulu baru orang pikul ko pigi jadi ambil taru di lubang tu. habis tadi satu dua yang sudah pigi tu kasi tinggal dorang kasi turun tanah habis ko tadi dia pung susun batu diatas na itu sudah selesai. &lt;@ENG They went right away, other people have already prepared the grave and so they put the dead body inside right away. Those who brought the  body covered it with earth and placed stones on top and it was finished.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a90" TIME_SLOT_REF1="ts157" TIME_SLOT_REF2="ts158">
+                <ANNOTATION_VALUE>wan afe we ba ama hakor-hapasa yo henidi.&lt;INDO&gt;begitulah masa dulu ketika orang masih ikat-mengikat mayat.&lt;Malay&gt;dulu pigi ko orang ikat-ikat orang itu begitu. &lt;@ENG So in the past, people were tied up like that.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a91" TIME_SLOT_REF1="ts159" TIME_SLOT_REF2="ts160">
+                <ANNOTATION_VALUE>henir ba henu e dara we oro heel akun-akan ba ha...mia me yo hen e la amakaang la hakor la hapasa ba yaa mi anai iya.&lt;INDO&gt;itu masih pada masa dunia gelap - pada masa itu orang masih melakukan sistem ikat-mengikat manusia mayat lalu dimasukkan ke dalam tanah.&lt;Malay&gt;begitu ko itu itu tadi masi waktu itu dunia gelap yang...dari situ ko datang tu orang ikat-ikat manusia saja ko pigi ambil taru di tanah. &lt;@ENG So that was the way of the dark age, when the dead bodies were tied up and put into their graves.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a92" TIME_SLOT_REF1="ts161" TIME_SLOT_REF2="ts162">
+                <ANNOTATION_VALUE>dikang me kabei me me hetilipangdi, hetilipangdi ba yala iti ama mon ba mi ba peti bang iya do henu hen dikang me e ama nuku ba Akanmai kalieta.&lt;INDO&gt;selanjutnya, hendak sampai pada penghujungnya sistem ikat-mengikat mayat, kini mayat dimasukkan ke dalam peti - sistem tersebut mulai berlaku pada saat meninggalnya seorang leluhur yang bernama Akanmai.&lt;Malay&gt;lagi datang sedikit datang sudah di dia pung ujung, dia pung ujung ko sekarang ni ada orang mati ko ambil taru di peti ini itu tu lagi, datang tadi satu orang yang itu moyang Akanmai. &lt;@ENG And later this practice ended, so now we put our dead into a coffin. The old practice ended around the funeral of our forefather named Akanmai.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a93" TIME_SLOT_REF1="ts163" TIME_SLOT_REF2="ts164">
+                <ANNOTATION_VALUE>hen henu e hen mia he'eesi.&lt;INDO&gt;sistem masukkan mayat ke dalam peti itu berawal di saat itu.&lt;Malay&gt;yang itu tu dari situ dia mulai. &lt;@ENG The practice of using coffins started from then on.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a94" TIME_SLOT_REF1="ts165" TIME_SLOT_REF2="ts166">
+                <ANNOTATION_VALUE>hen mia he'eesi yo henu mi peting iya mai ba ama bataa tuoti.&lt;INDO&gt;awal berlakunya sistem ini - masukkan mayat ke dalam peti, orang mengerjakan peti dari kayu.&lt;Malay&gt;itu mulai dari situ tu, itu taru di peti begitu ni yang orang kasi bersi  kayu. &lt;@ENG From then onward, coffines are used, which are made from hewn planks.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a95" TIME_SLOT_REF1="ts167" TIME_SLOT_REF2="ts168">
+                <ANNOTATION_VALUE>bataa tuot haba peti hu on naha ya pelang kiding.&lt;INDO&gt;mereka sudah mengerjakan kayu tersebut tetapi bukan berbentuk peti malah berbentuk perahu kecil.&lt;Malay&gt;kasi bersi kayu tapi peti tu tidak buat tapi perahu kecil. &lt;@ENG They used to hew the wood in the same way, but not for coffins, but for small canoes.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a96" TIME_SLOT_REF1="ts169" TIME_SLOT_REF2="ts170">
+                <ANNOTATION_VALUE>pelang. pelang kiding hu hen henu ama tuoti, homi dong boku kaang-kaangdi ya har te hu ama heel kalieta foka do ming hataani ya helung hadu naha.&lt;INDO&gt;perahu. orang mengerjakan perahu kecil. setelah melubangi kayu tersebut dengan baik, diperapikan baru kemudian orang membaringkan jasad si leluhur tanpa tutupnya.&lt;Malay&gt;perahu. perahu kecil itu yang orang bikin. &lt;@ENG Canoes. People used to make small canoes that way.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a97" TIME_SLOT_REF1="ts171" TIME_SLOT_REF2="ts172">
+                <ANNOTATION_VALUE>helung hadu naha ya batemang do hu kaipa nuku siiking foka nuku hen mi helung heer ba mi o amakaang do taai ii.&lt;INDO&gt;tanpa tutupnya. namun diambilkan selembar pelupuh yang besar yang dijadikan tutup, lalu diletakkan diatas manusia tersebut.&lt;Malay&gt;dia pung pintu tidak ada tapi pelupu ni yang satu lembar besar tu yang buat dia pung pintu ko ambil taru diatas manusia ini. &lt;@ENG There was no cover, so they took plaited bamboo sheet and made a cover from that and put it on top.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a98" TIME_SLOT_REF1="ts173" TIME_SLOT_REF2="ts174">
+                <ANNOTATION_VALUE>amakaang do taai ii se e wan e heel batemang mi taai ii so kaanri to, maama.&lt;INDO&gt;setelah diletakkan diatas manusia mayat - setelah meletakkan pelupuh tersebut diatasnya maka selesailah sudah, pak.&lt;Malay&gt;taru diatas manusia dulu baru tadi ambil taru itu pelupu diatas tu sudah tu, bapa. &lt;@ENG They covered the dead person with the plaited bamboo sheet and that was it, you know.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a99" TIME_SLOT_REF1="ts175" TIME_SLOT_REF2="ts176">
+                <ANNOTATION_VALUE>hen kaanri ya hen mia wan ama baang.&lt;INDO&gt;setelah itu, maka orang kemudian memikulnya.&lt;Malay&gt;itu sudah selesai begitu, dari situ orang pikul. &lt;@ENG When they were done, they carried the coffin.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a100" TIME_SLOT_REF1="ts177" TIME_SLOT_REF2="ts178">
+                <ANNOTATION_VALUE>ama baani ya mi pa anai dong sei so.&lt;INDO&gt;orang membawanya pergi lalu diturunkannya ke dalam makam.&lt;Malay&gt;orang sudah pikul ko ambil turun kasi turun di tanah tu. &lt;@ENG They took it to the grave and put it inside.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a101" TIME_SLOT_REF1="ts179" TIME_SLOT_REF2="ts180">
+                <ANNOTATION_VALUE>anai dong saai ba nalo ma wan hen mi anai dong sei so wan ama la hoohayool to.&lt;INDO&gt;setelah diturunkannya ke dalam makam, orang langsung menguburinya.&lt;Malay&gt;sudah kasi turun di tanah tu, habis sudah ambil kasi turun di tanah tu sudah orang langsung kubur dia tu. &lt;@ENG When the coffin was inside the grave, they covered it with earth. &gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a102" TIME_SLOT_REF1="ts181" TIME_SLOT_REF2="ts182">
+                <ANNOTATION_VALUE>wan hare afe akun-akan hei maiye hen wida.&lt;INDO&gt;jadi pada masa dunia gelap itu sistemnya seperti itu.&lt;Malay&gt;sudah jadi dulu  dunia gelap punya na seperti itu. &lt;@ENG So the dark age practice was like that.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a103" TIME_SLOT_REF1="ts183" TIME_SLOT_REF2="ts184">
+                <ANNOTATION_VALUE>e heel hakor hapasa ye nala ba dome yo hen mia ba me e heel hakor hapasa baai na hetilipang natetdi, ya wan me peti ong baai na hetilipang natetdi.&lt;INDO&gt;jadi masa berlakunya sistem ikat-mengikat mayat juga saya berdiri dan menyaksikannya pada penghujungnya, masa diberlakukan sistem pemakaman mayat dengan menggunakan peti pun saya berdiri dan menyaksikannya pada penghujungnya.&lt;Malay&gt;tadi itu ikat-ikat dengan apa begitu ko datang tu dari situ ko datang, tadi itu ikat-ikat juga saya sudah berdiri di dia punya ujung, dan sudah datang bikin peti juga saya sudah berdiri di dia punya ujung. &lt;@ENG So I have seen it when the bodies were tied up, and I stood at the edge, and when the bodies were placed in the coffin, I have also seen it.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a104" TIME_SLOT_REF1="ts185" TIME_SLOT_REF2="ts186">
+                <ANNOTATION_VALUE>henu yal e wan e heliik ong re hepeti ong re e hen miang hatiiti wan yal me riil reei do heedi.&lt;INDO&gt;karena dari itulah sistem pembuatan bale-bale atau peti itu berlangsung hingga sampai pada masa kalian sekarang ini.&lt;Malay&gt;itu sekarang  sudah tadi bikin dia punya bale-bale ko dia punya peti ko tadi dari situ terus sudah sekarang datang sampe datang di kamu ini dia. &lt;@ENG So from the time that we have stopped making the platform till the making of coffins, that's the time that you live now in.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a105" TIME_SLOT_REF1="ts187" TIME_SLOT_REF2="ts188">
+                <ANNOTATION_VALUE>madiya ama dara la hakor la hapaisa ba nala yo nedo me wan oro we etungtung loku mi ekuta reei ba nala yo heel hakor hapaisa yo na me hetilipang natetdi.&lt;INDO&gt;selanjutnya, pada saat masih berlakunya sistem ikat-mengikat mayat yaitu pada masa para leluhurmu hingga pada masa nenek moyangmu, saya berdiri dan meyaksikannya pada penghujungnya.&lt;Malay&gt;tapi orang masi ikat-ikat saja ko apa tu saya yang disana itu waktu lu punya moyang dorang sampe datang sampe di lu punya nenek yang apa tu, itu ikat-ikat tu saya sudah datang berdiri di dia pung ujung. &lt;@ENG So I have witnessed the old practice of binding the dead bodies and how it ended.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a106" TIME_SLOT_REF1="ts189" TIME_SLOT_REF2="ts191">
+                <ANNOTATION_VALUE>hare e heel e henir ba na e hiyen hu na iti heel loku nung ananra.&lt;INDO&gt;jadi, karena semua itu sudah saya saksikan maka saya ceritakan.&lt;Malay&gt;jadi tadi itu begitu ko saya sudah lihat itu yang saya ada cerita itu dorang. &lt;@ENG Because I have witnessed it, that's why I am telling about it.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a108" TIME_SLOT_REF1="ts195" TIME_SLOT_REF2="ts196">
+                <ANNOTATION_VALUE>yaa hen mia liik oni. hmm.&lt;INDO&gt;sampai di masa itu bale-bale dibuatkan.&lt;Malay&gt;sampai si situ bikin bale-bale. &lt;@ENG Until then, we used to make the platform.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a109" TIME_SLOT_REF1="ts197" TIME_SLOT_REF2="ts198">
+                <ANNOTATION_VALUE>heel hakor hapasa nu wan hen mia dowe nu hen kaanri, dikang me Akanmai kalieta nu wan hen mia hepeti oni.&lt;INDO&gt;di saat itulah masa berakhirnya ikat-mengikat mayat berakhir. hingga saat leluhur Akanmai meninggal dunia itu adalah masa diberlakukan pembuatan peti.&lt;Malay&gt;yang itu ikat-ikat itu dari situ ke sana tu sudah selesai. &lt;@ENG That was the time that we used to tie the dead bodies, and from the old Akanmai onward, we started making coffins.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a110" TIME_SLOT_REF1="ts199" TIME_SLOT_REF2="ts201">
+                <ANNOTATION_VALUE>hepeti on haba haba wan e pelang baai heng pati to.&lt;INDO&gt;sudah dibuatkan peti untuknya walaupun berbentuk perahu, tetapi juga disebut peti.&lt;Malay&gt;sudah bikin dia punya peti tapi sudah, biar perahu juga itu sudah peti tu. &lt;@ENG We made coffins, but even if it was an (old) canoe before, it's also a coffin.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a112" TIME_SLOT_REF1="ts205" TIME_SLOT_REF2="ts206">
+                <ANNOTATION_VALUE>he'e. maha ama sei hepeti oni.&lt;INDO&gt;iya. orang datang membuat petinya.&lt;Malay&gt;iya. ada orang turun bikin dia punya peti. &lt;@ENG Yes, people came down to make the coffins.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a113" TIME_SLOT_REF1="ts207" TIME_SLOT_REF2="ts209">
+                <ANNOTATION_VALUE>hen ama pelang hu tuoti mahaba wan yal heng peti, wan hen pi hewahai peti.&lt;INDO&gt;ketika itu orang membuatkan perahu tetapi sekarang  adalah peti - kini nampaknya peti.&lt;Malay&gt;itu yang orang bikin perahu itu tapi sekarang itu sudah peti, itu sudah kita lihat peti. &lt;@ENG If someone is cutting out a canoe, nowadays, when we see it, we think it's a coffin.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a115" TIME_SLOT_REF1="ts213" TIME_SLOT_REF2="ts214">
+                <ANNOTATION_VALUE>hmmm.&lt;INDO&gt;hm.&lt;Malay&gt;hm. &lt;@ENG Hm, yes.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a116" TIME_SLOT_REF1="ts215" TIME_SLOT_REF2="ts217">
+                <ANNOTATION_VALUE>heel adat hei yo wan heel hen kaanri.&lt;INDO&gt;tentang adat itu sudah selesai.&lt;Malay&gt;yang itu adat punya tu sudah yang itu selesai. &lt;@ENG That's all about that custom.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+    </TIER>
+    <TIER DEFAULT_LOCALE="us" LINGUISTIC_TYPE_REF="SectionType" TIER_ID="Sections">
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a0" TIME_SLOT_REF1="ts1" TIME_SLOT_REF2="ts216">
+                <ANNOTATION_VALUE>report</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+    </TIER>
+    <TIER DEFAULT_LOCALE="us" LINGUISTIC_TYPE_REF="UtteranceType" PARTICIPANT="Benidiktus Delpada" TIER_ID="Benidiktus Delpada">
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a17" TIME_SLOT_REF1="ts2" TIME_SLOT_REF2="ts4">
+                <ANNOTATION_VALUE>iya, nekuta yal do&lt;INDO&gt;iya. kakek, sekarang ini&lt;Malay&gt;iya, kake, sekarang ni &lt;@ENG So, grandfather, now&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a19" TIME_SLOT_REF1="ts8" TIME_SLOT_REF2="ts10">
+                <ANNOTATION_VALUE>kapala kiika hei yo hen mia ba a ananra!&lt;INDO&gt;tentang Kepala Merah di saat itu, kamu ceritakan!&lt;Malay&gt;kepala mera punya tu, dari itu waktu lu cerita! &lt;@ENG Can you tell me about the Red Head?&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a21" TIME_SLOT_REF1="ts14" TIME_SLOT_REF2="ts16">
+                <ANNOTATION_VALUE>heel baai kaang.&lt;INDO&gt;baik juga kalau begitu.&lt;Malay&gt;itu juga baik.  &lt;@ENG Ok, that's fine too.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a23" TIME_SLOT_REF1="ts20" TIME_SLOT_REF2="ts22">
+                <ANNOTATION_VALUE>yo yo. kaang ta.&lt;INDO&gt;iya iya. baiklah.&lt;Malay&gt;yo yo, baik jadi. &lt;@ENG Ok, ok, that's good.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a25" TIME_SLOT_REF1="ts26" TIME_SLOT_REF2="ts28">
+                <ANNOTATION_VALUE>yo yo.&lt;INDO&gt;iya iya.&lt;Malay&gt;yo yo.  &lt;@ENG Ok, sure.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a107" TIME_SLOT_REF1="ts192" TIME_SLOT_REF2="ts194">
+                <ANNOTATION_VALUE>hare yal me hetilipang miadi nu me Akanmai kalieta miadi?&lt;INDO&gt;jadi berakhirnya masa sistem itu adalah sampai pada masa leluhur Akanmai?&lt;Malay&gt;jadi sekarang datang sampai di dia pung ujung tu datang sampai di nenek/moyang Akanmai? &lt;@ENG So the current practice started from the time of the old Akanmai?&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a111" TIME_SLOT_REF1="ts202" TIME_SLOT_REF2="ts204">
+                <ANNOTATION_VALUE>iya.&lt;INDO&gt;iya.&lt;Malay&gt;iya. &lt;@ENG Oh yes.&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+        <ANNOTATION>
+            <ALIGNABLE_ANNOTATION ANNOTATION_ID="a114" TIME_SLOT_REF1="ts210" TIME_SLOT_REF2="ts212">
+                <ANNOTATION_VALUE>hare hel bayooka liik nu wan kaanri ho?&lt;INDO&gt;jadi tentang bale-bale bayooka itu sudah selesai?&lt;Malay&gt;jadi itu bale-bale bayooka tu itu sudah e? &lt;@ENG So that's all about the Bayooka platform?&gt;</ANNOTATION_VALUE>
+            </ALIGNABLE_ANNOTATION>
+        </ANNOTATION>
+    </TIER>
+    <LINGUISTIC_TYPE GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="UtteranceType" TIME_ALIGNABLE="true"/>
+    <LINGUISTIC_TYPE CONTROLLED_VOCABULARY_REF="SectionTypeCV" GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="SectionType" TIME_ALIGNABLE="true"/>
+    <LINGUISTIC_TYPE CONSTRAINTS="Time_Subdivision" GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="TurnType" TIME_ALIGNABLE="true"/>
+    <LINGUISTIC_TYPE CONSTRAINTS="Symbolic_Association" GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="ModeType" TIME_ALIGNABLE="false"/>
+    <LINGUISTIC_TYPE CONSTRAINTS="Symbolic_Association" GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="FidelityType" TIME_ALIGNABLE="false"/>
+    <LINGUISTIC_TYPE CONSTRAINTS="Symbolic_Association" GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="ChannelType" TIME_ALIGNABLE="false"/>
+    <LINGUISTIC_TYPE GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="BackgroundType" TIME_ALIGNABLE="true"/>
+    <LINGUISTIC_TYPE GRAPHIC_REFERENCES="false" LINGUISTIC_TYPE_ID="CommentType" TIME_ALIGNABLE="true"/>
+    <LOCALE COUNTRY_CODE="EN" LANGUAGE_CODE="us"/>
+    <LANGUAGE LANG_DEF="http://cdb.iso.org/lg/CDB-00130975-001" LANG_ID="und" LANG_LABEL="undetermined (und)"/>
+    <CONSTRAINT DESCRIPTION="Time subdivision of parent annotation's time interval, no time gaps allowed within this interval" STEREOTYPE="Time_Subdivision"/>
+    <CONSTRAINT DESCRIPTION="Symbolic subdivision of a parent annotation. Annotations refering to the same parent are ordered" STEREOTYPE="Symbolic_Subdivision"/>
+    <CONSTRAINT DESCRIPTION="1-1 association with a parent annotation" STEREOTYPE="Symbolic_Association"/>
+    <CONSTRAINT DESCRIPTION="Time alignable annotations within the parent annotation's time interval, gaps are allowed" STEREOTYPE="Included_In"/>
+    <CONTROLLED_VOCABULARY CV_ID="TurnModeCV">
+        <DESCRIPTION LANG_REF="und">All values that are allowed for Transcriber Turn.mode attribute</DESCRIPTION>
+        <CV_ENTRY_ML CVE_ID="cveid0">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">spontaneous</CVE_VALUE>
+        </CV_ENTRY_ML>
+        <CV_ENTRY_ML CVE_ID="cveid1">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">planned</CVE_VALUE>
+        </CV_ENTRY_ML>
+    </CONTROLLED_VOCABULARY>
+    <CONTROLLED_VOCABULARY CV_ID="TurnFidelityCV">
+        <DESCRIPTION LANG_REF="und">All values that are allowed for Transcriber Turn.fidelity attribute</DESCRIPTION>
+        <CV_ENTRY_ML CVE_ID="cveid0">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">high</CVE_VALUE>
+        </CV_ENTRY_ML>
+        <CV_ENTRY_ML CVE_ID="cveid1">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">medium</CVE_VALUE>
+        </CV_ENTRY_ML>
+        <CV_ENTRY_ML CVE_ID="cveid2">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">low</CVE_VALUE>
+        </CV_ENTRY_ML>
+    </CONTROLLED_VOCABULARY>
+    <CONTROLLED_VOCABULARY CV_ID="SectionTypeCV">
+        <DESCRIPTION LANG_REF="und">All values that are allowed for Transcriber Section.type attribute</DESCRIPTION>
+        <CV_ENTRY_ML CVE_ID="cveid0">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">report</CVE_VALUE>
+        </CV_ENTRY_ML>
+        <CV_ENTRY_ML CVE_ID="cveid1">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">nontrans</CVE_VALUE>
+        </CV_ENTRY_ML>
+        <CV_ENTRY_ML CVE_ID="cveid2">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">filler</CVE_VALUE>
+        </CV_ENTRY_ML>
+    </CONTROLLED_VOCABULARY>
+    <CONTROLLED_VOCABULARY CV_ID="TurnChannelCV">
+        <DESCRIPTION LANG_REF="und">All values that are allowed for Transcriber Turn.channel attribute</DESCRIPTION>
+        <CV_ENTRY_ML CVE_ID="cveid0">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">telephone</CVE_VALUE>
+        </CV_ENTRY_ML>
+        <CV_ENTRY_ML CVE_ID="cveid1">
+            <CVE_VALUE DESCRIPTION="" LANG_REF="und">studio</CVE_VALUE>
+        </CV_ENTRY_ML>
+    </CONTROLLED_VOCABULARY>
+</ANNOTATION_DOCUMENT>

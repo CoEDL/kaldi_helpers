@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030701TifolafengBapakKarel2" version="1" version_date="081021">
+<Speakers>
+<Speaker id="spk1" name="Karel Atafani" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="124.96">
+<Turn startTime="0" endTime="124.96" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="4.431"/>
+iya agustus homi mia maiye, henu pi yaa namei.#
+<Sync time="8.2"/>
+pi yaa pun namei,# kaanri ta# wan# pi teke-bateti.#
+<Sync time="14.611"/>
+kaanra maiye,# pi yaa ho'arari.# pi kaang yaa taakdi tapei.#
+<Sync time="20.586"/>
+taakdi-tapei kaanra maiye,# pi dikang wan yaa hefat di walra naha te sieng do walra ti,# pi dikang hepun henamei.#
+<Sync time="31.075"/>
+hepun henamei kaanra maiye,# hebaloka do pi ber ba kaanra.#
+<Sync time="37.101"/>
+mi kaanri ya,# kar te he# ran ayoku sieng-faat di ya# male naha te fat di male naha te fat di san takata ti,# sieng baai di ya san takata ti, pi we hui tahai, mi sei lik-ayaating mia tobinenri,# mi lik-ayaating ia.#
+<Sync time="54.891"/>
+henil yo,# hen hedi.#
+<Sync time="59.219"/>
+henu yaldo ni,# ming tanga-ananra,# naha te ni we# ko ya rihemuria.#
+<Sync time="66.36"/>
+fiyai hu ni muria re,# baleei-batako re,# ni# rihemuria.#
+<Sync time="73.423"/>
+henu yal ning ananra heri.#
+<Sync time="77.188"/>
+hedo ni we hehasil ti ni mi kaanri ya,# mi ba,# ti'isi foka dong hada sama.#
+<Sync time="88.843"/>
+we ni'isi foka dong hada samadia do,# baleei-batako nu pi dei,# pi rowa-walangai hei.#
+<Sync time="96.208"/>
+tapi, hasil ba pi rihemuri ba hebel-balik nu hen mi ba yaa,# pisui-pimeng hohareng naha te mi ba yaa,# pi mi ba anung yaari ya,# mi ba pi# ati ralowang bel hei.#
+<Sync time="113.822"/>
+henil,# hen hehasil ha,# ba hen do mia.#
+<Sync time="120.589"/>
+hen mia kaanri.#
+<Sync time="122.777"/>
+&lt;silence&gt;
+</Turn>
+</Section>
+</Episode>
+</Trans>

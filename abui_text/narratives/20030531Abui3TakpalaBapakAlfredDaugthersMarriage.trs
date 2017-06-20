@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Frantisek Kratochvil" audio_filename="20030531Abui3TakpalaBapakAlfredDaugthersMarriage" version="1" version_date="081020">
+<Speakers>
+<Speaker id="spk1" name="Alfred Maufani" check="no" type="male" dialect="native" accent="Abui" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="230.36">
+<Turn startTime="0" endTime="230.36" speaker="spk1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="41.108"/>
+moku mayol,# henil yal hefu hemeeting siyei,# heya-hemaama, moku mayol, tafuda hekaang hefanga.#
+<Sync time="56.047"/>
+ma hare,# neng# hefing-hekalieta,# naha te hemaama,# ko pi yaa,# mit-natea# tanga-ananra,# helung-haliel, lung-pei-miti,# makaisara nuku.#
+<Sync time="77.15"/>
+mayol hebel# yawa lohu ayoku,# makaisara nuku.#
+<Sync time="87.18"/>
+ma hare neng# heya naha te hemaama, hefing-hekalieta,# pi sama tanga,# sama ananra,# hewar-hetadeng ba mi ba awering hatang,# henu pi hetapa kaangdia.#
+<Sync time="102.581"/>
+maading hu,# mayol# yaa delik-defala mia# deya-demaama,# deneng hokariang.#
+<Sync time="117.115"/>
+nido dei,# ni maadadi nilik-ni'ayating mia.#
+<Sync time="121.905"/>
+neng moku ba nupa mia,# nimina mia,# ni hefikang-hebalenta.#
+<Sync time="127.863"/>
+&lt;silence&gt;
+<Sync time="139.769"/>
+ma hare,# yaldo ee ni hekaang hefanga,# el baai hen omi henatea,# a hen yaa,# ko neng hopa mia,# yaa e'ui hieng wahai naha,# mada apong arang henung wahai,# elik-efala homi mia# kurang-kale ba te wida,# henu he'om pang-he'aminang.#
+<Sync time="161.28"/>
+hekariang ruwol-fe haik,# ripun ri namei,# maading hu ya rilik-rifala homi mia,# hekaang hesama,# henu mada ding ahel-madok.#
+<Sync time="177.535"/>
+ma hare,# netanga-ne'ananra,# yala hemada,# mayol moku,# hen hekaang hefangi,# ni ming nuhapai beeka.#
+<Sync time="195.995"/>
+jadi,# ril baai ba,# wan tadeng maada pi# hetaming miti heto'ananra ya# mi ba awering hatang.#
+<Sync time="206.887"/>
+maading hu,# heya-hemaama nu toa miti# ni kul maada# fu-meeting hekaang nu kabei takai.#
+<Sync time="217.546"/>
+naha te,# ruwol heya ni maada kabei buuk.#
+<Sync time="225.201"/>
+hen mia do kaani.#
+</Turn>
+</Section>
+</Episode>
+</Trans>
