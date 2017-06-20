@@ -12,6 +12,7 @@ import argparse
 from distutils import spawn
 
 import json
+import platform
 
 #g_sampleRate = 8000
 #g_sampleRateHq = 48000
@@ -32,7 +33,7 @@ g_baseDir = args.inputDir;
 #if args.tmpDir != '':
 #    g_tmpDir = args.tmpDir
 
-g_outDir = os.path.join(g_baseDir, "output");
+#g_outDir = os.path.join(g_baseDir, "output");
 
 
 #g_ffmpegExe = "c:\\tools\\ffmpeg\\bin\\ffmpeg"
@@ -57,8 +58,8 @@ if g_verboseOutput:
 #if not os.path.exists(g_tmpDir):
 #    os.makedirs(g_tmpDir)
 
-if not os.path.exists(g_outDir):
-    os.makedirs(g_outDir)
+#if not os.path.exists(g_outDir):
+#    os.makedirs(g_outDir)
 
 
 def execProc(procArgs, progressPattern):
@@ -113,14 +114,18 @@ def findFilesByExt(setOfAllFiles, exts):
     
 def condLog(cond, text):
     if cond:
-        sys.stdout.write(text)
+        # Super-annoying mumbojumbo to work around utf8 file name and the windows console which under the debugger claims to be utf8 but then fails regardless!
+        if platform.system() == 'Windows':
+            sys.stdout.write(text.encode('cp850', errors='backslashreplace').decode(sys.stdout.encoding))
+        else:
+            sys.stdout.write(text)
         sys.stdout.flush()
 
 
 allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive = True))
 
 transcriptNames = findFilesByExt(allFilesInDir, set(["*.trs"]));
-print(transcriptNames)
+#print(transcriptNames)
 #def outputAudioSegment(fileName, startTime, endTime, transStr, outBaseName):
     #print(fileName, startTime, endTime, transStr)
     #ffmpeg -ss 0 -i file.mp3 -t 30 file.wav
@@ -130,16 +135,20 @@ print(transcriptNames)
 
 
 def processFile(fileName):
-    print("Processing transcript '%s'"%fileName)
-    global g_outDir
-    tree = ET.parse(fileName)
-    root = tree.getroot()
-    waveName = root.attrib['audio_filename'] + ".wav"
-    turnNodes = tree.findall(".//Turn")
+    condLog(g_verboseOutput, "Processing transcript '%s'\n"%fileName)
+    #global g_outDir
 
     utterances = []
-    for turnNode in turnNodes:
-        utterances = utterances + processTurn(fileName, turnNode, waveName, tree)
+    try:
+        tree = ET.parse(fileName)
+        root = tree.getroot()
+        waveName = root.attrib['audio_filename'] + ".wav"
+        turnNodes = tree.findall(".//Turn")
+
+        for turnNode in turnNodes:
+            utterances = utterances + processTurn(fileName, turnNode, waveName, tree)
+    except ET.ParseError as err:
+        condLog(True, "XML parser failed to parse '%s'!\n"%fileName)
     return utterances
 
 def processTurn(fileName, turnNode, waveName, tree):
@@ -153,15 +162,15 @@ def processTurn(fileName, turnNode, waveName, tree):
     if speakerNameNode != None:
         speakerName = speakerNameNode.attrib['name']
 
-    items = [(ch.attrib['time'], ch.tail.strip()) for ch in turnNode]
+    items = [(ch.attrib['time'], ch.tail.strip()) for ch in turnNode.findall("./Sync")]
 
     #create subDir in output
     baseDir,name = os.path.split(fileName)
     baseName, _ = os.path.splitext(name)
     waveFileName = os.path.join(baseDir, waveName)
-    outDir = os.path.join(g_outDir, baseName);
-    if not os.path.exists(outDir):
-        os.makedirs(outDir)
+    #outDir = os.path.join(g_outDir, baseName);
+    #if not os.path.exists(outDir):
+    #    os.makedirs(outDir)
 
     result = []
 
@@ -174,7 +183,7 @@ def processTurn(fileName, turnNode, waveName, tree):
             endTime = float(timeStr2)
         else:
             endTime = turnEnd
-        outBaseName = os.path.join(outDir, "%08d"%i)
+        #outBaseName = os.path.join(outDir, "%08d"%i)
         #outputAudioSegment(waveFileName, startTime, endTime, transStr, outBaseName)
         result.append({"speakerId" : speakerName, "audioFileName" : waveFileName, "transcript" : transStr, "startMs" : startTime * 1000.0, "stopMs" : endTime * 1000.0})
         startTime = endTime
@@ -190,5 +199,13 @@ for fn in transcriptNames:
 #print(utterances)
 #with open("jeff.json", "w") as f:
 #    f.write(json.dumps(utterances))
-with open('jeff.json', 'w') as outfile:
+
+resultBaseName,name = os.path.split(g_baseDir)
+
+if name == '.':
+    outFileName = "utterances.json"
+else:
+    outFileName = name + ".json"
+
+with open(outFileName, 'w') as outfile:
     json.dump(utterances, outfile, indent=2)
