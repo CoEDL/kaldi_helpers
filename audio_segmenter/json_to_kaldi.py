@@ -49,7 +49,8 @@ for json_transcript in json_transcripts:
 
     f_transcripts.write(utterance_id + " " + transcript + "\n");
     f_segments.write(utterance_id + " " + recording_id + " " + "%f %f\n" % (startMs / 1000.0, stopMs / 1000.0));
-    f_utt2spk.write(utterance_id + " " + speaker_id + "\n");
+    #f_utt2spk.write(utterance_id + " " + speaker_id + "\n");
+    f_utt2spk.write(utterance_id + " " + utterance_id + "\n"); # hack to match utterances to utterances
     f_corpus.write(transcript + "\n");
 
 
