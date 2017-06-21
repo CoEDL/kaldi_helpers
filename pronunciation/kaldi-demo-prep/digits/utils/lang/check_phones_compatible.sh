@@ -53,10 +53,10 @@ elif [ ! -f $table_second ]; then
   exit 0;
 fi
 
-#Check the two tables are same or not (except for possible difference in disambiguation symbols).
-##if ! cmp -s <(grep -v "^#" $table_first) <(grep -v "^#" $table_second); then
-#  echo "$0: phone symbol tables $table_first and $table_second are not compatible."
-#  exit 1;
-#fi
+# Check the two tables are same or not (except for possible difference in disambiguation symbols).
+if ! cmp -s <(grep -v "^#" $table_first) <(grep -v "^#" $table_second); then
+ echo "$0: phone symbol tables $table_first and $table_second are not compatible."
+ exit 1;
+fi
 
 exit 0;
