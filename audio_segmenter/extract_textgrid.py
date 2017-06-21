@@ -73,20 +73,24 @@ def sec2milli(seconds):
 def write_json(json_fn, intervals):
     with open(json_fn, "w") as json_f:
 
-        def print_interval(interval):
+        def print_interval(interval, final):
             print("{", file=json_f)
             print("\"transcript\": \"%s\"," % interval["text"], file=json_f)
             print("\"startMs\": %f," % sec2milli(float(interval["xmin"])), file=json_f)
             print("\"stopMs\": %f," % sec2milli(float(interval["xmax"])), file=json_f)
             print("\"speakerId\": \"\",", file=json_f)
             audiofn = interval["audioFileName"].rsplit(".", 1)[0] + ".wav"
-            print("\"audioFileName\": \"%s\"," % audiofn, file=json_f)
-            print("},", file=json_f)
+            print("\"audioFileName\": \"%s\"" % audiofn, file=json_f)
+            if final:
+                print("}", file=json_f)
+            else:
+                print("},", file=json_f)
 
 
         print("[", file=json_f)
-        for interval in intervals:
-            print_interval(interval)
+        for interval in intervals[:-1]:
+            print_interval(interval, final=False)
+        print_interval(intervals[-1], final=True)
         print("]", file=json_f)
 
 #    wav_fn = filename.rsplit(".", 1)[0];
