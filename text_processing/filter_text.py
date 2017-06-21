@@ -82,7 +82,13 @@ def main():
 		help="The input file to clean.")
 	parser.add_argument("wordlistfile", type=str,
 		help="Output word list.")
+	parser.add_argument("-j", "--jsonOutput", type=str,
+		help="Name of json file to use for cleaned data")
 	args = parser.parse_args()
+
+	json_outfile = "{0}_clean.json".format(args.infile.rstrip('.json'))
+	if args.jsonOutput:
+		json_outfile = args.jsonOutput
 
 	data = load_file(args.infile)
 
@@ -92,7 +98,7 @@ def main():
 
 	save_wordlist(wordlist, args.wordlistfile)
 
-	json_outfile = "{0}_clean.json".format(args.infile.rstrip('.json'))
+	
 	write_json(data, json_outfile)
 
 
