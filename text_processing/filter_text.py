@@ -45,13 +45,22 @@ def filter_data(data):
 	""" Note this mutates data
 	"""
 	to_remove = string.punctuation
+	special_cases = ["<silence>"]
+	empty_utts = []
 	for utt in data:
 		words = utt.get('transcript').split()
+		for word in words:
+			if word in special_cases:
+				empty_utts.append(utt)
 		for char in to_remove:
 			#word = word.replace(char, '')
 			words = [word.replace(char, '') for word in words]
 		utt['transcript'] = ' '.join(words).lower() #words.join(' ').lower()
-
+		if utt['transcript'].strip() == "":
+			empty_utts.append(utt)
+			
+	# clean any empty/special case utterances		
+	[data.remove(utt) for utt in empty_utts]
 	#print(utt['transcript'])
 
 
@@ -82,7 +91,13 @@ def main():
 		help="The input file to clean.")
 	parser.add_argument("wordlistfile", type=str,
 		help="Output word list.")
+	parser.add_argument("-j", "--jsonOutput", type=str,
+		help="Name of json file to use for cleaned data")
 	args = parser.parse_args()
+
+	json_outfile = "{0}_clean.json".format(args.infile.rstrip('.json'))
+	if args.jsonOutput:
+		json_outfile = args.jsonOutput
 
 	data = load_file(args.infile)
 
@@ -92,7 +107,7 @@ def main():
 
 	save_wordlist(wordlist, args.wordlistfile)
 
-	json_outfile = "{0}_clean.json".format(args.infile.rstrip('.json'))
+	
 	write_json(data, json_outfile)
 
 
