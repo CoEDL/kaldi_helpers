@@ -1,0 +1,9 @@
+p_B b_B t_B d_B k_B g_B ʔ_B C_B J_B f_B s_B h_B m_B n_B ŋ_B r_B j_B w_B l_B I_B u_B i:_B u:_B E_B O_B e:_B o:_B a_B a:_B 
+p_E b_E t_E d_E k_E g_E ʔ_E C_E J_E f_E s_E h_E m_E n_E ŋ_E r_E j_E w_E l_E I_E u_E i:_E u:_E E_E O_E e:_E o:_E a_E a:_E 
+p_I b_I t_I d_I k_I g_I ʔ_I C_I J_I f_I s_I h_I m_I n_I ŋ_I r_I j_I w_I l_I I_I u_I i:_I u:_I E_I O_I e:_I o:_I a_I a:_I 
+p_S b_S t_S d_S k_S g_S ʔ_S C_S J_S f_S s_S h_S m_S n_S ŋ_S r_S j_S w_S l_S I_S u_S i:_S u:_S E_S O_S e:_S o:_S a_S a:_S 
+SIL sil spn 
+SIL_B sil_B spn_B 
+SIL_E sil_E spn_E 
+SIL_I sil_I spn_I 
+SIL_S sil_S spn_S 

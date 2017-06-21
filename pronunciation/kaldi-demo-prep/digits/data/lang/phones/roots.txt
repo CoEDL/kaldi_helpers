@@ -1,0 +1,32 @@
+shared split SIL SIL_B SIL_E SIL_I SIL_S
+shared split sil sil_B sil_E sil_I sil_S
+shared split spn spn_B spn_E spn_I spn_S
+shared split p_B p_E p_I p_S
+shared split b_B b_E b_I b_S
+shared split t_B t_E t_I t_S
+shared split d_B d_E d_I d_S
+shared split k_B k_E k_I k_S
+shared split g_B g_E g_I g_S
+shared split ʔ_B ʔ_E ʔ_I ʔ_S
+shared split C_B C_E C_I C_S
+shared split J_B J_E J_I J_S
+shared split f_B f_E f_I f_S
+shared split s_B s_E s_I s_S
+shared split h_B h_E h_I h_S
+shared split m_B m_E m_I m_S
+shared split n_B n_E n_I n_S
+shared split ŋ_B ŋ_E ŋ_I ŋ_S
+shared split r_B r_E r_I r_S
+shared split j_B j_E j_I j_S
+shared split w_B w_E w_I w_S
+shared split l_B l_E l_I l_S
+shared split I_B I_E I_I I_S
+shared split u_B u_E u_I u_S
+shared split i:_B i:_E i:_I i:_S
+shared split u:_B u:_E u:_I u:_S
+shared split E_B E_E E_I E_S
+shared split O_B O_E O_I O_S
+shared split e:_B e:_E e:_I e:_S
+shared split o:_B o:_E o:_I o:_S
+shared split a_B a_E a_I a_S
+shared split a:_B a:_E a:_I a:_S

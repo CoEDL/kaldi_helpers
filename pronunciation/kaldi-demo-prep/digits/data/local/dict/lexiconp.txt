@@ -1,0 +1,32 @@
+!SIL 1.0	sil
+<UNK> 1.0	spn
+amakaang 1.0	a m a k a: ŋ
+di 1.0	d I
+kaai 1.0	k a: I
+hada 1.0	h a d a
+muila 1.0	m u I l a
+dining 1.0	d I n I ŋ
+ayoku 1.0	a j O k u
+kamar 1.0	k a m a r
+mia 1.0	m I a
+mui 1.0	m u I
+hekaai 1.0	h E k a: I
+deina 1.0	d E I n a
+del 1.0	d E l
+ong 1.0	O ŋ
+hayei 1.0	h a j E I
+ba 1.0	b a
+hepikaai 1.0	h E p I k a: I
+botol 1.0	b O t O l
+homi 1.0	h O m I
+dong 1.0	d O ŋ
+yaari 1.0	j a: r I
+lung 1.0	l u ŋ
+haliel 1.0	h a l I E l
+mai 1.0	m a I
+dapakdi 1.0	d a p a k d I
+ya 1.0	j a
+loku 1.0	l O k u
+poku 1.0	p O k u
+dekaai 1.0	d E k a: I
+habuti 1.0	h a b u t I

@@ -1,0 +1,18 @@
+# lattice-best-path --lm-scale=14 --word-symbol-table=exp/tri1/graph/words.txt "ark:gunzip -c exp/tri1/decode/lat.*.gz|" ark,t:exp/tri1/decode/scoring/14.tra 
+# Started at Wed Jun 21 11:03:07 AEST 2017
+#
+lattice-best-path --lm-scale=14 --word-symbol-table=exp/tri1/graph/words.txt 'ark:gunzip -c exp/tri1/decode/lat.*.gz|' ark,t:exp/tri1/decode/scoring/14.tra 
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:99) For utterance SL_1_1_1, best cost 385.043 + 13608.4 = 13993.4 over 367 frames.
+SL_1_1_1 amakaang di hada muila 
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:99) For utterance SL_1_1_2, best cost 503.168 + 16816.1 = 17319.3 over 464 frames.
+SL_1_1_2 dining ayoku kaai mia mai mia 
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:99) For utterance SL_1_1_3, best cost 591.708 + 20042.1 = 20633.8 over 556 frames.
+SL_1_1_3 dekaai dining ayoku kamar mia muila 
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:99) For utterance SL_1_1_4, best cost 888.158 + 37396.7 = 38284.8 over 1056 frames.
+SL_1_1_4 dekaai deina del di ayoku ba hepikaai deina botol muila 
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:99) For utterance SL_1_1_5, best cost 1528.62 + 74356.5 = 75885.1 over 1882 frames.
+SL_1_1_5 lung haliel dekaai dapakdi del ong hayei mai botol kaai deina dekaai habuti 
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:124) Overall cost per frame is 38.4084 = 0.900971 [graph] + 37.5075 [acoustic] over 4325 frames.
+LOG (lattice-best-path[5.2.29~1-20fe8]:main():lattice-best-path.cc:128) Done 5 lattices, failed for 0
+# Accounting: time=0 threads=1
+# Ended (code 0) at Wed Jun 21 11:03:07 AEST 2017, elapsed time 0 seconds

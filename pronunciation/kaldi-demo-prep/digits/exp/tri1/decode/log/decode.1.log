@@ -1,0 +1,22 @@
+# gmm-latgen-faster --max-active=7000 --beam=11.0 --lattice-beam=6.0 --acoustic-scale=0.083333 --allow-partial=true --word-symbol-table=exp/tri1/graph/words.txt exp/tri1/final.mdl exp/tri1/graph/HCLG.fst "ark,s,cs:apply-cmvn  --utt2spk=ark:data/test/split1/1/utt2spk scp:data/test/split1/1/cmvn.scp scp:data/test/split1/1/feats.scp ark:- | add-deltas  ark:- ark:- |" "ark:|gzip -c > exp/tri1/decode/lat.1.gz" 
+# Started at Wed Jun 21 11:03:00 AEST 2017
+#
+gmm-latgen-faster --max-active=7000 --beam=11.0 --lattice-beam=6.0 --acoustic-scale=0.083333 --allow-partial=true --word-symbol-table=exp/tri1/graph/words.txt exp/tri1/final.mdl exp/tri1/graph/HCLG.fst 'ark,s,cs:apply-cmvn  --utt2spk=ark:data/test/split1/1/utt2spk scp:data/test/split1/1/cmvn.scp scp:data/test/split1/1/feats.scp ark:- | add-deltas  ark:- ark:- |' 'ark:|gzip -c > exp/tri1/decode/lat.1.gz' 
+apply-cmvn --utt2spk=ark:data/test/split1/1/utt2spk scp:data/test/split1/1/cmvn.scp scp:data/test/split1/1/feats.scp ark:- 
+add-deltas ark:- ark:- 
+SL_1_1_1 amakaang di hada muila 
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:DecodeUtteranceLatticeFaster():decoder-wrappers.cc:286) Log-like per frame for utterance SL_1_1_1 is -3.16494 over 367 frames.
+LOG (apply-cmvn[5.2.29~1-20fe8]:main():apply-cmvn.cc:162) Applied cepstral mean normalization to 5 utterances, errors on 0
+SL_1_1_2 dining ayoku kaai mia mui mia 
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:DecodeUtteranceLatticeFaster():decoder-wrappers.cc:286) Log-like per frame for utterance SL_1_1_2 is -3.09751 over 464 frames.
+SL_1_1_3 dekaai dining ayoku kamar mia muila 
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:DecodeUtteranceLatticeFaster():decoder-wrappers.cc:286) Log-like per frame for utterance SL_1_1_3 is -3.07991 over 556 frames.
+SL_1_1_4 dekaai deina del di ayoku ba hepikaai deina botol dong di 
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:DecodeUtteranceLatticeFaster():decoder-wrappers.cc:286) Log-like per frame for utterance SL_1_1_4 is -3.01061 over 1056 frames.
+SL_1_1_5 lung haliel mai kaai dapakdi del ong hayei mai botol kaai deina dekaai habuti 
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:DecodeUtteranceLatticeFaster():decoder-wrappers.cc:286) Log-like per frame for utterance SL_1_1_5 is -3.35027 over 1882 frames.
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:main():gmm-latgen-faster.cc:176) Time taken 5.64554s: real-time factor assuming 100 frames/sec is 0.130533
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:main():gmm-latgen-faster.cc:179) Done 5 utterances, failed for 0
+LOG (gmm-latgen-faster[5.2.29~1-20fe8]:main():gmm-latgen-faster.cc:181) Overall log-likelihood per frame is -3.18974 over 4325 frames.
+# Accounting: time=6 threads=1
+# Ended (code 0) at Wed Jun 21 11:03:06 AEST 2017, elapsed time 6 seconds
