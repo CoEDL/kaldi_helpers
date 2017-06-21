@@ -22,10 +22,11 @@ utterances = {};
 os.makedirs(output_folder);
 
 f_segments = open(output_folder + "/segments", "w");
-f_transcripts = open(output_folder + "/transcripts", "w");
+f_transcripts = open(output_folder + "/text", "w");
 f_speakers = open(output_folder + "/spk2gender", "w");
 f_recordings = open(output_folder + "/wav.scp", "w");
 f_utt2spk = open(output_folder + "/utt2spk", "w");
+f_corpus = open(output_folder + "/corpus.txt", "w");
 
 for json_transcript in json_transcripts:
     transcript = json_transcript["transcript"];
@@ -49,6 +50,7 @@ for json_transcript in json_transcripts:
     f_transcripts.write(utterance_id + " " + transcript + "\n");
     f_segments.write(utterance_id + " " + recording_id + " " + "%f %f\n" % (startMs / 1000.0, stopMs / 1000.0));
     f_utt2spk.write(utterance_id + " " + speaker_id + "\n");
+    f_corpus.write(transcript + "\n");
 
 
 f_segments.close();
@@ -56,3 +58,4 @@ f_transcripts.close();
 f_speakers.close();
 f_recordings.close();
 f_utt2spk.close();
+f_corpus.close();
