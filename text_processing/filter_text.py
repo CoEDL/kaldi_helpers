@@ -59,12 +59,22 @@ def load_file(filename):
 	""" Given a filename load and return the object
 	"""
 	try:
-		with open(filename) as data:
-			data = json.load(data)
+		with open(filename) as f:
+			data = json.load(f)
 	except Exception as e:
 		print("Could not read file " + filename)
 		exit()
 	return data
+
+def write_json(data, filename):
+	""" Wrtie a data object in json format
+	"""
+	try:
+		with open(filename, 'w') as f:
+			json.dump(data, f, ensure_ascii=False, indent = 4)
+	except:
+		print("Could not write out json file " + filename)
+		exit()
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -81,6 +91,9 @@ def main():
 	wordlist = extract_wordlist(data)
 
 	save_wordlist(wordlist, args.wordlistfile)
+
+	json_outfile = "{0}_clean.json".format(args.infile.rstrip('.json'))
+	write_json(data, json_outfile)
 
 
 
