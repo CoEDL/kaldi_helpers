@@ -89,6 +89,8 @@ class EAF:
       })
     return myjson
 
+if len(sys.argv) > 1:
+  RepositoryPath                = sys.argv[1]
 jsons                           = []
 for fpath in glob.iglob(RepositoryPath+'/**/*.eaf', recursive=True):
   print("%s starts" % (fpath),file=sys.stderr)
