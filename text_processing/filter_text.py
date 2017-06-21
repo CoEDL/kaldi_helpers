@@ -9,6 +9,7 @@ import argparse
 import json
 import string
 import os
+import re
 
 
 def save_wordlist(wordlist, filename):
@@ -34,13 +35,58 @@ def extract_wordlist(data):
 	result = list(set(result))
 	result.sort()
 	return result
+
+def filter_data2(data):
+	""" Given a data object remove any transcriptons with undesirable features
+
+	"""
+	raise Exception("Untested")
 	
+	to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”"
+	special_cases = ["<silence>"]
+	cleaned_data = []
+
+	for utt in data:
+		trans = utt.get('transcript')
+		if trans in special_cases:
+			continue  # Ignore
+		words = trans.split()
+		clean_words = []
+		valid_utterance = True
+		for word in words:
+			# If utterance contains a translation
+			if word == '@ENG@':  # Translations / ignore
+				#words = words[:words.index(word)]
+				break
+
+			# If patial digit don't keep utterance
+			if bool(re.search(r'\d', word)) and not word.isdigit():
+				valid_utterance = False
+				break
+
+			# Remove punctuation and bad chars
+			for char in to_remove:
+				word = word.replace(char, '')
+
+			clean_words.append(word)
+
+		cleaned_trans = ' '.join(clean_words).strip()
+		if cleaned_trans == "":
+			valid_utterance = False
+
+		if not valid_utterance:   # Something was bad in utterance
+			continue
+
+		# Should be a clean valid utterance
+		cleaned_data.append(trans)
+
+
 
 
 def filter_data(data):
 	""" Returns a dictionary of words and frequencies
 	"""
-	to_remove = string.punctuation + "…" + "’"
+	to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”"
 	special_cases = ["<silence>"]
 	empty_utts = []
 	for utt in data:
@@ -51,9 +97,12 @@ def filter_data(data):
 			if word == "@ENG@":   ## In abui following is a translation to english
 				words = words[:words.index(word)]
 				break
+
 		for char in to_remove:
 			#word = word.replace(char, '')
 			words = [word.replace(char, '') for word in words]
+
+		words = [word for word in words if not bool(re.search(r'\d', word)) and not word.isdigit()]  # Filter digits
 		utt['transcript'] = ' '.join(words).lower() #words.join(' ').lower()
 		if utt['transcript'].strip() == "":
 			empty_utts.append(utt)
@@ -100,14 +149,18 @@ def main():
 
 	data = load_file(args.infile)
 
+	print("Filtering...", end='', flush=True)
 	filter_data(data)  # mutates the data object
+	print("Done.")
 
+	print("Wordlist...", end='', flush=True)
 	wordlist = extract_wordlist(data)
+	print("Done.")
 
+	print("Write out wordlist and json...", end='', flush=True)
 	save_wordlist(wordlist, args.wordlistfile)
-
-	
 	write_json(data, json_outfile)
+	print("Done.")
 
 
 
