@@ -49,10 +49,10 @@ def execProc(procArgs, progressPattern):
     while process.poll() == None:
         buff = process.stdout.read(1)
 
-        tmpStr += buff.decode()
+        tmpStr += buff.decode(errors="ignore")
 
         if g_verboseOutput:
-            sys.stdout.write(buff.decode())#, end = '', flush = True)
+            sys.stdout.write(buff.decode(errors="ignore"))#, end = '', flush = True)
             sys.stdout.flush()
 
         tmpStr.replace('\r', '\n')
