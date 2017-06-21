@@ -18,6 +18,8 @@ r r
 y j
 w w
 l l
+q q
+v w
 
 # Vowels
 i I
@@ -28,7 +30,7 @@ e E
 o O
 ee e:
 oo o:
-ɑ a
+a a
 aa a:
 
 # Wikipedia says tone is marked by diacritics on the vowels, but we can't see that in this corpus
