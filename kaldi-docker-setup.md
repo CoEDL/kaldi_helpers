@@ -37,3 +37,12 @@ git clone https://github.com/jotia1/asr-daan
 ```
 docker run -it --rm -v ~/Desktop/asr-sandbox/asr-daan/pronunciation/kaldi-demo-prep/digits/:/kaldi/egs/digits coedl/kaldi-srilm
 ```
+
+## Execute `run.sh`
+
+Change the directory (`cd`) to the place where the digits directoy had been mounted (the path after Docker `-v` in the command above), then run the Kaldi run script (`./run.sh`).
+
+```
+cd /kaldi/egs/digits
+./run.sh
+```
