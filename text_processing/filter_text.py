@@ -1,18 +1,14 @@
 """ Given a json file with transcript information this tools can perform 
 manipulations including generating word lists.
+Optionally provide the output json file name with -j
 
-Usage: python filter_text.py sample.json wordlist.txt
+Usage: python filter_text.py sample.json wordlist.txt 
 """
 
 import argparse
 import json
 import string
 import os
-
-
-
-# TODO 
-# Deal with things like <silence>
 
 
 def save_wordlist(wordlist, filename):
@@ -42,9 +38,9 @@ def extract_wordlist(data):
 
 
 def filter_data(data):
-	""" Note this mutates data
+	""" Returns a dictionary of words and frequencies
 	"""
-	to_remove = string.punctuation
+	to_remove = string.punctuation + "…" + "’"
 	special_cases = ["<silence>"]
 	empty_utts = []
 	for utt in data:
@@ -52,13 +48,16 @@ def filter_data(data):
 		for word in words:
 			if word in special_cases:
 				empty_utts.append(utt)
+			if word == "@ENG@":   ## In abui following is a translation to english
+				words = words[:words.index(word)]
+				break
 		for char in to_remove:
 			#word = word.replace(char, '')
 			words = [word.replace(char, '') for word in words]
 		utt['transcript'] = ' '.join(words).lower() #words.join(' ').lower()
 		if utt['transcript'].strip() == "":
 			empty_utts.append(utt)
-			
+
 	# clean any empty/special case utterances		
 	[data.remove(utt) for utt in empty_utts]
 	#print(utt['transcript'])
