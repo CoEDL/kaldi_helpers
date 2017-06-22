@@ -132,7 +132,7 @@ def write_json(data):
 	""" Wrtie a data object in json format
 	"""
 	try:
-		print( json.dumps(data, ensure_ascii=False, indent = 2) )
+		print( json.dumps(data, indent = 2) )
 	except:
 		print("Could not write out json file")
 		exit()
