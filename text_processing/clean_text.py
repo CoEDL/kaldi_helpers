@@ -50,11 +50,12 @@ def filter_data(data, removeEng=False):
         cleaned_data = []
         
         if removeEng:
-                from langid.langid import LanguageIdentifier, model
-                from nltk.corpus import words
-                identifier = LanguageIdentifier.from_modelstring(model, norm_probs=True)
-                eng_words = set(words.words())
                 use_langid = False
+                if use_langid:
+                        from langid.langid import LanguageIdentifier, model
+                        identifier = LanguageIdentifier.from_modelstring(model, norm_probs=True)
+                from nltk.corpus import words
+                eng_words = set(words.words())
                 # Using both 2.16% english in wordlist 14.6k words(slow)
                 # Using nltk dictionary 2.49% englisb in wordlist 15.5k words (fast)
                 # Using neither 11.1% english in wordlist 34.8k words (fast)
