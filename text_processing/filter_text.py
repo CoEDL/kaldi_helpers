@@ -36,18 +36,17 @@ def extract_wordlist(data):
 	result.sort()
 	return result
 
-def filter_data2(data):
+def filter_data(data):
 	""" Given a data object remove any transcriptons with undesirable features
 
 	"""
-	raise Exception("Untested")
 	
-	to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”"
+	to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”" + "‘"
 	special_cases = ["<silence>"]
 	cleaned_data = []
 
 	for utt in data:
-		trans = utt.get('transcript')
+		trans = utt.get('transcript').lower()
 		if trans in special_cases:
 			continue  # Ignore
 		words = trans.split()
@@ -59,7 +58,7 @@ def filter_data2(data):
 				#words = words[:words.index(word)]
 				break
 
-			# If patial digit don't keep utterance
+			# If partial digit, throw out whole utterance
 			if bool(re.search(r'\d', word)) and not word.isdigit():
 				valid_utterance = False
 				break
@@ -78,14 +77,17 @@ def filter_data2(data):
 			continue
 
 		# Should be a clean valid utterance
-		cleaned_data.append(trans)
+		utt['transcript'] = cleaned_trans
+		cleaned_data.append(utt)
+	return cleaned_data
 
 
 
 
-def filter_data(data):
+def _filter_data(data):
 	""" Returns a dictionary of words and frequencies
 	"""
+	raise Exception("Deprecated")
 	to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”"
 	special_cases = ["<silence>"]
 	empty_utts = []
@@ -150,7 +152,7 @@ def main():
 	data = load_file(args.infile)
 
 	print("Filtering...", end='', flush=True)
-	filter_data(data)  # mutates the data object
+	data = filter_data(data)  # mutates the data object
 	print("Done.")
 
 	print("Wordlist...", end='', flush=True)
