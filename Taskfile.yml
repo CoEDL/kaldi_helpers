@@ -27,26 +27,31 @@ build-all-abui:
     # Clean corpus data for import to Kaldi
     - task clean-json < {{ .TMP_PATH }}/selected_corpus_json.json > {{ .TMP_PATH }}/cleaned_selected_corpus.json
 
-    - task make-wordlist < {{ .TMP_PATH }}/cleaned_selected_corpus.json > {{ .TMP_PATH }}/corpus_wordlist.txt
+    # Make Kaldi export directory and populate with derived data
+    - task json-to-kaldi < {{ .TMP_PATH }}/cleaned_selected_corpus.json
 
-    - task json-to-kaldi < tmp/cleaned_selected_corpus.json
+    # Extract unique wordlist for corpus data, then generate pronunciation dictionary
+    - task make-wordlist < {{ .TMP_PATH }}/cleaned_selected_corpus.json > {{ .TMP_PATH }}/corpus_wordlist.txt
+    - task make-prn-dict < {{ .TMP_PATH }}/corpus_wordlist.txt > {{ .TMP_PATH }}/lexicon.txt
+
+    - echo "Pipeline completed without errors"
 
 ##################### Test definitions
 
 ##################### Job definitions
 
 tmp-makedir:
-  desc: "Make the tmp directory"
-  status:
-    # Run only if tmp is not a directory
-    - test -d tmp
+  desc: "Make the tmp directory, if it does not exist"
   cmds:
-    - mkdir tmp
+    - if [ ! -d {{ .TMP_PATH }} ]; then mkdir {{ .TMP_PATH }}; fi
 
 tmp-delete:
+  deps: [tmp-makedir]
   desc: "Delete all files in tmp directory"
   cmds:
-    - rm -r tmp/*
+    # Make directory non-empty, just in case it's just been initialised
+    - cp /dev/null {{ .TMP_PATH }}/null
+    - rm -r {{ .TMP_PATH }}/*
 
 elan-to-json:
   desc: "Convert a folder of .eaf files to a single JSON file"
@@ -72,13 +77,14 @@ make-wordlist:
   cmds:
     - python3 text_processing/make_wordlist.py
 
-echo_config_var:
-  desc: "testing"
+make-prn-dict:
+  desc: "Make pronunciation dictionary"
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
-    - echo "{{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}"
+    - python3 pronunciation/convert.py --config {{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}
 
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
     - python3 audio_segmenter/json_to_kaldi.py --output-folder="{{ .TMP_PATH }}/kaldi"
-
