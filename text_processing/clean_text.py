@@ -45,7 +45,8 @@ def filter_data(data, removeEng=False):
         """
         
         to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”" + "‘"
-        special_cases = ["<silence>"]
+        special_cases = ["<silence>", 'Q:', 'A:']
+        translation_tags = set(['@eng@', '<ind:', '<eng:'])
         cleaned_data = []
         
         if removeEng:
@@ -57,20 +58,28 @@ def filter_data(data, removeEng=False):
                 # Using both 2.16% english in wordlist 14.6k words(slow)
                 # Using nltk dictionary 2.49% englisb in wordlist 15.5k words (fast)
                 # Using neither 11.1% english in wordlist 34.8k words (fast)
-                # Only words > 3 chars are counted, for 
+                # Only words > 3 chars are counted, for audio-segment sample
+                # Using remove english and ignore after '<' 1.8% 20.4K
+
 
         for utt in data:
                 trans = utt.get('transcript').lower()
-                if trans in special_cases:
-                        continue  # Ignore
                 words = trans.split()
+
+                # Note this is an assumption only translations come after '<'
+                if "<" in trans:
+                        words = trans[:trans.index("<")].split()
+
                 clean_words = []
                 valid_utterance = True
                 eng_count = 0
                 for word in words:
+                        # If a special case ignore
+                        if word in special_cases:
+                                continue
+
                         # If utterance contains a translation
-                        if word == '@eng@':  # Translations / ignore
-                                #words = words[:words.index(word)]
+                        if word in translation_tags:  # Translations / ignore
                                 break
 
                         # If partial digit, throw out whole utterance
