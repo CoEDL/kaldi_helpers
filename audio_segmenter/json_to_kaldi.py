@@ -11,7 +11,7 @@ except:
     exit(-1);
 
 
-f_in = open(input_json_fname, "r");
+f_in = open(input_json_fname, "r", encoding = "utf-8");
 json_transcripts = json.loads(f_in.read());
 f_in.close();
 

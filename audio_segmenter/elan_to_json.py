@@ -79,7 +79,7 @@ class EAF:
       if al[3] == -1: al[3]     = al[4]
       if al[4] == -1: al[4]     = al[3]
       myjson.append({
-        "audioFilename": self.AudioFilename,
+        "audioFileName": self.AudioFilename,
         "speakerId": al[0],
         "tier": al[1],
         "transcript": al[2],
