@@ -1,6 +1,12 @@
 from __future__ import print_function
 import os;
 from subprocess import call;
+import sys;
+
+
+
+# Perform
+
 
 
 DEFAULT = 0;
@@ -9,7 +15,6 @@ START_INTERVAL = 2;
 
 
 def extract_textgrid_intervals(filename): #, scp_out, json_out):
-    global id;
 
     state = DEFAULT;
 
@@ -17,7 +22,7 @@ def extract_textgrid_intervals(filename): #, scp_out, json_out):
     current_interval = {};
     current_interval["audioFileName"] = filename
 
-    f = open(filename, "r");
+    f = open(filename, "r", encoding="ISO-8859-1");
 
     for line in f:
         #print line;
@@ -52,7 +57,6 @@ def extract_textgrid_intervals(filename): #, scp_out, json_out):
                 #   print text;
                 #    assert(text[0] == "\"" and text[-1] == "\"");
                 if text != "":
-                    print(text)
                     if text[0] == "\"":
                         text = text[1:];
 
@@ -71,56 +75,35 @@ def sec2milli(seconds):
     return seconds*1000
 
 def write_json(json_fn, intervals):
-    with open(json_fn, "w") as json_f:
+    json_f = sys.stdout; # here is where we ignore the filename and replace with stdout
+    #with open(json_fn, "w") as json_f:
 
-        def print_interval(interval, final):
-            print("{", file=json_f)
-            print("\"transcript\": \"%s\"," % interval["text"], file=json_f)
-            print("\"startMs\": %f," % sec2milli(float(interval["xmin"])), file=json_f)
-            print("\"stopMs\": %f," % sec2milli(float(interval["xmax"])), file=json_f)
-            print("\"speakerId\": \"\",", file=json_f)
-            audiofn = interval["audioFileName"].rsplit(".", 1)[0] + ".wav"
-            print("\"audioFileName\": \"%s\"" % audiofn, file=json_f)
-            if final:
-                print("}", file=json_f)
-            else:
-                print("},", file=json_f)
-
-
-        print("[", file=json_f)
-        for interval in intervals[:-1]:
-            print_interval(interval, final=False)
-        print_interval(intervals[-1], final=True)
-        print("]", file=json_f)
-
-#    wav_fn = filename.rsplit(".", 1)[0];
-
-#    try:
-#        os.makedirs("wav_output/" + os.path.dirname(wav_fn));
-#    except:
-#        pass;
+    def print_interval(interval, final):
+        print("{", file=json_f)
+        print("\"transcript\": \"%s\"," % interval["text"], file=json_f)
+        print("\"startMs\": %f," % sec2milli(float(interval["xmin"])), file=json_f)
+        print("\"stopMs\": %f," % sec2milli(float(interval["xmax"])), file=json_f)
+        print("\"speakerId\": \"\",", file=json_f)
+        audiofn = interval["audioFileName"].rsplit(".", 1)[0] + ".wav"
+        print("\"audioFileName\": \"%s\"" % audiofn, file=json_f)
+        if final:
+          print("}", file=json_f)
+        else:
+          print("},", file=json_f)
 
 
-#    f_out = open("wav_output/" + wav_fn + ".txt", "w");
-#    for i, interval in enumerate(intervals):
-#        #call("sox '%s.wav' 'wav_output/%s_%04i.wav' trim %s =%s" % (wav_fn, wav_fn, i, interval["xmin"], interval["xmax"]), shell=True);
-#        f_out.write("%s %s %s\n" % (interval["xmin"], interval["xmax"], interval["text"]));
-#        scp_out.write("_%010i '%s_%04i.wav'\n" % (id, wav_fn, i));
-#        id += 1;
-#    f_out.close();
+    print("[", file=json_f)
+    for interval in intervals[:-1]:
+        print_interval(interval, final=False)
+    print_interval(intervals[-1], final=True)
+    print("]", file=json_f)
 
-
-#sox in.mp3 out.mp3 trim 2 0.195
-
-
-#scp_out = open("wav_output/wav.scp", "w");
-id = 0;
 
 intervals = []
 for (root, dirs, files) in os.walk("."):
     for filename in files:
         if filename.endswith(".TextGrid"):
-            print(root, filename);
+            #print(root, filename);
             intervals.extend(extract_textgrid_intervals(root + "/" + filename));
 
 json_fn = "wav_output/textgrid.json"
