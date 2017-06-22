@@ -1,2 +1,6 @@
+TMP_PATH: "tmp"
 CORPUS_PATH: "/corpus"
 SCRIPTS_PATH: "/asr-daan"
+
+# Assuming this is relative to the scripts path
+LETTER_TO_SOUND: "pronunciation/abui_config.txt"
