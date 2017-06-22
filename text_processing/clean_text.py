@@ -121,7 +121,7 @@ def load_file(filename):
 	""" Given a filename load and return the object
 	"""
 	try:
-		with open(filename) as f:
+		with open(filename, "r", encoding = "utf-8") as f:
 			data = json.load(f)
 	except Exception as e:
 		print("Could not read file " + filename)
