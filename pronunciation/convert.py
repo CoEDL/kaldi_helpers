@@ -5,9 +5,9 @@
 import argparse
 import sys
 
-def generate_dictionary(input_file_name, config_file_name, output_file_name):
+def generate_dictionary(config_file_name):
 	# read the input file
-	input_file = open(input_file_name, 'r')
+	input_file = sys.stdin
 	input_tokens = []
 	for line in input_file.readlines():
 		token = line.strip()
@@ -25,7 +25,7 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 		if (line[0] == '#'):
 			continue
 
-		mapping = filter(None, line.strip().split(' '))
+		mapping = list( filter(None, line.strip().split(' ')) )
 
 		if (len(mapping) > 1):
 			sound_mappings.append((mapping[0], mapping[1]))
@@ -37,7 +37,7 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 
 	oov_characters = set([])
 
-	output_file = open(output_file_name, 'w+')
+	output_file = sys.stdout
 	output_file.write('!SIL sil\n')
 	output_file.write('UNK spn\n')
 	for token in input_tokens:
@@ -66,9 +66,9 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 	output_file.close()
 
 	for character in oov_characters:
-		print >> sys.stderr, "Unexcpected character: %s" % character
+		print("Unexpected character: %s" % character, file=sys.stderr)
 
-	print "Done"
+	print( "Done", file=sys.stderr )
 
 # TODO
 # Accept komnzo_words.txt from --words_file
@@ -81,14 +81,11 @@ if __name__ == "__main__":
 	# output_file_name = ""
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--words", help="input file with one word in each line")
+	# parser.add_argument("--words", help="input file with one word in each line")
 	parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
-	parser.add_argument("--output_file", help="name of the output file")
+	# parser.add_argument("--output_file", help="name of the output file")
 	
 	args = parser.parse_args()
-	if ((not args.words) or (not args.config) or (not args.output_file)):
-		print "Argument missing. Please refer to help for the required arguments"
-	else:
-		generate_dictionary(args.words, args.config, args.output_file)
+	generate_dictionary(args.config)
 
 
