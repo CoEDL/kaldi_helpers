@@ -16,7 +16,7 @@ def save_wordlist(wordlist, filename):
 	""" Given a list of strings write to file
 	"""
 	try:
-		with open(filename, 'w') as f:
+		with open(filename, 'w', encoding = 'utf-8') as f:
 			for word in wordlist:
 				f.write(word + '\n')
 	except:
@@ -118,7 +118,7 @@ def load_file(filename):
 	""" Given a filename load and return the object
 	"""
 	try:
-		with open(filename) as f:
+		with open(filename, "r", encoding = "utf-8") as f:
 			data = json.load(f)
 	except Exception as e:
 		print("Could not read file " + filename)
@@ -129,7 +129,7 @@ def write_json(data, filename):
 	""" Wrtie a data object in json format
 	"""
 	try:
-		with open(filename, 'w') as f:
+		with open(filename, 'w', encoding = 'utf-8') as f:
 			json.dump(data, f, ensure_ascii=False, indent = 4)
 	except:
 		print("Could not write out json file " + filename)
