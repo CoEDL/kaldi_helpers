@@ -1,0 +1,10 @@
+# Tasks can be run using 'Task' task runner
+# Cross-platform binaries available at: https://github.com/go-task/task
+#
+# Set variables such as {{ .CORPUS_PATH }} in sister file, "Taskvars.yml"
+
+elan-to-json:
+  desc: "Convert a folder of .eaf files to a single JSON file"
+  cmds:
+    - python3.6 {{ .SCRIPTS_PATH }}/audio_segmenter/elan_to_json.py {{ .CORPUS_PATH }} |
+      jq 'map(select(.speakerId == .tier))'

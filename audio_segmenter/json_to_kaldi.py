@@ -7,7 +7,7 @@ try:
     input_json_fname = sys.argv[1];
     output_folder = sys.argv[2];
 except:
-    print "Invalid args";
+    print("Invalid args");
     exit(-1);
 
 
@@ -19,14 +19,15 @@ speakers = {};
 recordings = {};
 utterances = {};
 
-os.makedirs(output_folder);
+if not os.path.exists(output_folder):
+	os.makedirs(output_folder);
 
-f_segments = open(output_folder + "/segments", "w");
-f_transcripts = open(output_folder + "/text", "w");
-f_speakers = open(output_folder + "/spk2gender", "w");
-f_recordings = open(output_folder + "/wav.scp", "w");
-f_utt2spk = open(output_folder + "/utt2spk", "w");
-f_corpus = open(output_folder + "/corpus.txt", "w");
+f_segments = open(output_folder + "/segments", "w", encoding="utf-8");
+f_transcripts = open(output_folder + "/text", "w", encoding="utf-8");
+f_speakers = open(output_folder + "/spk2gender", "w", encoding="utf-8");
+f_recordings = open(output_folder + "/wav.scp", "w", encoding="utf-8");
+f_utt2spk = open(output_folder + "/utt2spk", "w", encoding="utf-8");
+f_corpus = open(output_folder + "/corpus.txt", "w", encoding="utf-8");
 
 for json_transcript in json_transcripts:
     transcript = json_transcript["transcript"];
