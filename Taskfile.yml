@@ -9,6 +9,7 @@ build-all-abui:
     # 
     - ^tmp-makedir
     - ^tmp-delete
+    - ^make-kaldi-subfolders
 
     - export PYTHONIOENCODING="utf-8"
 
@@ -16,7 +17,7 @@ build-all-abui:
     - task elan-to-json > {{ .TMP_PATH }}/elan1.json
     - task elan-to-json > {{ .TMP_PATH }}/elan2.json
 
-    # Concatenate all gathered data into one file
+    # # Concatenate all gathered data into one file
     - find {{ .TMP_PATH }} -name "elan*.json" -exec cat {} +
         | task cat-all-json > {{ .TMP_PATH }}/all_corpus_json.json
 
@@ -33,6 +34,13 @@ build-all-abui:
     # Extract unique wordlist for corpus data, then generate pronunciation dictionary
     - task make-wordlist < {{ .TMP_PATH }}/cleaned_selected_corpus.json > {{ .TMP_PATH }}/corpus_wordlist.txt
     - task make-prn-dict < {{ .TMP_PATH }}/corpus_wordlist.txt > {{ .TMP_PATH }}/lexicon.txt
+
+    - cp {{ .TMP_PATH }}/json_splitted/corpus.txt {{ .TMP_PATH }}/kaldi/data/local/
+    - cp {{ .TMP_PATH }}/lexicon.txt {{ .TMP_PATH }}/kaldi/data/local/dict/
+    - task make-nonsil-phones > {{ .TMP_PATH }}/kaldi/data/local/dict/nonsilence_phones.txt
+
+    - cp {{ .TMP_PATH }}/json_splitted/segments {{ .TMP_PATH }}/json_splitted/text {{ .TMP_PATH }}/json_splitted/utt2spk {{ .TMP_PATH }}/json_splitted/wav.scp {{ .TMP_PATH }}/kaldi/data/test/
+    - cp {{ .TMP_PATH }}/json_splitted/segments {{ .TMP_PATH }}/json_splitted/text {{ .TMP_PATH }}/json_splitted/utt2spk {{ .TMP_PATH }}/json_splitted/wav.scp {{ .TMP_PATH }}/kaldi/data/train/
 
     - echo "Pipeline completed without errors"
 
@@ -52,6 +60,32 @@ tmp-delete:
     # Make directory non-empty, just in case it's just been initialised
     - cp /dev/null {{ .TMP_PATH }}/null
     - rm -r {{ .TMP_PATH }}/*
+
+make-kaldi-subfolders:
+  desc: "Makes subfolder structure which Kaldi expects"
+  cmds:
+    - mkdir -p {{ .TMP_PATH }}/kaldi/data/local/dict
+    - mkdir -p {{ .TMP_PATH }}/kaldi/data/test
+    - mkdir -p {{ .TMP_PATH }}/kaldi/data/train
+
+    - mkdir -p {{ .TMP_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/test
+    - mkdir -p {{ .TMP_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/train
+
+    # Top level directories
+    - mkdir -p {{ .TMP_PATH }}/kaldi/conf
+    - mkdir -p {{ .TMP_PATH }}/kaldi/local
+
+    # Copy in steps and utils from another Kaldi project
+    # - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/steps {{ .TMP_PATH }}/kaldi/steps
+    # - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/utils {{ .TMP_PATH }}/kaldi/utils
+
+make-nonsil-phones:
+  desc: "Generate non-silence phones file from LETTER_TO_SOUND file defined in Taskfile.yml"
+  cmds:
+    - grep -v '^#' < {{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}
+      | cut -d' ' -f2
+      | grep -v '^$'
+      | sort -u
 
 elan-to-json:
   desc: "Convert a folder of .eaf files to a single JSON file"
@@ -87,4 +121,4 @@ make-prn-dict:
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
-    - python3 audio_segmenter/json_to_kaldi.py --output-folder="{{ .TMP_PATH }}/kaldi"
+    - python3 audio_segmenter/json_to_kaldi.py --output-folder="{{ .TMP_PATH }}/json_splitted"
