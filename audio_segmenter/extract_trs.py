@@ -19,7 +19,7 @@ g_baseDir = args.inputDir;
 g_verboseOutput = args.verbose
 
 if g_verboseOutput:
-    print(g_baseDir)
+    sys.stderror.write(g_baseDir+"\n")
 
 def findFirstFileByExt(setOfAllFiles, exts):
     for f in setOfAllFiles:
@@ -40,10 +40,10 @@ def condLog(cond, text):
     if cond:
         # Super-annoying mumbojumbo to work around utf8 file name and the windows console which under the debugger claims to be utf8 but then fails regardless!
         if platform.system() == 'Windows':
-            sys.stdout.write(text.encode('cp850', errors='backslashreplace').decode(sys.stdout.encoding))
+            sys.stderr.write(text.encode('cp850', errors='backslashreplace').decode(sys.stdout.encoding))
         else:
-            sys.stdout.write(text)
-        sys.stdout.flush()
+            sys.stderr.write(text)
+        sys.stderr.flush()
 
 
 allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive = True))
@@ -65,6 +65,7 @@ def processFile(fileName):
             utterances = utterances + processTurn(fileName, turnNode, waveName, tree)
     except ET.ParseError as err:
         condLog(True, "XML parser failed to parse '%s'!\n"%fileName)
+        condLog(True, str(err))
     return utterances
 
 def processTurn(fileName, turnNode, waveName, tree):
@@ -108,10 +109,11 @@ for fn in transcriptNames:
 
 resultBaseName,name = os.path.split(g_baseDir)
 
-if name == '.':
-    outFileName = "utterances.json"
-else:
-    outFileName = name + ".json"
+#if name == '.':
+#    outFileName = "utterances.json"
+#else:
+#    outFileName = name + ".json"
 
-with open(outFileName, 'w') as outfile:
-    json.dump(utterances, outfile, indent=2)
+#with open(outFileName, 'w') as outfile:
+outfile = sys.stdout;
+json.dump(utterances, outfile, indent=2)
