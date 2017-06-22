@@ -3,8 +3,61 @@
 #
 # Set variables such as {{ .CORPUS_PATH }} in sister file, "Taskvars.yml"
 
+build-all-abui:
+  desc: "Run through entire processing pipeline"
+  cmds:
+    # 
+    - ^tmp-makedir
+    - ^tmp-delete
+
+    # Gather ELAN/TextGrid data into json files
+    - task elan-to-json > tmp/elan1.json
+    - task elan-to-json > tmp/elan2.json
+
+    # Concatenate all gathered data into one file
+    - find tmp -name "elan*.json" -exec cat {} + |
+        task cat-all-json > tmp/all_corpus_json.json
+
+    # Filter JSON data: for Abui select only the tier which is the same as the speaker ID
+    - cat tmp/all_corpus_json.json |
+        jq 'map(select(.speakerId == .tier))' > tmp/selected_corpus_json.json
+
+    # - ^clean-json
+    # - ^json-to-kaldi
+
+##################### Test definitions
+
+##################### Job definitions
+
+tmp-makedir:
+  desc: "Make the tmp directory"
+  status:
+    # Run only if tmp is not a directory
+    - test -d tmp
+  cmds:
+    - mkdir tmp
+
+tmp-delete:
+  desc: "Delete all files in tmp directory"
+  cmds:
+    - rm -r tmp/*
+
 elan-to-json:
   desc: "Convert a folder of .eaf files to a single JSON file"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/audio_segmenter/elan_to_json.py {{ .CORPUS_PATH }} |
-      jq 'map(select(.speakerId == .tier))'
+    - python3.6 {{ .SCRIPTS_PATH }}/audio_segmenter/elan_to_json.py {{ .CORPUS_PATH }}
+
+cat-all-json:
+  desc: "Concatenate all .json files into one .json file"
+  cmds:
+    - jq -s '. | add'
+
+# clean-json:
+#   desc: "Clean corpus of problematic characters before passing data to Kaldi"
+#   cmds:
+#     - python3 {{ .SCRIPTS_PATH }}/text_processing/filter_text.py tmp/elan1.json tmp/wordlist.txt
+
+# json-to-kaldi:
+#   desc: "Generate files for the Kaldi format"
+#   cmds:
+#     - python3 {{ .SCRIPTS_PATH }}/audio_segmenter/json_to_kaldi.py tmp/elan1_clean.json tmp/kaldi
