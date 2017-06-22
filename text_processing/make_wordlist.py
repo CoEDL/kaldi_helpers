@@ -16,58 +16,60 @@ import sys
 
 
 def save_wordlist(wordlist):
-	""" Given a list of strings write to file
-	"""
-	try:
-		for word in wordlist: sys.stdout.write(word + '\n')
-	except:
-		print("Could not write out to file " + filename)
-		exit()
+        """ Given a list of strings write to file
+        """
+        try:
+                for word in wordlist: sys.stdout.write(word + '\n')
+        except:
+                print("Could not write out to file " + filename)
+                exit()
 
 
 def extract_wordlist(data):
-	""" Given the data object produce a list of strings of single words
-		Returned list is of unique words and sorted
-	""" 
-	result = []
-	for utt in data:
-		words = utt.get('transcript').split()
-		result.extend(words)
-	result = list(set(result))
-	result.sort()
-	return result
+        """ Given the data object produce a list of strings of single words
+                Returned list is of unique words and sorted
+        """ 
+        result = []
+        for utt in data:
+                words = utt.get('transcript').split()
+                result.extend(words)
+        result = list(set(result))
+        result.sort()
+        return result
 
-
-def load_file(filename):
-	""" Given a filename load and return the object
-	"""
-	try:
-		with open(filename) as f:
-			data = json.load(f)
-	except Exception as e:
-		print("Could not read file " + filename)
-		exit()
-	return data
+def load_file(filename=""):
+        """ Given a filename load and return the object
+        """
+        try:
+                f = sys.stdin
+                if filename:
+                        f = open(filename, "r", encoding = "utf-8")
+                data = json.load(f)
+        except Exception as e:
+                print("Could not read file " + filename)
+                exit()
+        return data
 
 
 def main():
-	parser = argparse.ArgumentParser()
-	parser.add_argument("infile", type=str,
-		help="The input file to clean.")
-	args = parser.parse_args()
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--infile", type=str,
+                help="The input file to clean.")
+        args = parser.parse_args()
 
-	data = load_file(args.infile)
+        if args.infile: data = load_file(args.infile)
+        else: data = load_file()
 
-	print("Wordlist...", end='', flush=True,file=sys.stderr)
-	wordlist = extract_wordlist(data)
-	print("Done.",file=sys.stderr)
+        print("Wordlist...", end='', flush=True,file=sys.stderr)
+        wordlist = extract_wordlist(data)
+        print("Done.",file=sys.stderr)
 
-	print("Write out wordlist...", end='', flush=True,file=sys.stderr)
-	save_wordlist(wordlist)
-	print("Done.",file=sys.stderr)
+        print("Write out wordlist...", end='', flush=True,file=sys.stderr)
+        save_wordlist(wordlist)
+        print("Done.",file=sys.stderr)
 
 
 
 
 if __name__ == '__main__':
-	main()
+        main()
