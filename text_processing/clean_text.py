@@ -44,7 +44,7 @@ def filter_data(data, removeEng=False):
 
         """
         
-        to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”" + "‘"
+        to_remove = string.punctuation + "…’“–”‘°"
         special_cases = ["<silence>", 'Q:', 'A:']
         translation_tags = set(['@eng@', '<ind:', '<eng:'])
         cleaned_data = []
@@ -68,8 +68,10 @@ def filter_data(data, removeEng=False):
                 words = trans.split()
 
                 # Note this is an assumption only translations come after '<'
-                if "<" in trans:
-                        words = trans[:trans.index("<")].split()
+                #if "<" in trans:
+                r = re.search(r'[<]@?(eng|indo|ind|mala)', trans)
+                if bool(r):
+                        words = trans[:r.span()[0]].split()
 
                 clean_words = []
                 valid_utterance = True
