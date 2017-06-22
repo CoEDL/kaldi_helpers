@@ -35,6 +35,8 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 	sound_mappings.sort(key=lambda x: len(x[0]), reverse=True)
 
 	output_file = open(output_file_name, 'w+')
+	output_file.write('!SIL sil\n')
+	output_file.write('UNK spn\n')
 	for token in input_tokens:
 		cur = 0
 		res = [token]
