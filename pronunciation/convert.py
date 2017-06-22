@@ -18,7 +18,7 @@ def generate_dictionary(config_file_name):
 	input_file.close()
 
 	# read the config file
-	config_file = open(config_file_name, 'r')
+	config_file = open(config_file_name, 'r', encoding = 'utf-8')
 	sound_mappings = []
 
 	for line in config_file.readlines():
