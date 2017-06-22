@@ -10,20 +10,26 @@ build-all-abui:
     - ^tmp-makedir
     - ^tmp-delete
 
+    - export PYTHONIOENCODING="utf-8"
+
     # Gather ELAN/TextGrid data into json files
-    - task elan-to-json > tmp/elan1.json
-    - task elan-to-json > tmp/elan2.json
+    - task elan-to-json > {{ .TMP_PATH }}/elan1.json
+    - task elan-to-json > {{ .TMP_PATH }}/elan2.json
 
     # Concatenate all gathered data into one file
-    - find tmp -name "elan*.json" -exec cat {} + |
-        task cat-all-json > tmp/all_corpus_json.json
+    - find {{ .TMP_PATH }} -name "elan*.json" -exec cat {} +
+        | task cat-all-json > {{ .TMP_PATH }}/all_corpus_json.json
 
     # Filter JSON data: for Abui select only the tier which is the same as the speaker ID
-    - cat tmp/all_corpus_json.json |
-        jq 'map(select(.speakerId == .tier))' > tmp/selected_corpus_json.json
+    - cat {{ .TMP_PATH }}/all_corpus_json.json
+        | jq 'map(select(.speakerId == .tier))' > {{ .TMP_PATH }}/selected_corpus_json.json
 
-    # - ^clean-json
-    # - ^json-to-kaldi
+    # Clean corpus data for import to Kaldi
+    - task clean-json < {{ .TMP_PATH }}/selected_corpus_json.json > {{ .TMP_PATH }}/cleaned_selected_corpus.json
+
+    - task make-wordlist < {{ .TMP_PATH }}/cleaned_selected_corpus.json > {{ .TMP_PATH }}/corpus_wordlist.txt
+
+    - task json-to-kaldi < tmp/cleaned_selected_corpus.json
 
 ##################### Test definitions
 
@@ -52,12 +58,27 @@ cat-all-json:
   cmds:
     - jq -s '. | add'
 
-# clean-json:
-#   desc: "Clean corpus of problematic characters before passing data to Kaldi"
-#   cmds:
-#     - python3 {{ .SCRIPTS_PATH }}/text_processing/filter_text.py tmp/elan1.json tmp/wordlist.txt
+clean-json:
+  desc: "Clean corpus of problematic characters before passing data to Kaldi"
+  env:
+    PYTHONIOENCODING: "utf-8"
+  cmds:
+    - python3 {{ .SCRIPTS_PATH }}/text_processing/clean_text.py
 
-# json-to-kaldi:
-#   desc: "Generate files for the Kaldi format"
-#   cmds:
-#     - python3 {{ .SCRIPTS_PATH }}/audio_segmenter/json_to_kaldi.py tmp/elan1_clean.json tmp/kaldi
+make-wordlist:
+  desc: "Make a list of unique words that occur in the corpus"
+  env:
+    PYTHONIOENCODING: "utf-8"
+  cmds:
+    - python3 text_processing/make_wordlist.py
+
+echo_config_var:
+  desc: "testing"
+  cmds:
+    - echo "{{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}"
+
+json-to-kaldi:
+  desc: "Generate files for the Kaldi format"
+  cmds:
+    - python3 audio_segmenter/json_to_kaldi.py --output-folder="{{ .TMP_PATH }}/kaldi"
+
