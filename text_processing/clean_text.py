@@ -47,11 +47,17 @@ def filter_data(data, removeEng=False):
         to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”" + "‘"
         special_cases = ["<silence>"]
         cleaned_data = []
+        
         if removeEng:
                 from langid.langid import LanguageIdentifier, model
                 from nltk.corpus import words
                 identifier = LanguageIdentifier.from_modelstring(model, norm_probs=True)
                 eng_words = set(words.words())
+                use_langid = False
+                # Using both 2.16% english in wordlist 14.6k words(slow)
+                # Using nltk dictionary 2.49% englisb in wordlist 15.5k words (fast)
+                # Using neither 11.1% english in wordlist 34.8k words (fast)
+                # Only words > 3 chars are counted, for 
 
         for utt in data:
                 trans = utt.get('transcript').lower()
@@ -89,12 +95,12 @@ def filter_data(data, removeEng=False):
                         valid_utterance = False
 
                 # Exclude utterance if > 10% english
-                if len(clean_words) > 0 and eng_count / len(clean_words) > 0.1:
-                        print(eng_count / len(clean_words), trans, file=sys.stderr)
+                if removeEng and len(clean_words) > 0 and eng_count / len(clean_words) > 0.1:
+                        #print(round(eng_count / len(clean_words)), trans, file=sys.stderr)
                         valid_utterance = False
 
                 # Exclude utterance if langid thinks its english
-                if False and removeEng and valid_utterance:
+                if removeEng and use_langid and valid_utterance:
                         lang, prob = identifier.classify(cleaned_trans)
                         if lang == 'en' and prob > 0.5:
                                 valid_utterance = False
