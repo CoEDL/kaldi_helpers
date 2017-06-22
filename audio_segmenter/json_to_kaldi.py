@@ -12,9 +12,6 @@ parser.add_argument('--output-folder', type=str, required=True,
 parser.add_argument('--no-silence-markers', action="store_true", help='The input json file')
 args = parser.parse_args()
 
-
-
-<<<<<<< HEAD
 #input_json_fname = args.input_json;
 output_folder = args.output_folder;
 silence_markers = not args.no_silence_markers;
@@ -22,16 +19,7 @@ silence_markers = not args.no_silence_markers;
 
 #f_in = open(input_json_fname, "r");
 f_in = sys.stdin;
-=======
-try:
-    output_folder = sys.argv[1];
-except:
-    print("Invalid args");
-    exit(-1);
 
-
-f_in = sys.stdin
->>>>>>> 2e86cc0f61ca390c6a568dd3753f1a53ced80979
 json_transcripts = json.loads(f_in.read());
 f_in.close();
 
