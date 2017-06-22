@@ -5,8 +5,13 @@ import sys;
 
 
 
-# Perform
+import argparse
 
+parser = argparse.ArgumentParser(description='Search input-folder for .TextGrid files and convert to JSON on stdout')
+parser.add_argument('--input-folder', type=str, required=True, help='The input folder');
+args = parser.parse_args()
+
+corpus_root = args.input_folder;
 
 
 DEFAULT = 0;
@@ -100,11 +105,11 @@ def write_json(json_fn, intervals):
 
 
 intervals = []
-for (root, dirs, files) in os.walk("."):
+for (root, dirs, files) in os.walk(corpus_root):
     for filename in files:
         if filename.endswith(".TextGrid"):
             #print(root, filename);
-            intervals.extend(extract_textgrid_intervals(root + "/" + filename));
+            intervals.extend(extract_textgrid_intervals(os.path.join(os.getcwd(), root, filename)));
 
 json_fn = "wav_output/textgrid.json"
 write_json(json_fn, intervals)
