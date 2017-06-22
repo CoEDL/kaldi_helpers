@@ -2,7 +2,27 @@ import json;
 import sys;
 import uuid;
 import os;
+import sys;
 
+import argparse
+
+parser = argparse.ArgumentParser(description='Convert json from stdin to Kaldi input files (in output-folder).')
+parser.add_argument('--output-folder', type=str, required=True,
+                    help='The output folder')
+parser.add_argument('--no-silence-markers', action="store_true", help='The input json file')
+args = parser.parse_args()
+
+
+
+<<<<<<< HEAD
+#input_json_fname = args.input_json;
+output_folder = args.output_folder;
+silence_markers = not args.no_silence_markers;
+
+
+#f_in = open(input_json_fname, "r");
+f_in = sys.stdin;
+=======
 try:
     output_folder = sys.argv[1];
 except:
@@ -11,6 +31,7 @@ except:
 
 
 f_in = sys.stdin
+>>>>>>> 2e86cc0f61ca390c6a568dd3753f1a53ced80979
 json_transcripts = json.loads(f_in.read());
 f_in.close();
 
@@ -47,7 +68,10 @@ for json_transcript in json_transcripts:
     recording_id = recordings[audioFileName];
     utterance_id = speakers[speakerId] + "-" + str(uuid.uuid4());
 
-    f_transcripts.write(utterance_id + " " + transcript + "\n");
+    if silence_markers:
+      f_transcripts.write(utterance_id + " !SIL " + transcript + " !SIL\n");
+    else:
+      f_transcripts.write(utterance_id + " " + transcript + "\n");
     f_segments.write(utterance_id + " " + recording_id + " " + "%f %f\n" % (startMs / 1000.0, stopMs / 1000.0));
     #f_utt2spk.write(utterance_id + " " + speaker_id + "\n");
     f_utt2spk.write(utterance_id + " " + utterance_id + "\n"); # hack to match utterances to utterances
