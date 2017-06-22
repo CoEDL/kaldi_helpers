@@ -39,7 +39,7 @@ def extract_wordlist(data):
         result.sort()
         return result
 
-def filter_data(data):
+def filter_data(data, removeEng=False):
         """ Given a data object remove any transcriptons with undesirable features
 
         """
@@ -47,6 +47,11 @@ def filter_data(data):
         to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”" + "‘"
         special_cases = ["<silence>"]
         cleaned_data = []
+        if removeEng:
+                from langid.langid import LanguageIdentifier, model
+                from nltk.corpus import words
+                identifier = LanguageIdentifier.from_modelstring(model, norm_probs=True)
+                eng_words = set(words.words())
 
         for utt in data:
                 trans = utt.get('transcript').lower()
@@ -55,9 +60,10 @@ def filter_data(data):
                 words = trans.split()
                 clean_words = []
                 valid_utterance = True
+                eng_count = 0
                 for word in words:
                         # If utterance contains a translation
-                        if word == '@ENG@':  # Translations / ignore
+                        if word == '@eng@':  # Translations / ignore
                                 #words = words[:words.index(word)]
                                 break
 
@@ -70,11 +76,28 @@ def filter_data(data):
                         for char in to_remove:
                                 word = word.replace(char, '')
 
+                        # If word is in english dictionary count it
+                        if removeEng and len(word) > 3 and word in eng_words:
+                                #print(word, file=sys.stderr)
+                                eng_count += 1
+
                         clean_words.append(word)
 
+                # Exclude utterance if empty after cleaning
                 cleaned_trans = ' '.join(clean_words).strip()
                 if cleaned_trans == "":
                         valid_utterance = False
+
+                # Exclude utterance if > 10% english
+                if len(clean_words) > 0 and eng_count / len(clean_words) > 0.1:
+                        print(eng_count / len(clean_words), trans, file=sys.stderr)
+                        valid_utterance = False
+
+                # Exclude utterance if langid thinks its english
+                if False and removeEng and valid_utterance:
+                        lang, prob = identifier.classify(cleaned_trans)
+                        if lang == 'en' and prob > 0.5:
+                                valid_utterance = False
 
                 if not valid_utterance:   # Something was bad in utterance
                         continue
@@ -142,13 +165,15 @@ def write_json(data):
 def main():
         parser = argparse.ArgumentParser()
         parser.add_argument("--infile", type=str, help="The input file to clean.")
+        parser.add_argument("-re", "--removeEng",
+                help="Remove english like utterances", action="store_true")
         args = parser.parse_args()
 
         if args.infile: data = load_file(args.infile)
         else: data = load_file()
 
         print("Filtering...", end='', flush=True,file=sys.stderr)
-        data = filter_data(data)  # mutates the data object
+        data = filter_data(data, args.removeEng)  # mutates the data object
         write_json(data)
         print("Done.",file=sys.stderr)
 
