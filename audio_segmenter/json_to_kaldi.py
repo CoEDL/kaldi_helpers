@@ -4,14 +4,13 @@ import uuid;
 import os;
 
 try:
-    input_json_fname = sys.argv[1];
-    output_folder = sys.argv[2];
+    output_folder = sys.argv[1];
 except:
     print("Invalid args");
     exit(-1);
 
 
-f_in = open(input_json_fname, "r", encoding = "utf-8");
+f_in = sys.stdin
 json_transcripts = json.loads(f_in.read());
 f_in.close();
 
