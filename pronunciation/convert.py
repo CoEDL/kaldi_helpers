@@ -3,6 +3,7 @@
 # output: mapping between unique words and their sound, ordered by their appearance
 
 import argparse
+import sys
 
 def generate_dictionary(input_file_name, config_file_name, output_file_name):
 	# read the input file
@@ -34,6 +35,8 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 	# sort the sound mappings by length of sound mapping
 	sound_mappings.sort(key=lambda x: len(x[0]), reverse=True)
 
+	oov_characters = set([])
+
 	output_file = open(output_file_name, 'w+')
 	output_file.write('!SIL sil\n')
 	output_file.write('UNK spn\n')
@@ -54,12 +57,16 @@ def generate_dictionary(input_file_name, config_file_name, output_file_name):
 			if (not found):
 				# unknown sound
 				res.append('(' + token_lower[cur] + ')')
+				oov_characters.add(token_lower[cur])
 				cur+=1
 
 
 		output_file.write(' '.join(res) + '\n')
 
 	output_file.close()
+
+	for character in oov_characters:
+		print >> sys.stderr, "Unexcpected character: %s" % character
 
 	print "Done"
 
