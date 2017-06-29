@@ -3,7 +3,7 @@
 import xml.etree.ElementTree as ET
 import sys, json, glob, re
 
-RepositoryPath                  = "/Volumes/FLASH DRIVE" # Repository home drive
+RepositoryPath                  = "./Idi" # Repository home drive
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -11,6 +11,7 @@ RepositoryPath                  = "/Volumes/FLASH DRIVE" # Repository home drive
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 class EAF:
   def __init__(self, path):
+    self.Filename               = path.split("/")[-1]
     self.Tree                   = ET.parse(path)
     self.Root                   = self.Tree.getroot()
     self.getURI()
@@ -51,17 +52,35 @@ class EAF:
         avs                     = list( map(lambda a: a.text, list( aa.iter('ANNOTATION_VALUE') )) )
         if avs and avs[0]: strg   = "|".join( avs )
         else: strg              = ""
-        self.Alignable[a]       = (participant,tierN,strg,self.TimeCodes[t1],self.TimeCodes[t2])
+        self.Alignable[a]       = (participant,tierN,strg,self.TimeCodes[t1],self.TimeCodes[t2],"","",self.Filename)
+    indirection                 = {}
     for tier in self.Root.iter('TIER'):
       participant, tierN        = tier.get('PARTICIPANT'), tier.get('TIER_ID')
       for aa in tier.iter('REF_ANNOTATION'): # ANNOTATION_ID="a626" ANNOTATION_REF="a1"
         a,ar                    = aa.get("ANNOTATION_ID"),aa.get("ANNOTATION_REF")
+        indirection[a]          = ar
+    def followIndirection(a):
+      while a not in self.Alignable:
+        if a not in indirection: return None
+        a                       = indirection[a]
+      return a
+    for tier in self.Root.iter('TIER'):
+      participant, tierN        = tier.get('PARTICIPANT'), tier.get('TIER_ID')
+      print("NEW TIER /%s/ found in file and processed" % (tierN), file=sys.stderr)
+      for aa in tier.iter('REF_ANNOTATION'): # ANNOTATION_ID="a626" ANNOTATION_REF="a1"
+        a                       = aa.get("ANNOTATION_ID")
+        ar1                     = aa.get("ANNOTATION_REF")
+        ar                      = followIndirection( a )
+        if not ar:
+          print("ANNOTATION_REF /%s/ not found in file - ignoring annotation" % (a), file=sys.stderr)
+          continue
+        else: print("ANNOTATION_REF /%s/ found in file and processed" % (ar), file=sys.stderr)
         t1,t2                   = self.Alignable[ar][3],self.Alignable[ar][4]
         avs                     = list( map(lambda a: a.text, list( aa.iter('ANNOTATION_VALUE') )) )
         if avs and avs[0]: strg   = "|".join( avs )
         else: strg              = ""
         # print("Storing %s,%s" % (a,tierN))
-        self.Alignable[a]       = (participant,tierN,strg,t1,t2)
+        self.Alignable[a]       = (participant,tierN,strg,t1,t2,ar1,ar,self.Filename)
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   # Write json for each annotation
@@ -72,7 +91,13 @@ class EAF:
     # for t in ts: strg          += "%s: %d\n" % (t, self.TimeCodes[t])
     #
     ass                         = list(self.Alignable.keys())
-    ass.sort()
+    def a2k(a):
+      if re.match(r'^a[0-9]',a): base,a = 100000,a[1:]
+      elif re.match(r'^ann[0-9]',a): base,a = 0,a[3:]
+      else: return 0
+      a                         = re.sub(r'^([0-9]+)([^0-9].*)?$',r'\1',a)
+      return int( a )
+    ass.sort(key=a2k)
     myjson                      = []
     for a in ass:
       al                        = list(self.Alignable[a])
@@ -80,12 +105,15 @@ class EAF:
       if al[4] == -1: al[4]     = al[3]
       myjson.append({
         "audioFileName": self.AudioFilename,
+        "eafFileName": al[7],
         "speakerId": al[0],
         "tier": al[1],
         "transcript": al[2],
         "startMs": al[3],
         "stopMs": al[4],
-        "aCode": a
+        "aCode": a,
+        "aRefCode": al[5],
+        "aRefsCode": al[6]
       })
     return myjson
 
