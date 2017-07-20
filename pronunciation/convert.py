@@ -39,7 +39,7 @@ def generate_dictionary(config_file_name):
 
 	output_file = sys.stdout
 	output_file.write('!SIL sil\n')
-	output_file.write('UNK spn\n')
+	output_file.write('<UNK> spn\n')
 	for token in input_tokens:
 		cur = 0
 		res = [token]
