@@ -1,12 +1,17 @@
-TMP_PATH: "tmp"
-CORPUS_PATH: "/corpus"
-SCRIPTS_PATH: "/asr-daan"
+# No trailing slashes please!
+CORPUS_PATH: "input/data"
+SCRIPTS_PATH: "/kaldi-helpers"
+
+OUTPUT_PATH: "output"
 KALDI_PATH: "/kaldi"
 
 # Assuming this is relative to the scripts path
-LETTER_TO_SOUND: "pronunciation/abui_config.txt"
+LETTER_TO_SOUND: "input/abui_toy_config.txt"
 
 # TODO
 LOCALE: "en-AU.utf8"
 
-KALDI_PROJECT_NAME: "abui"
+KALDI_PROJECT_NAME: "abui_toy"
+
+SILENCE_PHONES: SIL,sil,spn
+OPTIONAL_SILENCE_PHONES: SIL

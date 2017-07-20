@@ -1,83 +1,129 @@
-# Tasks can be run using 'Task' task runner
-# Cross-platform binaries available at: https://github.com/go-task/task
-#
-# Set variables such as {{ .CORPUS_PATH }} in sister file, "Taskvars.yml"
-
-build-all-abui:
+_build-default:
   desc: "Run through entire processing pipeline"
   cmds:
     # 
+    - git pull
+    - ^clean-output-folder
     - ^tmp-makedir
-    - ^tmp-delete
     - ^make-kaldi-subfolders
 
-    - export PYTHONIOENCODING="utf-8"
+    - task elan-to-json > {{ .OUTPUT_PATH }}/tmp/toy_elan.json
 
-    # Gather ELAN/TextGrid data into json files
-    - task elan-to-json > {{ .TMP_PATH }}/elan1.json
-    - task elan-to-json > {{ .TMP_PATH }}/elan2.json
+    - task json-to-kaldi < {{ .OUTPUT_PATH }}/tmp/toy_elan.json
 
-    # # Concatenate all gathered data into one file
-    - find {{ .TMP_PATH }} -name "elan*.json" -exec cat {} +
-        | task cat-all-json > {{ .TMP_PATH }}/all_corpus_json.json
-
-    # Filter JSON data: for Abui select only the tier which is the same as the speaker ID
-    - cat {{ .TMP_PATH }}/all_corpus_json.json
-        | jq 'map(select(.speakerId == .tier))' > {{ .TMP_PATH }}/selected_corpus_json.json
-
-    # Clean corpus data for import to Kaldi
-    - task clean-json < {{ .TMP_PATH }}/selected_corpus_json.json > {{ .TMP_PATH }}/cleaned_selected_corpus.json
-
-    # Make Kaldi export directory and populate with derived data
-    - task json-to-kaldi < {{ .TMP_PATH }}/cleaned_selected_corpus.json
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
 
     # Extract unique wordlist for corpus data, then generate pronunciation dictionary
-    - task make-wordlist < {{ .TMP_PATH }}/cleaned_selected_corpus.json > {{ .TMP_PATH }}/corpus_wordlist.txt
-    - task make-prn-dict < {{ .TMP_PATH }}/corpus_wordlist.txt > {{ .TMP_PATH }}/lexicon.txt
+    - task make-wordlist < {{ .OUTPUT_PATH }}/tmp/toy_elan.json > {{ .OUTPUT_PATH }}/tmp/corpus_wordlist.txt
+    - task make-prn-dict < {{ .OUTPUT_PATH }}/tmp/corpus_wordlist.txt > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/lexicon.txt
 
-    - cp {{ .TMP_PATH }}/json_splitted/corpus.txt {{ .TMP_PATH }}/kaldi/data/local/
-    - cp {{ .TMP_PATH }}/lexicon.txt {{ .TMP_PATH }}/kaldi/data/local/dict/
-    - task make-nonsil-phones > {{ .TMP_PATH }}/kaldi/data/local/dict/nonsilence_phones.txt
+    - task make-nonsil-phones > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/nonsilence_phones.txt
+    - task copy-silence-phones
 
-    - cp {{ .TMP_PATH }}/json_splitted/segments {{ .TMP_PATH }}/json_splitted/text {{ .TMP_PATH }}/json_splitted/utt2spk {{ .TMP_PATH }}/json_splitted/wav.scp {{ .TMP_PATH }}/kaldi/data/test/
-    - cp {{ .TMP_PATH }}/json_splitted/segments {{ .TMP_PATH }}/json_splitted/text {{ .TMP_PATH }}/json_splitted/utt2spk {{ .TMP_PATH }}/json_splitted/wav.scp {{ .TMP_PATH }}/kaldi/data/train/
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/train/
 
-    - echo "Pipeline completed without errors"
+    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/segments > {{ .OUTPUT_PATH }}/kaldi/data/train/segments
+    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/segments {{ .OUTPUT_PATH }}/kaldi/data/test/
+
+    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp > {{ .OUTPUT_PATH }}/kaldi/data/train/wav.scp
+    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
+
+    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/text > {{ .OUTPUT_PATH }}/kaldi/data/train/text
+    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/text {{ .OUTPUT_PATH }}/kaldi/data/test/
+
+    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk > {{ .OUTPUT_PATH }}/kaldi/data/train/utt2spk
+    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/utt2spk {{ .OUTPUT_PATH }}/kaldi/data/test/
+
+    - task gather-wavs extract-wavs
+
+    - ^make-conf-files
+
+    - ^copy-helper-scripts
+
+    - echo "######################## Build task completed without errors"
+
+_run-training:
+  desc: "Run Kaldi on prepared data"
+  dir: output/kaldi
+  cmds:
+    - ./run.sh
+
+# Stuff inside default /kaldi-helpers/Taskfile.yml
+copy-helper-scripts:
+  desc: "Copy the necessary scripts from Kaldi"
+  cmds:
+    - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp input/path.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/run.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/local/score.sh {{ .OUTPUT_PATH }}/kaldi/local/score.sh
+
+    # Copy in steps and utils from another Kaldi project
+    - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
+    - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
+
+make-conf-files:
+  desc: "Make and copy necessary configuration files into output/kaldi/conf"
+  cmds:
+    # TODO: inject relevant variables from Taskvars.yml into a Moustache template
+    # instead of copying from asr-daan/pronunciation/... folder
+    - cp pronunciation/kaldi-demo-prep/digits/conf/* {{ .OUTPUT_PATH }}/kaldi/conf
 
 ##################### Test definitions
+copy-silence-phones:
+  desc: "Copy or make relevant silence/optional silence phones config for Kaldi"
+  cmds:
+    # TODO: Let users define this as part of the CONFIG variables inside
+    # Taskvars.yml
+    - echo "{{ .SILENCE_PHONES }}" | tr , '\n' > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/silence_phones.txt
+    - echo "{{ .OPTIONAL_SILENCE_PHONES }}"  | tr , '\n' > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/optional_silence.txt
+    # - cp input/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    # - cp input/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
 
-##################### Job definitions
+gather-wavs:
+  desc: "Gather all wav files inside input/data into output/media.zip"
+  dir: input/data
+  cmds:
+    - tar cf /kaldi-helpers/{{ .OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
+
+extract-wavs:
+  desc: "Extract all wav files into kaldi folder"
+  dir: output
+  cmds:
+    - tar xf media.tar -C kaldi
+    - rm media.tar
+
+clean-output-folder:
+  desc: "Delete all files and folders inside /kaldi-helpers/output"
+  cmds:
+    - rm -rf output/*
 
 tmp-makedir:
   desc: "Make the tmp directory, if it does not exist"
   cmds:
-    - if [ ! -d {{ .TMP_PATH }} ]; then mkdir {{ .TMP_PATH }}; fi
+    - if [ ! -d {{ .OUTPUT_PATH }}/tmp ]; then mkdir {{ .OUTPUT_PATH }}/tmp; fi
 
 tmp-delete:
   deps: [tmp-makedir]
   desc: "Delete all files in tmp directory"
   cmds:
     # Make directory non-empty, just in case it's just been initialised
-    - cp /dev/null {{ .TMP_PATH }}/null
-    - rm -r {{ .TMP_PATH }}/*
+    - cp /dev/null {{ .OUTPUT_PATH }}/null
+    - rm -r {{ .OUTPUT_PATH }}/*
 
 make-kaldi-subfolders:
   desc: "Makes subfolder structure which Kaldi expects"
   cmds:
-    - mkdir -p {{ .TMP_PATH }}/kaldi/data/local/dict
-    - mkdir -p {{ .TMP_PATH }}/kaldi/data/test
-    - mkdir -p {{ .TMP_PATH }}/kaldi/data/train
+    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/local/dict
+    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/test
+    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/train
 
-    - mkdir -p {{ .TMP_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/test
-    - mkdir -p {{ .TMP_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/train
+    # - mkdir -p {{ .OUTPUT_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/test
+    # - mkdir -p {{ .OUTPUT_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/train
 
     # Top level directories
-    - mkdir -p {{ .TMP_PATH }}/kaldi/conf
-    - mkdir -p {{ .TMP_PATH }}/kaldi/local
-
-    # Copy in steps and utils from another Kaldi project
-    # - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/steps {{ .TMP_PATH }}/kaldi/steps
-    # - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/utils {{ .TMP_PATH }}/kaldi/utils
+    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/conf
+    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/local
 
 make-nonsil-phones:
   desc: "Generate non-silence phones file from LETTER_TO_SOUND file defined in Taskfile.yml"
@@ -89,6 +135,8 @@ make-nonsil-phones:
 
 elan-to-json:
   desc: "Convert a folder of .eaf files to a single JSON file"
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .SCRIPTS_PATH }}/audio_segmenter/elan_to_json.py {{ .CORPUS_PATH }}
 
@@ -109,16 +157,16 @@ make-wordlist:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3 text_processing/make_wordlist.py
+    - python3 {{ .SCRIPTS_PATH }}/text_processing/make_wordlist.py
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3 pronunciation/convert.py --config {{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}
+    - python3 {{ .SCRIPTS_PATH }}/pronunciation/convert.py --config {{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}
 
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
-    - python3 audio_segmenter/json_to_kaldi.py --output-folder="{{ .TMP_PATH }}/json_splitted"
+    - python3 {{ .SCRIPTS_PATH }}/audio_segmenter/json_to_kaldi.py --output-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
