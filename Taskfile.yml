@@ -54,7 +54,7 @@ copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
   cmds:
     - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp input/path.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp path.sh {{ .OUTPUT_PATH }}/kaldi/
     - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/run.sh {{ .OUTPUT_PATH }}/kaldi/
     - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/local/score.sh {{ .OUTPUT_PATH }}/kaldi/local/score.sh
 
