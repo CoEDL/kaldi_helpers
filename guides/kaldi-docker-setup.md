@@ -14,35 +14,26 @@ Once the Docker daemon is running, open up a Terminal/Command Prompt window and 
 docker --version
 ```
 
-## Pull the `coedl/kaldi-srilm` container
+## Pull the `coedl/kaldi-helpers` container
 
 ```
-docker pull coedl/kaldi-srilm
+docker pull coedl/kaldi-helpers:0.1
 ```
 
-## Clone/pull the latest `jotia1/asr-daan` repository from GitHub
-
-I'm going to clone it into a folder called `asr-sandbox` on the Desktop.
-
-```
-# mkdir ~/Desktop/asr-sandbox
-# cd ~/Desktop/asr-sandbox
-git clone https://github.com/jotia1/asr-daan
-```
+***Note.*** The `:0.1` following `coedl/kaldi-helpers` indicate the version number of the Docker image.
 
 ## Run the docker image
 
-**Note the `-v` option** which mounts your local `asr-daan/pronunciation/kaldi-demo-prep/digits` mounted into the Docker container's `/kaldi/egs/digits`
-
 ```
-docker run -it --rm -v ~/Desktop/asr-sandbox/asr-daan/pronunciation/kaldi-demo-prep/digits/:/kaldi/egs/digits coedl/kaldi-srilm
+docker run -it --rm coedl/kaldi-helpers:0.1 /bin/bash
 ```
 
-## Execute `run.sh`
+## Run the `task` command inside the Docker image
 
-Change the directory (`cd`) to the place where the digits directoy had been mounted (the path after Docker `-v` in the command above), then run the Kaldi run script (`./run.sh`).
+Running the `task` command inside the `coedl/kald-helpers` image shows a list of helper tasks available.
 
-```
-cd /kaldi/egs/digits
-./run.sh
-```
+![](../screenshots/docker-task.png)
+
+See `/corpora/abui_toy_corpus` and `/corpora/komnzo-toy_corpus` in this repository on how to use these helper tasks to prepare corpus data for use with Kaldi.
+
+
