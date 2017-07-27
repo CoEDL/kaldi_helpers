@@ -16,7 +16,10 @@ The data from these ELAN files will first need to be filtered and cleaned before
 
 The file `komnzo-custom-build.sh` specifies a custom build pipeline, re-purposing various helper tasks to filter and clean the data. To run the script inside the `coedl/kaldi-helpers` Docker image, we can use the command:
 
-```
+```bash
+# Change ~/git-repos/coedl/kaldi-helpers/corpora/komnzo-toy_corpus/
+# to the appropriate path for your computer
+
 docker run --rm \
            -v ~/git-repos/coedl/kaldi-helpers/corpora/komnzo-toy_corpus/:/kaldi-helpers/input \
            coedl/kaldi-helpers:0.1 \
