@@ -1,102 +1,108 @@
-_build-default:
-  desc: "Run through entire processing pipeline"
+######################################### DRIVER TASKS ############################################
+
+_run-all-default:
+  desc: "Run through entire processing pipeline with default settings"
   cmds:
-    # 
-    - git pull
-    - ^clean-output-folder
-    - ^tmp-makedir
-    - ^make-kaldi-subfolders
+    # Default extract stage, assuming data are cleaned and filtered.
+    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    - task elan-to-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task _build-default
+    # - task _train-test-default
 
-    - task elan-to-json > {{ .OUTPUT_PATH }}/tmp/toy_elan.json
-
-    - task json-to-kaldi < {{ .OUTPUT_PATH }}/tmp/toy_elan.json
-
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
-
-    # Extract unique wordlist for corpus data, then generate pronunciation dictionary
-    - task make-wordlist < {{ .OUTPUT_PATH }}/tmp/toy_elan.json > {{ .OUTPUT_PATH }}/tmp/corpus_wordlist.txt
-    - task make-prn-dict < {{ .OUTPUT_PATH }}/tmp/corpus_wordlist.txt > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/lexicon.txt
-
-    - task make-nonsil-phones > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/nonsilence_phones.txt
-    - task copy-silence-phones
-
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/train/
-
-    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/segments > {{ .OUTPUT_PATH }}/kaldi/data/train/segments
-    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/segments {{ .OUTPUT_PATH }}/kaldi/data/test/
-
-    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp > {{ .OUTPUT_PATH }}/kaldi/data/train/wav.scp
-    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
-
-    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/text > {{ .OUTPUT_PATH }}/kaldi/data/train/text
-    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/text {{ .OUTPUT_PATH }}/kaldi/data/test/
-
-    # - sort {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk > {{ .OUTPUT_PATH }}/kaldi/data/train/utt2spk
-    # - cp {{ .OUTPUT_PATH }}/kaldi/data/train/utt2spk {{ .OUTPUT_PATH }}/kaldi/data/test/
-
-    - task gather-wavs extract-wavs
-
-    - ^make-conf-files
-
-    - ^copy-helper-scripts
+_build-default:
+  desc: "Run through only the build stage with default settings (i.e. not the clean/filter/extract stage)"
+  cmds:
+    - task generate-kaldi-files
+           copy-generated-files copy-phones-configs copy-helper-scripts
+           gather-wavs extract-wavs
 
     - echo "######################## Build task completed without errors"
 
-_run-training:
-  desc: "Run Kaldi on prepared data"
-  dir: output/kaldi
+_train-test-default:
+  desc: "Run Kaldi train and test stages on default settings"
+  # dir: input/output/kaldi
   cmds:
-    - ./run.sh
+    - cd {{ .OUTPUT_PATH }}/kaldi; ./run.sh
 
-# Stuff inside default /kaldi-helpers/Taskfile.yml
+######################################### HELPER TASKS ############################################
+
+generate-kaldi-files:
+  desc: "Generate corpus-related files for Kaldi from JSON data"
+  cmds:
+    - task json-to-kaldi < {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+
+    - task make-wordlist < {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }} |
+      task make-prn-dict > {{ .OUTPUT_PATH }}/tmp/lexicon.txt
+
+    - task make-nonsil-phones > {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt
+
+    # Grab variables from Taskvars.yml and inject into mo command
+    - KALDI_ROOT={{ .KALDI_ROOT }}
+      HELPERS_PATH={{ .HELPERS_PATH }}
+      CORPUS_PATH={{ .CORPUS_PATH }}
+        mo < templates/path.sh > {{ .OUTPUT_PATH }}/tmp/path.sh
+
+    - MFCC_SAMPLE_FREQUENCY={{ .MFCC_SAMPLE_FREQUENCY }}
+      MFCC_FRAME_LENGTH={{ .MFCC_FRAME_LENGTH }}
+      MFCC_LOW_FREQ={{ .MFCC_LOW_FREQ }}
+      MFCC_HIGH_FREQ={{ .MFCC_HIGH_FREQ }}
+      MFCC_NUM_CEPS={{ .MFCC_NUM_CEPS }}
+        mo < templates/mfcc.conf > {{ .OUTPUT_PATH }}/tmp/mfcc.conf
+
+    - DECODE_BEAM={{ .DECODE_BEAM }}
+      DECODE_FIRST_BEAM={{ .DECODE_FIRST_BEAM }}
+        mo < templates/decode.config > {{ .OUTPUT_PATH }}/tmp/decode.config
+
+##################### Helpers for copying things
+
+copy-generated-files:
+  desc: "Copy generated files to appropriate (sub)directories under /output/kaldi"
+  cmds:
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
+    - cp {{ .OUTPUT_PATH }}/tmp/lexicon.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    
+    - cp {{ .OUTPUT_PATH }}/tmp/path.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp {{ .OUTPUT_PATH }}/tmp/mfcc.conf {{ .OUTPUT_PATH }}/kaldi/conf/
+    - cp {{ .OUTPUT_PATH }}/tmp/decode.config {{ .OUTPUT_PATH }}/kaldi/conf/
+
+    # Note the default settings make the 'train' and 'test' folders identical
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/train/
+
 copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
   cmds:
-    - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp path.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/run.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp /kaldi-helpers/pronunciation/kaldi-demo-prep/digits/local/score.sh {{ .OUTPUT_PATH }}/kaldi/local/score.sh
+    - cp /kaldi-helpers/templates/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp /kaldi-helpers/templates/run.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp /kaldi-helpers/templates/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
+    - cp -R {{ .KALDI_ROOT }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
+    - cp -R {{ .KALDI_ROOT }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
 
-    # Copy in steps and utils from another Kaldi project
-    - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
-    - cp -R {{ .KALDI_PATH }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
-
-make-conf-files:
-  desc: "Make and copy necessary configuration files into output/kaldi/conf"
+copy-phones-configs:
+  desc: "Copy provided silence/optional silence configuration files"
   cmds:
-    # TODO: inject relevant variables from Taskvars.yml into a Moustache template
-    # instead of copying from asr-daan/pronunciation/... folder
-    - cp pronunciation/kaldi-demo-prep/digits/conf/* {{ .OUTPUT_PATH }}/kaldi/conf
-
-##################### Test definitions
-copy-silence-phones:
-  desc: "Copy or make relevant silence/optional silence phones config for Kaldi"
-  cmds:
-    # TODO: Let users define this as part of the CONFIG variables inside
-    # Taskvars.yml
-    - echo "{{ .SILENCE_PHONES }}" | tr , '\n' > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/silence_phones.txt
-    - echo "{{ .OPTIONAL_SILENCE_PHONES }}"  | tr , '\n' > {{ .OUTPUT_PATH }}/kaldi/data/local/dict/optional_silence.txt
-    # - cp input/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    # - cp input/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp input/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp input/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
 
 gather-wavs:
   desc: "Gather all wav files inside input/data into output/media.zip"
-  dir: input/data
   cmds:
-    - tar cf /kaldi-helpers/{{ .OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
+    # Tar up .wav files in order to keep folder structure the same
+    - cd {{ .CORPUS_PATH }}; tar cf /kaldi-helpers/{{ .OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
 
 extract-wavs:
   desc: "Extract all wav files into kaldi folder"
-  dir: output
   cmds:
-    - tar xf media.tar -C kaldi
-    - rm media.tar
+    - tar xf {{ .OUTPUT_PATH }}/media.tar -C {{ .OUTPUT_PATH }}/kaldi
+    - rm {{ .OUTPUT_PATH }}/media.tar
+
+##################### Helpers for folders stuff
 
 clean-output-folder:
   desc: "Delete all files and folders inside /kaldi-helpers/output"
   cmds:
-    - rm -rf output/*
+    - rm -rf {{ .OUTPUT_PATH }}/*
 
 tmp-makedir:
   desc: "Make the tmp directory, if it does not exist"
@@ -117,18 +123,20 @@ make-kaldi-subfolders:
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/local/dict
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/test
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/train
-
-    # - mkdir -p {{ .OUTPUT_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/test
-    # - mkdir -p {{ .OUTPUT_PATH }}/kaldi/{{ .KALDI_PROJECT_NAME }}_audio/train
-
-    # Top level directories
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/conf
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/local
 
-make-nonsil-phones:
-  desc: "Generate non-silence phones file from LETTER_TO_SOUND file defined in Taskfile.yml"
+##################### Helpers for generating things (mostly wrappers for Python scripts)
+
+cat-all-json:
+  desc: "Concatenate all .json files into one .json file"
   cmds:
-    - grep -v '^#' < {{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}
+    - jq -s '. | add'
+
+make-nonsil-phones:
+  desc: "Generate non-silence phones file from LETTER_TO_SOUND_PATH file defined in Taskfile.yml"
+  cmds:
+    - grep -v '^#' < {{ .LETTER_TO_SOUND_PATH }}
       | cut -d' ' -f2
       | grep -v '^$'
       | sort -u
@@ -140,10 +148,10 @@ elan-to-json:
   cmds:
     - python3.6 {{ .SCRIPTS_PATH }}/audio_segmenter/elan_to_json.py {{ .CORPUS_PATH }}
 
-cat-all-json:
-  desc: "Concatenate all .json files into one .json file"
+json-to-kaldi:
+  desc: "Generate files for the Kaldi format"
   cmds:
-    - jq -s '. | add'
+    - python3 {{ .SCRIPTS_PATH }}/audio_segmenter/json_to_kaldi.py --output-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
@@ -164,9 +172,4 @@ make-prn-dict:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3 {{ .SCRIPTS_PATH }}/pronunciation/convert.py --config {{ .SCRIPTS_PATH }}/{{ .LETTER_TO_SOUND }}
-
-json-to-kaldi:
-  desc: "Generate files for the Kaldi format"
-  cmds:
-    - python3 {{ .SCRIPTS_PATH }}/audio_segmenter/json_to_kaldi.py --output-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
+    - python3 {{ .SCRIPTS_PATH }}/pronunciation/convert.py --config {{ .LETTER_TO_SOUND_PATH }}
