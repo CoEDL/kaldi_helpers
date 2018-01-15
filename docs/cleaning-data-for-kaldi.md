@@ -24,7 +24,6 @@ Choose a set of data from your corpus. Look for already-transcribed content from
 - Remove inline conventions such as speaker or language codes.
 
 
-
 ## Cleaning audio 
 
 As well as cleaning the transcription, ensure the audio is in a standard format. The scripts anticipate 41.KHz 16bit mono audio. If needed, you can convert audio to this format using [Switch](http://www.nch.com.au/switch/index.html) (OSX) or [Audacity](http://www.audacityteam.org/) 
@@ -58,6 +57,5 @@ u u
 e e 
 o o
 ```
-
 
 You should now have a collection of cleaned transcriptions, audio in the right format, and a mapping file of the letters to the sounds for the language.
