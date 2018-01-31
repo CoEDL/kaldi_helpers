@@ -15,7 +15,7 @@ def save_wordlist(wordlist):
     global args
     try:
         for word in wordlist:
-            print(word + '\n', file=sys.stderr)
+            print(word + '\n', file=sys.stdout)
     except Exception:
         print("Could not write out to file " + args.infile, file=sys.stderr)
         exit()
