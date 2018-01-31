@@ -120,35 +120,6 @@ def filter_data(data, removeEng=False):
     return cleaned_data
 
 
-def _filter_data(data):
-    # Returns a dictionary of words and frequencies
-    raise Exception("Deprecated")
-    to_remove = string.punctuation + "…" + "’" + "“" + "–" + "”"
-    special_cases = ["<silence>"]
-    empty_utts = []
-    for utt in data:
-        words = utt.get('transcript').split()
-        for word in words:
-            if word in special_cases:
-                empty_utts.append(utt)
-            if word == "@ENG@":
-                # In abui following is a translation to english
-                words = words[:words.index(word)]
-                break
-
-        for char in to_remove:
-            # word = word.replace(char, '')
-            words = [word.replace(char, '') for word in words]
-
-        words = [word for word in words if not bool(re.search(r'\d', word)) and not word.isdigit()]  # Filter digits
-        utt['transcript'] = ' '.join(words).lower()
-        if utt['transcript'].strip() == "":
-            empty_utts.append(utt)
-
-    # clean any empty/special case utterances
-    [data.remove(utt) for utt in empty_utts]
-
-
 def load_file(filename=""):
     # Given a filename load and return the object
     try:
