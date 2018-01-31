@@ -14,6 +14,7 @@ CORPUS_PATH: "input/data"
 CLEANED_FILTERED_DATA: "cleaned_filtered.json"
 
 # For output/kaldi/data/local/dict
+# Relative to HELPERS_PATH
 LETTER_TO_SOUND_PATH: "input/config/letter_to_sound.txt"
 SILENCE_PHONES_PATH: "input/config/silence_phones.txt"
 OPTIONAL_SILENCE_PHONES_PATH: "input/config/optional_silence.txt"
@@ -30,3 +31,9 @@ MFCC_NUM_CEPS: 7
 # Template is in kaldi-helpers/templates/
 DECODE_BEAM: 11.0
 DECODE_FIRST_BEAM: 8.0
+
+# For slicing audio and eafs to separate clips and text
+DIRTY_DATA_PATH: "input/dirty-data"
+TARGET_LANGUAGE_TIER: "Phrase"
+SILENCE_MARKER: "*PUB"
+SILENCE_REF_TIER: "Silence"

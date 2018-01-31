@@ -7,12 +7,21 @@ _run-all-default:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task elan-to-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build-default
-    # - task _train-test-default
+
+_run-all-dirty:
+  desc: "Strip English from dirty data then run processing pipeline with default settings"
+  cmds:
+    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    - task split-eafs
+    - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task _build-default
+
 
 _build-default:
   desc: "Run through only the build stage with default settings (i.e. not the clean/filter/extract stage)"
   cmds:
     - task generate-kaldi-files
+           generate-kaldi-configs
            copy-generated-files copy-phones-configs copy-helper-scripts
            gather-wavs extract-wavs
 
@@ -36,6 +45,9 @@ generate-kaldi-files:
 
     - task make-nonsil-phones > {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt
 
+generate-kaldi-configs:
+  desc: "Generate config files for Kaldi from templates, populate with Taskvars"
+  cmds:
     # Grab variables from Taskvars.yml and inject into mo command
     - KALDI_ROOT={{ .KALDI_ROOT }}
       HELPERS_PATH={{ .HELPERS_PATH }}
@@ -61,7 +73,7 @@ copy-generated-files:
     - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
     - cp {{ .OUTPUT_PATH }}/tmp/lexicon.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
     - cp {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    
+
     - cp {{ .OUTPUT_PATH }}/tmp/path.sh {{ .OUTPUT_PATH }}/kaldi/
     - cp {{ .OUTPUT_PATH }}/tmp/mfcc.conf {{ .OUTPUT_PATH }}/kaldi/conf/
     - cp {{ .OUTPUT_PATH }}/tmp/decode.config {{ .OUTPUT_PATH }}/kaldi/conf/
@@ -73,9 +85,9 @@ copy-generated-files:
 copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
   cmds:
-    - cp /kaldi-helpers/templates/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp /kaldi-helpers/templates/run.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp /kaldi-helpers/templates/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
+    - cp {{ .HELPERS_PATH }}/templates/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp {{ .HELPERS_PATH }}/templates/run.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp {{ .HELPERS_PATH }}/templates/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
     - cp -R {{ .KALDI_ROOT }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
     - cp -R {{ .KALDI_ROOT }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
 
@@ -89,7 +101,8 @@ gather-wavs:
   desc: "Gather all wav files inside input/data into output/media.zip"
   cmds:
     # Tar up .wav files in order to keep folder structure the same
-    - cd {{ .CORPUS_PATH }}; tar cf /kaldi-helpers/{{ .OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
+    # because Kaldi's wav.scp data file uses dir structure
+    - cd {{ .CORPUS_PATH }}; tar cf {{ .HELPERS_PATH }}/{{ .OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
 
 extract-wavs:
   desc: "Extract all wav files into kaldi folder"
@@ -100,7 +113,7 @@ extract-wavs:
 ##################### Helpers for folders stuff
 
 clean-output-folder:
-  desc: "Delete all files and folders inside /kaldi-helpers/output"
+  desc: "Delete all files and folders inside output directory"
   cmds:
     - rm -rf {{ .OUTPUT_PATH }}/*
 
@@ -158,7 +171,7 @@ clean-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3 {{ .SCRIPTS_PATH }}/clean_text.py
+    - python3 {{ .SCRIPTS_PATH }}/clean_json.py  --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
@@ -173,3 +186,25 @@ make-prn-dict:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3 {{ .SCRIPTS_PATH }}/make_prn_dict.py --config {{ .LETTER_TO_SOUND_PATH }}
+
+
+resample-audio:
+  desc: "Change audio to 16 bit 44.1kHz mono WAV"
+  env:
+    PYTHONIOENCODING: "utf-8"
+  cmds:
+    - python3 {{ .SCRIPTS_PATH }}/resample_audio.py --corpus {{ .CORPUS_PATH }}
+
+silence-audio:
+  desc: "Silence audio that has an annotion in matching Elan file 'Silence' tier"
+  env:
+    PYTHONIOENCODING: "utf-8"
+  cmds:
+    - python3 {{ .SCRIPTS_PATH }}/silence_audio.py --corpus {{ .CORPUS_PATH }}
+
+split-eafs:
+  desc: "Read Elan files, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
+  env:
+    PYTHONIOENCODING: "utf-8"
+  cmds:
+    - python3 {{ .SCRIPTS_PATH }}/split_eafs.py --input_dir {{ .DIRTY_DATA_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --silence_marker {{ .SILENCE_MARKER }} --silence_tier {{ .SILENCE_REF_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json --output_audio_dir {{ .CORPUS_PATH }} --output_text_dir {{ .OUTPUT_PATH }}/tmp/labels
