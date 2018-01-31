@@ -43,7 +43,12 @@ for json_transcript in json_transcripts:
     transcript = json_transcript["transcript"]
     startMs = json_transcript["startMs"]
     stopMs = json_transcript["stopMs"]
-    speakerId = json_transcript["speakerId"]
+
+    if "speakerId" in json_transcript:
+        speakerId = json_transcript["speakerId"]
+    else:
+        speakerId = str(uuid.uuid4())
+
     audioFileName = json_transcript["audioFileName"].replace("\\", "/")
 
     if speakerId not in speakers:
