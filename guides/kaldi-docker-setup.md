@@ -17,15 +17,15 @@ docker --version
 ## Pull the `coedl/kaldi-helpers` container
 
 ```
-docker pull coedl/kaldi-helpers:0.1
+docker pull coedl/kaldi-helpers:0.2
 ```
 
-***Note.*** The `:0.1` following `coedl/kaldi-helpers` indicate the version number of the Docker image.
+***Note.*** The `:0.2` following `coedl/kaldi-helpers` indicate the version number of the Docker image.
 
 ## Run the docker image
 
 ```
-docker run -it --rm coedl/kaldi-helpers:0.1 /bin/bash
+docker run -it --rm coedl/kaldi-helpers:0.2 /bin/bash
 ```
 
 ## Run the `task` command inside the Docker image
