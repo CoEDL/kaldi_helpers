@@ -19,7 +19,7 @@ args = parser.parse_args()
 overwrite = args.overwrite
 g_baseDir = args.corpus
 g_audioExts = ["*.wav"]
-g_soxPath = "/usr/local/bin/sox"
+g_soxPath = "/usr/bin/sox"
 g_tmpDir = "tmp"
 
 
