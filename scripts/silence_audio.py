@@ -92,7 +92,7 @@ def process():
 
 # look for .eaf files, recirsively from the passed corpus dir
 # for fpath in glob.iglob(corpus + '/**/*.eaf', recursive=True):
-for fpath in glob.iglob(corpus + '/**/*.eaf'):
+for fpath in glob.iglob(corpus + '/*.eaf'):
     print(fpath)
     eaffile = Eaf(fpath)
     names = eaffile.get_tier_names()
