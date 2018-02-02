@@ -1,4 +1,4 @@
-# v 0.0.2
+# v 0.0.3
 ######################################### DRIVER TASKS ############################################
 
 _run-elan-default:
@@ -18,7 +18,7 @@ _run-elan-split:
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build-default
 
-_run-all-trs:
+_run-trs-default:
   desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
