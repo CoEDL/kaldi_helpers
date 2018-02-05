@@ -4,14 +4,16 @@ _run-elan-default:
   desc: "Run through processing pipeline for Elan transcriptions"
   cmds:
     # Default extract stage, assuming data are cleaned and filtered.
+    # Extracts data from all tiers in input files, which will flow all the way through the pipeline to the lexicon
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
-    - task elan-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - task elan-to-json
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build-default
 
 _run-elan-split:
   desc: "Segment audio and text by Elan annotation start/end times then run through processing pipeline with default settings"
   cmds:
+    # Extracts only from 'Phrase' tier, and skips annotations that have a corresponding annotation on a ref tier
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task split-eafs
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
@@ -168,7 +170,7 @@ elan-to-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/elan_to_json.py {{ .CORPUS_PATH }}
+    - python3.6 {{ .SCRIPTS_PATH }}/elan_to_json.py --input_dir {{ .CORPUS_PATH }} --output_dir {{ .OUTPUT_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 trs-to-json:
   desc: "Convert a folder of .trs files to a single JSON file"

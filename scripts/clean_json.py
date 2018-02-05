@@ -36,10 +36,34 @@ def extract_wordlist(data):
     return result
 
 
+def load_file(filename=""):
+    # Given a filename load and return the object
+    try:
+        f = sys.stdin
+        if filename:
+            f = open(filename, "r", encoding="utf-8")
+        data = json.load(f)
+    except Exception as e:
+        print("Could not read file " + filename)
+        exit()
+    return data
+
+
+def write_json(data):
+    # Write a data object in json format
+    try:
+        print(json.dumps(data, indent=2))
+    except Exception:
+        print("Could not write out json file")
+        exit()
+
+
 def filter_data(data, removeEng=False):
+
     # Given a data object remove any transcriptons with undesirable features
     to_remove = string.punctuation + "…’“–”‘°"
-    special_cases = ["<silence>", 'Q:', 'A:']
+    # Any words you want to ignore
+    special_cases = ["<silence>"]
     translation_tags = set(['@eng@', '<ind:', '<eng:'])
     cleaned_data = []
 
@@ -57,14 +81,16 @@ def filter_data(data, removeEng=False):
         # Using remove english and ignore after '<' 1.8% 20.4K
 
     for utt in data:
+        # print(utt, file=sys.stderr)
+
         trans = utt.get('transcript').lower()
         words = trans.split()
 
         # Note this is an assumption only translations come after '<'
         # if "<" in trans:
-        r = re.search(r'[<]@?(eng|indo|ind|mala)', trans)
-        if bool(r):
-            words = trans[:r.span()[0]].split()
+        # r = re.search(r'[<]@?(eng|indo|ind|mala)', trans)
+        # if bool(r):
+        #     words = trans[:r.span()[0]].split()
 
         clean_words = []
         valid_utterance = True
@@ -120,43 +146,21 @@ def filter_data(data, removeEng=False):
     return cleaned_data
 
 
-def load_file(filename=""):
-    # Given a filename load and return the object
-    try:
-        f = sys.stdin
-        if filename:
-            f = open(filename, "r", encoding="utf-8")
-        data = json.load(f)
-    except Exception as e:
-        print("Could not read file " + filename)
-        exit()
-    return data
-
-
-def write_json(data):
-    # Write a data object in json format
-    try:
-        print(json.dumps(data, indent=2))
-    except Exception:
-        print("Could not write out json file")
-        exit()
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--infile", type=str, help="The input file to clean.")
     parser.add_argument("-re", "--removeEng", help="Remove english like utterances", action="store_true")
     args = parser.parse_args()
 
-    if args.infile:
-        data = load_file(args.infile)
-    else:
-        data = load_file()
+    data = load_file(args.infile)
 
     print("Filtering...", end='', flush=True, file=sys.stderr)
-    data = filter_data(data, args.removeEng)  # mutates the data object
-    write_json(data)
-    print("Done.", file=sys.stderr)
+
+    f_data = filter_data(data, args.removeEng)  # mutates the data object
+
+    write_json(f_data)
+    # print(f_data, file=sys.stderr)
+    # print("Done.", file=sys.stderr)
 
 
 if __name__ == '__main__':
