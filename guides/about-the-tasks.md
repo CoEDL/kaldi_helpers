@@ -1,8 +1,8 @@
 # Kaldi Pipeline tasks
 
-The pipeline uses go-task to run Python scripts for data cleaning and preparation, and to organise the cleaned data into the folders that Kaldi expects.
+The pipeline uses a program in the Docker container named 'go-task' to run Python scripts for data cleaning and preparation, and to organise the cleaned data into the folders that Kaldi expects.
 
-The first task to run is to resample audio to 16 bit 44.1KkHz (which is what the Kaldi config is set to).
+We have a task `resample-audio` that can change the sample rate, bit depth and number of channels of audio to 44.1kHz, 16 bit, mono (which is what the Kaldi config is set to).
 
 If the audio files contain English or other non-target language, there are two processes that can strip these out.
 
@@ -34,9 +34,9 @@ The final task, `_train-test-default`, runs Kaldi's run.sh script.
 
 The helper tasks are grouped by driver tasks, so a user would typically just do:
 
-- task _run-elan-default
-- task _build-default
-- task _train-test-default
+- task _run-elan
+- task _build
+- task _train-test
 
 
 
@@ -44,7 +44,7 @@ The helper tasks are grouped by driver tasks, so a user would typically just do:
 ## A little bit more detail about each task
 
 `resample-audio`
-Resamples audio to 16 bit 44.1 kHz WAV
+Resamples audio to 16 bit 44.1 kHz mono WAV
 
 
 `silence-audio`
@@ -69,7 +69,11 @@ Sets up the folders that Kaldi requires, in the output directory
 
 
 `elan-to-json`
-Writes a JSON file (tmp/cleaned_filtered.json), containing all the text, annotation times and speaker info from the Elan files in input/data/
+`trs-to-json`
+`textgrid-to-json`
+Looks for files in the input/data folder and writes a JSON file (tmp/cleaned_filtered.json) containing all the text, annotation times and speaker info from a tier in Elan, Transcriber or Textgrid files respectively. Note that the Elan tier currently must be named 'Phrase'. We will change this soon to use the first tier in a file rather than a partiular named tier.
+
+The Textgrid input script has not yet been widely tested.
 
 
 `json-to-kaldi`

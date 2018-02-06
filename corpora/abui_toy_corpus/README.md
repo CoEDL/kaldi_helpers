@@ -33,7 +33,7 @@ The easiest way to use kaldi-helpers is through the Docker image (see `/guides/k
 docker run --rm \
            -v ~/git-repos/coedl/kaldi-helpers/corpora/abui_toy_corpus/:/kaldi-helpers/input \
            coedl/kaldi-helpers:0.2 \
-           task _run-elan-default
+           task _run-elan
 ```
 
 ***Notes.***
