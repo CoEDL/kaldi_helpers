@@ -59,6 +59,7 @@ def extract_textgrid_intervals(filename):
                         text = text[:-1]
 
                 # need to clean the text here, else it could create invalid json
+                # let's start by stripping quotes
                 current_interval["text"] = text.replace('"', '')
     f.close()
     return intervals
@@ -72,13 +73,17 @@ def write_json(filename, intervals):
     # here is where we ignore the filename and replace with stdout
     json_f = sys.stdout
 
+    # Get paths to files
+    inDir, name = os.path.split(filename)
+    basename, ext = os.path.splitext(name)
+
     def print_interval(interval, final):
         print("{", file=json_f)
         print("\"transcript\": \"%s\"," % interval["text"], file=json_f)
         print("\"startMs\": %f," % sec2milli(float(interval["xmin"])), file=json_f)
         print("\"stopMs\": %f," % sec2milli(float(interval["xmax"])), file=json_f)
         print("\"speakerId\": \"\",", file=json_f)
-        print("\"audioFileName\": \"%s\"" % os.path.join(".", filename), file=json_f)
+        print("\"audioFileName\": \"%s\"" % os.path.join(".", basename + "wav"), file=json_f)
         if final:
             print("}", file=json_f)
         else:
