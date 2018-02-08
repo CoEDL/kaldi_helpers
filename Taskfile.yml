@@ -192,7 +192,8 @@ textgrid-to-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/textgrid_to_json.py --input-dir {{ .CORPUS_PATH }}
+    # praatio is another that won't install because of the ssl error. use 3.4 for now
+    - python3.4 {{ .SCRIPTS_PATH }}/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
 
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
