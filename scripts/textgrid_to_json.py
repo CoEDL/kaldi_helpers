@@ -83,7 +83,7 @@ def write_json(filename, intervals):
         print("\"startMs\": %f," % sec2milli(float(interval["xmin"])), file=json_f)
         print("\"stopMs\": %f," % sec2milli(float(interval["xmax"])), file=json_f)
         print("\"speakerId\": \"\",", file=json_f)
-        print("\"audioFileName\": \"%s\"" % os.path.join(".", basename + "wav"), file=json_f)
+        print("\"audioFileName\": \"%s\"" % os.path.join(".", basename + ".wav"), file=json_f)
         if final:
             print("}", file=json_f)
         else:
