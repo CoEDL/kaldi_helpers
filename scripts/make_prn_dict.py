@@ -28,7 +28,7 @@ def generate_dictionary(config_file_name):
         if (line[0] == '#'):
             continue
 
-        mapping = list(filter(None, line.strip().split(' ')))
+        mapping = list(filter(None, line.strip().split(' ', 1)))
 
         if (len(mapping) > 1):
             sound_mappings.append((mapping[0], mapping[1]))
