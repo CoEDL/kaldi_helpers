@@ -100,7 +100,7 @@ generate-kaldi-configs:
 copy-generated-files:
   desc: "Copy generated files to appropriate (sub)directories under /output/kaldi"
   cmds:
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/training/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
     - cp {{ .OUTPUT_PATH }}/tmp/lexicon.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
     - cp {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
 
@@ -108,9 +108,9 @@ copy-generated-files:
     - cp {{ .OUTPUT_PATH }}/tmp/mfcc.conf {{ .OUTPUT_PATH }}/kaldi/conf/
     - cp {{ .OUTPUT_PATH }}/tmp/decode.config {{ .OUTPUT_PATH }}/kaldi/conf/
 
-    # Note the default settings make the 'train' and 'test' folders identical
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/text {{ .OUTPUT_PATH }}/tmp/json_splitted/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/train/
+    # Note the default settings make the 'train' and 'test' folders identical (not anymore!)
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/text {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
+    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/training/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/training/text {{ .OUTPUT_PATH }}/tmp/json_splitted/training/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/training/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/train/
 
 copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
