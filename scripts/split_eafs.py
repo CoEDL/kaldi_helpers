@@ -112,9 +112,10 @@ def read_eaf(ie):
             skip = True
 
         if skip is True:
-            print('skipping annotation: ' + annotation, start, end)
+            # print('skipping annotation: ' + annotation, start, end)
+            print("skipping")
         else:
-            print('processing annotation: ' + annotation, start, end)
+            # print('processing annotation: ' + annotation, start, end)
             # build the output audio/text filename
             fname = basename + "_" + str(i)
             obj = {
