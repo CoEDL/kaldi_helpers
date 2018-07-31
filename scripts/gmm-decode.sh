@@ -15,14 +15,18 @@
 #    files, consult the official Kaldi documentation.
 
 # INPUT:
-#    transcriptions/
-#        wav.scp
+#    data/
+#       infer/          <= these need to be created
+#           wav.scp
+#           utt2spk
+#           spk2utt
+#           text        <= put a transcription here for quick comparison against generated one
 #
 #    config/
 #        mfcc.conf
 #
-#    experiment/
-#        triphones_deldel/
+#    exp/
+#        tri/
 #            final.mdl
 #
 #            graph/
@@ -30,13 +34,14 @@
 #                words.txt
 
 # OUTPUT:
-#    transcriptions/
-#        feats.ark
-#        feats.scp
-#        delta-feats.ark
-#        lattices.ark
-#        one-best.tra
-#        one-best-hypothesis.txt
+#    data/
+#       infer/
+#            feats.ark
+#            feats.scp
+#            delta-feats.ark
+#            lattices.ark
+#            one-best.tra
+#            one-best-hypothesis.txt
 
 
 
@@ -47,62 +52,39 @@
 # export LC_ALL=C
 
 # AUDIO --> FEATURE VECTORS
-#compute-mfcc-feats \
-#    --config=conf/mfcc.conf \
-#    scp:data/new/wav.scp \
-#    ark,scp:data/test/feats.ark,data/test/feats.scp
+steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
 
-steps/make_mfcc.sh --nj 1 data/test exp/make_mfcc/test mfcc
-
-#add-deltas \
-#    scp:data/test/feats.scp \
-#    ark:data/test/delta-feats.ark
-
-#add-deltas scp:mfcc/raw_mfcc_test.1.scp ark:data/test/delta-feats.ark
-
-#add-deltas scp:data/test/feats.scp ark:data/test/delta-feats.ark
-
-#add-deltas scp:mfcc/raw_mfcc_test.1.scp ark:data/test/delta-feats.ark
-
-apply-cmvn --utt2spk=ark:data/test/utt2spk scp:mfcc/cmvn_test.scp scp:mfcc/raw_mfcc_test.1.scp ark:- | add-deltas ark:- ark:data/test/delta-feats.ark
+apply-cmvn --utt2spk=ark:data/infer/utt2spk scp:mfcc/cmvn_test.scp scp:mfcc/raw_mfcc_infer.1.scp ark:- | add-deltas ark:- ark:data/infer/delta-feats.ark
 
 # TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
 gmm-latgen-faster \
     --word-symbol-table=exp/tri1/graph/words.txt \
     exp/tri1/final.mdl \
     exp/tri1/graph/HCLG.fst \
-    ark:data/test/delta-feats.ark \
-    ark,t:lattices.ark
-
-# TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
-#gmm-latgen-faster \
-#    --word-symbol-table=exp/tri1/graph/words.txt \
-#    exp/tri1/final.mdl \
-#    exp/tri1/graph/HCLG.fst \
-#    ark:mfcc/raw_mfcc_test.1.ark \
-#    ark,t:lattices.ark
+    ark:data/infer/delta-feats.ark \
+    ark,t:data/infer/lattices.ark
 
 # LATTICE --> BEST PATH THROUGH LATTICE
 lattice-best-path \
     --word-symbol-table=exp/tri1/graph/words.txt \
-    ark:lattices.ark \
-    ark,t:one-best.tra
+    ark:data/infer/lattices.ark \
+    ark,t:data/infer/one-best.tra
 
 # BEST PATH INTERGERS --> BEST PATH WORDS
 utils/int2sym.pl -f 2- \
     exp/tri1/graph/words.txt \
-    one-best.tra \
-    > one-best-hypothesis.txt
+    data/infer/one-best.tra \
+    > data/infer/one-best-hypothesis.txt
 
 echo ""
 echo ""
 echo "Reference (human-provided golden transription) / Ref"
-cat data/test/text
+cat data/infer/text
 
 echo ""
 echo ""
 echo "Machine-generated transcription / Hypothesis / Hyp"
-cat one-best-hypothesis.txt
+cat data/infer/one-best-hypothesis.txt
 
 echo ""
 echo ""
