@@ -172,6 +172,7 @@ make-kaldi-subfolders:
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/train
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/conf
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/local
+    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/wavs
 
 ##################### Helpers for generating things (mostly wrappers for Python scripts)
 
