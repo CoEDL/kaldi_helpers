@@ -253,7 +253,7 @@ silence-audio:
     - python3 {{ .SCRIPTS_PATH }}/silence_audio.py --corpus {{ .CORPUS_PATH }}
 
 split-eafs:
-  desc: "Read Elan files, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
+  desc: "Read Elan files in input/dirty-data, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
