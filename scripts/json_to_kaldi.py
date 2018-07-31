@@ -63,7 +63,7 @@ class KaldiInput:
 
         return self.recordings[audioFileName]
 
-    def add(self, recording_id, utterance_id, startMs, stopMs, transcript, silence_markers):
+    def add(self, recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers):
         if silence_markers:
             self.l_transcripts.append(utterance_id + " !SIL " + transcript + " !SIL\n")
         else:
@@ -71,7 +71,7 @@ class KaldiInput:
         self.l_segments.append(utterance_id + " " + recording_id + " " + "%f %f\n" % (startMs / 1000.0, stopMs / 1000.0))
         # f_utt2spk.write(utterance_id + " " + speaker_id + "\n")
         # hack to match utterances to utterances
-        self.l_utt2spk.append(utterance_id + " " + utterance_id + "\n")
+        self.l_utt2spk.append(utterance_id + " " + speaker_id + "\n")
         self.l_corpus.append(transcript + "\n")
 
     def write_and_close(self):
@@ -129,7 +129,7 @@ for i, json_transcript in enumerate(json_transcripts):
         utterance_id = speaker_id + "-" + str(uuid.uuid4())
 
         silence_markers = False
-        testing_input.add(recording_id, utterance_id, startMs, stopMs, transcript, silence_markers)
+        testing_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
     else:
         # add speaker id
         speaker_id = training_input.add_speaker_if_missing(speakerId)
@@ -140,7 +140,7 @@ for i, json_transcript in enumerate(json_transcripts):
         utterance_id = speaker_id + "-" + str(uuid.uuid4())
 
         silence_markers = True
-        training_input.add(recording_id, utterance_id, startMs, stopMs, transcript, silence_markers)
+        training_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
 
 testing_input.write_and_close()
 training_input.write_and_close()
