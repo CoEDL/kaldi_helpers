@@ -20,7 +20,7 @@ _run-elan-split:
     - task _build
 
 _run-trs:
-  desc: "Run through processing pipeline for TRS transcriptions"
+  desc: "Run through processing pipeline for TRS transcriptions (Transcriber)"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task trs-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
@@ -28,7 +28,7 @@ _run-trs:
     - task _build
 
 _run-textgrid:
-  desc: "Run through processing pipeline for TRS transcriptions"
+  desc: "Run through processing pipeline for Textgrid transcriptions (PRAAT)"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task textgrid-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
@@ -141,7 +141,7 @@ gather-wavs:
 extract-wavs:
   desc: "Extract all wav files into kaldi folder"
   cmds:
-    - tar xf {{ .OUTPUT_PATH }}/media.tar -C {{ .OUTPUT_PATH }}/kaldi
+    - tar xf {{ .OUTPUT_PATH }}/media.tar -C {{ .OUTPUT_PATH }}/kaldi/wavs
     - rm {{ .OUTPUT_PATH }}/media.tar
 
 ##################### Helpers for folders stuff

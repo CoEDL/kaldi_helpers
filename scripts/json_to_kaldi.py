@@ -14,7 +14,7 @@ args = parser.parse_args()
 # input_json_fname = args.input_json
 output_folder = args.output_folder
 silence_markers = not args.no_silence_markers
-
+wav_folder = "wavs/"
 
 # f_in = open(input_json_fname, "r")
 f_in = sys.stdin
@@ -24,6 +24,7 @@ f_in.close()
 
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
+
 
 class KaldiInput:
     def __init__(self, output_folder):
@@ -57,7 +58,8 @@ class KaldiInput:
         if audioFileName not in self.recordings:
             # create recording id
             self.recordings[audioFileName] = str(uuid.uuid4())
-            self.l_recordings.append(self.recordings[audioFileName] + " " + audioFileName + "\n")
+
+            self.l_recordings.append(self.recordings[audioFileName] + " " + wav_folder + audioFileName + "\n")
 
         return self.recordings[audioFileName]
 
@@ -113,11 +115,9 @@ for i, json_transcript in enumerate(json_transcripts):
 
     audioFileName = json_transcript["audioFileName"].replace("\\", "/")
 
-
-
-    #speaker_id = speakers[speakerId]
-    #recording_id = recordings[audioFileName]
-    #utterance_id = speakers[speakerId] + "-" + str(uuid.uuid4())
+    # speaker_id = speakers[speakerId]
+    # recording_id = recordings[audioFileName]
+    # utterance_id = speakers[speakerId] + "-" + str(uuid.uuid4())
 
     if i % 10 == 0:
         # add speaker id
@@ -128,6 +128,7 @@ for i, json_transcript in enumerate(json_transcripts):
 
         utterance_id = speaker_id + "-" + str(uuid.uuid4())
 
+        silence_markers = False
         testing_input.add(recording_id, utterance_id, startMs, stopMs, transcript, silence_markers)
     else:
         # add speaker id
@@ -138,6 +139,7 @@ for i, json_transcript in enumerate(json_transcripts):
 
         utterance_id = speaker_id + "-" + str(uuid.uuid4())
 
+        silence_markers = True
         training_input.add(recording_id, utterance_id, startMs, stopMs, transcript, silence_markers)
 
 testing_input.write_and_close()
