@@ -82,7 +82,7 @@ def read_eaf(ie):
 
         # print('processing annotation: ' + annotation, start, end)
         obj = {
-            'audioFileName': os.path.join(".", basename + ".wav"),
+            'audioFileName': basename + ".wav",
             'transcript': annotation,
             'startMs': start,
             'stopMs': end
