@@ -6,10 +6,10 @@ services:
 language: python
 
 before_install:
-  - docker pull coedl/kaldi-helpers:0.2
+  - docker pull coedl/src:0.2
 
 script:
   # Test that you can run _run-elan on abui-toy-corpus
-  - docker run -v `pwd`:/kaldi-helpers coedl/kaldi-helpers:0.2 bash -c
+  - docker run -v `pwd`:/src coedl/src:0.2 bash -c
     'ln -s corpora/abui_toy_corpus input;
     task _run-elan'

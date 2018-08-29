@@ -2,7 +2,7 @@
 #
 # Anonymise a wave file based on an Elan tier
 # Copyright Steven Bird stevenbird1@gmail.com 7 May 2016
-# Adapted for mono/stero and kaldi-helpers pipeline by Ben Foley Jan 2018
+# Adapted for mono/stero and src pipeline by Ben Foley Jan 2018
 # Assumes eaf file has millisecond offsets
 # Assumes do-not-publish annotations are non-overlapping
 # Should work whether the Silence tier is a child tier or not
