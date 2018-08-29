@@ -5,7 +5,7 @@
 # Optionally provide the output json file name with -j
 # Usage: python filter_text.py sample.json wordlist.txt
 
-
+from typing import List
 import argparse
 import json
 import re
@@ -13,15 +13,12 @@ import string
 import sys
 
 
-def save_wordlist(wordlist, filename):
+def save_wordlist(wordlist: List[str], filename: str) -> None:
     # Given a list of strings write to file
-    try:
-        with open(filename, 'w') as f:
-            for word in wordlist:
-                f.write(word + '\n')
-    except Exception:
-        print("Could not write out to file " + filename)
-        exit()
+    with open(filename, 'w') as f:
+        for word in wordlist:
+            f.write(word + '\n')
+        print(f'Wrote wordlist to {filename}')
 
 
 def extract_wordlist(data):
