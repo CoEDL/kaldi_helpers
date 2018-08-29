@@ -13,3 +13,8 @@ script:
   - docker run -v `pwd`:/src coedl/src:0.2 bash -c
     'ln -s corpora/abui_toy_corpus input;
     task _run-elan'
+
+# Build only these branches
+branches:
+  only:
+  - master
