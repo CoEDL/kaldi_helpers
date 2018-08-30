@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#
 # Parse trs file and extract information from it for json
 # Dumps json to sys stdout,
 # so you'll need to direct the output to a file when running the script
@@ -14,22 +15,14 @@ import json
 import platform
 import uuid
 
-parser = argparse.ArgumentParser(description='.', formatter_class=argparse.RawDescriptionHelpFormatter)
-
-parser.add_argument('-d', '--indir', dest='inputDir', help='Input directory, default=\'.\'', default='.')
-parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
-
-args = parser.parse_args()
-
-g_baseDir = args.inputDir
-
-g_verboseOutput = args.verbose
-
-if g_verboseOutput:
-    sys.stderror.write(g_baseDir + "\n")
-
 
 def findFirstFileByExt(setOfAllFiles, exts):
+    """
+    
+    :param setOfAllFiles: 
+    :param exts: 
+    :return: 
+    """
     for f in setOfAllFiles:
         name, ext = os.path.splitext(f)
         if ("*" + ext.lower()) in exts:
@@ -38,6 +31,12 @@ def findFirstFileByExt(setOfAllFiles, exts):
 
 
 def findFilesByExt(setOfAllFiles, exts):
+    """
+    
+    :param setOfAllFiles: 
+    :param exts: 
+    :return: 
+    """
     res = []
     for f in setOfAllFiles:
         name, ext = os.path.splitext(f)
@@ -47,8 +46,15 @@ def findFilesByExt(setOfAllFiles, exts):
 
 
 def condLog(cond, text):
+    """
+    Work around for UTF8 file name and the windows console 
+    :param cond: 
+    :param text: 
+    :return: 
+    """
     if cond:
-        # Super-annoying mumbojumbo to work around utf8 file name and the windows console which under the debugger claims to be utf8 but then fails regardless!
+        # Super-annoying mumbojumbo to work around utf8 file name and the windows console which under the debugger
+        # claims to be utf8 but then fails regardless!
         if platform.system() == 'Windows':
             sys.stderr.write(text.encode('cp850', errors='backslashreplace').decode(sys.stdout.encoding))
         else:
@@ -56,12 +62,9 @@ def condLog(cond, text):
         sys.stderr.flush()
 
 
-allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive=True))
-
-transcriptNames = findFilesByExt(allFilesInDir, set(["*.trs"]))
 
 
-def processFile(fileName):
+def processFile(fileName, g_verboseOutput):
     condLog(g_verboseOutput, "Processing transcript '%s'\n" % fileName)
 
     utterances = []
@@ -113,18 +116,45 @@ def processTurn(fileName, turnNode, waveName, tree):
     return result
 
 
-# iterate through all .trs files and process them, creates audio clip files and returns the set {fileName, transcriptString, speakerID}
-utterances = []
-for fn in transcriptNames:
-    utterances = utterances + processFile(fn)
+def main():
 
-resultBaseName, name = os.path.split(g_baseDir)
+    """ Run the entire trs_to_json.py as a command line utility """
 
-# if name == '.':
-#    outFileName = "utterances.json"
-# else:
-#    outFileName = name + ".json"
+    parser = argparse.ArgumentParser(description='.', formatter_class=argparse.RawDescriptionHelpFormatter)
 
-# with open(outFileName, 'w') as outfile:
-outfile = sys.stdout
-json.dump(utterances, outfile, indent=2)
+    parser.add_argument('-d', '--indir', dest='inputDir', help='Input directory, default=\'.\'', default='.')
+    parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
+
+    args = parser.parse_args()
+
+    g_baseDir = args.inputDir
+
+    g_verboseOutput = args.verbose
+
+    if g_verboseOutput:
+        sys.stderror.write(g_baseDir + "\n")
+
+    allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive=True))
+
+    transcriptNames = findFilesByExt(allFilesInDir, set(["*.trs"]))
+
+    # iterate through all .trs files and process them, creates audio clip files and returns the set
+    # {fileName, transcriptString, speakerID}
+    utterances = []
+    for fn in transcriptNames:
+        utterances = utterances + processFile(fn, g_verboseOutput)
+
+    resultBaseName, name = os.path.split(g_baseDir)
+
+    # if name == '.':
+    #    outFileName = "utterances.json"
+    # else:
+    #    outFileName = name + ".json"
+
+    # with open(outFileName, 'w') as outfile:
+    outfile = sys.stdout
+    json.dump(utterances, outfile, indent=2)
+
+
+if __name__ == '__main__':
+    main()
