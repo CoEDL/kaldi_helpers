@@ -14,7 +14,7 @@ class TestSaveWordlist:
             'love',
             'tests'
         ]
-        save_wordlist(wordlist, filename)
+        save_word_list(wordlist, filename)
         with open(filename, 'r') as file:
             assert file.read() == '\n'.join(wordlist)+'\n'
         os.remove("test.txt")

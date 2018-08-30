@@ -13,37 +13,43 @@ import string
 import sys
 
 
-def save_wordlist(wordlist: List[str], filename: str) -> None:
-    # Given a list of strings write to file
-    with open(filename, 'w') as f:
-        for word in wordlist:
+def save_word_list(word_list: List[str], file_name: str) -> None:
+    """ 
+    Given a list of strings, write them to a new file named filename. 
+    :param word_list: list of words to write.
+    :param file_name: name of file to write word list to.
+    """
+    with open(file_name, "w") as f:
+        for word in word_list:
             f.write(word + '\n')
-        print(f'Wrote wordlist to {filename}')
+        print(f"Wrote word list to {file_name}")
 
 
-def extract_wordlist(data):
-    # Given the data object produce a list of strings of single words
-    # Returned list is of unique words and sorted
-    result = []
-    for utt in data:
-        words = utt.get('transcript').split()
+def extract_word_list(json_data: dict) -> List[str]:
+    """
+    Unpack dictionary from json_file to list of words.
+    :param json_data: python dictionary read from a JSON file.
+    :return: list of unique words from data, sorted alphabetically.
+    """
+    result: List[str] = []
+    for utt in json_data:
+        words = utt.get("transcript").split()
         result.extend(words)
     result = list(set(result))
-    result.sort()
-    return result
+    return sorted(result)
 
 
-def load_file(filename=""):
-    # Given a filename load and return the object
-    try:
-        f = sys.stdin
-        if filename:
-            f = open(filename, "r", encoding="utf-8")
-        data = json.load(f)
-    except Exception as e:
-        print("Could not read file " + filename)
-        exit()
-    return data
+def load_file(file_name: str) -> dict:
+    """
+    Given a filename (argv or parameter) containing JSON, load and
+    return the a Python dictionary with containing the same information.
+    :param file_name: name of file containing JSON to read from.
+    :return a Python dictionary with the contents of the JSON file.
+    """
+    if file_name:
+        file = open(file_name, "r", encoding="utf-8")
+        data = json.load(file)
+        return data
 
 
 def write_json(data):
@@ -55,7 +61,7 @@ def write_json(data):
         exit()
 
 
-def filter_data(data, removeEng=False):
+def filter_data(data, remove_english=False):
 
     # Given a data object remove any transcriptons with undesirable features
     to_remove = string.punctuation + "…’“–”‘°"
@@ -64,7 +70,7 @@ def filter_data(data, removeEng=False):
     translation_tags = set(['@eng@', '<ind:', '<eng:'])
     cleaned_data = []
 
-    if removeEng:
+    if remove_english:
         use_langid = False
         if use_langid:
             from langid.langid import LanguageIdentifier, model
@@ -111,7 +117,7 @@ def filter_data(data, removeEng=False):
                 word = word.replace(char, '')
 
             # If word is in english dictionary count it
-            if removeEng and len(word) > 3 and word in eng_words:
+            if remove_english and len(word) > 3 and word in eng_words:
                 # print(word, file=sys.stderr)
                 eng_count += 1
 
@@ -123,12 +129,12 @@ def filter_data(data, removeEng=False):
             valid_utterance = False
 
         # Exclude utterance if > 10% english
-        if removeEng and len(clean_words) > 0 and eng_count / len(clean_words) > 0.1:
+        if remove_english and len(clean_words) > 0 and eng_count / len(clean_words) > 0.1:
             # print(round(eng_count / len(clean_words)), trans, file=sys.stderr)
             valid_utterance = False
 
         # Exclude utterance if langid thinks its english
-        if removeEng and use_langid and valid_utterance:
+        if remove_english and use_langid and valid_utterance:
             lang, prob = identifier.classify(cleaned_trans)
             if lang == 'en' and prob > 0.5:
                 valid_utterance = False
