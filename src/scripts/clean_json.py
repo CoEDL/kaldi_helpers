@@ -5,12 +5,13 @@
 # Optionally provide the output json file name with -j
 # Usage: python filter_text.py sample.json wordlist.txt
 
-from typing import List
-import argparse
 import json
 import re
 import string
 import sys
+from typing import List
+from argparse import ArgumentParser
+from .utilities.json_utilities import load_json_file
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:
@@ -37,19 +38,6 @@ def extract_word_list(json_data: dict) -> List[str]:
         result.extend(words)
     result = list(set(result))
     return sorted(result)
-
-
-def load_file(file_name: str) -> dict:
-    """
-    Given a filename (argv or parameter) containing JSON, load and
-    return the a Python dictionary with containing the same information.
-    :param file_name: name of file containing JSON to read from.
-    :return a Python dictionary with the contents of the JSON file.
-    """
-    if file_name:
-        file = open(file_name, "r", encoding="utf-8")
-        data = json.load(file)
-        return data
 
 
 def write_json(data):
@@ -149,19 +137,22 @@ def filter_data(data, remove_english=False):
     return cleaned_data
 
 
-def main():
-    parser = argparse.ArgumentParser()
+def main() -> None:
+    """
+    Run the entire clean_json process as a command line utility.
+    """
+    parser: ArgumentParser = ArgumentParser()
     parser.add_argument("--infile", type=str, help="The input file to clean.")
     parser.add_argument("-re", "--removeEng", help="Remove english like utterances", action="store_true")
     args = parser.parse_args()
 
-    data = load_file(args.infile)
+    data = load_json_file(args.infile)
 
     print("Filtering...", end='', flush=True, file=sys.stderr)
 
-    f_data = filter_data(data, args.removeEng)  # mutates the data object
+    filtered_data = filter_data(data, args.removeEng)  # mutates the data object
 
-    write_json(f_data)
+    write_json(filtered_data)
     # print(f_data, file=sys.stderr)
     # print("Done.", file=sys.stderr)
 
