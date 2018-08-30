@@ -5,13 +5,12 @@
 # Optionally provide the output json file name with -j
 # Usage: python filter_text.py sample.json wordlist.txt
 
-import json
 import re
 import string
 import sys
 from typing import List
 from argparse import ArgumentParser
-from .utilities.json_utilities import load_json_file
+from .utilities import load_json_file, write_dict_to_json_file
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:
@@ -38,15 +37,6 @@ def extract_word_list(json_data: dict) -> List[str]:
         result.extend(words)
     result = list(set(result))
     return sorted(result)
-
-
-def write_json(data):
-    # Write a data object in json format
-    try:
-        print(json.dumps(data, indent=2))
-    except Exception:
-        print("Could not write out json file")
-        exit()
 
 
 def filter_data(data, remove_english=False):
@@ -152,7 +142,7 @@ def main() -> None:
 
     filtered_data = filter_data(data, args.removeEng)  # mutates the data object
 
-    write_json(filtered_data)
+    write_dict_to_json_file(filtered_data, )
     # print(f_data, file=sys.stderr)
     # print("Done.", file=sys.stderr)
 
