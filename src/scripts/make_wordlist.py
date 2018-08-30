@@ -5,25 +5,33 @@
 # Optionally provide the output json file name with -j
 # Usage: python filter_text.py sample.json wordlist.txt
 
+from typing import List, Union
 import argparse
 import json
 import sys
+from .utilities import load_json_file
 
 
-def save_wordlist(wordlist):
-    # Given a list of strings write to file
+def save_wordlist(wordlist: List[str]) -> None:
+    """
+    Given a list of strings, write to a file.
+    :param wordlist: list of words to write.
+    """
     global args
     try:
         for word in wordlist:
             print(word + '\n', file=sys.stdout)
-    except Exception:
+    except Exception as e:
         print("Could not write out to file " + args.infile, file=sys.stderr)
         exit()
 
 
-def extract_wordlist(data):
-    # Given the data object produce a list of strings of single words
-    # Returned list is of unique words and sorted
+def extract_wordlist(data: dict) -> List[str]:
+    """
+    Given the data object, produce a list of string of single words.
+    :param data: a dictionary with contents of the JSON file
+    :return: sorted list of unique words
+    """
     result = []
     for utt in data:
         words = utt.get('transcript').split()
@@ -32,29 +40,18 @@ def extract_wordlist(data):
     result.sort()
     return result
 
-
-def load_file(filename=""):
-    # Given a filename load and return the object
-    try:
-        f = sys.stdin
-        if filename:
-            f = open(filename, "r", encoding="utf-8")
-        data = json.load(f)
-    except Exception as e:
-        print("Could not read file " + filename)
-        exit()
-    return data
-
-
 def main():
+
+    """ Run the entire make_wordlist.py as a command line utility """
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--infile", type=str, help="The input file to clean.")
     args = parser.parse_args()
 
     if args.infile:
-        data = load_file(args.infile)
+        data = load_json_file(args.infile)
     else:
-        data = load_file()
+        data = load_json_file()
 
     print("Wordlist...", end='', flush=True, file=sys.stderr)
 
