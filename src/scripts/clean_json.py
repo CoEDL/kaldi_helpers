@@ -8,7 +8,8 @@
 import re
 import string
 import sys
-from typing import List
+import nltk
+from typing import Dict, List, Set, Union
 from argparse import ArgumentParser
 from .utilities import load_json_file, write_dict_to_json_file
 
@@ -25,53 +26,76 @@ def save_word_list(word_list: List[str], file_name: str) -> None:
         print(f"Wrote word list to {file_name}")
 
 
-def extract_word_list(json_data: dict) -> List[str]:
+def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
     """
-    Unpack dictionary from json_file to list of words.
+    Unpack a dictionary constructed from a json_file containing the key
+    "transcript" into a (Python) list of words.
     :param json_data: python dictionary read from a JSON file.
     :return: list of unique words from data, sorted alphabetically.
     """
     result: List[str] = []
-    for utt in json_data:
-        words = utt.get("transcript").split()
+    for utterance in json_data:
+        words = utterance.get("transcript").split()
         result.extend(words)
     result = list(set(result))
     return sorted(result)
 
 
-def filter_data(data, remove_english=False):
+def get_english_words() -> Set[str]:
+    """
+    Gets a list of English words from the nltk corpora (~235k words).
+    N.B: will download the word list if not already available (~740kB).
+    :return: a set containing the English words
+    """
+    nltk.download('words')
+    from nltk.corpus import words
+    return set(words.words())
 
-    # Given a data object remove any transcriptons with undesirable features
+
+def clean_utterance(utterance: str,
+                    remove_english: bool=False,
+                    english_words: set={},
+                    punctuation: str=string.punctuation + "…’“–”‘°",
+                    special_cases: List[str]=['<silence>']) -> (int, List[str]):
+    translation_tags = {'@eng@', '<ind:', '<eng:'}
+    utterance = utterance.lower()
+    words = utterance.split()
+    clean_words = []
+    english_word_count = 0
+    for word in words:
+        if word in special_cases:
+            continue
+        if word in translation_tags:  # Translations / ignore
+            return [], 0
+        # If a word contains a digit, throw out whole utterance
+        if bool(re.search(r'\d', word)) and not word.isdigit():
+            return None
+        for mark in punctuation:
+            word = word.replace(mark, '')
+        if remove_english and len(word) > 3 and word in english_words:
+            # print(word, file=sys.stderr)
+            english_word_count += 1
+        clean_words.append(word)
+    return english_word_count, clean_words
+
+
+def filter_data(json_data: Dict[str, List[str]], remove_english=False) -> List[str]:
+
+    # Given a data object remove any transcriptions with undesirable features
     to_remove = string.punctuation + "…’“–”‘°"
     # Any words you want to ignore
     special_cases = ["<silence>"]
-    translation_tags = set(['@eng@', '<ind:', '<eng:'])
+    translation_tags = {'@eng@', '<ind:', '<eng:'}
     cleaned_data = []
 
     if remove_english:
-        use_langid = False
-        if use_langid:
-            from langid.langid import LanguageIdentifier, model
-            identifier = LanguageIdentifier.from_modelstring(model, norm_probs=True)
-        from nltk.corpus import words
-        eng_words = set(words.words())
-        # Using both 2.16% english in wordlist 14.6k words(slow)
-        # Using nltk dictionary 2.49% englisb in wordlist 15.5k words (fast)
-        # Using neither 11.1% english in wordlist 34.8k words (fast)
-        # Only words > 3 chars are counted, for audio-segment sample
-        # Using remove english and ignore after '<' 1.8% 20.4K
+        english_words = get_english_words()
 
-    for utt in data:
+    for utterance in json_data:
         # print(utt, file=sys.stderr)
 
-        trans = utt.get('transcript').lower()
+        trans = utterance.get('transcript').lower()
         words = trans.split()
-
-        # Note this is an assumption only translations come after '<'
-        # if "<" in trans:
-        # r = re.search(r'[<]@?(eng|indo|ind|mala)', trans)
-        # if bool(r):
-        #     words = trans[:r.span()[0]].split()
 
         clean_words = []
         valid_utterance = True
@@ -95,7 +119,7 @@ def filter_data(data, remove_english=False):
                 word = word.replace(char, '')
 
             # If word is in english dictionary count it
-            if remove_english and len(word) > 3 and word in eng_words:
+            if remove_english and len(word) > 3 and word in english_words:
                 # print(word, file=sys.stderr)
                 eng_count += 1
 
@@ -122,14 +146,15 @@ def filter_data(data, remove_english=False):
             continue
 
         # Should be a clean valid utterance
-        utt['transcript'] = cleaned_trans
-        cleaned_data.append(utt)
+        utterance['transcript'] = cleaned_trans
+        cleaned_data.append(utterance)
     return cleaned_data
 
 
-def main() -> None:
+def clean_json() -> None:
     """
     Run the entire clean_json process as a command line utility.
+    Usage: python clean_json.py --infile file.json [-re|--removeEng]
     """
     parser: ArgumentParser = ArgumentParser()
     parser.add_argument("--infile", type=str, help="The input file to clean.")
@@ -148,4 +173,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    clean_json()

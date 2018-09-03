@@ -26,7 +26,7 @@ def save_wordlist(wordlist: List[str]) -> None:
         exit()
 
 
-def extract_wordlist(data: dict) -> List[str]:
+def extract_word_list(data: dict) -> List[str]:
     """
     Given the data object, produce a list of string of single words.
     :param data: a dictionary with contents of the JSON file
@@ -40,26 +40,26 @@ def extract_wordlist(data: dict) -> List[str]:
     result.sort()
     return result
 
+
 def main():
 
-    """ Run the entire make_wordlist.py as a command line utility """
+    """
+    Run the entire make_wordlist.py as a command line utility
+    """
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--infile", type=str, help="The input file to clean.")
     args = parser.parse_args()
 
-    if args.infile:
-        data = load_json_file(args.infile)
-    else:
-        data = load_json_file()
+    data = load_json_file(args.infile)
 
     print("Wordlist...", end='', flush=True, file=sys.stderr)
 
-    wordlist = extract_wordlist(data)
+    word_list = extract_word_list(data)
     print("Done.", file=sys.stderr)
 
     print("Write out wordlist...", end='', flush=True, file=sys.stderr)
-    save_wordlist(wordlist)
+    save_wordlist(word_list)
     print("Done.", file=sys.stderr)
 
 
