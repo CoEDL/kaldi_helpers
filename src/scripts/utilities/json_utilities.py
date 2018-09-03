@@ -19,7 +19,7 @@ def load_json_file(file_name: str) -> dict:
     return data
 
 
-def write_dict_to_json_file(data: dict, output: Union[str, TextIOWrapper]) -> None:
+def write_dict_to_json_file(data: object, output: Union[str, TextIOWrapper]) -> None:
     """
     Writes the given Python dictionary object to a JSON file at the the given
     output location (which can either be a file - specified as a string, or
@@ -29,4 +29,4 @@ def write_dict_to_json_file(data: dict, output: Union[str, TextIOWrapper]) -> No
     """
     if isinstance(output, str):
         output = open(output, "w")
-    print(json.dumps(data, indent=2), file=output)
+    print(json.dumps(data, indent=2), file=output, flush=True)

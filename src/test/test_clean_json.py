@@ -33,10 +33,44 @@ class TestCleanJSON:
         assert "français" not in english_words
 
     def test_clean_utterance_remove_english(self) -> None:
-        example_utterance = "je veux une petite dejeuner"
+        example_utterance = {"transcript": "je veux une petite dejeuner"}
         english_words = get_english_words()
         cleaned_utterance, english_word_count = clean_utterance(example_utterance,
                                                                 remove_english=True,
-                                                                english_words=english_words)
-        assert cleaned_utterance == ['je', 'veux', 'une', 'dejeuner']
-        assert english_words == 1
+                                                                english_words=english_words,
+                                                                punctuation="…’“–”‘°",
+                                                                special_cases=['<silence>'])
+        assert cleaned_utterance == ['je', 'veux', 'une']  # Apparently dejeuner is in English?
+        assert english_word_count == 2
+
+    def test_clean_utterance_keep_english(self) -> None:
+        example_utterance = {"transcript": "I say, jeune homme!"}
+        english_words = get_english_words()
+        cleaned_utterance, english_word_count = clean_utterance(example_utterance,
+                                                                remove_english=True,
+                                                                english_words=english_words,
+                                                                punctuation="…,’“–”‘°!",
+                                                                special_cases=['<silence>'])
+        assert cleaned_utterance == ['i', 'say', 'jeune', 'homme']  # Apparently dejeuner is in English?
+        assert english_word_count == 0
+
+    def test_is_valid_utterance_remove_english(self) -> None:
+        cleaned_utterance = ['je', 'veux', 'acheter', 'la', 'nouveau', 'bonbon', 'pour', 'ma', 'mère',
+                             'et', 'mon', 'père']
+        langid_identifier = LanguageIdentifier.from_modelstring(model,
+                                                                norm_probs=True)
+        assert is_valid_utterance(clean_words=cleaned_utterance,
+                                  english_word_count=0,
+                                  remove_english=True,
+                                  use_langid=True,
+                                  langid_identifier=langid_identifier) is True
+
+    def test_is_valid_utterance_keep_english(self) -> None:
+        cleaned_utterance = ['i', 'say', 'jeune', 'homme']
+        langid_identifier = LanguageIdentifier.from_modelstring(model,
+                                                                norm_probs=True)
+        assert is_valid_utterance(clean_words=cleaned_utterance,
+                                  english_word_count=0,
+                                  remove_english=False,
+                                  use_langid=False,
+                                  langid_identifier=langid_identifier) is True
