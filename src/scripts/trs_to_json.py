@@ -17,7 +17,7 @@ import uuid
 from typing import Set, List
 
 
-def find_first_file_by_ext(set_of_all_files: Set[str], exts: str) -> str:
+def find_first_file_by_ext(set_of_all_files: List[str], exts: List[str]) -> str:
     """
     Searches for the first file with a given extension in a set of files.
     
@@ -32,7 +32,7 @@ def find_first_file_by_ext(set_of_all_files: Set[str], exts: str) -> str:
     return ""
 
 
-def find_files_by_ext(set_of_all_files: Set[str], exts: str) -> List[str]:
+def find_files_by_ext(set_of_all_files: Set[str], exts: Set[str]) -> Set[str]:
     """
     Searches for all files in the set of files with the given extension.
     
@@ -42,6 +42,7 @@ def find_files_by_ext(set_of_all_files: Set[str], exts: str) -> List[str]:
     """
 
     res = []
+
     for f in set_of_all_files:
         name, ext = os.path.splitext(f)
         if ("*" + ext.lower()) in exts:
@@ -158,9 +159,9 @@ def main():
     if g_verbose_output:
         sys.stderror.write(g_base_dir + "\n")
 
-    all_files_in_dir = set(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
+    all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
 
-    transcript_names = find_files_by_ext(all_files_in_dir, set(["*.trs"]))
+    transcript_names = find_files_by_ext(all_files_in_dir, list(["*.trs"]))
 
     # iterate through all .trs files and process them, creates audio clip files and returns the set
     # {file_name, transcriptString, speaker_ID}
