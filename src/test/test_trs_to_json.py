@@ -1,9 +1,10 @@
 import os
+import sys
 import pytest
 import glob
 from typing import List, Set, Dict
 from scripts.trs_to_json import *
-
+# Capsys
 
 class TestTRSToJSON:
 
@@ -55,7 +56,23 @@ class TestTRSToJSON:
 
 
     def test_cond_log(self):
-        assert 2 == 2
+
+        sys.stderr = open('err.txt', 'w') # import not working?? check
+        test_str1: str = "test"
+        cond_log(cond=True, text=test_str1);
+        with open("err.txt", "r") as f:
+            assert test_str1 == f.read()
+            f.close()
+
+        sys.stderr = open('err.txt', 'w')
+        test_str2: str = "Kaldi is a fun project\nASR is a cool tech\n"
+        cond_log(cond=True, text=test_str2);
+        with open("err.txt", "r") as f:
+            assert test_str2 == f.read()
+            f.close()
+
+        sys.stderr = sys.__stderr__
+        os.remove('err.txt')
 
     def test_process_file(self):
         assert 1 == 1

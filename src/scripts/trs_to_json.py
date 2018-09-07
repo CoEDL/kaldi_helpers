@@ -14,7 +14,7 @@ import argparse
 import json
 import platform
 import uuid
-from typing import Set, List
+from typing import Set, List, Dict, Union
 
 
 def find_first_file_by_ext(set_of_all_files: List[str], exts: List[str]) -> str:
@@ -52,9 +52,9 @@ def find_files_by_ext(set_of_all_files: Set[str], exts: Set[str]) -> Set[str]:
 
 def cond_log(cond: bool, text: str) -> None:
     """
-    Work around for UTF8 file name and the windows console.
+    Work around for UTF8 file name and the windows console. 
     
-    :param cond: condition to indicate whether text should be output to console
+    :param cond: condition to indicate whether text should be output to stderr
     :param text: text to output to stderr 
     """
 
@@ -67,8 +67,8 @@ def cond_log(cond: bool, text: str) -> None:
             sys.stderr.write(text)
         sys.stderr.flush()
 
+def process_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
 
-def process_file(file_name: str, g_verbose_output: bool) -> List[dict]:
     """
     Method to process the .trs files and returns a list of utterances.
     
@@ -82,8 +82,8 @@ def process_file(file_name: str, g_verbose_output: bool) -> List[dict]:
 
     utterances = []
     try:
-        tree = ET.parse(file_name)
-        root = tree.getroot()
+        tree = ET.parse(file_name) # loads an external XML section into this element tree
+        root = tree.getroot() # root of element tree
         wave_name = root.attrib['audio_file_name'] + ".wav"
         turn_nodes = tree.findall(".//Turn")
         for turn_node in turn_nodes:
@@ -106,7 +106,6 @@ def process_turn(file_name, turn_node, wave_name, tree):
     :param tree: XML data represented as a tree data structure
     :return: list of key information on utterances
     """
-
 
     # turn_start = float(turn_node.attrib['start_time'])
     turn_end = float(turn_node.attrib['end_time'])
