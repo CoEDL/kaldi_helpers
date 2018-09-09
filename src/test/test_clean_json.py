@@ -83,10 +83,10 @@ def test_clean_json_data_full_file() -> None:
     write_data_to_json_file(EXAMPLE_JSON_DATA, file_in_name)
     os.system(f"clean_json.py --infile file_in.json --outfile {file_out_name}"
               f" --removeEng --useLangid")
-    #assert load_json_file(file_out_name) == [
-    #    {"transcript": "je mappelle françois"},
-    #    {"transcript": "vraiment je nai jamais lu ça"}
-    #]
+    assert load_json_file(file_out_name) == [
+        {"transcript": "je mappelle françois"},
+        {"transcript": "vraiment je nai jamais lu ça"}
+    ]
     os.remove('file_in.json')
     os.remove('file_out.json')
 

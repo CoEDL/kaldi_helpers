@@ -28,7 +28,6 @@ def write_data_to_json_file(data: object, output: Union[str, TextIOWrapper]) -> 
     :param output: the file to write the dictionary contents to.
     """
     json_data_string = json.dumps(data, indent=2)
-    print(json_data_string)
     if isinstance(output, str):
         with open(output, "w") as file:
             file.write(json_data_string)
