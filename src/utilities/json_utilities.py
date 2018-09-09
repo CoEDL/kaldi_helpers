@@ -7,15 +7,15 @@ from typing import Union
 from _io import TextIOWrapper
 
 
-def load_json_file(file_name: str) -> dict:
+def load_json_file(file_name: str) -> object:
     """
     Given a filename (parameter) containing JSON, load and
-    return the a Python dictionary with containing the same information.
+    return the a list of python dictionaries with containing the same information.
     :param file_name: name of file containing JSON to read from.
     :return a Python dictionary with the contents of the JSON file.
     """
     file = open(file_name, "r", encoding="utf-8")
-    data: dict = json.load(file)
+    data: object = json.load(file)
     return data
 
 
@@ -27,6 +27,10 @@ def write_dict_to_json_file(data: object, output: Union[str, TextIOWrapper]) -> 
     :param data: the Python dictionary to be converted to JSON and written.
     :param output: the file to write the dictionary contents to.
     """
+    json_data_string = json.dumps(data, indent=2)
+    print(json_data_string)
     if isinstance(output, str):
-        output = open(output, "w")
-    print(json.dumps(data, indent=2), file=output, flush=True)
+        with open(output, "w") as file:
+            file.write(json_data_string)
+    else:
+        print(json_data_string, file=output, flush=True)
