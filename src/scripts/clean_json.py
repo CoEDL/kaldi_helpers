@@ -24,7 +24,7 @@ from argparse import ArgumentParser
 from langid.langid import LanguageIdentifier, model
 from nltk.corpus import words
 from typing import Dict, List, Set
-from utilities import load_json_file, write_dict_to_json_file
+from utilities import load_json_file, write_data_to_json_file
 
 
 def get_english_words() -> Set[str]:
@@ -169,7 +169,7 @@ def main() -> None:
                                     remove_english=args.removeEng,
                                     use_langid=args.useLangId)
 
-    write_dict_to_json_file(data=list(filtered_data),
+    write_data_to_json_file(data=list(filtered_data),
                             output=outfile)
 
     print(f"Finished! Wrote {str(len(filtered_data))} transcriptions.", end="", flush=True, file=outfile)

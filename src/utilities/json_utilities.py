@@ -19,9 +19,9 @@ def load_json_file(file_name: str) -> object:
     return data
 
 
-def write_dict_to_json_file(data: object, output: Union[str, TextIOWrapper]) -> None:
+def write_data_to_json_file(data: object, output: Union[str, TextIOWrapper]) -> None:
     """
-    Writes the given Python dictionary object to a JSON file at the the given
+    Writes the given Python dictionary (or list) object to a JSON file at the the given
     output location (which can either be a file - specified as a string, or
     directed to an output like sys.stdout or sys.stderr).
     :param data: the Python dictionary to be converted to JSON and written.

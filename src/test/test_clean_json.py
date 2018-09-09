@@ -1,7 +1,7 @@
 import os
 from _pytest.capture import CaptureFixture
 from scripts.clean_json import *
-from utilities import write_dict_to_json_file
+from utilities import write_data_to_json_file
 
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},
@@ -10,30 +10,6 @@ EXAMPLE_JSON_DATA = [
     {"transcript": "Oui, j'adore L'histoire secrète par Donna Tartt."},
     {"transcript": "Vraiment? Je n'ai jamais lu ça."},
 ]
-
-
-def test_save_word_list() -> None:
-    file_name: str = "test.txt"
-    word_list: List[str] = [
-        "hello",
-        "world",
-        "i",
-        "love",
-        "tests"
-    ]
-    save_word_list(word_list, file_name)
-    with open(file_name, "r") as file:
-        assert file.read() == "\n".join(word_list) + "\n"
-    os.remove("test.txt")  # Clean up
-
-
-def test_extract_word_list() -> None:
-    json_data = [
-        {"transcript": "Hello world I love tests"},
-        {"transcript": "I love tests too"}
-    ]
-    result = extract_word_list(json_data)
-    assert result == ["Hello", "I", "love", "tests", "too", "world"]
 
 
 def test_get_english_words() -> None:
@@ -104,15 +80,15 @@ def test_clean_json_data_full_file() -> None:
     file_in_name = 'file_in.json'
     file_out_name = 'file_out.json'
     os.system('touch file_out.json')
-    write_dict_to_json_file(EXAMPLE_JSON_DATA, file_in_name)
+    write_data_to_json_file(EXAMPLE_JSON_DATA, file_in_name)
     os.system(f"clean_json.py --infile file_in.json --outfile {file_out_name}"
               f" --removeEng --useLangid")
     #assert load_json_file(file_out_name) == [
     #    {"transcript": "je mappelle françois"},
     #    {"transcript": "vraiment je nai jamais lu ça"}
     #]
-    #os.remove('file_in.json')
-    #os.remove('file_out.json')
+    os.remove('file_in.json')
+    os.remove('file_out.json')
 
 
 def test_clean_json_data_full_command_line(capsys: CaptureFixture) -> None:
