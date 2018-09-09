@@ -33,7 +33,7 @@ except Exception:
 
 annotations_data = []
 
-# Build output dier if needed
+# Build output directory if needed
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 

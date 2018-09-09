@@ -11,7 +11,7 @@ EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},
     {"transcript": "Je m'appelle François."},
     {"transcript": "Est-ce tu a une livre préférér."},
-    {"transcript": "Oui, j'adore L'histoire secrète par Donna Tartt."},
+    {"transcript": "Oui, j'adore L'Histoire Secrète par Donna Tartt."},
     {"transcript": "Vraiment? Je n'ai jamais lu ça."},
 ]
 """

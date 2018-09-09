@@ -17,37 +17,37 @@ import uuid
 from typing import Set, List
 
 
-def find_first_file_by_ext(set_of_all_files: List[str], exts: List[str]) -> str:
+def find_first_file_by_ext(set_of_all_files: List[str], extensions: List[str]) -> str:
     """
     Searches for the first file with a given extension in a set of files.
     
     :param set_of_all_files: set of file names in string format
-    :param exts: file extension being searched for
+    :param extensions: file extension being searched for
     :return: name of the first file_name that is matched, if any. otherwise, this method returns an empty string
     """
-    for f in set_of_all_files:
-        name, ext = os.path.splitext(f)
-        if ("*" + ext.lower()) in exts:
-            return f
+    for file in set_of_all_files:
+        name, extension = os.path.splitext(file)
+        if ("*" + extension.lower()) in extensions:
+            return file
     return ""
 
 
-def find_files_by_ext(set_of_all_files: Set[str], exts: Set[str]) -> Set[str]:
+def find_files_by_ext(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
     """
-    Searches for all files in the set of files with the given extension.
+    Searches for all files in the set of files with the given extensions.
     
     :param set_of_all_files: set of file names in string format
-    :param exts: file extension being searched for
+    :param extensions: file extension being searched for
     :return: list of file_names matched with given extension. if none exists, returns an empty list.
     """
 
-    res = []
+    results = set()
 
     for f in set_of_all_files:
         name, ext = os.path.splitext(f)
-        if ("*" + ext.lower()) in exts:
-            res.append(f)
-    return res
+        if ("*" + ext.lower()) in extensions:
+            results.add(f)
+    return results
 
 
 def cond_log(cond: bool, text: str) -> None:
@@ -107,7 +107,6 @@ def process_turn(file_name, turn_node, wave_name, tree):
     :return: list of key information on utterances
     """
 
-
     # turn_start = float(turn_node.attrib['start_time'])
     turn_end = float(turn_node.attrib['end_time'])
     speaker_ID = turn_node.get('speaker', '')
@@ -157,11 +156,11 @@ def main():
     g_verbose_output = args.verbose
 
     if g_verbose_output:
-        sys.stderror.write(g_base_dir + "\n")
+        sys.stderr.write(g_base_dir + "\n")
 
     all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
 
-    transcript_names = find_files_by_ext(all_files_in_dir, list(["*.trs"]))
+    transcript_names = find_files_by_ext(set(all_files_in_dir), {"*.trs"})
 
     # iterate through all .trs files and process them, creates audio clip files and returns the set
     # {file_name, transcriptString, speaker_ID}
