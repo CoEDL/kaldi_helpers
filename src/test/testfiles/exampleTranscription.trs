@@ -1,0 +1,1408 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+
+<Trans scribe="mlbsguest" audio_filename="140724_1000_ex2_BJS" version="2" version_date="140726">
+
+<Episode>
+
+<Section type="report" startTime="0" endTime="2411.755">
+
+<Turn startTime="0" endTime="2411.755">
+
+<Sync time="0"/>
+
+[BJS; 20140724; 1000; ex2; B; clear day]
+
+<Sync time="95.049"/>
+
+i1: hover fly
+
+<Sync time="100.81"/>
+
+i1 scan p18
+
+<Sync time="106.214"/>
+
+i1 other
+
+<Sync time="110.274"/>
+
+i1 search
+
+<Sync time="113.814"/>
+
+i1 scan p19
+
+<Sync time="117.498"/>
+
+i1 search
+
+<Sync time="122.411"/>
+
+i1 lost
+
+<Sync time="165.535"/>
+
+i2: bumble bee
+
+<Sync time="169.439"/>
+
+i2 search
+
+<Sync time="172.196"/>
+
+i2 exit w1
+
+<Sync time="197.84"/>
+
+i3: bumble bee
+
+<Sync time="201.381"/>
+
+i3 enter w1
+
+<Sync time="201.709"/>
+
+i3 search
+
+<Sync time="202.76"/>
+
+i3 scan p10
+
+<Sync time="205.172"/>
+
+i3 scan p7
+
+<Sync time="208.02"/>
+
+i3 land p7 
+
+<Sync time="210.815"/>
+
+i3 scan p7
+
+<Sync time="213.234"/>
+
+i3 scan p10
+
+<Sync time="215.37"/>
+
+i3 search
+
+<Sync time="218.442"/>
+
+i3 scan p21
+
+<Sync time="221.013"/>
+
+i3 other
+
+<Sync time="227.743"/>
+
+i3 search
+
+<Sync time="229.794"/>
+
+i3 scan p19
+
+<Sync time="231.912"/>
+
+i3 search
+
+<Sync time="248.119"/>
+
+i3 exit w1
+
+<Sync time="262.103"/>
+
+i4: bumble bee
+
+<Sync time="265.508"/>
+
+i4 enter w4
+
+<Sync time="266.19"/>
+
+i4 search
+
+<Sync time="268.097"/>
+
+i4 scan p2
+
+<Sync time="270.454"/>
+
+i4 search
+
+<Sync time="273.674"/>
+
+i4 exit w3
+
+<Sync time="294.159"/>
+
+i5: bumble bee
+
+<Sync time="298.341"/>
+
+i5 search
+
+<Sync time="300.312"/>
+
+i5 land p20
+
+<Sync time="302.958"/>
+
+i5 scan p20
+
+<Sync time="303.747"/>
+
+i5 search
+
+<Sync time="307.416"/>
+
+i5 exit 
+
+<Sync time="361.586"/>
+
+i6: bumble bee
+
+<Sync time="365.826"/>
+
+i6 enter w4
+
+<Sync time="367.154"/>
+
+i6 exit w2
+
+<Sync time="390.993"/>
+
+i7: bumble bee
+
+<Sync time="391.353"/>
+
+i7 search
+
+<Sync time="391.7"/>
+
+i7 scan p4
+
+<Sync time="393.796"/>
+
+i7 search
+
+<Sync time="394.157"/>
+
+i7 scan p7
+
+<Sync time="396.773"/>
+
+i7 search
+
+<Sync time="399.369"/>
+
+i7 scan p10
+
+<Sync time="401.749"/>
+
+i7 search
+
+<Sync time="404.989"/>
+
+i7 exit w2
+
+<Sync time="455.776"/>
+
+i8: bumble bee
+
+<Sync time="458.915"/>
+
+i8 search
+
+<Sync time="461.34"/>
+
+i8 lost
+
+<Sync time="508.974"/>
+
+i9: bumble bee 
+
+<Sync time="509.608"/>
+
+i9 search
+
+<Sync time="511.836"/>
+
+i9 scan p16
+
+<Sync time="515.979"/>
+
+i9 exit
+
+<Sync time="541.049"/>
+
+i10: bumble bee
+
+<Sync time="543.029"/>
+
+i10 search
+
+<Sync time="546.662"/>
+
+i10 exit w2
+
+<Sync time="551.435"/>
+
+i11: bumble bee
+
+<Sync time="554.858"/>
+
+i11 search
+
+<Sync time="559.547"/>
+
+i11 exit
+
+<Sync time="572.974"/>
+
+i12: bumble bee
+
+<Sync time="577.129"/>
+
+i12 enter
+
+<Sync time="579.188"/>
+
+i12 exit
+
+<Sync time="586.059"/>
+
+i13: bumble bee
+
+<Sync time="589.58"/>
+
+i13 search
+
+<Sync time="591.682"/>
+
+i13 exit
+
+<Sync time="595.889"/>
+
+i14: bumble bee
+
+<Sync time="599.579"/>
+
+i14 search
+
+<Sync time="601.98"/>
+
+i14 scan p4
+
+<Sync time="604.967"/>
+
+i14 land p4
+
+<Sync time="605.606"/>
+
+i15: bumble bee
+
+<Sync time="606.042"/>
+
+i15 scan p4
+
+<Sync time="609.444"/>
+
+i15 other
+
+<Sync time="613.958"/>
+
+i14 other
+
+<Sync time="622.237"/>
+
+i15 scan p7
+
+<Sync time="626.529"/>
+
+i15 scan p10
+
+<Sync time="629.395"/>
+
+i16: bumble bee
+
+<Sync time="633.847"/>
+
+i16 enter
+
+<Sync time="636.147"/>
+
+i16 exit
+
+<Sync time="636.452"/>
+
+i15 scan p12
+
+<Sync time="640.615"/>
+
+i15 scan p16
+
+<Sync time="641.026"/>
+
+i15 exit
+
+<Sync time="657.1"/>
+
+i17: bumble bee
+
+<Sync time="663.219"/>
+
+i17 scan p10
+
+<Sync time="665.894"/>
+
+i17 scan p7
+
+<Sync time="669.34"/>
+
+i17 land p7
+
+<Sync time="671.063"/>
+
+i17 scan p7
+
+<Sync time="672.759"/>
+
+i17 land p7
+
+<Sync time="675.537"/>
+
+i17 scan p7
+
+<Sync time="679.751"/>
+
+i17 scan p4
+
+<Sync time="684.977"/>
+
+i17 scan p1
+
+<Sync time="687.488"/>
+
+i17 scan p10
+
+<Sync time="687.847"/>
+
+i17 land p10
+
+<Sync time="688.303"/>
+
+i17 scan p10
+
+<Sync time="688.713"/>
+
+i17 land p10
+
+<Sync time="691.493"/>
+
+i17 scan p10
+
+<Sync time="691.884"/>
+
+i17 land p10
+
+<Sync time="694.231"/>
+
+i17 scan p10
+
+<Sync time="696.92"/>
+
+i17 land p10
+
+<Sync time="699.991"/>
+
+i17 exit 
+
+<Sync time="705.101"/>
+
+i14 lost
+
+<Sync time="710.848"/>
+
+!C
+
+<Sync time="766.234"/>
+
+i18: bumble bee
+
+<Sync time="766.603"/>
+
+i18 search
+
+<Sync time="768.583"/>
+
+i18 scan p21
+
+<Sync time="768.882"/>
+
+i18 scan p18
+
+<Sync time="769.495"/>
+
+i18 search
+
+<Sync time="772.141"/>
+
+i18 scan p10
+
+<Sync time="774.888"/>
+
+i18 search
+
+<Sync time="776.557"/>
+
+i18 scan p7
+
+<Sync time="787.906"/>
+
+i19: hover fly
+
+<Sync time="792.04"/>
+
+i19 land p7
+
+<Sync time="794.588"/>
+
+i19 scan p7
+
+<Sync time="795.12"/>
+
+i19 scan p10
+
+<Sync time="803.871"/>
+
+i19 scan p7
+
+<Sync time="806.547"/>
+
+i19 lost
+
+<Sync time="823.914"/>
+
+i20: hover fly
+
+<Sync time="827.554"/>
+
+i20 scan p19
+
+<Sync time="846.135"/>
+
+i20 other
+
+<Sync time="847.268"/>
+
+i21: bumble bee
+
+<Sync time="850.588"/>
+
+i21 scan p16
+
+<Sync time="854.011"/>
+
+i21 search
+
+<Sync time="856.522"/>
+
+i21 scan p11
+
+<Sync time="858.626"/>
+
+i22: bumble bee
+
+<Sync time="859.405"/>
+
+i22 land p10
+
+<Sync time="863.226"/>
+
+i21 exit w2
+
+<Sync time="864.061"/>
+
+i22 scanp10
+
+<Sync time="867.778"/>
+
+i22 land p10
+
+<Sync time="870.368"/>
+
+i22 scan p10
+
+<Sync time="873.519"/>
+
+i22 scan p10
+
+<Sync time="876.67"/>
+
+i22 land p10
+
+<Sync time="881.997"/>
+
+i22 search
+
+<Sync time="885.104"/>
+
+i22 exit
+
+<Sync time="889.66"/>
+
+i23: bumble bee
+
+<Sync time="890.058"/>
+
+i23 scan p17
+
+<Sync time="890.83"/>
+
+i23 search
+
+<Sync time="893.058"/>
+
+i23 scan p14
+
+<Sync time="893.706"/>
+
+i23 search
+
+<Sync time="896.551"/>
+
+i23 scan p9
+
+<Sync time="898.211"/>
+
+i23 search
+
+<Sync time="898.53"/>
+
+i23 scan p10
+
+<Sync time="901.476"/>
+
+i23 land p10
+
+<Sync time="904.088"/>
+
+i23 scan p10
+
+<Sync time="907.841"/>
+
+i23 land p10
+
+<Sync time="910.156"/>
+
+i23 scan p10
+
+<Sync time="910.505"/>
+
+i23 land p10
+
+<Sync time="913.909"/>
+
+i23 scan p10
+
+<Sync time="916.325"/>
+
+i23 land p10
+
+<Sync time="919.188"/>
+
+i23 land p10
+
+<Sync time="921.938"/>
+
+i23 scan p10
+
+<Sync time="925.361"/>
+
+i23 land p10
+
+<Sync time="926.06"/>
+
+i23 scan p10
+
+<Sync time="929.068"/>
+
+i23 land p10
+
+<Sync time="932.899"/>
+
+i23 scan p10
+
+<Sync time="935.581"/>
+
+i23 land p10
+
+<Sync time="937.912"/>
+
+i23 land p10
+
+<Sync time="940.357"/>
+
+i23 land p10 
+
+<Sync time="944.279"/>
+
+i23 scan p10
+
+<Sync time="944.641"/>
+
+i23 land p10
+
+<Sync time="946.952"/>
+
+i23 scan p10
+
+<Sync time="950.252"/>
+
+i23 search
+
+<Sync time="954.5"/>
+
+i23 scan p7
+
+<Sync time="956.721"/>
+
+i23 land p10
+
+<Sync time="959.068"/>
+
+i23 land p10
+
+<Sync time="961.886"/>
+
+i23 scan p7
+
+<Sync time="964.003"/>
+
+i23 scan p1
+
+<Sync time="964.402"/>
+
+i23 land p1
+
+<Sync time="964.891"/>
+
+i23 scan p3
+
+<Sync time="969.785"/>
+
+i23 search
+
+<Sync time="973.587"/>
+
+i23 exit w4
+
+<Sync time="980.716"/>
+
+i24: bumble bee
+
+<Sync time="983.774"/>
+
+i24 enter w4
+
+<Sync time="984.131"/>
+
+i24 scan p1
+
+<Sync time="984.989"/>
+
+i24 scan p2
+
+<Sync time="985.657"/>
+
+i24 search
+
+<Sync time="988.834"/>
+
+i24 scan p5
+
+<Sync time="989.877"/>
+
+i24 land p5
+
+<Sync time="990.458"/>
+
+i24 scan p5
+
+<Sync time="993.202"/>
+
+i24 search
+
+<Sync time="995.429"/>
+
+i24 scan p19
+
+<Sync time="997.465"/>
+
+i24 search
+
+<Sync time="997.776"/>
+
+i24 scan p24
+
+<Sync time="1000.999"/>
+
+i24 search
+
+<Sync time="1003.884"/>
+
+i24 exit w2
+
+<Sync time="1089.516"/>
+
+i25: hover fly
+
+<Sync time="1100.969"/>
+
+i25 scan p19
+
+<Sync time="1102.334"/>
+
+i26: hover fly 
+
+<Sync time="1104.838"/>
+
+i26 scan p19
+
+<Sync time="1111.786"/>
+
+i25 other
+
+<Sync time="1117.151"/>
+
+i27: bumble bee
+
+<Sync time="1117.844"/>
+
+i27 enter w1
+
+<Sync time="1120.953"/>
+
+i27 scan p9
+
+<Sync time="1129.85"/>
+
+i27 scan p14
+
+<Sync time="1133.173"/>
+
+i27 scan p9
+
+<Sync time="1137.097"/>
+
+i27 exit w2
+
+<Sync time="1145.964"/>
+
+i26 other
+
+<Sync time="1154.833"/>
+
+i25 search
+
+<Sync time="1171.332"/>
+
+i25 other
+
+<Sync time="1203.436"/>
+
+!D
+
+<Sync time="1247.54"/>
+
+i28: bumble bee
+
+<Sync time="1248.119"/>
+
+i28 enter w3
+
+<Sync time="1249.582"/>
+
+i28 scan p19
+
+<Sync time="1253.929"/>
+
+i28 exit
+
+<Sync time="1276.02"/>
+
+i29: bumble bee
+
+<Sync time="1279.192"/>
+
+i29 search
+
+<Sync time="1281.92"/>
+
+i29 scan p13
+
+<Sync time="1282.347"/>
+
+i29 scan p9
+
+<Sync time="1286.81"/>
+
+i29 exit
+
+<Sync time="1325.569"/>
+
+i30: fly
+
+<Sync time="1330.721"/>
+
+i30 scan p16
+
+<Sync time="1335.926"/>
+
+i30 other
+
+<Sync time="1357.064"/>
+
+i30 exit
+
+<Sync time="1387.403"/>
+
+i31: bumble bee 
+
+<Sync time="1387.735"/>
+
+i31 search
+
+<Sync time="1388.107"/>
+
+i31 scan p16
+
+<Sync time="1391.304"/>
+
+i31 search
+
+<Sync time="1395.66"/>
+
+i31 exit w2
+
+<Sync time="1444.841"/>
+
+i32: bumble bee
+
+<Sync time="1445.245"/>
+
+i32 scan p7
+
+<Sync time="1449.395"/>
+
+i32 land p7
+
+<Sync time="1449.862"/>
+
+i33: bumble bee
+
+<Sync time="1453.062"/>
+
+i33 search
+
+<Sync time="1453.344"/>
+
+i33 land p18
+
+<Sync time="1455.936"/>
+
+i32 scan p7
+
+<Sync time="1458.865"/>
+
+i32 land p7
+
+<Sync time="1462.47"/>
+
+i33 land p14
+
+<Sync time="1469.798"/>
+
+i33 land p6
+
+<Sync time="1476.27"/>
+
+i32 exit
+
+<Sync time="1479.941"/>
+
+i33 scan p6
+
+<Sync time="1482.765"/>
+
+i33 land p6
+
+<Sync time="1483.412"/>
+
+i33 scan p6
+
+<Sync time="1488.364"/>
+
+i33 search
+
+<Sync time="1490.547"/>
+
+i33 scan p3
+
+<Sync time="1491.045"/>
+
+i33 search
+
+<Sync time="1493.313"/>
+
+i33 scan p6
+
+<Sync time="1497.289"/>
+
+i33 exit w2
+
+<Sync time="1501.821"/>
+
+i33 enter
+
+<Sync time="1504.291"/>
+
+i33 search
+
+<Sync time="1506.373"/>
+
+i33 scan p18
+
+<Sync time="1509.596"/>
+
+i33 scan p24
+
+<Sync time="1513.99"/>
+
+i33 search
+
+<Sync time="1517.447"/>
+
+i33 exit 
+
+<Sync time="1529.837"/>
+
+i34: bumble bee
+
+<Sync time="1530.219"/>
+
+i34 scan p4
+
+<Sync time="1533.371"/>
+
+i34 search
+
+<Sync time="1536.671"/>
+
+i34 scan p10
+
+<Sync time="1547.131"/>
+
+i34 exit
+
+<Sync time="1549.625"/>
+
+i35: bumble bee
+
+<Sync time="1553.112"/>
+
+i35 scan p5
+
+<Sync time="1555.996"/>
+
+i35 other
+
+<Sync time="1556.371"/>
+
+i35 scan p4
+
+<Sync time="1556.873"/>
+
+i35 scan p3
+
+<Sync time="1560.105"/>
+
+i35 scan p2
+
+<Sync time="1561.942"/>
+
+i35 other
+
+<Sync time="1565.418"/>
+
+i35 scan p22
+
+<Sync time="1573.709"/>
+
+i35 scan p19
+
+<Sync time="1579.075"/>
+
+i35 exit
+
+<Sync time="1611.071"/>
+
+i36: bumble bee
+
+<Sync time="1611.581"/>
+
+i36 scan p5
+
+<Sync time="1611.956"/>
+
+i36 land p5
+
+<Sync time="1615.252"/>
+
+i36 scan p7
+
+<Sync time="1618.973"/>
+
+i36 scan p10
+
+<Sync time="1621.21"/>
+
+i36 scan p4
+
+<Sync time="1624.75"/>
+
+i36 other
+
+<Sync time="1626.914"/>
+
+i36 scan p9
+
+<Sync time="1627.363"/>
+
+i36 scan p10
+
+<Sync time="1630.689"/>
+
+i36 scan p14
+
+<Sync time="1633.71"/>
+
+i36 land p14
+
+<Sync time="1645.025"/>
+
+i36 scan p14
+
+<Sync time="1648.182"/>
+
+i36 land p14
+
+<Sync time="1656.185"/>
+
+i36 land p13
+
+<Sync time="1667.447"/>
+
+i36 scan p13
+
+<Sync time="1670.955"/>
+
+i36 land p13
+
+<Sync time="1674.779"/>
+
+i36 search
+
+<Sync time="1685.023"/>
+
+i37: fly
+
+<Sync time="1685.387"/>
+
+i37 scan p16
+
+<Sync time="1687.892"/>
+
+i36 exit
+
+<Sync time="1690.716"/>
+
+i37 land p16
+
+<Sync time="1726.024"/>
+
+i38: bumble bee
+
+<Sync time="1726.384"/>
+
+i38 search
+
+<Sync time="1729.473"/>
+
+i38 scan p4
+
+<Sync time="1731.128"/>
+
+i38 search
+
+<Sync time="1731.44"/>
+
+i38 scan p5
+
+<Sync time="1734.826"/>
+
+i38 other
+
+<Sync time="1749.434"/>
+
+i37 scan p12
+
+<Sync time="1753.26"/>
+
+i37 land p12
+
+<Sync time="1816.831"/>
+
+i38 lost
+
+<Sync time="1819.281"/>
+
+!A
+
+<Sync time="1824.121"/>
+
+i37 lost
+
+<Sync time="2022.099"/>
+
+i39: bumble bee
+
+<Sync time="2024.634"/>
+
+i39 scan p24
+
+<Sync time="2028.838"/>
+
+i39 search
+
+<Sync time="2032.311"/>
+
+i39 exit
+
+<Sync time="2046.195"/>
+
+i40: bumble bee
+
+<Sync time="2046.729"/>
+
+i40 scan p10
+
+<Sync time="2049.654"/>
+
+i40 search
+
+<Sync time="2053.222"/>
+
+i40 exit
+
+<Sync time="2055.587"/>
+
+i41: bumble bee
+
+<Sync time="2055.939"/>
+
+i41 scan p17
+
+<Sync time="2056.968"/>
+
+i41 scan p13
+
+<Sync time="2060.644"/>
+
+i41 scan p9
+
+<Sync time="2060.994"/>
+
+i41 scan p1
+
+<Sync time="2062.556"/>
+
+i41 search
+
+<Sync time="2065.141"/>
+
+i41 exit
+
+<Sync time="2067.144"/>
+
+i42: bumble bee
+
+<Sync time="2071.359"/>
+
+i42 scan p9
+
+<Sync time="2074.366"/>
+
+i42 exit
+
+<Sync time="2121.666"/>
+
+i43: bumble bee
+
+<Sync time="2125.653"/>
+
+i43 scan p24
+
+<Sync time="2126.37"/>
+
+i43 scan p22
+
+<Sync time="2129.835"/>
+
+i43 scan p19
+
+<Sync time="2131.438"/>
+
+i43 land p19
+
+<Sync time="2134.607"/>
+
+i43 scan p19
+
+<Sync time="2135.868"/>
+
+i43 land p19
+
+<Sync time="2138.602"/>
+
+i43 scan p19
+
+<Sync time="2141.465"/>
+
+i43 land p19
+
+<Sync time="2145.038"/>
+
+i43 exit w3
+
+<Sync time="2169.869"/>
+
+i44: bumble bee
+
+<Sync time="2173.006"/>
+
+i44 search
+
+<Sync time="2175.398"/>
+
+i44 exit w3
+
+<Sync time="2181.282"/>
+
+i45: fly
+
+<Sync time="2183.534"/>
+
+i45 scan p4
+
+<Sync time="2183.979"/>
+
+i45 scan p1
+
+<Sync time="2187.097"/>
+
+i45 land p1
+
+<Sync time="2227.843"/>
+
+i45 search
+
+<Sync time="2231.768"/>
+
+i45 lost
+
+<Sync time="2283.253"/>
+
+i46: fly
+
+<Sync time="2286.819"/>
+
+i46 scan p16
+
+<Sync time="2287.594"/>
+
+i46 land p16
+
+<Sync time="2290.584"/>
+
+i46 scan p16
+
+<Sync time="2299.793"/>
+
+i46 lost
+
+<Sync time="2302.487"/>
+
+i47: bumble bee
+
+<Sync time="2306.496"/>
+
+i47 scan p14
+
+<Sync time="2309.346"/>
+
+i47 scan p10
+
+<Sync time="2312.246"/>
+
+i47 scan p14
+
+<Sync time="2313.12"/>
+
+i47 scan p10
+
+<Sync time="2315.298"/>
+
+i47 land p10
+
+<Sync time="2318.362"/>
+
+i47 search
+
+<Sync time="2321.31"/>
+
+i47 exit
+
+<Sync time="2402.995"/>
+
+i48: bumble bee
+
+<Sync time="2403.404"/>
+
+i48 search
+
+<Sync time="2406.123"/>
+
+i48 scan p4
+
+<Sync time="2406.623"/>
+
+i48 search
+
+<Sync time="2409.691"/>
+
+i48 exit
+
+</Turn>
+
+</Section>
+
+</Episode>
+
+</Trans>
+

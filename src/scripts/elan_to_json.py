@@ -12,30 +12,6 @@ import sys
 import os
 from pympi.Elan import Eaf
 
-parser = argparse.ArgumentParser(description="This script will slice audio and output text in a format ready for our Kaldi pipeline.")
-parser.add_argument('-i', '--input_dir', help='Directory of dirty audio and eaf files', type=str, default='input/data/')
-parser.add_argument('-o', '--output_dir', help='Output directory', type=str, default='../input/output/tmp/')
-parser.add_argument('-t', '--tier', help='Target language tier name', type=str, default='Phrase')
-parser.add_argument('-j', '--output_json', help='File name to output json', type=str, default='../input/output/tmp/dirty.json')
-args = parser.parse_args()
-try:
-    input_dir = args.input_dir
-    output_dir = args.output_dir
-    tier = args.tier
-    output_json = args.output_json
-except Exception:
-    parser.print_help()
-    sys.exit(0)
-
-# print(input_dir, file=sys.stderr)
-# print(output_dir, file=sys.stderr)
-# print(tier, file=sys.stderr)
-
-annotations_data = []
-
-# Build output dier if needed
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
 
 
 def findFilesByExt(setOfAllFiles, exts):
@@ -47,12 +23,12 @@ def findFilesByExt(setOfAllFiles, exts):
     return res
 
 
-def write_json():
+def write_json(output_json, annotations_data):
     with open(output_json, 'w') as outfile:
         json.dump(annotations_data, outfile, indent=4, separators=(',', ': '), sort_keys=False)
 
 
-def read_eaf(ie):
+def read_eaf(ie, tier, annotations_data):
     # Get paths to files
     inDir, name = os.path.split(ie)
     basename, ext = os.path.splitext(name)
@@ -92,12 +68,48 @@ def read_eaf(ie):
         annotations_data.append(obj)
 
 
-g_exts = ["*.eaf"]
-allFilesInDir = set(glob.glob(os.path.join(input_dir, "**"), recursive=True))
-input_eafs = findFilesByExt(allFilesInDir, set(g_exts))
+
+def main():
+
+    """ Run the entire trs_to_json.py as a command line utility """
+    parser = argparse.ArgumentParser(
+        description="This script will slice audio and output text in a format ready for our Kaldi pipeline.")
+    parser.add_argument('-i', '--input_dir', help='Directory of dirty audio and eaf files', type=str,
+                        default='input/data/')
+    parser.add_argument('-o', '--output_dir', help='Output directory', type=str, default='../input/output/tmp/')
+    parser.add_argument('-t', '--tier', help='Target language tier name', type=str, default='Phrase')
+    parser.add_argument('-j', '--output_json', help='File name to output json', type=str,
+                        default='../input/output/tmp/dirty.json')
+    args = parser.parse_args()
+    try:
+        input_dir = args.input_dir
+        output_dir = args.output_dir
+        tier = args.tier
+        output_json = args.output_json
+    except Exception:
+        parser.print_help()
+        sys.exit(0)
+
+    # print(input_dir, file=sys.stderr)
+    # print(output_dir, file=sys.stderr)
+    # print(tier, file=sys.stderr)
+
+    annotations_data = []
+
+    # Build output dier if needed
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    g_exts = ["*.eaf"]
+    allFilesInDir = set(glob.glob(os.path.join(input_dir, "**"), recursive=True))
+    input_eafs = findFilesByExt(allFilesInDir, set(g_exts))
+
+    for ie in input_eafs:
+        read_eaf(ie, tier, annotations_data)
+
+    write_json(output_json, annotations_data)
 
 
-for ie in input_eafs:
-    read_eaf(ie)
+if __name__ == '__main__':
+    main()
 
-write_json()

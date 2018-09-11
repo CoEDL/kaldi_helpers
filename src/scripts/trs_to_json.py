@@ -17,35 +17,35 @@ import uuid
 from typing import Set, List, Dict, Union
 
 
-def find_first_file_by_ext(set_of_all_files: List[str], exts: List[str]) -> str:
+def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:
     """
     Searches for the first file with a given extension in a set of files.
     
     :param set_of_all_files: set of file names in string format
-    :param exts: file extension being searched for
+    :param extensions: file extension being searched for
     :return: name of the first file_name that is matched, if any. otherwise, this method returns an empty string
     """
     for f in set_of_all_files:
-        name, ext = os.path.splitext(f)
-        if ("*" + ext.lower()) in exts:
+        name, extension = os.path.splitext(f)
+        if ("*" + extension.lower()) in extensions:
             return f
     return ""
 
 
-def find_files_by_ext(set_of_all_files: Set[str], exts: Set[str]) -> Set[str]:
+def find_files_by_extension(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
     """
     Searches for all files in the set of files with the given extension.
     
     :param set_of_all_files: set of file names in string format
-    :param exts: file extension being searched for
+    :param extensions: file extension being searched for
     :return: list of file_names matched with given extension. if none exists, returns an empty list.
     """
 
     res = []
 
     for f in set_of_all_files:
-        name, ext = os.path.splitext(f)
-        if ("*" + ext.lower()) in exts:
+        name, extension = os.path.splitext(f)
+        if ("*" + extension.lower()) in extensions:
             res.append(f)
     return res
 
@@ -80,11 +80,11 @@ def process_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union
 
     cond_log(g_verbose_output, "Processing transcript '%s'\n" % file_name)
 
-    utterances = []
+    utterances: List[Dict[str, Union[str, float]]] = []
     try:
         tree = ET.parse(file_name) # loads an external XML section into this element tree
         root = tree.getroot() # root of element tree
-        wave_name = root.attrib['audio_file_name'] + ".wav"
+        wave_name = root.attrib['audio_filename'] + ".wav" # changed audio_file_name to audio_filename
         turn_nodes = tree.findall(".//Turn")
         for turn_node in turn_nodes:
             utterances = utterances + process_turn(file_name, turn_node, wave_name, tree)
@@ -108,7 +108,7 @@ def process_turn(file_name, turn_node, wave_name, tree):
     """
 
     # turn_start = float(turn_node.attrib['start_time'])
-    turn_end = float(turn_node.attrib['end_time'])
+    turn_end = float(turn_node.attrib['endTime']) # changed end_time to endTime
     speaker_ID = turn_node.get('speaker', '')
 
     speaker_name_node = tree.find(".//Speaker[@id='%s']" % speaker_ID)
@@ -134,7 +134,11 @@ def process_turn(file_name, turn_node, wave_name, tree):
             end_time = float(time_str2)
         else:
             end_time = turn_end
-        result.append({"speaker_ID": speaker_name, "audiofile_name": wavefile_name, "transcript": trans_str, "startMs": start_time * 1000.0, "stopMs": end_time * 1000.0})
+        result.append({"speaker_ID": speaker_name,
+                       "audiofile_name": wavefile_name,
+                       "transcript": trans_str,
+                       "startMs": start_time * 1000.0,
+                       "stopMs": end_time * 1000.0})
         start_time = end_time
 
     return result
@@ -144,9 +148,11 @@ def main():
 
     """ Run the entire trs_to_json.py as a command line utility """
 
+    # utterances = process_file("..\\test\\testfiles\\exampleTranscription.trs", True)
+    # print(utterances)
+
     parser = argparse.ArgumentParser(description='A command line utility to convert .trs files to .json',
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-
     parser.add_argument('-d', '--indir', dest='inputDir', help='Input directory, default=\'.\'', default='.')
     parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
 
@@ -160,7 +166,7 @@ def main():
 
     all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
 
-    transcript_names = find_files_by_ext(all_files_in_dir, list(["*.trs"]))
+    transcript_names = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
 
     # iterate through all .trs files and process them, creates audio clip files and returns the set
     # {file_name, transcriptString, speaker_ID}
