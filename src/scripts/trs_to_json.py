@@ -47,12 +47,12 @@ def find_files_by_extension(set_of_all_files: Set[str], extensions: Set[str]) ->
     for f in set_of_all_files:
         name, extension = os.path.splitext(f)
         if ("*" + extension.lower()) in extensions:
-            results.append(f)
+            results.add(f)
     return results
 
 
 
-def cond_log(cond: bool, text: str) -> None:
+def conditional_log(cond: bool, text: str) -> None:
     """
     Work around for UTF8 file name and the windows console. 
     
@@ -69,7 +69,7 @@ def cond_log(cond: bool, text: str) -> None:
             sys.stderr.write(text)
         sys.stderr.flush()
 
-def process_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
+def process_trs_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
 
     """
     Method to process the .trs files and returns a list of utterances.
@@ -80,7 +80,7 @@ def process_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union
             speaker_ID, audiofile_name, transcript, startMs, stopMs.
     """
 
-    cond_log(g_verbose_output, "Processing transcript '%s'\n" % file_name)
+    conditional_log(g_verbose_output, "Processing transcript '%s'\n" % file_name)
 
     utterances: List[Dict[str, Union[str, float]]] = []
     try:
@@ -92,8 +92,8 @@ def process_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union
             utterances = utterances + process_turn(file_name, turn_node, wave_name, tree)
 
     except ET.ParseError as err:
-        cond_log(True, "XML parser failed to parse '%s'!\n" % file_name)
-        cond_log(True, str(err))
+        conditional_log(True, "XML parser failed to parse '%s'!\n" % file_name)
+        conditional_log(True, str(err))
 
     return utterances
 
@@ -150,7 +150,7 @@ def main():
 
     """ Run the entire trs_to_json.py as a command line utility """
 
-    # utterances = process_file("..\\test\\testfiles\\exampleTranscription.trs", True)
+    # utterances = process_trs_file("..\\test\\testfiles\\exampleTranscription.trs", True)
     # print(utterances)
 
     parser = argparse.ArgumentParser(description='A command line utility to convert .trs files to .json',
@@ -174,7 +174,7 @@ def main():
     # {file_name, transcriptString, speaker_ID}
     utterances = []
     for fn in transcript_names:
-        utterances = utterances + process_file(fn, g_verbose_output)
+        utterances = utterances + process_trs_file(fn, g_verbose_output)
 
     result_base_name, name = os.path.split(g_base_dir)
 

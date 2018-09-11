@@ -5,14 +5,14 @@ import glob
 import regex
 from typing import List, Set, Dict
 from scripts.trs_to_json import *
-# Capsys
 
 TEST_FILES_BASE_DIR = os.path.join(".", "src", "test", "testfiles")
-TRS_FILE_DIR = os.path.join("C:", "Classified_Lang_Data", "abui-trs")
+TRS_FILE_DIR = os.path.join("C:\\", "Classified_Lang_Data", "abui-trs")
 SCRIPT_PATH = os.path.join(".", "src", "scripts", "trs_to_json.py")
 
+
 class TestTRSToJSON:
-    def test_find_first_file_by_ext(self) -> None:
+    def test_find_first_file_by_extension(self) -> None:
         all_files_in_dir = list(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
         all_files_in_dir.sort()
         
@@ -30,7 +30,7 @@ class TestTRSToJSON:
         assert os.path.basename(third_test) != "howdy.xlsx"
         assert os.path.basename(third_test) == "charm.xlsx"
 
-    def test_find_files_by_ext(self) -> None:
+    def test_find_files_by_extension(self) -> None:
         all_files_in_dir = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
 
         g_base_directory: str = TEST_FILES_BASE_DIR
@@ -57,18 +57,18 @@ class TestTRSToJSON:
             assert (file.endswith(".py") or file.endswith(".txt"))
         assert {"test.py", "howdy.txt", "test.txt"}.issubset(files)
 
-    def test_cond_log(self) -> None:
+    def test_conditional_log(self) -> None:
 
         sys.stderr = open('err.txt', 'w') # import not working?? check
         test_str1: str = "test"
-        cond_log(cond=True, text=test_str1);
+        conditional_log(cond=True, text=test_str1);
         with open("err.txt", "r") as f:
             assert test_str1 == f.read()
             f.close()
 
         sys.stderr = open('err.txt', 'w')
         test_str2: str = "Kaldi is a fun project\nASR is a cool tech\n"
-        cond_log(cond=True, text=test_str2);
+        conditional_log(cond=True, text=test_str2);
         with open("err.txt", "r") as f:
             assert test_str2 == f.read()
             f.close()
@@ -76,8 +76,7 @@ class TestTRSToJSON:
         sys.stderr = sys.__stderr__
         os.remove('err.txt')
 
-
-    def test_process_file(self):
+    def test_process_trs_file(self):
         all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                                recursive=True))
 
@@ -85,7 +84,7 @@ class TestTRSToJSON:
             with open(file_name) as f:
                 contents = f.read()
                 count = sum(1 for match in regex.finditer(r"\bSync\b", contents, flags=regex.IGNORECASE))
-                utterances = process_file(file_name, False)
+                utterances = process_trs_file(file_name, False)
                 assert count == len(utterances)
 
     def test_process_turn(self):
@@ -116,7 +115,7 @@ class TestTRSToJSON:
         all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                                          recursive=True))
         for file_name in all_files_in_directory:
-            num_utterances += len(process_file(file_name, False))
+            num_utterances += len(process_trs_file(file_name, False))
 
         os.system("python " + SCRIPT_PATH + " --indir " + TRS_FILE_DIR)
         json_name: str = os.path.basename(TRS_FILE_DIR) + ".json"
