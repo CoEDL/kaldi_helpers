@@ -13,7 +13,6 @@ import os
 from pympi.Elan import Eaf
 
 
-
 def findFilesByExt(setOfAllFiles, exts):
     res = []
     for f in setOfAllFiles:

@@ -201,6 +201,10 @@ pyvenv.cfg
 pip-selfcheck.json
 
 
+# Generated .json files
+*.json
+
+
 # End of https://www.gitignore.io/api/python,pycharm
 
 *.iml

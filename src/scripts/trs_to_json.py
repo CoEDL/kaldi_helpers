@@ -17,6 +17,7 @@ import uuid
 from typing import Set, List, Dict, Union
 
 
+
 def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:
     """
     Searches for the first file with a given extension in a set of files.
@@ -34,20 +35,21 @@ def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[s
 
 def find_files_by_extension(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
     """
-    Searches for all files in the set of files with the given extension.
-    
-    :param set_of_all_files: set of file names in string format
-    :param extensions: file extension being searched for
-    :return: list of file_names matched with given extension. if none exists, returns an empty list.
-    """
+        Searches for all files in the set of files with the given extensions.
 
-    res = []
+        :param set_of_all_files: set of file names in string format
+        :param extensions: file extension being searched for
+        :return: list of file_names matched with given extension. if none exists, returns an empty list.
+        """
+
+    results = set()
 
     for f in set_of_all_files:
         name, extension = os.path.splitext(f)
         if ("*" + extension.lower()) in extensions:
-            res.append(f)
-    return res
+            results.append(f)
+    return results
+
 
 
 def cond_log(cond: bool, text: str) -> None:
@@ -162,7 +164,7 @@ def main():
     g_verbose_output = args.verbose
 
     if g_verbose_output:
-        sys.stderror.write(g_base_dir + "\n")
+        sys.stderr.write(g_base_dir + "\n")
 
     all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
 

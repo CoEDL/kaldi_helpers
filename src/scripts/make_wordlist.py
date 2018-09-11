@@ -2,53 +2,49 @@
 #
 # Given a json file with transcript information this tools can perform
 # manipulations including generating word lists.
-# Optionally provide the output json file name with -j
+# Optionally provide the output json file name with -o
 # Usage: python filter_text.py sample.json wordlist.txt
 
-from typing import List, Union
+from typing import List, Dict
 import argparse
-import json
 import sys
-from .utilities import load_json_file
+from utilities import load_json_file
 
 
-def save_wordlist(wordlist: List[str]) -> None:
+def save_word_list(word_list: List[str], file_name: str) -> None:
     """
-    Given a list of strings, write to a file.
-    :param wordlist: list of words to write.
+    Given a list of strings, write them to a new file named filename.
+    :param word_list: list of words to write.
+    :param file_name: name of file to write word list to.
     """
-    global args
-    try:
-        for word in wordlist:
-            print(word + '\n', file=sys.stdout)
-    except Exception as e:
-        print("Could not write out to file " + args.infile, file=sys.stderr)
-        exit()
+    with open(file_name, "w") as f:
+        for word in word_list:
+            f.write(word + "\n")
+        print(f"Wrote word list to {file_name}")
 
 
-def extract_word_list(data: dict) -> List[str]:
+def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
     """
-    Given the data object, produce a list of string of single words.
-    :param data: a dictionary with contents of the JSON file
-    :return: sorted list of unique words
+    Unpack a dictionary constructed from a json_file containing the key
+    "transcript" into a (Python) list of words.
+    :param json_data: Python list of dictionaries read from a JSON file.
+    :return: list of unique words from data, sorted alphabetically.
     """
-    result = []
-    for utt in data:
-        words = utt.get('transcript').split()
+    result: List[str] = []
+    for utterance in json_data:
+        words = utterance.get("transcript").split()
         result.extend(words)
     result = list(set(result))
-    result.sort()
-    return result
+    return sorted(result)
 
 
 def main():
-
     """
     Run the entire make_wordlist.py as a command line utility
     """
-
     parser = argparse.ArgumentParser()
-    parser.add_argument("--infile", type=str, help="The input file to clean.")
+    parser.add_argument("--infile", "i", type=str, help="The input file to clean.")
+    parser.add_argument("--outfile", "-o", type=str, help="The input file to clean.")
     args = parser.parse_args()
 
     data = load_json_file(args.infile)
@@ -58,8 +54,8 @@ def main():
     word_list = extract_word_list(data)
     print("Done.", file=sys.stderr)
 
-    print("Write out wordlist...", end='', flush=True, file=sys.stderr)
-    save_wordlist(word_list)
+    print(f"Writing out wordlist to stderr", end='', flush=True, file=sys.stderr)
+    save_word_list(word_list)
     print("Done.", file=sys.stderr)
 
 

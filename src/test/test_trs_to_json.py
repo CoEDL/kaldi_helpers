@@ -7,16 +7,13 @@ from typing import List, Set, Dict
 from scripts.trs_to_json import *
 # Capsys
 
+TEST_FILES_BASE_DIR = os.path.join(".", "src", "test", "testfiles")
+TRS_FILE_DIR = os.path.join("C:", "Classified_Lang_Data", "abui-trs")
+SCRIPT_PATH = os.path.join(".", "src", "scripts", "trs_to_json.py")
+
 class TestTRSToJSON:
-
-    def test_find_first_file_by_extension(self) -> None:
-        """
-        Tests find_first_file_by_extension function 
-        :return: 
-        """
-
-        g_base_dir = ".\\src\\test\\testfiles\\"
-        all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
+    def test_find_first_file_by_ext(self) -> None:
+        all_files_in_dir = list(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
         all_files_in_dir.sort()
         
         first_test: str = find_first_file_by_extension(all_files_in_dir, list(["*.rtf"]))
@@ -34,8 +31,9 @@ class TestTRSToJSON:
         assert os.path.basename(third_test) == "charm.xlsx"
 
     def test_find_files_by_ext(self) -> None:
+        all_files_in_dir = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
 
-        g_base_directory: str = ".\\src\\test\\testfiles\\"
+        g_base_directory: str = TEST_FILES_BASE_DIR
         all_files_in_directory = set(glob.glob(os.path.join(g_base_directory, "**"), recursive=True))
 
         first_test: List[str] = find_files_by_extension(all_files_in_directory, set(["*.xlsx"]))
@@ -78,8 +76,9 @@ class TestTRSToJSON:
         sys.stderr = sys.__stderr__
         os.remove('err.txt')
 
+
     def test_process_file(self):
-        all_files_in_directory: Set[str] = set(glob.glob(os.path.join("C:\\Classified_Lang_Data\\abui-trs\\", "*.trs"),
+        all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                                recursive=True))
 
         for file_name in all_files_in_directory:
@@ -90,7 +89,7 @@ class TestTRSToJSON:
                 assert count == len(utterances)
 
     def test_process_turn(self):
-        all_files_in_directory: Set[str] = set(glob.glob(os.path.join("C:\\Classified_Lang_Data\\abui-trs\\", "*.trs"),
+        all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                                          recursive=True))
 
         for file_name in all_files_in_directory:
@@ -110,17 +109,17 @@ class TestTRSToJSON:
                     utterances_in_turn = process_turn(file_name, turn_nodes[i], wave_name, tree)
                     assert count == len(utterances_in_turn)
 
+
     def test_trs_to_JSON(self):
 
         num_utterances: int = 0;
-        all_files_in_directory: Set[str] = set(glob.glob(os.path.join("C:\\Classified_Lang_Data\\abui-trs\\", "*.trs"),
+        all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                                          recursive=True))
         for file_name in all_files_in_directory:
             num_utterances += len(process_file(file_name, False))
 
-        trs_path: str = "C:\\Classified_Lang_Data\\abui-trs"
-        os.system("python src\\scripts\\trs_to_json.py --indir " + trs_path)
-        json_name: str = os.path.basename(trs_path) + ".json"
+        os.system("python " + SCRIPT_PATH + " --indir " + TRS_FILE_DIR)
+        json_name: str = os.path.basename(TRS_FILE_DIR) + ".json"
 
         with open(json_name) as f:
             contents = f.read()
@@ -129,3 +128,4 @@ class TestTRSToJSON:
         assert count == num_utterances
 
         os.remove(json_name)
+

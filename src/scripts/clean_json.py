@@ -1,10 +1,20 @@
 #!/usr/bin/python3
 
-# Given a json file with transcript information these tools can perform
+"""
+Given a json file with transcript information these tools can perform
 # manipulations including generating word lists or filtering output to
 # exclude english/punctuation.
 # Optionally provide the output json file name with -j
 # Usage: python clean_json.py --infile file_in.json [--outfile file_out.json] [-re|--removeEng] [-ul|--useLangid]
+
+EXAMPLE_JSON_DATA = [
+    {"transcript": "Comment t'appelles tu?"},
+    {"transcript": "Je m'appelle François."},
+    {"transcript": "Est-ce tu a une livre préférér."},
+    {"transcript": "Oui, j'adore L'Histoire Secrète par Donna Tartt."},
+    {"transcript": "Vraiment? Je n'ai jamais lu ça."},
+]
+"""
 
 import re
 import string
@@ -14,34 +24,7 @@ from argparse import ArgumentParser
 from langid.langid import LanguageIdentifier, model
 from nltk.corpus import words
 from typing import Dict, List, Set
-from .utilities import load_json_file, write_dict_to_json_file
-
-
-def save_word_list(word_list: List[str], file_name: str) -> None:
-    """ 
-    Given a list of strings, write them to a new file named filename. 
-    :param word_list: list of words to write.
-    :param file_name: name of file to write word list to.
-    """
-    with open(file_name, "w") as f:
-        for word in word_list:
-            f.write(word + "\n")
-        print(f"Wrote word list to {file_name}")
-
-
-def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
-    """
-    Unpack a dictionary constructed from a json_file containing the key
-    "transcript" into a (Python) list of words.
-    :param json_data: Python list of dictionaries read from a JSON file.
-    :return: list of unique words from data, sorted alphabetically.
-    """
-    result: List[str] = []
-    for utterance in json_data:
-        words = utterance.get("transcript").split()
-        result.extend(words)
-    result = list(set(result))
-    return sorted(result)
+from utilities import load_json_file, write_data_to_json_file
 
 
 def get_english_words() -> Set[str]:
@@ -125,7 +108,7 @@ def is_valid_utterance(clean_words: List[str],
 
 def clean_json_data(json_data: List[Dict[str, str]],
                     remove_english: bool = False,
-                    use_langid: bool = False) -> List[dict]:
+                    use_langid: bool = False) -> List[Dict[str, str]]:
     """
     Clean a list of utterances (Python dictionaries) based on the given parameters.
     :param json_data: list of Python dictionaries, each must have a 'transcription' key-value.
@@ -172,7 +155,7 @@ def main() -> None:
     """
     parser: ArgumentParser = ArgumentParser()
     parser.add_argument("--infile", type=str, help="The input file to clean.")
-    parser.add_argument("--outfile", type=str, help="The file to write to")
+    parser.add_argument("--outfile", type=str, help="The file to write to")  # Default to stdout if not provided
     parser.add_argument("-r", "--removeEng", help="Remove english like utterances", action="store_true")
     parser.add_argument("-u", "--useLangId", help="Use langid library to detect English", action="store_true")
     args = parser.parse_args()
@@ -186,7 +169,7 @@ def main() -> None:
                                     remove_english=args.removeEng,
                                     use_langid=args.useLangId)
 
-    write_dict_to_json_file(data=list(filtered_data),
+    write_data_to_json_file(data=list(filtered_data),
                             output=outfile)
 
     print(f"Finished! Wrote {str(len(filtered_data))} transcriptions.", end="", flush=True, file=outfile)
