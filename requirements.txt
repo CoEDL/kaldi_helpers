@@ -3,3 +3,4 @@ pympi-ling
 numpy
 langid
 nltk
+praatio

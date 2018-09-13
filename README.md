@@ -2,11 +2,11 @@
 
 A set of scripts to use in preparing a corpus for speech-to-text processing with Kaldi.
 
-Read about [setting up Docker](guides/kaldi-docker-setup.md) to run all this.
+Read about [setting up Docker](docs/guides/kaldi-docker-setup.md) to run all this.
 
-For more information about data requirements, see the [data guide](guides/2018-workshop-preparation.md).
+For more information about data requirements, see the [data guide](docs/guides/2018-workshop-preparation.md).
 
-Read about the [tasks](guides/about-the-tasks.md) that can be run.
+Read about the [tasks](docs/guides/about-the-tasks.md) that can be run.
 
 
 # Workflow

@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-#
-# Parse trs file and extract information from it for json
-# Dumps json to sys stdout,
-# so you'll need to direct the output to a file when running the script
-# $ python3 trs_to_json.py --indir ../input/data > ../input/output/tmp/dirty.json
 
+"""
+Parse trs file and extract information from it for json
+Dumps json to sys stdout,
+so you'll need to direct the output to a file when running the script
+Usage: python3 trs_to_json.py --indir ../input/data > ../input/output/tmp/dirty.json
+"""
 
 import xml.etree.ElementTree as ET
 import glob
@@ -15,7 +16,7 @@ import json
 import platform
 import uuid
 from typing import Set, List, Dict, Union
-
+from utilities import find_files_by_extension
 
 
 def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:
@@ -33,29 +34,9 @@ def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[s
     return ""
 
 
-def find_files_by_extension(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
-    """
-        Searches for all files in the set of files with the given extensions.
-
-        :param set_of_all_files: set of file names in string format
-        :param extensions: file extension being searched for
-        :return: list of file_names matched with given extension. if none exists, returns an empty list.
-        """
-
-    results = set()
-
-    for f in set_of_all_files:
-        name, extension = os.path.splitext(f)
-        if ("*" + extension.lower()) in extensions:
-            results.add(f)
-    return results
-
-
-
 def conditional_log(cond: bool, text: str) -> None:
     """
-    Work around for UTF8 file name and the windows console. 
-    
+    Work around for UTF8 file name and the windows console.
     :param cond: condition to indicate whether text should be output to stderr
     :param text: text to output to stderr 
     """
@@ -69,11 +50,11 @@ def conditional_log(cond: bool, text: str) -> None:
             sys.stderr.write(text)
         sys.stderr.flush()
 
+
 def process_trs_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
 
     """
     Method to process the .trs files and returns a list of utterances.
-    
     :param file_name: file_name of the .trs file
     :param g_verbose_output: whether or not output to stdout
     :return: a list of dictionaries. each dictionary contains key information on utterances, including 
@@ -101,7 +82,6 @@ def process_trs_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, U
 def process_turn(file_name, turn_node, wave_name, tree):
     """
     Helper method to process each turn_node in the .trs file
-    
     :param file_name: name of the file
     :param turn_node: name of the turn node to be processed
     :param wave_name: name of .wav audio file to be processed
@@ -149,7 +129,6 @@ def process_turn(file_name, turn_node, wave_name, tree):
 def main():
 
     """ Run the entire trs_to_json.py as a command line utility """
-
     # utterances = process_trs_file("..\\test\\testfiles\\exampleTranscription.trs", True)
     # print(utterances)
 

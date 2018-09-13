@@ -1,25 +1,21 @@
 #!/usr/bin/python3
 
-# get all files in the repositoy
-# can use recursive atm as long as we don't need numpy
-# pass in corpus path
-# throw an error if matching file wav isn't found in the corpus dir
+"""
+get all files in the repository
+can use recursive atm as long as we don't need numpy
+pass in corpus path
+throw an error if matching file wav isn't found in the corpus directory
+"""
 
-import argparse
+
 import glob
 import json
 import sys
 import os
+from argparse import ArgumentParser
 from pympi.Elan import Eaf
-
-
-def findFilesByExt(setOfAllFiles, exts):
-    res = []
-    for f in setOfAllFiles:
-        name, ext = os.path.splitext(f)
-        if ("*" + ext.lower()) in exts:
-            res.append(f)
-    return res
+from typing import List
+from utilities import find_files_by_extension
 
 
 def write_json(output_json, annotations_data):
@@ -27,59 +23,74 @@ def write_json(output_json, annotations_data):
         json.dump(annotations_data, outfile, indent=4, separators=(',', ': '), sort_keys=False)
 
 
-def read_eaf(ie, tier, annotations_data):
+def read_eaf(input_elan_file, tier_name: str) -> List[dict]:
     # Get paths to files
-    inDir, name = os.path.split(ie)
-    basename, ext = os.path.splitext(name)
+    input_directory, full_file_name = os.path.split(input_elan_file)
+    file_name, extension = os.path.splitext(full_file_name)
 
-    input_eaf = Eaf(ie)
+    input_eaf = Eaf(input_elan_file)
 
-    # I want the media in the same folder as the eaf. error if not found
-    # We could also parse the linked media.. let try this later
-    # files = input_eaf.get_linked_files()
-
-    # look for wav file matching the eaf file
-    if os.path.isfile(os.path.join(inDir, basename + ".wav")):
-        print("WAV file found for " + basename, file=sys.stderr)
+    # look for wav file matching the eaf file in same directory
+    if os.path.isfile(os.path.join(input_directory, file_name + ".wav")):
+        print("WAV file found for " + file_name, file=sys.stderr)
     else:
-        raise ValueError('Eeeek! WAV file not found for ' + basename + '. Please put it next to the eaf file in ' + inDir)
+        raise ValueError(f'WAV file not found for {full_file_name}. '
+                         f'Please put it next to the eaf file in {input_directory}.')
 
-    # Get annotations and params (thigs like speaker id) on the target tier
-    annotations = sorted(input_eaf.get_annotation_data_for_tier(tier))
-    params = input_eaf.get_parameters_for_tier(tier)
-    if 'PARTICIPANT' in params:
-        speaker_id = params['PARTICIPANT']
+    # Get annotations and parameters (things like speaker id) on the target tier
+    annotations = sorted(input_eaf.get_annotation_data_for_tier(tier_name))
+    parameters = input_eaf.get_parameters_for_tier(tier_name)
+    speaker_id = parameters.get("PARTICIPANT", default="")
 
-    for ann in annotations:
-        start = ann[0]
-        end = ann[1]
-        annotation = ann[2]
+    annotations_data = []
+
+    for annotation in annotations:
+        start = annotation[0]
+        end = annotation[1]
+        annotation = annotation[2]
 
         # print('processing annotation: ' + annotation, start, end)
         obj = {
-            'audioFileName': basename + ".wav",
+            'audioFileName': f"{file_name}.wav",
             'transcript': annotation,
             'startMs': start,
             'stopMs': end
         }
-        if 'PARTICIPANT' in params:
+        if 'PARTICIPANT' in parameters:
             obj["speakerId"] = speaker_id
         annotations_data.append(obj)
 
+    return annotations_data
+
+
+def create_argument_parser() -> ArgumentParser:
+    parser = ArgumentParser(description="This script takes an directory with ELAN files and "
+                                                 "slices the audio and output text in a format ready "
+                                                 "for our Kaldi pipeline.")
+    parser.add_argument('-i', '--input_dir',
+                        help='Directory of dirty audio and eaf files',
+                        type=str,
+                        default='input/data/')
+    parser.add_argument('-o', '--output_dir',
+                        help='Output directory',
+                        type=str,
+                        default='../input/output/tmp/')
+    parser.add_argument('-t', '--tier',
+                        help='Target language tier name',
+                        type=str,
+                        default='Phrase')
+    parser.add_argument('-j', '--output_json',
+                        help='File name to output json',
+                        type=str,
+                        default='../input/output/tmp/dirty.json')
+    return parser
 
 
 def main():
-
-    """ Run the entire trs_to_json.py as a command line utility """
-    parser = argparse.ArgumentParser(
-        description="This script will slice audio and output text in a format ready for our Kaldi pipeline.")
-    parser.add_argument('-i', '--input_dir', help='Directory of dirty audio and eaf files', type=str,
-                        default='input/data/')
-    parser.add_argument('-o', '--output_dir', help='Output directory', type=str, default='../input/output/tmp/')
-    parser.add_argument('-t', '--tier', help='Target language tier name', type=str, default='Phrase')
-    parser.add_argument('-j', '--output_json', help='File name to output json', type=str,
-                        default='../input/output/tmp/dirty.json')
+    """ Run the entire elan_to_json.py as a command line utility """
+    parser = create_argument_parser()
     args = parser.parse_args()
+
     try:
         input_dir = args.input_dir
         output_dir = args.output_dir
@@ -89,22 +100,17 @@ def main():
         parser.print_help()
         sys.exit(0)
 
-    # print(input_dir, file=sys.stderr)
-    # print(output_dir, file=sys.stderr)
-    # print(tier, file=sys.stderr)
-
-    annotations_data = []
-
-    # Build output dier if needed
+    # Build output directory if needed
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    g_exts = ["*.eaf"]
-    allFilesInDir = set(glob.glob(os.path.join(input_dir, "**"), recursive=True))
-    input_eafs = findFilesByExt(allFilesInDir, set(g_exts))
+    all_files_in_directory = set(glob.glob(os.path.join(input_dir, "**"), recursive=True))
+    input_eafs_files = find_files_by_extension(all_files_in_directory, {"*.eaf"})
 
-    for ie in input_eafs:
-        read_eaf(ie, tier, annotations_data)
+    annotations_data = []
+
+    for input_eaf_file in input_eafs_files:
+        annotations_data.extend(read_eaf(input_eaf_file, tier))
 
     write_json(output_json, annotations_data)
 

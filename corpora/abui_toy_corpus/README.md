@@ -16,7 +16,7 @@ The `config` folder contains three required files:
 
 The corpus consists of 5 pairs of .wav and .eaf files (`1_1_1.wav`, ..., `1_1_5.eaf`) in the `data` directory. In each .eaf file, there is a single tier with Abui text, as show below for `1_1_1.eaf`:
 
-![](../../screenshots/abui-toy-corpus-eaf.png)
+![](../../docs/screenshots/abui-toy-corpus-eaf.png)
 
 ### `output`
 
@@ -27,7 +27,7 @@ An empty folder to which the kaldi-helper scripts will write their output.
 The easiest way to use kaldi-helpers is through the Docker image (see `/guides/kaldi-docker-setup`). With Docker set up and running, and the `coedl/kaldi-helpers` image on your computer, you can prepare the abui-toy-corpus data for use with Kaldi in the following way:
 
 ```bash
-# Change ~/git-repos/coedl/kaldi-helpers/corpora/abui_toy_corpus/
+src
 # to the appropriate path for your computer
 
 docker run --rm \

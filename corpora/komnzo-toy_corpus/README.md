@@ -8,7 +8,7 @@ The Komnzo toy corpus gives a more realistic example of data to be processed. No
 
 The data from these ELAN files will first need to be filtered and cleaned before they are similar to those in the Abui Toy Corpus example. Only then can we use the default build pipeline.
 
-![](../../screenshots/komnzo-toy-corpus-eaf.png)
+![](../../docs/screenshots/komnzo-toy-corpus-eaf.png)
 
 ## `komnzo-custom-build.sh`
 
@@ -17,7 +17,7 @@ The data from these ELAN files will first need to be filtered and cleaned before
 The file `komnzo-custom-build.sh` specifies a custom build pipeline, re-purposing various helper tasks to filter and clean the data. To run the script inside the `coedl/kaldi-helpers` Docker image, we can use the command:
 
 ```bash
-# Change ~/git-repos/coedl/kaldi-helpers/corpora/komnzo-toy_corpus/
+src
 # to the appropriate path for your computer
 
 docker run --rm \
@@ -36,7 +36,7 @@ docker run --rm \
 # Extract all tiers from ELAN files
 
 ## Note the output file path: remember that this script is being called
-## from /kaldi-helpers, so we're going to use absolute paths to make everything clear
+src
 task elan-to-json > /kaldi-helpers/input/output/tmp/komnzo_all.json
 
 # Select text tiers (starting with tx@), and filter out annotations
