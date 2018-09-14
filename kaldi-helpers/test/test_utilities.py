@@ -4,7 +4,7 @@ from _pytest.capture import CaptureFixture
 from utilities.json_utilities import *
 
 
-TEST_FILES_BASE_DIR = os.path.join(".", "src", "test", "testfiles")
+TEST_FILES_BASE_DIR = os.path.join(".", "kaldi-helpers", "test", "testfiles")
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},
     {"transcript": "Je m'appelle François."},

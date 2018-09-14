@@ -6,9 +6,9 @@ import regex
 from typing import List, Set, Dict
 from scripts.trs_to_json import *
 
-TEST_FILES_BASE_DIR = os.path.join(".", "src", "test", "testfiles")
+TEST_FILES_BASE_DIR = os.path.join(".", "kaldi-helpers", "test", "testfiles")
 TRS_FILE_DIR = os.path.join("C:\\", "Classified_Lang_Data", "abui-trs")
-SCRIPT_PATH = os.path.join(".", "src", "scripts", "trs_to_json.py")
+SCRIPT_PATH = os.path.join(".", "kaldi-helpers", "scripts", "trs_to_json.py")
 
 
 class TestTRSToJSON:
@@ -108,9 +108,7 @@ class TestTRSToJSON:
                     utterances_in_turn = process_turn(file_name, turn_nodes[i], wave_name, tree)
                     assert count == len(utterances_in_turn)
 
-
     def test_trs_to_JSON(self):
-
         num_utterances: int = 0;
         all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                                          recursive=True))

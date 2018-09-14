@@ -1,11 +1,11 @@
 # Default path configuration
 # No trailing slashes please!
 KALDI_ROOT: "/kaldi"
-HELPERS_PATH: "/src"
+HELPERS_PATH: "/kaldi-helpers"
 
 # Folders to read/write from, all set relative to HELPERS_PATH
-# i.e., input == /src/input (default)
-# See also src/templates/path.sh
+# i.e., input == /kaldi-helpers/input (default)
+# See also kaldi-helpers/templates/path.sh
 SCRIPTS_PATH: "scripts"
 INPUT_PATH: "input"
 OUTPUT_PATH: "input/output"
@@ -20,7 +20,7 @@ SILENCE_PHONES_PATH: "input/config/silence_phones.txt"
 OPTIONAL_SILENCE_PHONES_PATH: "input/config/optional_silence.txt"
 
 # For output/kaldi/conf/mfcc.conf
-# Template is in src/templates/mfcc.conf
+# Template is in kaldi-helpers/templates/mfcc.conf
 MFCC_SAMPLE_FREQUENCY: 44100
 MFCC_FRAME_LENGTH: 25
 MFCC_LOW_FREQ: 20
@@ -28,7 +28,7 @@ MFCC_HIGH_FREQ: 22050
 MFCC_NUM_CEPS: 7
 
 # For output/kaldi/conf/decode.config
-# Template is in src/templates/
+# Template is in kaldi-helpers/templates/
 DECODE_BEAM: 11.0
 DECODE_FIRST_BEAM: 8.0
 

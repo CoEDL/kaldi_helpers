@@ -6,9 +6,9 @@ import regex
 from typing import List, Set, Dict
 from scripts.textgrid_to_json import *
 
-TEST_FILES_BASE_DIR = os.path.join(".", "src", "test", "testfiles")
+TEST_FILES_BASE_DIR = os.path.join(".", "kaldi-helpers", "test", "testfiles")
 TEXTGRID_FILE_DIR = os.path.join("C:\\", "Classified_Lang_Data", "textgrid")
-SCRIPT_PATH = os.path.join(".", "src", "scripts", "textgrid_to_json.py")
+SCRIPT_PATH = os.path.join(".", "kaldi-helpers", "scripts", "textgrid_to_json.py")
 
 class TestTextgridToJSON:
 

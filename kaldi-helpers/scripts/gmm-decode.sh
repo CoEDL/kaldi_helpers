@@ -48,7 +48,7 @@
 . ./path.sh
 # make sure you include the path to the gmm bin(s)
 # the following two export commands are what my path.sh script contains:
-# export PATH=$PWD/utils/:$PWD/../../../src/bin:$PWD/../../../tools/openfst/bin:$PWD/../../../src/fstbin/:$PWD/../../../src/gmmbin/:$PWD/../../../src/featbin/:$PWD/../../../src/lm/:$PWD/../../../src/sgmmbin/:$PWD/../../../src/fgmmbin/:$PWD/../../../src/latbin/:$PWD/../../../src/nnet2bin/:$PWD:$PATH
+# export PATH=$PWD/utils/:$PWD/../../../kaldi-helpers/bin:$PWD/../../../tools/openfst/bin:$PWD/../../../kaldi-helpers/fstbin/:$PWD/../../../kaldi-helpers/gmmbin/:$PWD/../../../kaldi-helpers/featbin/:$PWD/../../../kaldi-helpers/lm/:$PWD/../../../kaldi-helpers/sgmmbin/:$PWD/../../../kaldi-helpers/fgmmbin/:$PWD/../../../kaldi-helpers/latbin/:$PWD/../../../kaldi-helpers/nnet2bin/:$PWD:$PATH
 # export LC_ALL=C
 
 # AUDIO --> FEATURE VECTORS
