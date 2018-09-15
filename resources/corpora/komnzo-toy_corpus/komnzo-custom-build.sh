@@ -5,7 +5,7 @@ task clean-output-folder tmp-makedir make-kaldi-subfolders
 # Extract all tiers from ELAN files
 
 ## Note the output file path: remember that this script is being called
-## from /kaldi-helpers, so we're going to use absolute paths to make everything clear
+## from /src, so we're going to use absolute paths to make everything clear
 task elan-to-json > /kaldi-helpers/input/output/tmp/komnzo_all.json
 
 # Select text tiers (starting with tx@), and filter out annotations

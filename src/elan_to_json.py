@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-get all files in the repository
+Get all files in the repository
 can use recursive atm as long as we don"t need numpy
 pass in corpus path
 throw an error if matching file wav isn"t found in the corpus directory
@@ -13,8 +13,8 @@ import os
 from argparse import ArgumentParser
 from pympi.Elan import Eaf
 from typing import List
-from utilities.file_utilities import find_files_by_extension
-from utilities.json_utilities import write_data_to_json_file
+from src.utilities import find_files_by_extension
+from src.utilities import write_data_to_json_file
 
 
 def read_eaf(input_elan_file, tier_name: str) -> List[dict]:

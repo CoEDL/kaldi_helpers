@@ -1,7 +1,7 @@
 import os
 from _pytest.capture import CaptureFixture
-from scripts.clean_json import *
-from utilities import write_data_to_json_file
+from src.clean_json import *
+from src.utilities import write_data_to_json_file
 
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},

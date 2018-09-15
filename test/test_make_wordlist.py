@@ -1,5 +1,5 @@
 import os
-from scripts.make_wordlist import *
+from src.make_wordlist import *
 from typing import List
 
 
@@ -10,7 +10,7 @@ def test_save_word_list() -> None:
         "world",
         "i",
         "love",
-        "tests"
+        "test"
     ]
     save_word_list(word_list, file_name)
     with open(file_name, "r") as file:
@@ -20,10 +20,10 @@ def test_save_word_list() -> None:
 
 def test_extract_word_list() -> None:
     json_data = [
-        {"transcript": "Hello world I love tests"},
-        {"transcript": "I love tests too"}
+        {"transcript": "Hello world I love test"},
+        {"transcript": "I love test too"}
     ]
     result = extract_word_list(json_data)
-    assert result == ["Hello", "I", "love", "tests", "too", "world"]
+    assert result == ["Hello", "I", "love", "test", "too", "world"]
 
 

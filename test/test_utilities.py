@@ -1,10 +1,9 @@
 import os
 import sys
+from src.utilities import *
 from _pytest.capture import CaptureFixture
-from utilities.json_utilities import *
 
-
-TEST_FILES_BASE_DIR = os.path.join(".", "kaldi-helpers", "test", "testfiles")
+TEST_FILES_BASE_DIR = os.path.join("test", "testfiles")
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},
     {"transcript": "Je m'appelle François."},
@@ -29,4 +28,4 @@ def test_write_data_to_json_file_path():
 def test_write_data_to_json_stdout(capsys: CaptureFixture):
     write_data_to_json_file(EXAMPLE_JSON_DATA, sys.stdout)
     out, _ = capsys.readouterr()
-    assert out == json.dumps(EXAMPLE_JSON_DATA, indent=2) + "\n"
+    assert out == json.dumps(EXAMPLE_JSON_DATA, indent=4) + "\n"

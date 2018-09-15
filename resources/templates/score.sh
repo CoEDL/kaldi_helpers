@@ -2,7 +2,7 @@
 # Copyright 2012  Johns Hopkins University (Author: Daniel Povey)
 # Apache 2.0
 
-[ -f ./path.sh ] && . ./path.sh
+[ -f ./path.sh ] && . path.sh
 
 # begin configuration section.
 cmd=run.pl
@@ -10,7 +10,7 @@ min_lmwt=7
 max_lmwt=17
 #end configuration section.
 
-[ -f ./path.sh ] && . ./path.sh
+[ -f ./path.sh ] && . path.sh
 . parse_options.sh || exit 1;
 
 if [ $# -ne 3 ]; then

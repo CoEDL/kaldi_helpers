@@ -8,7 +8,7 @@
 from typing import List, Dict
 import argparse
 import sys
-from utilities import load_json_file
+from src.utilities import load_json_file
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:

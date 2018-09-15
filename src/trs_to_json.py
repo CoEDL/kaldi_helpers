@@ -15,8 +15,8 @@ import argparse
 import json
 import platform
 import uuid
-from typing import Set, List, Dict, Union
-from utilities import find_files_by_extension
+from typing import List, Dict, Union
+from src.utilities import find_files_by_extension
 
 
 def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:

@@ -4,3 +4,5 @@ numpy
 langid
 nltk
 praatio
+pydub
+regex
