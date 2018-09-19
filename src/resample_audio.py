@@ -1,6 +1,10 @@
 #!/usr/bin/python3
-# Copyright Ola Olsson 2018
-# Convert audio to 16 bit 16k mono WAV
+
+"""
+Convert audio to 16 bit 16k mono WAV
+
+@author Ola Olsson 2018
+"""
 
 import argparse
 import glob
@@ -9,35 +13,10 @@ import subprocess
 import threading
 from multiprocessing.dummy import Pool
 from shutil import move
+from src.utilities.file_utilities import find_files_by_extension
 
 
-parser = argparse.ArgumentParser(description="This script will silence a wave file based on annotations in an Elan tier ")
-parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default='../input/data')
-parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='yes')
-args = parser.parse_args()
-
-overwrite = args.overwrite
-g_baseDir = args.corpus
-g_audioExts = ["*.wav"]
-g_soxPath = "/usr/bin/sox"
-g_tmpDir = "tmp"
-
-
-def findFilesByExt(setOfAllFiles, exts):
-    res = []
-    for f in setOfAllFiles:
-        name, ext = os.path.splitext(f)
-        if ("*" + ext.lower()) in exts:
-            res.append(f)
-    return res
-
-
-def joinNorm(p1, p2):
-    tmp = os.path.join(os.path.normpath(p1), os.path.normpath(p2))
-    return os.path.normpath(tmp)
-
-
-def processItem(xx):
+def process_item(xx, tmpFolders, g_soxPath):
     print("processing")
     inInd, ia = xx
     global g_tmpDir
@@ -71,27 +50,47 @@ def processItem(xx):
     return tmpAudioName
 
 
-allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive=True))
-inputAudio = findFilesByExt(allFilesInDir, set(g_audioExts))
-g_processLock = threading.Lock()
-g_outputStep = 0
+def joinNorm(p1, p2):
+    tmp = os.path.join(os.path.normpath(p1), os.path.normpath(p2))
+    return os.path.normpath(tmp)
 
-outputs = []
-tmpFolders = set([])
 
-# Single thread
-# outputs.append(processItem(ia))
+def main():
+    parser = argparse.ArgumentParser(
+        description="This script will silence a wave file based on annotations in an Elan tier ")
+    parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default='../input/data')
+    parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='yes')
+    args = parser.parse_args()
 
-# Multithread
-with Pool() as p:
-    outputs = p.map(processItem, enumerate(inputAudio))
+    overwrite = args.overwrite
+    g_baseDir = args.corpus
+    g_audioExts = ["*.wav"]
+    g_soxPath = "/usr/bin/sox"
+    g_tmpDir = "tmp"
 
-    if overwrite == 'yes':
-        # Replace original files
-        for f in outputs:
-            fname = os.path.basename(f)
-            parent = os.path.dirname(os.path.dirname(f))
-            move(f, os.path.join(parent, fname))
-        # Clean up tmp folders
-        for d in tmpFolders:
-            os.rmdir(d)
+    allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive=True))
+    inputAudio = find_files_by_extension(allFilesInDir, set(g_audioExts))
+    g_processLock = threading.Lock()
+    g_outputStep = 0
+
+    outputs = []
+    tmpFolders = set([])
+
+    # Single thread
+    # outputs.append(processItem(ia))
+
+    # Multithread
+    with Pool() as p:
+        outputs = p.map(process_item, enumerate(inputAudio))
+
+        if overwrite == 'yes':
+            # Replace original files
+            for f in outputs:
+                fname = os.path.basename(f)
+                parent = os.path.dirname(os.path.dirname(f))
+                move(f, os.path.join(parent, fname))
+            # Clean up tmp folders
+            for d in tmpFolders:
+                os.rmdir(d)
+
+

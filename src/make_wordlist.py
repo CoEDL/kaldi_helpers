@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-#
-# Given a json file with transcript information this tools can perform
-# manipulations including generating word lists.
-# Optionally provide the output json file name with -o
-# Usage: python filter_text.py sample.json wordlist.txt
+
+"""
+Given a json file with transcript information this tools can perform
+manipulations including generating word lists.
+Optionally provide the output json file name with -o
+Usage: python3 filter_text.py sample.json wordlist.txt
+"""
 
 from typing import List, Dict
 import argparse

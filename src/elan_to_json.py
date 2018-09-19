@@ -2,7 +2,7 @@
 
 """
 Get all files in the repository
-can use recursive atm as long as we don"t need numpy
+can use recursive atm as long as we don't need numpy
 pass in corpus path
 throw an error if matching file wav isn"t found in the corpus directory
 """

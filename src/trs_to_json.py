@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 """
 Parse trs file and extract information from it for json
@@ -42,8 +42,6 @@ def conditional_log(cond: bool, text: str) -> None:
     """
 
     if cond:
-        # Super-annoying mumbojumbo to work around utf8 file name and the windows console which under the debugger
-        # claims to be utf8 but then fails regardless!
         if platform.system() == 'Windows':
             sys.stderr.write(text.encode('cp850', errors='backslashreplace').decode(sys.stdout.encoding))
         else:
@@ -103,7 +101,6 @@ def process_turn(file_name, turn_node, wave_name, tree):
 
     base_dir, name = os.path.split(file_name)
     base_name, _ = os.path.splitext(name)
-    # wavefile_name = os.path.join(base_dir, wave_name)
     wavefile_name = os.path.join(".", wave_name)
 
     result = []

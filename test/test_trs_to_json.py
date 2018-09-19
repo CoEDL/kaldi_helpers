@@ -1,7 +1,14 @@
+"""
+Test script for validating trs to json conversion methods. 
+
+@author Aninda Saha
+"""
+
 from src.trs_to_json import *
+from typing import Set, List, Union
 
 TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
-# TRS_FILE_DIR = os.path.join("C:\\", "Classified_Lang_Data", "abui-trs")
+TRS_FILE_DIR = os.path.join("C:\\", "Classified_Lang_Data", "abui-trs")
 SCRIPT_PATH = os.path.join(".", "src", "scripts", "trs_to_json.py")
 
 
@@ -72,7 +79,6 @@ def test_conditional_log() -> None:
     os.remove('err.txt')
 
 
-"""
 def test_process_trs_file():
     all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
                                            recursive=True))
@@ -124,5 +130,3 @@ def test_trs_to_JSON():
     assert count == num_utterances
 
     os.remove(json_name)
-"""
-
