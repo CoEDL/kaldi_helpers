@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Trans SYSTEM "trans-14.dtd">
+<Trans scribe="Aninda Saha" audio_filename="Little red riding hood" version="1" version_date="20092018">
+<Speakers>
+<Speaker id="speaker1" name="Aninda Saha" check="no" type="male" dialect="native" accent="Fijian" scope="local"/>
+</Speakers>
+<Episode>
+<Section type="report" startTime="0" endTime="46.6">
+<Turn startTime="0" endTime="46.6" speaker="speaker1">
+<Sync time="0"/>
+&lt;silence&gt;
+<Sync time="12.036"/>
+Language learning is fun#
+<Sync time="15.723"/>
+&lt;silence&gt;
+<Sync time="25.12"/>
+it helps to learn about other cultures#
+<Sync time="29.776"/>
+it helps to become more open-minded#
+<Sync time="35.354"/>
+&lt;silence&gt;
+<Sync time="40.223"/>
+that's all, folks#
+</Turn>
+</Section>
+</Episode>
+</Trans>

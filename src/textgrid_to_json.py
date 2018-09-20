@@ -9,8 +9,10 @@ Usage: python3 textgrid_to_json.py --indir <input_file> [--output_dir output_dir
 import os
 import sys
 import argparse
+import glob
+import regex
 from praatio import tgio
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Set
 from src.utilities import write_data_to_json_file
 
 
@@ -75,6 +77,7 @@ def main():
     parser.add_argument('-j', '--output_json', help='File name to output json', type=str,
                         default='input/output/tmp/dirty.json')
     args = parser.parse_args()
+
     try:
         input_dir = args.input_dir
         output_dir = args.output_dir

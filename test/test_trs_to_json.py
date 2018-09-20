@@ -5,10 +5,9 @@ Test script for validating trs to json conversion methods.
 """
 
 from src.trs_to_json import *
-from typing import Set, List, Union
+
 
 TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
-TRS_FILE_DIR = os.path.join("C:\\", "Classified_Lang_Data", "abui-trs")
 SCRIPT_PATH = os.path.join(".", "src", "scripts", "trs_to_json.py")
 
 
@@ -80,9 +79,8 @@ def test_conditional_log() -> None:
 
 
 def test_process_trs_file():
-    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
+    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.trs"),
                                            recursive=True))
-
     for file_name in all_files_in_directory:
         with open(file_name) as f:
             contents = f.read()
@@ -92,7 +90,7 @@ def test_process_trs_file():
 
 
 def test_process_turn():
-    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
+    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.trs"),
                                                      recursive=True))
 
     for file_name in all_files_in_directory:
@@ -114,19 +112,23 @@ def test_process_turn():
 
 
 def test_trs_to_JSON():
-    num_utterances: int = 0;
-    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TRS_FILE_DIR, "*.trs"),
+
+    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.trs"),
                                                      recursive=True))
+    utterances = []
     for file_name in all_files_in_directory:
-        num_utterances += len(process_trs_file(file_name, False))
+        utterances = utterances + process_trs_file(file_name, False)
 
-    os.system("python " + SCRIPT_PATH + " --indir " + TRS_FILE_DIR)
-    json_name: str = os.path.basename(TRS_FILE_DIR) + ".json"
+    os.system("python " + SCRIPT_PATH + " --indir " + TEST_FILES_BASE_DIR)
 
+    json_name: str = os.path.basename(TEST_FILES_BASE_DIR) + ".json"
     with open(json_name) as f:
-        contents = f.read()
-        count = sum(1 for match in regex.finditer(r"\bspeaker_ID\b", contents, flags=regex.IGNORECASE))
+        contents = json.loads(f.read())
 
-    assert count == num_utterances
+    assert (len(contents) == len(utterances))
+    assert contents == utterances
 
-    os.remove(json_name)
+    ##os.remove(json_name)
+
+if __name__ == "__main__":
+    test_trs_to_JSON()

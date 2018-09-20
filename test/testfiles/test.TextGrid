@@ -1,0 +1,88 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0
+xmax = 55.782
+tiers? <exists>
+size = 4
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "Turns"
+        xmin = 0
+        xmax = 55.782
+        intervals: size = 2
+        intervals [1]:
+            xmin = 0
+            xmax = 17.186
+            text = "Aninda Saha"
+        intervals [2]:
+            xmin = 17.186
+            xmax = 55.782
+            text = "Nicholas Lambourne"
+    item [2]:
+        class = "IntervalTier"
+        name = "Speech"
+        xmin = 0
+        xmax = 40.676
+        intervals: size = 7
+        intervals [1]:
+            xmin = 0
+            xmax = 17.186
+            text = "Hello, I love bikes.#"
+        intervals [2]:
+            xmin = 17.186
+            xmax = 30.049
+            text = "I want to visit Iceland.#"
+        intervals [3]:
+            xmin = 30.049
+            xmax = 35.676
+            text = "Switzerland would be nice too.#"
+        intervals [4]:
+            xmin = 35.676
+            xmax = 40.676
+            text = "Africa is a beautiful place.#"
+    item [3]:
+        class = "IntervalTier"
+        name = "IPA"
+        xmin = 0
+        xmax = 22.265248132408697
+        intervals: size = 4
+        intervals [1]:
+            xmin = 0
+            xmax = 17.186
+            text = "Goldenwattles are beautiful.#"
+        intervals [2]:
+            xmin = 17.186
+            xmax = 17.393788900157798
+            text = "See the beauty in everything.#"
+        intervals [3]:
+            xmin = 17.393788900157798
+            xmax = 18.636938775510206
+            text = "Red rock delis are yummy.#"
+        intervals [4]:
+            xmin = 18.636938775510206
+            xmax = 22.265248132408697
+            text = ""
+    item [4]:
+        class = "IntervalTier"
+        name = "Free Translation"
+        xmin = 0
+        xmax = 55.782
+        intervals: size = 4
+        intervals [1]:
+            xmin = 0
+            xmax = 17.186
+            text = "Computers are fascinating.#"
+        intervals [2]:
+            xmin = 17.186
+            xmax = 30.049
+            text = "Hoodies are so comfortable.#"
+        intervals [3]:
+            xmin = 30.049
+            xmax = 35.676
+            text = "I live in Toowong.#"
+        intervals [4]:
+            xmin = 35.676
+            xmax = 55.782
+            text = "Sprite is the best soft drink.#"

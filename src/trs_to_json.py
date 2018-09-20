@@ -15,7 +15,9 @@ import argparse
 import json
 import platform
 import uuid
-from typing import List, Dict, Union
+import subprocess
+import regex
+from typing import List, Dict, Union, Set
 from src.utilities import find_files_by_extension
 
 
@@ -125,18 +127,19 @@ def process_turn(file_name, turn_node, wave_name, tree):
 
 def main():
 
-    """ Run the entire trs_to_json.py as a command line utility """
-    # utterances = process_trs_file("..\\test\\testfiles\\exampleTranscription.trs", True)
-    # print(utterances)
+    """ 
+    Run the entire trs_to_json.py as a command line utility 
+    Usage: python3 trs_to_json.py --indir ../input/data > ../input/output/tmp/dirty.json
+    """
 
     parser = argparse.ArgumentParser(description='A command line utility to convert .trs files to .json',
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-d', '--indir', dest='inputDir', help='Input directory, default=\'.\'', default='.')
+    parser.add_argument('-d', '--indir', dest='input_directory', help='Input directory, default=\'.\'', default='.')
     parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
 
     args = parser.parse_args()
 
-    g_base_dir = args.inputDir
+    g_base_dir = args.input_directory
     g_verbose_output = args.verbose
 
     if g_verbose_output:
@@ -147,10 +150,10 @@ def main():
     transcript_names = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
 
     # iterate through all .trs files and process them, creates audio clip files and returns the set
-    # {file_name, transcriptString, speaker_ID}
+    # {file_name, transcript_string, speaker_ID}
     utterances = []
-    for fn in transcript_names:
-        utterances = utterances + process_trs_file(fn, g_verbose_output)
+    for file_name in transcript_names:
+        utterances = utterances + process_trs_file(file_name, g_verbose_output)
 
     result_base_name, name = os.path.split(g_base_dir)
 

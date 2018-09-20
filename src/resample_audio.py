@@ -1,7 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 """
-Convert audio to 16 bit 16k mono WAV
+Convert audio to 16 bit 16k mono WAV file
+
+Usage: python3 resample_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
 
 @author Ola Olsson 2018
 """
@@ -13,84 +15,116 @@ import subprocess
 import threading
 from multiprocessing.dummy import Pool
 from shutil import move
-from src.utilities.file_utilities import find_files_by_extension
+from utilities.file_utilities import find_files_by_extension
+from typing import Tuple
+
+DEFAULT_DATA_DIRECTORY = os.path.join("..", "resources", "corpora", "abui_toy_corpus", "data")
+AUDIO_EXTENSIONS = ["*.wav"]
+TEMPORARY_DIRECTORY = "tmp"
+SOX_PATH = "C:\\Program Files (x86)\\sox-14-4-2\\sox.exe"
+#SOX_PATH = "/usr/bin/sox"
+
+def process_item(audio_file: Tuple[int, str]) -> str:
+
+    """
+    Processes an audio file and resamples it to a 16k mono WAV file 
+    
+    :param audio_file: audio file to be resampled
+    :return: name of the resampled file stored in a temporary folder
+    """
+
+    global temporary_folders
+    global g_process_lock
+    global g_output_step
+
+    input_index, input_audio_file = audio_file
+
+    with g_process_lock:
+        print("[%d, %d]%s" % (g_output_step, input_index, input_audio_file))
+        g_output_step += 1
+
+    # Extracting input directory names and file names
+    input_directory, name = os.path.split(input_audio_file)
+    base_name, extension = os.path.splitext(name)
+    output_directory = os.path.join(input_directory, TEMPORARY_DIRECTORY)
+    temporary_folders.add(output_directory)
+
+    # Security check to avoid race conditions
+    with g_process_lock:
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
+
+    temporary_audio_name = join_normalised_path(output_directory, "%s.%s" % (base_name, "wav"))
+    normalised_path = os.path.normpath(input_audio_file)
+    if not os.path.exists(temporary_audio_name):
+        command_line = [SOX_PATH, normalised_path, "-b", "4", "-c", "1",
+                        "-r", "44.1k", "-t", "wav", temporary_audio_name]
+        subprocess.call(command_line)
+
+    return temporary_audio_name
 
 
-def process_item(xx, tmpFolders, g_soxPath):
-    print("processing")
-    inInd, ia = xx
-    global g_tmpDir
-    global g_processLock
-    global g_outputStep
-
-    with g_processLock:
-        print("[%d, %d]%s" % (g_outputStep, inInd, ia))
-        g_outputStep += 1
-
-    inputName = os.path.normpath(ia)
-    # 1. convert using sox
-
-    inDir, name = os.path.split(ia)
-    print(inDir)
-    baseName, ext = os.path.splitext(name)
-    outDir = os.path.join(inDir, g_tmpDir)
-    print(outDir)
-    tmpFolders.add(outDir)
-
-    # avoid race condition
-    with g_processLock:
-        if not os.path.exists(outDir):
-            os.makedirs(outDir)
-
-    tmpAudioName = joinNorm(outDir, "%s.%s" % (baseName, "wav"))
-
-    if not os.path.exists(tmpAudioName):
-        cmdLn = [g_soxPath, inputName, "-b", "16", "-c", "1", "-r", "44.1k", "-t", "wav", tmpAudioName]
-        subprocess.call(cmdLn)
-    return tmpAudioName
-
-
-def joinNorm(p1, p2):
-    tmp = os.path.join(os.path.normpath(p1), os.path.normpath(p2))
+def join_normalised_path(path1, path2):
+    """
+    Joining two paths by first normalising them and then re-normalising their concatenation.
+    This allows for safer path conversions across various operating systems.
+    
+    :param path1: prepended part of the desired resulting path
+    :param path2: appended part of the desired resulting path
+    :return: concatenated and normalised path 
+    """
+    tmp = os.path.join(os.path.normpath(path1), os.path.normpath(path2))
     return os.path.normpath(tmp)
 
 
 def main():
+
+    """
+    A command line utility to process the audio files in a given directory 
+    Usage: python3 resample_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
+    """
+    global temporary_folders
+    global SOX_PATH
+    global g_process_lock
+    global g_output_step
+
     parser = argparse.ArgumentParser(
         description="This script will silence a wave file based on annotations in an Elan tier ")
-    parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default='../input/data')
-    parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='yes')
+
+    parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default=DEFAULT_DATA_DIRECTORY)
+    parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='true')
     args = parser.parse_args()
 
     overwrite = args.overwrite
-    g_baseDir = args.corpus
-    g_audioExts = ["*.wav"]
-    g_soxPath = "/usr/bin/sox"
-    g_tmpDir = "tmp"
+    base_directory = args.corpus
+    
+    temporary_folders = set([])
 
-    allFilesInDir = set(glob.glob(os.path.join(g_baseDir, "**"), recursive=True))
-    inputAudio = find_files_by_extension(allFilesInDir, set(g_audioExts))
-    g_processLock = threading.Lock()
-    g_outputStep = 0
+    all_files_in_directory = set(glob.glob(os.path.join(base_directory, "**"), recursive=True))
+    input_audio = find_files_by_extension(all_files_in_directory, set(AUDIO_EXTENSIONS))
+    g_process_lock = threading.Lock()
+    g_output_step = 0
 
-    outputs = []
-    tmpFolders = set([])
+    # Single-threaded solution
+    # outputs = []
+    # outputs.append(process_item(input_audio))
 
-    # Single thread
-    # outputs.append(processItem(ia))
-
-    # Multithread
+    # Multi-threaded solution
     with Pool() as p:
-        outputs = p.map(process_item, enumerate(inputAudio))
-
-        if overwrite == 'yes':
+        temporary_folders = set([])
+        outputs = p.map(process_item, enumerate(input_audio))
+        if overwrite == 'true':
             # Replace original files
-            for f in outputs:
-                fname = os.path.basename(f)
-                parent = os.path.dirname(os.path.dirname(f))
-                move(f, os.path.join(parent, fname))
-            # Clean up tmp folders
-            for d in tmpFolders:
-                os.rmdir(d)
+            for file in outputs:
+                file_name = os.path.basename(file)
+                parent = os.path.dirname(os.path.dirname(file))
+                move(file, os.path.join(parent, file_name))
+            # Perform clean up of temporary folders
+            for file in temporary_folders:
+                os.rmdir(file)
+                continue
 
+
+if __name__ == "__main__":
+    main()
 

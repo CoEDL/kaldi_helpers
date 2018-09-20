@@ -1,4 +1,3 @@
-import os
 import sys
 from src.utilities import *
 from _pytest.capture import CaptureFixture
