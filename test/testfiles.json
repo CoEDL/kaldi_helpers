@@ -1,0 +1,51 @@
+[
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "<silence>",
+        "startMs": 0.0,
+        "stopMs": 12036.0
+    },
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "Language learning is fun#",
+        "startMs": 12036.0,
+        "stopMs": 15723.0
+    },
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "<silence>",
+        "startMs": 15723.0,
+        "stopMs": 25120.0
+    },
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "it helps to learn about other cultures#",
+        "startMs": 25120.0,
+        "stopMs": 29776.0
+    },
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "it helps to become more open-minded#",
+        "startMs": 29776.0,
+        "stopMs": 35354.0
+    },
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "<silence>",
+        "startMs": 35354.0,
+        "stopMs": 40223.0
+    },
+    {
+        "speaker_ID": "Aninda Saha",
+        "audiofile_name": "./Little red riding hood.wav",
+        "transcript": "that's all, folks#",
+        "startMs": 40223.0,
+        "stopMs": 46600.0
+    }
+]

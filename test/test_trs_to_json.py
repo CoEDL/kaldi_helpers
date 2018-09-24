@@ -8,7 +8,7 @@ from src.trs_to_json import *
 
 
 TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
-SCRIPT_PATH = os.path.join(".", "src", "scripts", "trs_to_json.py")
+SCRIPT_PATH = os.path.join(".", "src", "trs_to_json.py")
 
 
 def test_find_first_file_by_extension() -> None:
@@ -119,9 +119,12 @@ def test_trs_to_JSON():
     for file_name in all_files_in_directory:
         utterances = utterances + process_trs_file(file_name, False)
 
+    #result = subprocess.run(["python", SCRIPT_PATH, "--indir", TEST_FILES_BASE_DIR], check=True)
+
+    #assert result.returncode == 0
     os.system("python " + SCRIPT_PATH + " --indir " + TEST_FILES_BASE_DIR)
 
-    json_name: str = os.path.basename(TEST_FILES_BASE_DIR) + ".json"
+    json_name: str = os.path.join(TEST_FILES_BASE_DIR, "example.json")
     with open(json_name) as f:
         contents = json.loads(f.read())
 

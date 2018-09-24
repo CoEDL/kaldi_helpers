@@ -75,7 +75,7 @@ def main():
     parser.add_argument('-i', '--input_dir', help='The input data dir', type=str, default='input/data/')
     parser.add_argument('-o', '--output_dir', help='Output directory', type=str, default='input/output/tmp/')
     parser.add_argument('-j', '--output_json', help='File name to output json', type=str,
-                        default='input/output/tmp/dirty.json')
+                        default='input/output/tmp/dirty.json') #'input/output/tmp/dirty.json'
     args = parser.parse_args()
 
     try:
