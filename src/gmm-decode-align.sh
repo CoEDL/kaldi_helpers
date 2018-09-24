@@ -85,10 +85,10 @@ lattice-1best \
 #       FST lattice input file specifier
 #       lattice output file specifier
 lattice-align-words \
-
+    data/lang/phones/word_boundary.int \
     exp/tri1/final.mdl \
     ark,t:data/infer/1best-fst.tra \
-    ark,t:data/infer/1best-fst-word-aligned.tra \
+    ark,t:data/infer/1best-fst-word-aligned.tra
 
 
 # LATTICE --> BEST PATH THROUGH LATTICE
