@@ -57,7 +57,7 @@ def process_item(audio_file: Tuple[int, str]) -> str:
     temporary_audio_name = join_normalised_path(output_directory, "%s.%s" % (base_name, "wav"))
     normalised_path = os.path.normpath(input_audio_file)
     if not os.path.exists(temporary_audio_name):
-        command_line = [SOX_PATH, normalised_path, "-b", "4", "-c", "1",
+        command_line = [SOX_PATH, normalised_path, "-b", "16", "-c", "1",
                         "-r", "44.1k", "-t", "wav", temporary_audio_name]
         subprocess.call(command_line)
 

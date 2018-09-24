@@ -146,6 +146,7 @@ def main():
         sys.stderr.write(g_base_dir + "\n")
 
     all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
+    print(all_files_in_dir)
 
     transcript_names = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
 

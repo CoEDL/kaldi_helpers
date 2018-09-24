@@ -4,11 +4,10 @@ Test script for validating textgrid to json conversion pipeline.
 @author Aninda Saha
 """
 
-
 from src.textgrid_to_json import *
 
-TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
-SCRIPT_PATH = os.path.join(".", "src", "scripts", "textgrid_to_json.py")
+TEST_FILES_BASE_DIR = os.path.join(os.getcwd(), os.path.join(".", "testfiles"))
+SCRIPT_PATH = os.path.join(os.getcwd(), os.path.join(".", "src", "textgrid_to_json.py"))
 
 def test_process_textgrid_file() -> None:
 
@@ -40,4 +39,4 @@ def test_textgrid_to_json() -> None:
 
     assert count == num_utterances
 
-    os.remove(json_name)
+    #os.remove(json_name)
