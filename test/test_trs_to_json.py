@@ -16,9 +16,11 @@ Test script for validating trs to json conversion methods.
 # from src.utilities import find_files_by_extension
 
 from src.trs_to_json import *
+TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
+SCRIPT_PATH = os.path.join(".", "src", "trs_to_json.py")
 
-TEST_FILES_BASE_DIR = os.path.normpath(os.path.join(os.getcwd(), os.path.join(".", "test", "testfiles")))
-SCRIPT_PATH = os.path.normpath(os.path.join(os.getcwd(), os.path.join("..", "src", "trs_to_json.py")))
+# TEST_FILES_BASE_DIR = os.path.normpath(os.path.join(os.getcwd(), os.path.join(".", "test", "testfiles")))
+# SCRIPT_PATH = os.path.normpath(os.path.join(os.getcwd(), os.path.join("..", "src", "trs_to_json.py")))
 
 def test_find_first_file_by_extension() -> None:
     all_files_in_dir = list(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
@@ -127,10 +129,14 @@ def test_trs_to_JSON():
     for file_name in all_files_in_directory:
         utterances = utterances + process_trs_file(file_name, False)
 
-    path = ["python", os.path.join("..", "src", "trs_to_json.py"), "--indir", TEST_FILES_BASE_DIR];
-    exit = subprocess.call(path)
+    #result = subprocess.run(["python", SCRIPT_PATH, "--indir", TEST_FILES_BASE_DIR], check=True)
 
-    assert 1 == 1
+    #assert result.returncode == 0
+    os.system("python " + SCRIPT_PATH + " --indir " + TEST_FILES_BASE_DIR)
+
+    json_name: str = os.path.join(TEST_FILES_BASE_DIR, "example.json")
+    with open(json_name) as f:
+        contents = json.loads(f.read())
 
     #
     # json_name: str = os.path.basename(TEST_FILES_BASE_DIR) + ".json"

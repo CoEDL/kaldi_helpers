@@ -18,7 +18,7 @@ import uuid
 import subprocess
 import regex
 from typing import List, Dict, Union, Set
-from src.utilities import find_files_by_extension
+from src.utilities import find_files_by_extension, write_data_to_json_file
 
 
 def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:
@@ -158,15 +158,17 @@ def main():
 
     result_base_name, name = os.path.split(g_base_dir)
 
-    if name == '.':
+    print(result_base_name, name)
+
+    if not name or name == '.':
         outfile_name = "utterances.json"
     else:
-        outfile_name = name + ".json"
+        outfile_name = os.path.join(name + '.json')
 
-    with open(outfile_name, 'w') as outfile:
-        # outfile = sys.stdout
-        json.dump(utterances, outfile, indent=2)
+    outfile_path = os.path.join(result_base_name, outfile_name)
 
+    write_data_to_json_file(utterances, outfile_path)
+    print("are you getting here")
 
 if __name__ == '__main__':
     main()

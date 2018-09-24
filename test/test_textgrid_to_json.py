@@ -6,8 +6,9 @@ Test script for validating textgrid to json conversion pipeline.
 
 from src.textgrid_to_json import *
 
-TEST_FILES_BASE_DIR = os.path.join(os.getcwd(), os.path.join(".", "testfiles"))
-SCRIPT_PATH = os.path.join(os.getcwd(), os.path.join(".", "src", "textgrid_to_json.py"))
+TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
+SCRIPT_PATH = os.path.join(".", "src", "textgrid_to_json.py")
+
 
 def test_process_textgrid_file() -> None:
 
@@ -30,9 +31,9 @@ def test_textgrid_to_json() -> None:
     for file_name in all_files_in_directory:
         num_utterances += len(process_textgrid_file(file_name))
 
-    os.system("python " + SCRIPT_PATH + " --indir " + TEST_FILES_BASE_DIR)
+    os.system("python " + SCRIPT_PATH + " -i " + TEST_FILES_BASE_DIR + " -j " + os.path.join(TEST_FILES_BASE_DIR, "example.json"))
 
-    json_name: str = os.path.basename(TEST_FILES_BASE_DIR) + ".json"
+    json_name: str = os.path.join(TEST_FILES_BASE_DIR, 'example.json')
     with open(json_name) as f:
         contents = f.read()
         count = sum(1 for match in regex.finditer(r"\bspeaker_ID\b", contents, flags=regex.IGNORECASE))
