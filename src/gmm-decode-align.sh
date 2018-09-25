@@ -115,19 +115,22 @@ lattice-align-words \
 #       ctm (int) output file specifier
 nbest-to-ctm \
     ark,t:data/infer/1best-fst-word-aligned.tra \
-    data/infer/align-words-best.ctm
-
-### --> Works up to here
+    data/infer/align-words-best-intkeys.ctm
 
 # BEST PATH INTERGERS (CTM) --> BEST PATH WORDS (CTM) // TO FIX
-utils/int2sym.pl -f 2- \
+# args:
+#       mapping of integer keys to words
+#       ctm file to change integers to words in
+utils/int2sym.pl -f 5- \
     exp/tri/graph/words.txt \
-    data/infer/one-best.tra \
-    > data/infer/one-best-hypothesis.txt
+    data/infer/align-words-best-intkeys.ctm \
+    > data/infer/align-words-best-wordkeys.ctm
+
+### --> Works up to here
 
 # BEST PATH WORDS (CTM) --> ELAN
 # // TODO
 
 # REPORT OUTPUT
-echo "\r\n\r\nCTM output"
-cat ./data/infer/align-words-best.ctm
+echo "CTM output"
+cat ./data/infer/align-words-best-wordkeys.ctm
