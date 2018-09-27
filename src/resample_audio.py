@@ -17,12 +17,8 @@ from multiprocessing.dummy import Pool
 from shutil import move
 from utilities.file_utilities import find_files_by_extension
 from typing import Tuple
+from utilities.globals import *
 
-DEFAULT_DATA_DIRECTORY = os.path.join("..", "resources", "corpora", "abui_toy_corpus", "data")
-AUDIO_EXTENSIONS = ["*.wav"]
-TEMPORARY_DIRECTORY = "tmp"
-SOX_PATH = "C:\\Program Files (x86)\\sox-14-4-2\\sox.exe"
-#SOX_PATH = "/usr/bin/sox"
 
 def process_item(audio_file: Tuple[int, str]) -> str:
 
@@ -34,14 +30,14 @@ def process_item(audio_file: Tuple[int, str]) -> str:
     """
 
     global temporary_folders
-    global g_process_lock
-    global g_output_step
+    global process_lock
+    global output_step
 
     input_index, input_audio_file = audio_file
 
-    with g_process_lock:
-        print("[%d, %d]%s" % (g_output_step, input_index, input_audio_file))
-        g_output_step += 1
+    with process_lock:
+        print("[%d, %d]%s" % (output_step, input_index, input_audio_file))
+        output_step += 1
 
     # Extracting input directory names and file names
     input_directory, name = os.path.split(input_audio_file)
@@ -50,7 +46,7 @@ def process_item(audio_file: Tuple[int, str]) -> str:
     temporary_folders.add(output_directory)
 
     # Security check to avoid race conditions
-    with g_process_lock:
+    with process_lock:
         if not os.path.exists(output_directory):
             os.makedirs(output_directory)
 
@@ -84,15 +80,14 @@ def main():
     Usage: python3 resample_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
     """
     global temporary_folders
-    global SOX_PATH
-    global g_process_lock
-    global g_output_step
+    global process_lock
+    global output_step
 
     parser = argparse.ArgumentParser(
         description="This script will silence a wave file based on annotations in an Elan tier ")
 
     parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default=DEFAULT_DATA_DIRECTORY)
-    parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='true')
+    parser.add_argument('-o', '--overwrite', help='Write over existing files', action="store_true")
     args = parser.parse_args()
 
     overwrite = args.overwrite
@@ -102,18 +97,18 @@ def main():
 
     all_files_in_directory = set(glob.glob(os.path.join(base_directory, "**"), recursive=True))
     input_audio = find_files_by_extension(all_files_in_directory, set(AUDIO_EXTENSIONS))
-    g_process_lock = threading.Lock()
-    g_output_step = 0
+    process_lock = threading.Lock()
+    output_step = 0
 
-    # Single-threaded solution
+    ''' Single-threaded solution '''
     # outputs = []
     # outputs.append(process_item(input_audio))
 
-    # Multi-threaded solution
+    ''' Multi-threaded solution '''
     with Pool() as p:
         temporary_folders = set([])
         outputs = p.map(process_item, enumerate(input_audio))
-        if overwrite == 'true':
+        if overwrite:
             # Replace original files
             for file in outputs:
                 file_name = os.path.basename(file)

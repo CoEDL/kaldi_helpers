@@ -14,22 +14,7 @@ import wave
 import numpy
 from pympi.Elan import Eaf
 
-
-parser = argparse.ArgumentParser(description="This script will silence a wave file based on annotations in an Elan tier ")
-parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, required=True)
-parser.add_argument('-s', '--silence_tier', help='silence audio when annotations are found on this tier', type=str, default='Silence')
-parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='yes')
-args = parser.parse_args()
-
-corpus = args.corpus
-overwrite = args.overwrite
-DO_NOT_PUBLISH = args.silence_tier
-SILENCE_M = 0
-SILENCE_S = [0, 0]
-SUFFIX = 'S'
-
-
-def process():
+def process(eaffile, DO_NOT_PUBLISH, SILENCE_M, output):
     # load audio
     with wave.open(input, 'rb') as audio:
         params = audio.getparams()
@@ -90,27 +75,52 @@ def process():
                                                    num_samples / params.framerate))
 
 
-# look for .eaf files, recirsively from the passed corpus dir
-# for fpath in glob.iglob(corpus + '/**/*.eaf', recursive=True):
-for fpath in glob.iglob(corpus + '/*.eaf'):
-    print(fpath)
-    eaffile = Eaf(fpath)
-    names = eaffile.get_tier_names()
-    # print(names)
+def main():
+    """
+    A command line utility to silence the audio files in a given directory 
+    Usage: python silence_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
+    """
 
-    # check for existence of silence tier
-    #
-    if DO_NOT_PUBLISH in names:
-        print("have tier %s in %s" % (DO_NOT_PUBLISH, fpath))
+    parser = argparse.ArgumentParser(
+        description="This script will silence a wave file based on annotations in an Elan tier ")
+    parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, required=True)
+    parser.add_argument('-s', '--silence_tier', help='silence audio when annotations are found on this tier', type=str,
+                        default='Silence')
+    parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='yes')
+    args = parser.parse_args()
 
-        basename, extn = os.path.splitext(fpath)
+    corpus = args.corpus
+    overwrite = args.overwrite
+    DO_NOT_PUBLISH = args.silence_tier
+    SILENCE_M = 0
+    SILENCE_S = [0, 0]
+    SUFFIX = 'S'
 
-        input = basename + ".wav"
-        if overwrite == 'yes':
-            output = basename + ".wav"
-        else:
-            output = basename + SUFFIX + ".wav"
+    # look for .eaf files, recirsively from the passed corpus dir
+    # for fpath in glob.iglob(corpus + '/**/*.eaf', recursive=True):
+    for fpath in glob.iglob(corpus + '/*.eaf'):
+        print(fpath)
+        eaffile = Eaf(fpath)
+        names = eaffile.get_tier_names()
+        # print(names)
 
-        process()
-    # else:
-        # print("tier %s in %s not found, skipping" % (DO_NOT_PUBLISH, fpath))
+        # check for existence of silence tier
+        #
+        if DO_NOT_PUBLISH in names:
+            print("have tier %s in %s" % (DO_NOT_PUBLISH, fpath))
+
+            basename, extn = os.path.splitext(fpath)
+
+            input = basename + ".wav"
+            if overwrite == 'yes':
+                output = basename + ".wav"
+            else:
+                output = basename + SUFFIX + ".wav"
+
+            process(eaffile, DO_NOT_PUBLISH, SILENCE_M, output)
+            # else:
+            # print("tier %s in %s not found, skipping" % (DO_NOT_PUBLISH, fpath))
+
+
+if __name__ == "__main__":
+    main()
