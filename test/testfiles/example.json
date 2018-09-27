@@ -1,0 +1,26 @@
+[
+    {
+        "audioFileName": "./test.wav",
+        "transcript": "Hello, I love bikes.#",
+        "startMs": 0,
+        "stopMs": 17186
+    },
+    {
+        "audioFileName": "./test.wav",
+        "transcript": "I want to visit Iceland.#",
+        "startMs": 17186,
+        "stopMs": 30049
+    },
+    {
+        "audioFileName": "./test.wav",
+        "transcript": "Switzerland would be nice too.#",
+        "startMs": 30049,
+        "stopMs": 35676
+    },
+    {
+        "audioFileName": "./test.wav",
+        "transcript": "Africa is a beautiful place.#",
+        "startMs": 35676,
+        "stopMs": 40676
+    }
+]

@@ -67,6 +67,13 @@ _infer:
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode.sh
 
+_infer_ctm:
+  desc: "Produce time aligned inference (CTM format)"
+  cmds:
+    - task _run_elan
+    - task _train-test
+    - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode-align.sh
+
 ######################################### HELPER TASKS ############################################
 
 generate-kaldi-files:
