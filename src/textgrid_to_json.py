@@ -11,48 +11,47 @@ import sys
 import argparse
 import glob
 import regex
+import subprocess
+from pyparsing import ParseException
 from praatio import tgio
 from typing import List, Dict, Union, Set
-from src.utilities import write_data_to_json_file
+from src.utilities import *
 
 
-def process_textgrid_file(input_dir: str) -> List[Dict[str, Union[str, int]]]:
+def process_textgrid_files(input_directory: str) -> List[Dict[str, Union[str, int]]]:
     """
-    Traverses through the textgrid file and extracts transcription information
-    in each tier and creates a list of dictionaries, each containing data in the
-    following format: {'audioFileName': <file_name>,
+    Traverses through the textgrid files in the given directory and extracts 
+    transcription information in each tier and creates a list of dictionaries,
+    each containing data in the following format: 
+                        {'audio_file_name': <file_name>,
                         'transcript': <transcription_label>,
-                        'startMs': <start_time_in_milliseconds>,
-                        'stopMs': <stop_time_in_milliseconds>}
+                        'start_ms': <start_time_in_milliseconds>,
+                        'stop_ms': <stop_time_in_milliseconds>}
                         
-    :param input_dir: directory path containing input files from where the method
-                    
+    :param input_directory: directory path containing input files from where the method
     :return: list of interval data in dictionary form
     """
-    intervals = []
+    intervals: List[Dict[str, Union[str, int]]] = []
 
-    for (root, dirs, files) in os.walk(input_dir):
+    for root, directories, files in os.walk(input_directory):
         for filename in files:
-            basename, ext = os.path.splitext(filename)
+            basename, extension = os.path.splitext(filename)
             if filename.endswith(".TextGrid"):
-                tg = tgio.openTextgrid(os.path.join(root, filename))
-                speech_tier = tg.tierDict['Speech']
+                text_grid: tgio.Textgrid = tgio.openTextgrid(os.path.join(root, filename))
+                speech_tier: tgio.IntervalTier = text_grid.tierDict["Speech"]
                 for start, stop, label in speech_tier.entryList:
-                    label_w = label.replace('"', '')
-
-                    obj = {
-                        'audioFileName': os.path.join(".", basename + ".wav"),
-                        'transcript': label_w,
-                        'startMs': sec_to_milli(float(start)),
-                        'stopMs': sec_to_milli(float(stop))
-                    }
-
-                    intervals.append(obj)
+                    label_word: str = label.replace('"', '')
+                    intervals.append({
+                        "audio_file_name": os.path.join(".", basename + ".wav"),
+                        "transcript": label_word,
+                        "start_ms": second_to_milli(float(start)),
+                        "stop_ms": second_to_milli(float(stop))
+                    })
 
     return intervals
 
 
-def sec_to_milli(seconds: float) -> int:
+def second_to_milli(seconds: float) -> int:
     """
     Converts from seconds to milliseconds 
     
@@ -63,7 +62,7 @@ def sec_to_milli(seconds: float) -> int:
     return int(seconds * 1000)
 
 
-def main():
+def main() -> None:
 
     """ 
     Run the entire textgrid_to_json.py as a command line utility 
@@ -71,25 +70,29 @@ def main():
     """
 
     parser = argparse.ArgumentParser(
-        description='Search input-folder for .TextGrid files and convert to JSON on stdout')
-    parser.add_argument('-i', '--input_dir', help='The input data dir', type=str, default='input/data/')
-    parser.add_argument('-o', '--output_dir', help='Output directory', type=str, default='input/output/tmp/')
-    parser.add_argument('-j', '--output_json', help='File name to output json', type=str,
-                        default='input/output/tmp/dirty.json') #'input/output/tmp/dirty.json'
+        description = "Search input folder for .TextGrid files and convert to JSON on stdout")
+    parser.add_argument("-i", "--input_dir", help="The input data dir", type=str, default="input/data/")
+    parser.add_argument("-o", "--output_dir", help="Output directory", type=str, default=".") #default="input/output/tmp"
     args = parser.parse_args()
 
     try:
-        input_dir = args.input_dir
-        output_dir = args.output_dir
-        output_json = args.output_json
-    except Exception:
+        input_directory = args.input_dir
+        output_directory = input_directory if args.output_dir == "." else args.output_dir
+    except ParseException:
         parser.print_help()
         sys.exit(0)
 
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
 
-    intervals = process_textgrid_file(input_dir)
+    intervals = process_textgrid_files(input_directory)
+
+    result_base_name, name = os.path.split(output_directory)
+    if not name or name == '.':
+        outfile_name = "intervals.json"
+    else:
+        outfile_name = os.path.join(name + '.json')
+    output_json = os.path.join(result_base_name, outfile_name)
 
     write_data_to_json_file(intervals, output_json)
 

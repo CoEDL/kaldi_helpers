@@ -17,60 +17,46 @@ import platform
 import uuid
 import subprocess
 import regex
-from typing import List, Dict, Union, Set
-from src.utilities import find_files_by_extension, write_data_to_json_file
+from typing import List, Dict, Union, Set, Tuple
+from src.utilities import *
 
 
-def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:
-    """
-    Searches for the first file with a given extension in a set of files.
-    
-    :param set_of_all_files: set of file names in string format
-    :param extensions: file extension being searched for
-    :return: name of the first file_name that is matched, if any. otherwise, this method returns an empty string
-    """
-    for f in set_of_all_files:
-        name, extension = os.path.splitext(f)
-        if ("*" + extension.lower()) in extensions:
-            return f
-    return ""
-
-
-def conditional_log(cond: bool, text: str) -> None:
+def conditional_log(condition: bool, text: str) -> None:
     """
     Work around for UTF8 file name and the windows console.
-    :param cond: condition to indicate whether text should be output to stderr
+    :param condition: condition to indicate whether text should be output to stderr
     :param text: text to output to stderr 
     """
 
-    if cond:
-        if platform.system() == 'Windows':
-            sys.stderr.write(text.encode('cp850', errors='backslashreplace').decode(sys.stdout.encoding))
+    if condition:
+        if platform.system() == "Windows":
+            sys.stderr.write(text.encode("cp850", errors="backslashreplace").decode(sys.stdout.encoding))
         else:
             sys.stderr.write(text)
         sys.stderr.flush()
 
 
-def process_trs_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
+def process_trs_file(file_name: str, verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
 
     """
     Method to process the .trs files and returns a list of utterances.
     :param file_name: file_name of the .trs file
-    :param g_verbose_output: whether or not output to stdout
+    :param verbose_output: whether or not output to stdout
     :return: a list of dictionaries. each dictionary contains key information on utterances, including 
             speaker_ID, audiofile_name, transcript, startMs, stopMs.
     """
 
-    conditional_log(g_verbose_output, "Processing transcript '%s'\n" % file_name)
+    conditional_log(verbose_output, "Processing transcript '%s'\n" % file_name)
 
     utterances: List[Dict[str, Union[str, float]]] = []
     try:
-        tree = ET.parse(file_name) # loads an external XML section into this element tree
-        root = tree.getroot() # root of element tree
-        wave_name = root.attrib['audio_filename'] + ".wav" # changed audio_file_name to audio_filename
-        turn_nodes = tree.findall(".//Turn")
+        tree: ET.ElementTree = ET.parse(file_name)
+        root: ET.Element = tree.getroot()
+        wave_name: str = root.attrib["audio_filename"] + ".wav"
+        turn_nodes: List[ET.Element] = tree.findall(".//Turn")
+
         for turn_node in turn_nodes:
-            utterances = utterances + process_turn(file_name, turn_node, wave_name, tree)
+            utterances = utterances + process_turn(wave_name, turn_node, tree)
 
     except ET.ParseError as err:
         conditional_log(True, "XML parser failed to parse '%s'!\n" % file_name)
@@ -79,96 +65,84 @@ def process_trs_file(file_name: str, g_verbose_output: bool) -> List[Dict[str, U
     return utterances
 
 
-def process_turn(file_name, turn_node, wave_name, tree):
+def process_turn(wave_name: str, turn_node: ET.Element, tree: ET.ElementTree) -> List[Dict[str, Union[str, float]]]:
     """
     Helper method to process each turn_node in the .trs file
     :param file_name: name of the file
-    :param turn_node: name of the turn node to be processed
+    :param turn_node: the ElementTree node to be processed
     :param wave_name: name of .wav audio file to be processed
     :param tree: XML data represented as a tree data structure
     :return: list of key information on utterances
     """
 
-    # turn_start = float(turn_node.attrib['start_time'])
-    turn_end = float(turn_node.attrib['endTime']) # changed end_time to endTime
-    speaker_ID = turn_node.get('speaker', '')
+    turn_end: float = float(turn_node.attrib["endTime"])
+    speaker_ID: str = turn_node.get("speaker", "")
 
-    speaker_name_node = tree.find(".//Speaker[@id='%s']" % speaker_ID)
-    speaker_name = ""
+    speaker_name_node: ET.Element = tree.find(".//Speaker[@id='%s']" % speaker_ID)
     if speaker_name_node is not None:
-        speaker_name = speaker_name_node.attrib['name']
+        speaker_name: str = speaker_name_node.attrib["name"]
     else:
-        speaker_name = str(uuid.uuid4())
-    items = [(ch.attrib['time'], ch.tail.strip()) for ch in turn_node.findall("./Sync")]
+        speaker_name: str = str(uuid.uuid4())
 
-    base_dir, name = os.path.split(file_name)
-    base_name, _ = os.path.splitext(name)
-    wavefile_name = os.path.join(".", wave_name)
+    items: List[Tuple[str, str]] = [(element.attrib["time"], element.tail.strip()) for element in turn_node.findall("./Sync")]
+    wave_file_name = os.path.join(".", wave_name)
 
-    result = []
+    result: List[Dict[str, Union[str, float]]] = []
 
     for i in range(0, len(items)):
-        time_str, trans_str = items[i]
-        start_time = float(time_str)
+        time_str, transcription_str = items[i]
+        start_time: float = float(time_str)
         if i < len(items) - 1:
-            time_str2, _ = items[i + 1]
-            end_time = float(time_str2)
+            end_time: float = float(items[i + 1][0])
         else:
             end_time = turn_end
         result.append({"speaker_ID": speaker_name,
-                       "audiofile_name": wavefile_name,
-                       "transcript": trans_str,
-                       "startMs": start_time * 1000.0,
-                       "stopMs": end_time * 1000.0})
-        start_time = end_time
+                       "audio_file_name": wave_file_name,
+                       "transcript": transcription_str,
+                       "start_ms": start_time * 1000.0,
+                       "stop_ms": end_time * 1000.0})
 
     return result
 
 
-def main():
+def main() -> None:
 
     """ 
     Run the entire trs_to_json.py as a command line utility 
     Usage: python3 trs_to_json.py --indir ../input/data > ../input/output/tmp/dirty.json
     """
 
-    parser = argparse.ArgumentParser(description='A command line utility to convert .trs files to .json',
+    parser = argparse.ArgumentParser(description="A command line utility to convert .trs files to .json",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-d', '--indir', dest='input_directory', help='Input directory, default=\'.\'', default='.')
+    parser.add_argument("-d", "--input_dir", dest="input_directory", help="Input directory, default='.'", default=".")
     parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
 
     args = parser.parse_args()
+    base_directory = args.input_directory
+    verbose_output = args.verbose
 
-    g_base_dir = args.input_directory
-    g_verbose_output = args.verbose
+    if verbose_output:
+        sys.stderr.write(base_directory + "\n")
 
-    if g_verbose_output:
-        sys.stderr.write(g_base_dir + "\n")
-
-    all_files_in_dir = list(glob.glob(os.path.join(g_base_dir, "**"), recursive=True))
+    all_files_in_dir = list(glob.glob(os.path.join(base_directory, "**"), recursive=True))
+    transcript_names = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
     print(all_files_in_dir)
 
-    transcript_names = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
-
-    # iterate through all .trs files and process them, creates audio clip files and returns the set
-    # {file_name, transcript_string, speaker_ID}
+    '''
+    Iteratively processes all .trs files and outputs a list of dictionaries of the form:
+    {speaker_ID: <str>, audio_file_name: <str>, transcript: <str>, start_ms: <float>, stop_ms: <float>}
+    '''
     utterances = []
     for file_name in transcript_names:
-        utterances = utterances + process_trs_file(file_name, g_verbose_output)
+        utterances = utterances + process_trs_file(file_name, verbose_output)
 
-    result_base_name, name = os.path.split(g_base_dir)
-
-    print(result_base_name, name)
-
+    result_base_name, name = os.path.split(base_directory)
     if not name or name == '.':
         outfile_name = "utterances.json"
     else:
         outfile_name = os.path.join(name + '.json')
-
     outfile_path = os.path.join(result_base_name, outfile_name)
-
     write_data_to_json_file(utterances, outfile_path)
-    print("are you getting here")
 
 if __name__ == '__main__':
     main()

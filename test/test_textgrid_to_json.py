@@ -6,7 +6,6 @@ Test script for validating textgrid to json conversion pipeline.
 
 from src.textgrid_to_json import *
 
-TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
 SCRIPT_PATH = os.path.join(".", "src", "textgrid_to_json.py")
 
 
@@ -19,25 +18,23 @@ def test_process_textgrid_file() -> None:
                 tg = tgio.openTextgrid(os.path.join(root, filename))
                 speech_tier_total_length += len(tg.tierDict['Speech'].entryList)
 
-    intervals: List[Dict[str, Union[str, int]]] = process_textgrid_file(TEST_FILES_BASE_DIR)
+    intervals: List[Dict[str, Union[str, int]]] = process_textgrid_files(TEST_FILES_BASE_DIR)
     assert speech_tier_total_length == len(intervals)
 
 
 def test_textgrid_to_json() -> None:
 
-    num_utterances: int = 0;
-    all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.textgrid"),
-                                                     recursive=True))
-    for file_name in all_files_in_directory:
-        num_utterances += len(process_textgrid_file(file_name))
+    utterances: List[Dict[str, Union[str, float]]] = process_textgrid_files(TEST_FILES_BASE_DIR)
 
-    os.system("python " + SCRIPT_PATH + " -i " + TEST_FILES_BASE_DIR + " -j " + os.path.join(TEST_FILES_BASE_DIR, "example.json"))
+    result: subprocess.CompletedProcess = subprocess.run(["python", SCRIPT_PATH, "--input_dir", TEST_FILES_BASE_DIR],
+                                                         check=True)
+    assert result.returncode == 0
 
-    json_name: str = os.path.join(TEST_FILES_BASE_DIR, 'example.json')
+    parent_directory_name, base_directory_name = os.path.split(TEST_FILES_BASE_DIR)
+    json_name: str = os.path.join(parent_directory_name, base_directory_name + ".json")
     with open(json_name) as f:
-        contents = f.read()
-        count = sum(1 for match in regex.finditer(r"\bspeaker_ID\b", contents, flags=regex.IGNORECASE))
+        contents: List[Dict[str, Union[str, float]]] = json.loads(f.read())
+    assert len(contents) == len(utterances)
+    assert utterances == contents
 
-    assert count == num_utterances
-
-    #os.remove(json_name)
+    os.remove(json_name)
