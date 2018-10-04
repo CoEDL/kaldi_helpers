@@ -65,8 +65,8 @@ steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
 # MFCC + DELTAS --> FEATURE VECTORS
 # args:
 #       -- utt2spk: utterance to speaker mapping
-#       trained CMVN
-#       trained MFCC
+#       trained CMVN: cepstral mean and variance normalisation
+#       trained MFCC: mel-frequency cepstral coefficients
 #       PIPED INTO add-deltas (adds delta features)
 #       args:
 #             delta features

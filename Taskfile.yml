@@ -20,7 +20,7 @@ _run-elan-split:
     - task _build
 
 _run-trs:
-  desc: "Run through processing pipeline for TRS transcriptions (Transcriber)"
+  desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task trs-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
@@ -28,7 +28,7 @@ _run-trs:
     - task _build
 
 _run-textgrid:
-  desc: "Run through processing pipeline for Textgrid transcriptions (PRAAT)"
+  desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task textgrid-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
@@ -67,11 +67,9 @@ _infer:
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode.sh
 
-_infer_ctm:
-  desc: "Produce time aligned inference (CTM format)"
+_infer-align:
+  desc: "Run Kaldi inference on test data and output ctm aligned files"
   cmds:
-    - task _run_elan
-    - task _train-test
     - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode-align.sh
 
 ######################################### HELPER TASKS ############################################
@@ -148,7 +146,7 @@ gather-wavs:
 extract-wavs:
   desc: "Extract all wav files into kaldi folder"
   cmds:
-    - tar xf {{ .OUTPUT_PATH }}/media.tar -C {{ .OUTPUT_PATH }}/kaldi/wavs
+    - tar xf {{ .OUTPUT_PATH }}/media.tar -C {{ .OUTPUT_PATH }}/kaldi
     - rm {{ .OUTPUT_PATH }}/media.tar
 
 ##################### Helpers for folders stuff
@@ -179,7 +177,6 @@ make-kaldi-subfolders:
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/train
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/conf
     - mkdir -p {{ .OUTPUT_PATH }}/kaldi/local
-    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/wavs
 
 ##################### Helpers for generating things (mostly wrappers for Python scripts)
 
@@ -258,10 +255,10 @@ silence-audio:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/silence_audio.py --corpus {{ .CORPUS_PATH }}
+    - python3 {{ .SCRIPTS_PATH }}/silence_audio.py --corpus {{ .CORPUS_PATH }}
 
 split-eafs:
-  desc: "Read Elan files in input/dirty-data, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
+  desc: "Read Elan files, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
