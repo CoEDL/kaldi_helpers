@@ -6,6 +6,7 @@ Test script for validating silence audio script.
 
 from src.silence_audio import *
 
+
 def test_process() -> None:
     assert 1 == 1
 
