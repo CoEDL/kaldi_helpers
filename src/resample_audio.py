@@ -77,7 +77,7 @@ def main():
 
     """
     A command line utility to process the audio files in a given directory 
-    Usage: python3 resample_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
+    Usage: python resample_audio.py [--corpus <DATA_DIRECTORY>] [--overwrite]
     """
     global temporary_folders
     global process_lock
@@ -88,8 +88,8 @@ def main():
 
     parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default=DEFAULT_DATA_DIRECTORY)
     parser.add_argument('-o', '--overwrite', help='Write over existing files', action="store_true")
-    args = parser.parse_args()
 
+    args = parser.parse_args()
     overwrite = args.overwrite
     base_directory = args.corpus
     
