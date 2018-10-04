@@ -1,11 +1,15 @@
 #!/usr/bin/python3
-#
-# Anonymise a wave file based on an Elan tier
-# Copyright Steven Bird stevenbird1@gmail.com 7 May 2016
-# Adapted for mono/stero and src pipeline by Ben Foley Jan 2018
-# Assumes eaf file has millisecond offsets
-# Assumes do-not-publish annotations are non-overlapping
-# Should work whether the Silence tier is a child tier or not
+
+""" 
+Anonymise a wave file based on an Elan tier
+Copyright Steven Bird stevenbird1@gmail.com 7 May 2016
+Adapted for mono/stero and src pipeline by Ben Foley Jan 2018
+Assumes eaf file has millisecond offsets
+Assumes do-not-publish annotations are non-overlapping
+Should work whether the Silence tier is a child tier or not
+
+Usage: 
+"""
 
 import argparse
 import glob
@@ -14,79 +18,86 @@ import wave
 import numpy
 from pympi.Elan import Eaf
 
-def process(eaffile, DO_NOT_PUBLISH, SILENCE_M, output):
-    # load audio
-    with wave.open(input, 'rb') as audio:
-        params = audio.getparams()
-        num_channels = params.nchannels
+def silence_audio(eaf_file, output):
 
-        if params.sampwidth == 1:
+    global SILENCE_M
+    global SILENCE_S
+    global DO_NOT_PUBLISH
+
+    # Load the audio file
+    with wave.open(input, "rb") as audio:
+        parameters = audio.getparams()
+        number_of_channels = parameters.nchannels
+
+        if parameters.sample_width == 1:
             raise ValueError("Assumes 16 bit input")
 
-        # stereo
-        if (num_channels == 1) or (num_channels == 2):
-            raw = audio.readframes(params.nframes * num_channels)
-            samples = numpy.fromstring(raw, dtype=numpy.int16)
-            samples.shape = params.nframes if num_channels == 1 else (params.nframes, 2)
+        # Stereo audio file handling
+        if (number_of_channels == 1) or (number_of_channels == 2):
+            raw_audio = audio.readframes(parameters.nframes * number_of_channels)
+            samples = numpy.fromstring(raw_audio, dtype=numpy.int16)
+            samples.shape = parameters.nframes if number_of_channels == 1 else (parameters.nframes, 2)
         else:
             raise ValueError("Assumes mono or stereo input")
 
-    # silence between annotations
-    num_samples = 0
-    scale = params.framerate / 1000
+    # Silence between annotations
+    number_of_samples = 0
+    scale = parameters.framerate / 1000
 
-    # check tier type - is it ref or non-ref?
-    silence_tier_info = eaffile.get_parameters_for_tier(DO_NOT_PUBLISH)
-    silence_tier_is_a_ref_tier = True if silence_tier_info.get("PARENT_REF") else False
+    # Check tier type of the silence tier - is it a reference tier?
+    silence_tier_info = eaf_file.get_parameters_for_tier(DO_NOT_PUBLISH)
+    is_reference_tier = bool(silence_tier_info.get("PARENT_REF"))
 
-    print(silence_tier_is_a_ref_tier)
-
-    if silence_tier_is_a_ref_tier:
-        annotations = sorted(eaffile.get_ref_annotation_data_for_tier(DO_NOT_PUBLISH))
+    if is_reference_tier:
+        annotations = sorted(eaf_file.get_ref_annotation_data_for_tier(DO_NOT_PUBLISH))
         print("ref_annotations")
         print(annotations)
         offsets = [int(offset * scale)
                    for (start, end, _, _) in annotations
                    for offset in (start, end)]
     else:
-        annotations = sorted(eaffile.get_annotation_data_for_tier(DO_NOT_PUBLISH))
+        annotations = sorted(eaf_file.get_annotation_data_for_tier(DO_NOT_PUBLISH))
         print("annotations")
         print(annotations)
         offsets = [int(offset * scale)
                    for (start, end, _) in annotations
                    for offset in (start, end)]
 
-    pass_thru = True
-    for i in range(params.nframes):
+    pass_through = True
+    for i in range(parameters.nframes):
         if offsets and i > offsets[0]:
             offsets = offsets[1:]
-            pass_thru = not pass_thru
-        if not pass_thru:
-            samples[i] = SILENCE_M if num_channels == 1 else SILENCE_S
-            num_samples += 1
+            pass_through = not pass_through
+        if not pass_through:
+            samples[i] = SILENCE_M if number_of_channels == 1 else SILENCE_S
+            number_of_samples += 1
 
     # write audio
     with wave.open(output, 'wb') as audio:
-        samples.shape = params.nframes if num_channels == 1 else (params.nframes * 2)
-        audio.setparams(params)
+        samples.shape = parameters.nframes if number_of_channels == 1 else (parameters.nframes * 2)
+        audio.setparams(parameters)
         audio.writeframesraw(samples)
 
     print("Silenced {} intervals ({:.1f}s)".format(len(annotations),
-                                                   num_samples / params.framerate))
+                                                   number_of_samples / parameters.framerate))
 
 
-def main():
+def main() -> None:
     """
     A command line utility to silence the audio files in a given directory 
-    Usage: python silence_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
+    Usage: python silence_audio.py --corpus <DEFAULT_DATA_DIRECTORY> [--silence_tier ]
     """
 
+    global SILENCE_M
+    global SILENCE_S
+    global DO_NOT_PUBLISH
+
     parser = argparse.ArgumentParser(
-        description="This script will silence a wave file based on annotations in an Elan tier ")
+        description="This script will silence a wave file based on annotations in an Elan tier")
     parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, required=True)
-    parser.add_argument('-s', '--silence_tier', help='silence audio when annotations are found on this tier', type=str,
+    parser.add_argument('-s', '--silence_tier', help='Silence audio when annotations are found on this tier', type=str,
                         default='Silence')
-    parser.add_argument('-o', '--overwrite', help='Write over existing files', type=str, default='yes')
+    parser.add_argument('-o', '--overwrite', help='Write over existing files', action="store_true")
     args = parser.parse_args()
 
     corpus = args.corpus
@@ -96,30 +107,29 @@ def main():
     SILENCE_S = [0, 0]
     SUFFIX = 'S'
 
-    # look for .eaf files, recirsively from the passed corpus dir
-    # for fpath in glob.iglob(corpus + '/**/*.eaf', recursive=True):
-    for fpath in glob.iglob(corpus + '/*.eaf'):
-        print(fpath)
-        eaffile = Eaf(fpath)
-        names = eaffile.get_tier_names()
-        # print(names)
-
-        # check for existence of silence tier
-        #
+    '''
+    Look for .eaf files, recursively from the passed corpus dir for file_path in 
+    glob.iglob(corpus + '/**/*.eaf', recursive=True)
+    '''
+    
+    for file_path in glob.iglob(corpus + '/*.eaf'):
+        eaf_file = Eaf(file_path)
+        names = eaf_file.get_tier_names()
+        
+        # Check for existence of silence tier
         if DO_NOT_PUBLISH in names:
-            print("have tier %s in %s" % (DO_NOT_PUBLISH, fpath))
 
-            basename, extn = os.path.splitext(fpath)
+            print("Have tier %s in %s" % (DO_NOT_PUBLISH, file_path))
+
+            basename, extension = os.path.splitext(file_path)
 
             input = basename + ".wav"
-            if overwrite == 'yes':
+            if overwrite:
                 output = basename + ".wav"
             else:
                 output = basename + SUFFIX + ".wav"
 
-            process(eaffile, DO_NOT_PUBLISH, SILENCE_M, output)
-            # else:
-            # print("tier %s in %s not found, skipping" % (DO_NOT_PUBLISH, fpath))
+            silence_audio(eaf_file, output)
 
 
 if __name__ == "__main__":

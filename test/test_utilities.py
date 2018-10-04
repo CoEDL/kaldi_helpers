@@ -2,6 +2,12 @@ import sys
 from src.utilities import *
 from _pytest.capture import CaptureFixture
 
+"""
+Test script for validating trs to json conversion methods. 
+
+@author Nicholas Lambourne 
+"""
+
 TEST_FILES_BASE_DIR = os.path.join(".", "test", "testfiles")
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},
