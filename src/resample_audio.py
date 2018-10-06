@@ -10,7 +10,6 @@ Usage: python3 resample_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrit
 
 import argparse
 import glob
-import os
 import subprocess
 import threading
 from multiprocessing.dummy import Pool

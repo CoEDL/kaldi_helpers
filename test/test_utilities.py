@@ -17,6 +17,7 @@ EXAMPLE_JSON_DATA = [
     {"transcript": "Vraiment? Je n'ai jamais lu ça."},
 ]
 
+
 def test_load_json_file():
     json_data = load_json_file(os.path.join(TEST_FILES_BASE_DIR, "example.json"))
     assert json_data[0]["transcript"] == "¿Por qué no los dos?"

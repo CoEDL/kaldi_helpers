@@ -4,11 +4,14 @@
 # Modified for CTM output by Nicholas Lambourne & CoEDL (2018)
 
 # USAGE:
-#    $ kaldi/egs/your-model/your-model-1/gmm-decode.sh
+#    $ task _infer-align
 #
 #    This script is meant to demonstrate how an already trained GMM-HMM
-#    model and its corresponding HCLG graph, build via Kaldi,
+#    model and its corresponding HCLG graph, built via Kaldi,
 #    can be used to decode new audio files.
+#
+#    It relies on a model already being prepared, which you can achieve
+#    via `task _run-elan` followed by `task _train-test`
 #
 
 # INPUT:
@@ -40,8 +43,8 @@
 #            lattices.ark
 #            1best-fst.tra
 #            1best-fst-word-aligned.tra
-#            align-words-best.ctm       <= Time aligned output (CTM)
-#            align-words-best.eaf       <= ELAN file //TODO
+#            align-words-best-wordkeys.ctm       <= Time aligned output (CTM)
+#            align-words-best-wordkeys.eaf       <= ELAN file //TODO
 
 
 
@@ -56,7 +59,7 @@ mkdir ./data/infer
 
 # COPY TRAINED MODEL
 cp -R ./exp/tri1 ./exp/tri
-cp ./data/train/* ./data/infer
+cp ./data/test/* ./data/infer
 rm ./data/infer/text
 
 # CREATE MFCC
@@ -65,14 +68,14 @@ steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
 # MFCC + DELTAS --> FEATURE VECTORS
 # args:
 #       -- utt2spk: utterance to speaker mapping
-#       trained CMVN
-#       trained MFCC
+#       trained CMVN: cepstral mean and variance normalisation
+#       trained MFCC: mel-frequency cepstral coefficients
 #       PIPED INTO add-deltas (adds delta features)
 #       args:
 #             delta features
 apply-cmvn --utt2spk=ark:data/infer/utt2spk \
-    scp:mfcc/cmvn_train.scp \
-    scp:mfcc/raw_mfcc_train.1.scp ark:- | \
+    scp:mfcc/cmvn_test.scp \
+    scp:mfcc/raw_mfcc_test.1.scp ark:- | \
     add-deltas ark:- ark:data/infer/delta-feats.ark
 
 # TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
@@ -83,7 +86,7 @@ apply-cmvn --utt2spk=ark:data/infer/utt2spk \
 #       feature input file specifier
 #       lattice output file specifier
 gmm-latgen-faster \
-    --word-symbol-table=exp/tri1/graph/words.txt \
+    --word-symbol-table=exp/tri/graph/words.txt \
     exp/tri/final.mdl \
     exp/tri/graph/HCLG.fst \
     ark:data/infer/delta-feats.ark \
