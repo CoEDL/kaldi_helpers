@@ -18,11 +18,7 @@ import wave
 import numpy
 from pympi.Elan import Eaf
 
-def silence_audio(eaf_file, output):
-
-    global SILENCE_M
-    global SILENCE_S
-    global DO_NOT_PUBLISH
+def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish):
 
     # Load the audio file
     with wave.open(input, "rb") as audio:
@@ -45,18 +41,18 @@ def silence_audio(eaf_file, output):
     scale = parameters.framerate / 1000
 
     # Check tier type of the silence tier - is it a reference tier?
-    silence_tier_info = eaf_file.get_parameters_for_tier(DO_NOT_PUBLISH)
+    silence_tier_info = eaf_file.get_parameters_for_tier(do_not_publish)
     is_reference_tier = bool(silence_tier_info.get("PARENT_REF"))
 
     if is_reference_tier:
-        annotations = sorted(eaf_file.get_ref_annotation_data_for_tier(DO_NOT_PUBLISH))
+        annotations = sorted(eaf_file.get_ref_annotation_data_for_tier(do_not_publish))
         print("ref_annotations")
         print(annotations)
         offsets = [int(offset * scale)
                    for (start, end, _, _) in annotations
                    for offset in (start, end)]
     else:
-        annotations = sorted(eaf_file.get_annotation_data_for_tier(DO_NOT_PUBLISH))
+        annotations = sorted(eaf_file.get_annotation_data_for_tier(do_not_publish))
         print("annotations")
         print(annotations)
         offsets = [int(offset * scale)
@@ -69,7 +65,7 @@ def silence_audio(eaf_file, output):
             offsets = offsets[1:]
             pass_through = not pass_through
         if not pass_through:
-            samples[i] = SILENCE_M if number_of_channels == 1 else SILENCE_S
+            samples[i] = silence_mono if number_of_channels == 1 else silence_stereo
             number_of_samples += 1
 
     # write audio
@@ -88,9 +84,9 @@ def main() -> None:
     Usage: python silence_audio.py --corpus <DEFAULT_DATA_DIRECTORY> [--silence_tier ]
     """
 
-    global SILENCE_M
-    global SILENCE_S
-    global DO_NOT_PUBLISH
+    global silence_mono
+    global silence_stereo
+    global do_not_publish
 
     parser = argparse.ArgumentParser(
         description="This script will silence a wave file based on annotations in an Elan tier")
@@ -102,9 +98,9 @@ def main() -> None:
 
     corpus = args.corpus
     overwrite = args.overwrite
-    DO_NOT_PUBLISH = args.silence_tier
-    SILENCE_M = 0
-    SILENCE_S = [0, 0]
+    do_not_publish = args.silence_tier
+    silence_mono = 0
+    silence_stereo = [0, 0]
     SUFFIX = 'S'
 
     '''
@@ -117,9 +113,9 @@ def main() -> None:
         names = eaf_file.get_tier_names()
         
         # Check for existence of silence tier
-        if DO_NOT_PUBLISH in names:
+        if do_not_publish in names:
 
-            print("Have tier %s in %s" % (DO_NOT_PUBLISH, file_path))
+            print("Have tier %s in %s" % (do_not_publish, file_path))
 
             basename, extension = os.path.splitext(file_path)
 

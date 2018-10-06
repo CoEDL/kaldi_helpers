@@ -15,23 +15,20 @@ import subprocess
 import threading
 from multiprocessing.dummy import Pool
 from shutil import move
-from utilities.file_utilities import find_files_by_extension
-from typing import Tuple
-from utilities.globals import *
+from src.utilities.file_utilities import find_files_by_extension
+from typing import Tuple, Set
+from functools import partial
+from src.utilities.globals import *
 
 
-def process_item(audio_file: Tuple[int, str]) -> str:
+def process_item(audio_file: Tuple[int, str], temporary_folders: str, process_lock, output_step: str) -> str:
 
     """
     Processes an audio file and resamples it to a 16k mono WAV file 
     
     :param audio_file: audio file to be resampled
-    :return: name of the resampled file stored in a temporary folder
+    :return: name of the file to be resampled
     """
-
-    global temporary_folders
-    global process_lock
-    global output_step
 
     input_index, input_audio_file = audio_file
 
@@ -42,7 +39,7 @@ def process_item(audio_file: Tuple[int, str]) -> str:
     # Extracting input directory names and file names
     input_directory, name = os.path.split(input_audio_file)
     base_name, extension = os.path.splitext(name)
-    output_directory = os.path.join(input_directory, TEMPORARY_DIRECTORY)
+    output_directory: str = os.path.join(input_directory, TEMPORARY_DIRECTORY)
     temporary_folders.add(output_directory)
 
     # Security check to avoid race conditions
@@ -60,7 +57,7 @@ def process_item(audio_file: Tuple[int, str]) -> str:
     return temporary_audio_name
 
 
-def join_normalised_path(path1, path2):
+def join_normalised_path(path1: str, path2: str):
     """
     Joining two paths by first normalising them and then re-normalising their concatenation.
     This allows for safer path conversions across various operating systems.
@@ -79,15 +76,12 @@ def main():
     A command line utility to process the audio files in a given directory 
     Usage: python resample_audio.py [--corpus <DATA_DIRECTORY>] [--overwrite]
     """
-    global temporary_folders
-    global process_lock
-    global output_step
 
     parser = argparse.ArgumentParser(
-        description="This script will silence a wave file based on annotations in an Elan tier ")
+        description="This script will silence a wave file based on annotations in an Elan tier.")
 
-    parser.add_argument('-c', '--corpus', help='Directory of audio and eaf files', type=str, default=DEFAULT_DATA_DIRECTORY)
-    parser.add_argument('-o', '--overwrite', help='Write over existing files', action="store_true")
+    parser.add_argument("-c", "--corpus", help="Directory of audio and eaf files", type=str, default=DEFAULT_DATA_DIRECTORY)
+    parser.add_argument("-o", "--overwrite", help="Write over existing files", action="store_true", default=True)
 
     args = parser.parse_args()
     overwrite = args.overwrite
@@ -107,7 +101,8 @@ def main():
     ''' Multi-threaded solution '''
     with Pool() as p:
         temporary_folders = set([])
-        outputs = p.map(process_item, enumerate(input_audio))
+        outputs = p.map(partial(process_item, temporary_folders=temporary_folders,
+                                process_lock=process_lock, output_step=output_step), enumerate(input_audio))
         if overwrite:
             # Replace original files
             for file in outputs:

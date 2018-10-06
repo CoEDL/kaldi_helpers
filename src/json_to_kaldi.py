@@ -1,33 +1,17 @@
-#!/usr/local/bin/python3
+#!/usr/local/bin/python
 
 import argparse
 import json
 import os
 import sys
 import uuid
-
-parser = argparse.ArgumentParser(description='Convert json from stdin to Kaldi input files (in output-folder).')
-parser.add_argument('--output-folder', type=str, required=True, help='The output folder')
-parser.add_argument('--no-silence-markers', action="store_true", help='The input json file')
-args = parser.parse_args()
-
-# input_json_fname = args.input_json
-output_folder = args.output_folder
-silence_markers = not args.no_silence_markers
-wav_folder = "wavs/"
-
-# f_in = open(input_json_fname, "r")
-f_in = sys.stdin
-
-json_transcripts = json.loads(f_in.read())
-f_in.close()
-
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+from typing import Set, List, Tuple
+from src.utilities import *
 
 
 class KaldiInput:
-    def __init__(self, output_folder):
+    
+    def __init__(self, output_folder: str) -> None:
 
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
@@ -35,7 +19,6 @@ class KaldiInput:
         self.speakers = {}
         self.recordings = {}
         self.utterances = {}
-
         self.l_segments, self.l_transcripts, self.l_speakers, self.l_recordings, self.l_utt2spk, self.l_corpus = [], [], [], [], [], []
 
         self.f_segments = open(output_folder + "/segments", "w", encoding="utf-8")
@@ -59,7 +42,7 @@ class KaldiInput:
             # create recording id
             self.recordings[audioFileName] = str(uuid.uuid4())
 
-            self.l_recordings.append(self.recordings[audioFileName] + " " + wav_folder + audioFileName + "\n")
+            self.l_recordings.append(self.recordings[audioFileName] + " " + WAV_FOLDER + audioFileName + "\n")
 
         return self.recordings[audioFileName]
 
@@ -100,47 +83,72 @@ class KaldiInput:
         self.f_corpus.close()
 
 
-testing_input = KaldiInput(output_folder + "/testing")
-training_input = KaldiInput(output_folder + "/training")
+def main():
+    
+    """ Run the entire elan_to_json.py as a command line utility """
+    parser = argparse.ArgumentParser(description='Convert json from stdin to Kaldi input files (in output-folder).')
+    parser.add_argument("-o", "--output_folder", dest="output_folder", type=str, required=True, help='The output folder')
+    parser.add_argument("-n", '--no_silence', dest="no_silence_markers", action="store_true", 
+                        help='The input json file')
+    args = parser.parse_args()
 
-for i, json_transcript in enumerate(json_transcripts):
-    transcript = json_transcript["transcript"]
-    startMs = json_transcript["startMs"]
-    stopMs = json_transcript["stopMs"]
+    # input_json_fname = args.input_json
+    output_folder: str = args.output_folder
+    silence_markers: bool = not args.no_silence_markers
 
-    if "speakerId" in json_transcript:
-        speakerId = json_transcript["speakerId"]
-    else:
-        speakerId = str(uuid.uuid4())
+    # input_file = open(input_json_fname, "r")
+    input_file: TextIOWrapper = sys.stdin # takes in json file from stdin
+    json_transcripts = json.loads(input_file.read())
+    input_file.close()
 
-    audioFileName = json_transcript["audioFileName"].replace("\\", "/")
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
 
-    # speaker_id = speakers[speakerId]
-    # recording_id = recordings[audioFileName]
-    # utterance_id = speakers[speakerId] + "-" + str(uuid.uuid4())
+    testing_input = KaldiInput(output_folder + "/testing")
+    training_input = KaldiInput(output_folder + "/training")
 
-    if i % 10 == 0:
-        # add speaker id
-        speaker_id = testing_input.add_speaker_if_missing(speakerId)
+    for i, json_transcript in enumerate(json_transcripts):
+        transcript = json_transcript["transcript"]
+        startMs = json_transcript["startMs"]
+        stopMs = json_transcript["stopMs"]
 
-        # add audioFilename
-        recording_id = testing_input.add_recording_if_missing(audioFileName)
+        if "speakerId" in json_transcript:
+            speakerId = json_transcript["speakerId"]
+        else:
+            speakerId = str(uuid.uuid4())
 
-        utterance_id = speaker_id + "-" + str(uuid.uuid4())
+        audioFileName = json_transcript["audioFileName"].replace("\\", "/")
 
-        silence_markers = False
-        testing_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
-    else:
-        # add speaker id
-        speaker_id = training_input.add_speaker_if_missing(speakerId)
+        # speaker_id = speakers[speakerId]
+        # recording_id = recordings[audioFileName]
+        # utterance_id = speakers[speakerId] + "-" + str(uuid.uuid4())
 
-        # add audioFilename
-        recording_id = training_input.add_recording_if_missing(audioFileName)
+        if i % 10 == 0:
+            # add speaker id
+            speaker_id = testing_input.add_speaker_if_missing(speakerId)
 
-        utterance_id = speaker_id + "-" + str(uuid.uuid4())
+            # add audioFilename
+            recording_id = testing_input.add_recording_if_missing(audioFileName)
 
-        silence_markers = True
-        training_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
+            utterance_id = speaker_id + "-" + str(uuid.uuid4())
 
-testing_input.write_and_close()
-training_input.write_and_close()
+            silence_markers = False
+            testing_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
+        else:
+            # add speaker id
+            speaker_id = training_input.add_speaker_if_missing(speakerId)
+
+            # add audioFilename
+            recording_id = training_input.add_recording_if_missing(audioFileName)
+
+            utterance_id = speaker_id + "-" + str(uuid.uuid4())
+
+            silence_markers = True
+            training_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
+
+    testing_input.write_and_close()
+    training_input.write_and_close()
+
+
+if __name__ == "__main__":
+    main()
