@@ -71,7 +71,5 @@ def main() -> None:
                     output_directory)
 
 
-
-
 if __name__ == '__main__':
     main()
