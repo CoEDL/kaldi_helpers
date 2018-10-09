@@ -1,154 +1,209 @@
 #!/usr/local/bin/python
 
+"""
+Parse json file and extract transcription information which are then processed and output in the desired Kaldi format.
+The output files will be stored in two separate folders training and testing inside the specified output directory.
+
+Kaldi input file structure: 
+    
+corpus:    
+    exp :
+               
+    conf : 
+        mfcc.conf
+        
+    data :
+        train : 
+            text, segments, wav.scp, utt2spk, spk2utt
+        lang :
+            L.fst, L_disambig.fst, oov.int, oov.txt, phones.txt, topo, words.txt
+            
+            phones :
+                extra_questions.txt
+        local :
+            lang :
+                lexicon.txt, nosilence_phone.txt, optional_silence.txt, silence_phones.txt, extra_questions.txt
+                
+This script prepares files for the data\train folder only at this point. All other files are prepared either using 
+bash scripts or by hand.
+            
+Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
+
+"""
+
 import argparse
 import json
 import os
 import sys
 import uuid
-from typing import Set, List, Tuple
+import subprocess
+from pyparsing import ParseException
+from typing import Set, List, Tuple, Dict
 from src.utilities import *
 
 
 class KaldiInput:
-    
+
+    """
+    Class to represent the data structure for the input files of the Kaldi pipeline.
+    """
+
     def __init__(self, output_folder: str) -> None:
 
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
-        self.speakers = {}
-        self.recordings = {}
-        self.utterances = {}
-        self.l_segments, self.l_transcripts, self.l_speakers, self.l_recordings, self.l_utt2spk, self.l_corpus = [], [], [], [], [], []
+        self.speakers: Dict[str, str] = {}
+        self.recordings: Dict[str, str] = {}
+        self.utterances: Dict[str, str] = {}
 
-        self.f_segments = open(output_folder + "/segments", "w", encoding="utf-8")
-        self.f_transcripts = open(output_folder + "/text", "w", encoding="utf-8")
-        self.f_speakers = open(output_folder + "/spk2gender", "w", encoding="utf-8")
-        self.f_recordings = open(output_folder + "/wav.scp", "w", encoding="utf-8")
-        self.f_utt2spk = open(output_folder + "/utt2spk", "w", encoding="utf-8")
-        self.f_corpus = open(output_folder + "/corpus.txt", "w", encoding="utf-8")
+        self.segments_list: List[str] = []
+        self.transcripts_list: List[str] = []
+        self.speakers_list: List[str] = []
+        self.recordings_list: List[str] = []
+        self.utt2spk_list: List[str] = []
+        self.corpus_list: List[str] = []
 
-    def add_speaker_if_missing(self, speakerId):
-        if speakerId not in self.speakers:
-            # create speaker id
-            self.speakers[speakerId] = str(uuid.uuid4())
-            # writing gender
-            self.l_speakers.append(self.speakers[speakerId] + " " + "f\n")
+        self.segments_file: TextIOWrapper = open(output_folder + "/segments", "w", encoding="utf-8")
+        self.transcripts_file: TextIOWrapper = open(output_folder + "/text", "w", encoding="utf-8")
+        self.speakers_file: TextIOWrapper = open(output_folder + "/spk2gender", "w", encoding="utf-8")
+        self.recordings_file: TextIOWrapper = open(output_folder + "/wav.scp", "w", encoding="utf-8")
+        self.utt2spk_file: TextIOWrapper = open(output_folder + "/utt2spk", "w", encoding="utf-8")
+        self.corpus_file: TextIOWrapper = open(output_folder + "/corpus.txt", "w", encoding="utf-8")
 
-        return self.speakers[speakerId]
+    def add_speaker(self, speaker_id: str) -> str:
+        """
+        Adds a speaker element if it is not already present.
+        :param speaker_id: 
+        :return: 
+        """
+        if speaker_id not in self.speakers:
+            self.speakers[speaker_id] = str(uuid.uuid4()) # create speaker id
+            self.speakers_list.append(self.speakers[speaker_id] + " " + "f\n") # writing gender
+        return self.speakers[speaker_id]
 
-    def add_recording_if_missing(self, audioFileName):
-        if audioFileName not in self.recordings:
-            # create recording id
-            self.recordings[audioFileName] = str(uuid.uuid4())
+    def add_recording(self, audio_file: str) -> str:
+        """
+        Adds an audio file it is not already present.
+        :param audio_file: 
+        :return: 
+        """
+        if audio_file not in self.recordings:
+            self.recordings[audio_file] = str(uuid.uuid4()) # create recording id
+            self.recordings_list.append(self.recordings[audio_file] + " " + WAV_FOLDER + audio_file + "\n")
+        return self.recordings[audio_file]
 
-            self.l_recordings.append(self.recordings[audioFileName] + " " + WAV_FOLDER + audioFileName + "\n")
-
-        return self.recordings[audioFileName]
-
-    def add(self, recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers):
+    def add(self, recording_id: str, speaker_id: str, utterance_id: str,
+            start_ms: int, stop_ms: int, transcript: str, silence_markers: bool) -> None:
+        """
+        Appends new items to the transcripts, segments, utt2spk and corpus lists.
+        
+        :param recording_id: 
+        :param speaker_id: 
+        :param utterance_id: 
+        :param start_ms: 
+        :param stop_ms: 
+        :param transcript: 
+        :param silence_markers: 
+        :return: 
+        """
         if silence_markers:
-            self.l_transcripts.append(utterance_id + " !SIL " + transcript + " !SIL\n")
+            self.transcripts_list.append(utterance_id + " !SIL " + transcript + " !SIL\n")
         else:
-            self.l_transcripts.append(utterance_id + " " + transcript + "\n")
-        self.l_segments.append(utterance_id + " " + recording_id + " " + "%f %f\n" % (startMs / 1000.0, stopMs / 1000.0))
-        # f_utt2spk.write(utterance_id + " " + speaker_id + "\n")
-        # hack to match utterances to utterances
-        self.l_utt2spk.append(utterance_id + " " + speaker_id + "\n")
-        self.l_corpus.append(transcript + "\n")
+            self.transcripts_list.append(utterance_id + " " + transcript + "\n")
+        self.segments_list.append(utterance_id + " " + recording_id + " " + f"{start_ms/1000.0} {stop_ms/1000.0}\n")
+        self.utt2spk_list.append(utterance_id + " " + speaker_id + "\n")
+        self.corpus_list.append(transcript + "\n")
 
-    def write_and_close(self):
-        self.l_segments.sort()
-        self.f_segments.write("".join(self.l_segments))
-        self.f_segments.close()
+    def write_and_close(self) -> None:
 
-        self.l_transcripts.sort()
-        self.f_transcripts.write("".join(self.l_transcripts))
-        self.f_transcripts.close()
+        """
+        After parsing the json file and populating the segments, transcripts, speakers, recordings, utt2spk and corpus 
+        lists with data, this function performs the final write to their respective files. 
+        :return: 
+        """
 
-        self.l_speakers.sort()
-        self.f_speakers.write("".join(self.l_speakers))
-        self.f_speakers.close()
+        self.segments_list.sort()
+        self.segments_file.write("".join(self.segments_list))
+        self.segments_file.close()
 
-        self.l_recordings.sort()
-        self.f_recordings.write("".join(self.l_recordings))
-        self.f_recordings.close()
+        self.transcripts_list.sort()
+        self.transcripts_file.write("".join(self.transcripts_list))
+        self.transcripts_file.close()
 
-        self.l_utt2spk.sort()
-        self.f_utt2spk.write("".join(self.l_utt2spk))
-        self.f_utt2spk.close()
+        self.speakers_list.sort()
+        self.speakers_file.write("".join(self.speakers_list))
+        self.speakers_file.close()
 
-        self.l_corpus.sort()
-        self.f_corpus.write("".join(self.l_corpus))
-        self.f_corpus.close()
+        self.recordings_list.sort()
+        self.recordings_file.write("".join(self.recordings_list))
+        self.recordings_file.close()
+
+        self.utt2spk_list.sort()
+        self.utt2spk_file.write("".join(self.utt2spk_list))
+        self.utt2spk_file.close()
+
+        self.corpus_list.sort()
+        self.corpus_file.write("".join(self.corpus_list))
+        self.corpus_file.close()
 
 
 def main():
-    
-    """ Run the entire elan_to_json.py as a command line utility """
-    parser = argparse.ArgumentParser(description='Convert json from stdin to Kaldi input files (in output-folder).')
-    parser.add_argument("-o", "--output_folder", dest="output_folder", type=str, required=True, help='The output folder')
-    parser.add_argument("-n", '--no_silence', dest="no_silence_markers", action="store_true", 
-                        help='The input json file')
-    args = parser.parse_args()
 
-    # input_json_fname = args.input_json
-    output_folder: str = args.output_folder
-    silence_markers: bool = not args.no_silence_markers
+    """ Run the entire json_to_kaldi.py as a command line utility """
+    parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input files (in output-folder).")
+    parser.add_argument("-i", "--input_json", type=str, help="The input json file", required=False,
+                        default=os.path.join(".", "test", "testfiles", "example.json"))
+    parser.add_argument("-o", "--output_folder", type=str, help="The output folder", default=os.path.join(".", "data"))
+    # parser.add_argument("-s", "--silence_markers", action="store_true", help="The input json file")
+    arguments: argparse.Namespace = parser.parse_args()
 
-    # input_file = open(input_json_fname, "r")
-    input_file: TextIOWrapper = sys.stdin # takes in json file from stdin
-    json_transcripts = json.loads(input_file.read())
-    input_file.close()
+    try:
+        input_file: TextIOWrapper = open(arguments.input_json, "r")
+        json_transcripts: str = json.loads(input_file.read())
+        input_file.close()
+    except FileNotFoundError:
+        print(f"JSON file could not be found: {arguments.input_json}")
+    except:
+        print("Unexpected error", sys.exc_info()[0])
+        raise
 
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    if not os.path.exists(arguments.output_folder):
+        os.makedirs(arguments.output_folder)
 
-    testing_input = KaldiInput(output_folder + "/testing")
-    training_input = KaldiInput(output_folder + "/training")
+    testing_input: KaldiInput = KaldiInput(arguments.output_folder + "/testing")
+    training_input: KaldiInput = KaldiInput(arguments.output_folder + "/training")
 
     for i, json_transcript in enumerate(json_transcripts):
-        transcript = json_transcript["transcript"]
-        startMs = json_transcript["startMs"]
-        stopMs = json_transcript["stopMs"]
+        transcript: str = json_transcript.get("transcript", "")
+        start_ms: int = json_transcript.get("start_ms", 0)
+        stop_ms: int = json_transcript.get("stop_ms", 0)
 
-        if "speakerId" in json_transcript:
-            speakerId = json_transcript["speakerId"]
+        if "speaker_id" in json_transcript:
+            speaker_id: str = json_transcript.get("speaker_id", "")
         else:
-            speakerId = str(uuid.uuid4())
+            speaker_id: str = str(uuid.uuid4())
 
-        audioFileName = json_transcript["audioFileName"].replace("\\", "/")
-
-        # speaker_id = speakers[speakerId]
-        # recording_id = recordings[audioFileName]
-        # utterance_id = speakers[speakerId] + "-" + str(uuid.uuid4())
+        audio_file: str = json_transcript.get("audio_file_name", "").replace("\\", "/")
 
         if i % 10 == 0:
-            # add speaker id
-            speaker_id = testing_input.add_speaker_if_missing(speakerId)
 
-            # add audioFilename
-            recording_id = testing_input.add_recording_if_missing(audioFileName)
+            speaker_id = testing_input.add_speaker(speaker_id) # add speaker_id
+            recording_id: str = testing_input.add_recording(audio_file) # add audio file name
+            utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
+            silence_markers: bool = False
+            testing_input.add(recording_id, speaker_id, utterance_id, start_ms, stop_ms, transcript, silence_markers)
 
-            utterance_id = speaker_id + "-" + str(uuid.uuid4())
-
-            silence_markers = False
-            testing_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
         else:
-            # add speaker id
-            speaker_id = training_input.add_speaker_if_missing(speakerId)
 
-            # add audioFilename
-            recording_id = training_input.add_recording_if_missing(audioFileName)
-
-            utterance_id = speaker_id + "-" + str(uuid.uuid4())
-
-            silence_markers = True
-            training_input.add(recording_id, speaker_id, utterance_id, startMs, stopMs, transcript, silence_markers)
+            speaker_id = training_input.add_speaker(speaker_id) # add speaker id
+            recording_id: str = training_input.add_recording(audio_file) # add audio file name
+            utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
+            silence_markers: bool = True
+            training_input.add(recording_id, speaker_id, utterance_id, start_ms, stop_ms, transcript, silence_markers)
 
     testing_input.write_and_close()
     training_input.write_and_close()
-
 
 if __name__ == "__main__":
     main()

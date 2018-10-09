@@ -12,6 +12,8 @@ import argparse
 import glob
 import subprocess
 import threading
+import sys
+from pyparsing import ParseException
 from multiprocessing.dummy import Pool
 from shutil import move
 from src.utilities.file_utilities import find_files_by_extension
@@ -20,12 +22,15 @@ from functools import partial
 from src.utilities.globals import *
 
 
-def process_item(audio_file: Tuple[int, str], temporary_folders: str, process_lock, output_step: str) -> str:
+def process_item(audio_file: Tuple[int, str], temporary_folders: Set[str], process_lock, output_step: str) -> str:
 
     """
     Processes an audio file and resamples it to a 16k mono WAV file 
     
     :param audio_file: audio file to be resampled
+    :param temporary_folders: a list of folders to store temporary files
+    :param process_lock: 
+    :param output_step: 
     :return: name of the file to be resampled
     """
 
@@ -61,8 +66,8 @@ def join_normalised_path(path1: str, path2: str):
     Joining two paths by first normalising them and then re-normalising their concatenation.
     This allows for safer path conversions across various operating systems.
     
-    :param path1: prepended part of the desired resulting path
-    :param path2: appended part of the desired resulting path
+    :param path1: prepended part of the desired path
+    :param path2: appended part of the desired path
     :return: concatenated and normalised path 
     """
     tmp = os.path.join(os.path.normpath(path1), os.path.normpath(path2))
@@ -78,17 +83,13 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="This script will silence a wave file based on annotations in an Elan tier.")
-
     parser.add_argument("-c", "--corpus", help="Directory of audio and eaf files", type=str, default=DEFAULT_DATA_DIRECTORY)
     parser.add_argument("-o", "--overwrite", help="Write over existing files", action="store_true", default=True)
+    arguments = parser.parse_args()
 
-    args = parser.parse_args()
-    overwrite = args.overwrite
-    base_directory = args.corpus
-    
     temporary_folders = set([])
 
-    all_files_in_directory = set(glob.glob(os.path.join(base_directory, "**"), recursive=True))
+    all_files_in_directory = set(glob.glob(os.path.join(arguments.corpus, "**"), recursive=True))
     input_audio = find_files_by_extension(all_files_in_directory, set(AUDIO_EXTENSIONS))
     process_lock = threading.Lock()
     output_step = 0
@@ -102,7 +103,7 @@ def main():
         temporary_folders = set([])
         outputs = p.map(partial(process_item, temporary_folders=temporary_folders,
                                 process_lock=process_lock, output_step=output_step), enumerate(input_audio))
-        if overwrite:
+        if arguments.overwrite:
             # Replace original files
             for file in outputs:
                 file_name = os.path.basename(file)

@@ -158,16 +158,16 @@ def main() -> None:
     parser.add_argument("--outfile", type=str, help="The file to write to")  # Default to stdout if not provided
     parser.add_argument("-r", "--removeEng", help="Remove english like utterances", action="store_true")
     parser.add_argument("-u", "--useLangId", help="Use langid library to detect English", action="store_true")
-    args = parser.parse_args()
+    arguments = parser.parse_args()
 
-    data = load_json_file(args.infile)
-    outfile = args.outfile if args.outfile else sys.stdout
+    data = load_json_file(arguments.infile)
+    outfile = arguments.outfile if arguments.outfile else sys.stdout
 
-    print(f"Filtering {str(args.infile)}...", end="", flush=True, file=outfile)
+    print(f"Filtering {str(arguments.infile)}...", end="", flush=True, file=outfile)
 
     filtered_data = clean_json_data(list(data),
-                                    remove_english=args.removeEng,
-                                    use_langid=args.useLangId)
+                                    remove_english=arguments.removeEng,
+                                    use_langid=arguments.useLangId)
 
     write_data_to_json_file(data=list(filtered_data),
                             output=outfile)

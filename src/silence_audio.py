@@ -16,6 +16,8 @@ import glob
 import os
 import wave
 import numpy
+import sys
+from pyparsing import ParseException
 from pympi.Elan import Eaf
 
 def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish):
@@ -94,36 +96,33 @@ def main() -> None:
     parser.add_argument('-s', '--silence_tier', help='Silence audio when annotations are found on this tier', type=str,
                         default='Silence')
     parser.add_argument('-o', '--overwrite', help='Write over existing files', action="store_true")
-    args = parser.parse_args()
+    arguments = parser.parse_args()
 
-    corpus = args.corpus
-    overwrite = args.overwrite
-    do_not_publish = args.silence_tier
     silence_mono = 0
     silence_stereo = [0, 0]
-    SUFFIX = 'S'
+    suffix = 'S'
 
     '''
-    Look for .eaf files, recursively from the passed corpus dir for file_path in 
-    glob.iglob(corpus + '/**/*.eaf', recursive=True)
+    Look for .eaf files, recursively from the passed arguments.corpus dir for file_path in 
+    glob.iglob(arguments.corpus + '/**/*.eaf', recursive=True)
     '''
     
-    for file_path in glob.iglob(corpus + '/*.eaf'):
+    for file_path in glob.iglob(arguments.corpus + '/*.eaf'):
         eaf_file = Eaf(file_path)
         names = eaf_file.get_tier_names()
         
         # Check for existence of silence tier
-        if do_not_publish in names:
+        if arguments.silence_tier in names:
 
-            print("Have tier %s in %s" % (do_not_publish, file_path))
+            print("Have tier %s in %s" % (arguments.silence_tier, file_path))
 
             basename, extension = os.path.splitext(file_path)
 
             input = basename + ".wav"
-            if overwrite:
+            if arguments.overwrite:
                 output = basename + ".wav"
             else:
-                output = basename + SUFFIX + ".wav"
+                output = basename + suffix + ".wav"
 
             silence_audio(eaf_file, output)
 

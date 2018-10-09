@@ -6,7 +6,7 @@
 
 import argparse
 import sys
-
+from pyparsing import ParseException
 
 def generate_dictionary(config_file_name):
     # read the input file
@@ -73,20 +73,24 @@ def generate_dictionary(config_file_name):
     print("Done", file=sys.stderr)
 
 
-# TODO
-# Accept komnzo_words.txt from --words_file
-# accept Komnzo_Letter_to_Sound from --config_file
-# accept test.txt from --output_file
+def main():
+    # TODO
+    # Accept komnzo_words.txt from --words_file
+    # accept Komnzo_Letter_to_Sound from --config_file
+    # accept test.txt from --output_file
+    if __name__ == "__main__":
+        # argv = sys.argv[1:]
+        # input_file_name = ""
+        # config_file_name = ""
+        # output_file_name = ""
+
+        parser = argparse.ArgumentParser()
+        # parser.add_argument("--words", help="input file with one word in each line")
+        parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
+        # parser.add_argument("--output_file", help="name of the output file")
+        arguments = parser.parse_args()
+
+        generate_dictionary(arguments.config)
+
 if __name__ == "__main__":
-    # argv = sys.argv[1:]
-    # input_file_name = ""
-    # config_file_name = ""
-    # output_file_name = ""
-
-    parser = argparse.ArgumentParser()
-    # parser.add_argument("--words", help="input file with one word in each line")
-    parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
-    # parser.add_argument("--output_file", help="name of the output file")
-
-    args = parser.parse_args()
-    generate_dictionary(args.config)
+    main()

@@ -17,6 +17,7 @@ import platform
 import uuid
 import subprocess
 import regex
+from pyparsing import ParseException
 from typing import List, Dict, Union, Set, Tuple
 from src.utilities import *
 
@@ -39,11 +40,11 @@ def conditional_log(condition: bool, text: str) -> None:
 def process_trs_file(file_name: str, verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
 
     """
-    Method to process the .trs files and returns a list of utterances.
+    Method to process the trs files and return a list of utterances.
     :param file_name: file_name of the .trs file
     :param verbose_output: whether or not output to stdout
     :return: a list of dictionaries. each dictionary contains key information on utterances, including 
-            speaker_ID, audiofile_name, transcript, startMs, stopMs.
+            speaker_id, audiofile_name, transcript, startMs, stopMs.
     """
 
     conditional_log(verbose_output, "Processing transcript '%s'\n" % file_name)
@@ -76,9 +77,9 @@ def process_turn(wave_name: str, turn_node: ET.Element, tree: ET.ElementTree) ->
     """
 
     turn_end: float = float(turn_node.attrib["endTime"])
-    speaker_ID: str = turn_node.get("speaker", "")
+    speaker_id: str = turn_node.get("speaker", "")
 
-    speaker_name_node: ET.Element = tree.find(".//Speaker[@id='%s']" % speaker_ID)
+    speaker_name_node: ET.Element = tree.find(".//Speaker[@id='%s']" % speaker_id)
     if speaker_name_node is not None:
         speaker_name: str = speaker_name_node.attrib["name"]
     else:
@@ -96,7 +97,7 @@ def process_turn(wave_name: str, turn_node: ET.Element, tree: ET.ElementTree) ->
             end_time: float = float(items[i + 1][0])
         else:
             end_time = turn_end
-        result.append({"speaker_ID": speaker_name,
+        result.append({"speaker_id": speaker_name,
                        "audio_file_name": wave_file_name,
                        "transcript": transcription_str,
                        "start_ms": start_time * 1000.0,
@@ -116,27 +117,23 @@ def main() -> None:
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-d", "--input_dir", dest="input_directory", help="Input directory, default='.'", default=".")
     parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
+    arguments: argparse.Namespace = parser.parse_args()
+  
+    if arguments.verbose:
+        sys.stderr.write(arguments.input_directory + "\n")
 
-    args = parser.parse_args()
-    base_directory = args.input_directory
-    verbose_output = args.verbose
-
-    if verbose_output:
-        sys.stderr.write(base_directory + "\n")
-
-    all_files_in_dir = list(glob.glob(os.path.join(base_directory, "**"), recursive=True))
-    transcript_names = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
-    print(all_files_in_dir)
+    all_files_in_dir: List[str] = list(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
+    transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
 
     '''
     Iteratively processes all .trs files and outputs a list of dictionaries of the form:
-    {speaker_ID: <str>, audio_file_name: <str>, transcript: <str>, start_ms: <float>, stop_ms: <float>}
+    {speaker_id: <str>, audio_file_name: <str>, transcript: <str>, start_ms: <float>, stop_ms: <float>}
     '''
     utterances = []
     for file_name in transcript_names:
-        utterances = utterances + process_trs_file(file_name, verbose_output)
+        utterances = utterances + process_trs_file(file_name, arguments.verbose)
 
-    result_base_name, name = os.path.split(base_directory)
+    result_base_name, name = os.path.split(arguments.input_directory)
     if not name or name == '.':
         outfile_name = "utterances.json"
     else:

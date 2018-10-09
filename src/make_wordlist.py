@@ -7,9 +7,10 @@ Optionally provide the output json file name with -o
 Usage: python3 filter_text.py sample.json wordlist.txt
 """
 
-from typing import List, Dict
 import argparse
 import sys
+from pyparsing import ParseException
+from typing import List, Dict
 from src.utilities import load_json_file
 
 
@@ -47,16 +48,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--infile", "i", type=str, help="The input file to clean.")
     parser.add_argument("--outfile", "-o", type=str, help="The input file to clean.")
-    args = parser.parse_args()
+    arguments = parser.parse_args()
 
-    data = load_json_file(args.infile)
+    data = load_json_file(arguments.infile)
 
-    print("Wordlist...", end='', flush=True, file=sys.stderr)
+    print("Wordlist...", end="", flush=True, file=sys.stderr)
 
     word_list = extract_word_list(data)
     print("Done.", file=sys.stderr)
 
-    print(f"Writing out wordlist to stderr", end='', flush=True, file=sys.stderr)
+    print(f"Writing out wordlist to stderr", end="", flush=True, file=sys.stderr)
     save_word_list(word_list)
     print("Done.", file=sys.stderr)
 

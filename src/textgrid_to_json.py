@@ -3,7 +3,7 @@
 """
 Extracts transcription information and outputs them as json 
 By default dumps json to ../input/output/tmp/dirty.json file
-Usage: python3 textgrid_to_json.py --indir <input_file> [--output_dir output_directory] [--output_json output_file]
+Usage: python3 textgrid_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR]
 """
 
 import os
@@ -70,24 +70,17 @@ def main() -> None:
     """
 
     parser = argparse.ArgumentParser(
-        description = "Search input folder for .TextGrid files and convert to JSON on stdout")
+        description="Search input folder for .TextGrid files and convert to JSON on stdout")
     parser.add_argument("-i", "--input_dir", help="The input data dir", type=str, default="input/data/")
-    parser.add_argument("-o", "--output_dir", help="Output directory", type=str, default=".") #default="input/output/tmp"
-    args = parser.parse_args()
+    parser.add_argument("-o", "--output_dir", help="Output directory", type=str, default="input/output/tmp")
+    arguments = parser.parse_args()
 
-    try:
-        input_directory = args.input_dir
-        output_directory = input_directory if args.output_dir == "." else args.output_dir
-    except ParseException:
-        parser.print_help()
-        sys.exit(0)
+    if not os.path.exists(arguments.output_dir):
+        os.makedirs(arguments.output_dir)
 
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
+    intervals = process_textgrid_files(arguments.input_dir)
 
-    intervals = process_textgrid_files(input_directory)
-
-    result_base_name, name = os.path.split(output_directory)
+    result_base_name, name = os.path.split(arguments.output_dir)
     if not name or name == '.':
         outfile_name = "intervals.json"
     else:

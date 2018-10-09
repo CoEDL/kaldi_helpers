@@ -29,19 +29,19 @@ item []:
         intervals [1]:
             xmin = 0
             xmax = 17.186
-            text = "Hello, I love bikes.#"
+            text = "Hello, I love bikes."
         intervals [2]:
             xmin = 17.186
             xmax = 30.049
-            text = "I want to visit Iceland.#"
+            text = "I want to visit Iceland."
         intervals [3]:
             xmin = 30.049
             xmax = 35.676
-            text = "Switzerland would be nice too.#"
+            text = "Switzerland would be nice too."
         intervals [4]:
             xmin = 35.676
             xmax = 40.676
-            text = "Africa is a beautiful place.#"
+            text = "Africa is a beautiful place."
     item [3]:
         class = "IntervalTier"
         name = "IPA"
