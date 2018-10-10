@@ -4,21 +4,23 @@
 Get all files in the repository can use recursive atm as long as we don't need numpy
 pass in corpus path throw an error if matching file wav isn"t found in the corpus directory
 
-Usage 
+Usage: 
 """
 
 import glob
 import sys
 import os
 import argparse
+import subprocess
+import json
 from pympi.Elan import Eaf
-from typing import List
+from typing import List, Dict, Set, Union
 from pyparsing import ParseException
 from src.utilities import find_files_by_extension
 from src.utilities import write_data_to_json_file
 
 
-def read_eaf(input_elan_file, tier_name: str) -> List[dict]:
+def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:
     """
     Method to process a particular tier in an eaf file (ELAN Annotation Format). It stores the transcriptions in the 
     following format:
@@ -47,7 +49,7 @@ def read_eaf(input_elan_file, tier_name: str) -> List[dict]:
     # Get annotations and parameters (things like speaker id) on the target tier
     annotations = sorted(input_eaf.get_annotation_data_for_tier(tier_name))
     parameters = input_eaf.get_parameters_for_tier(tier_name)
-    speaker_id = parameters.get("PARTICIPANT", default="")
+    speaker_id = parameters.get("PARTICIPANT", "")
 
     annotations_data = []
 
@@ -94,7 +96,7 @@ def main():
     annotations_data = []
 
     for input_eaf_file in input_eafs_files:
-        annotations_data.extend(read_eaf(input_eaf_file, arguments.tier))
+        annotations_data.extend(process_eaf(input_eaf_file, arguments.tier))
 
     write_data_to_json_file(annotations_data, arguments.output_json)
 
