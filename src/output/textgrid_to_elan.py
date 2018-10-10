@@ -1,3 +1,10 @@
+#!/usr/bin/python
+
+"""
+# Copyright 2018 The University of Queensland (Author: Nicholas Lambourne)
+# LICENCE: MIT
+"""
+
 from argparse import ArgumentParser
 from pathlib import Path
 from pympi import Praat
