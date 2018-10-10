@@ -18,13 +18,13 @@ def test_process_textgrid_file() -> None:
                 tg = tgio.openTextgrid(os.path.join(root, filename))
                 speech_tier_total_length += len(tg.tierDict['Speech'].entryList)
 
-    intervals: List[Dict[str, Union[str, int]]] = process_textgrid_files(TEST_FILES_BASE_DIR)
+    intervals: List[Dict[str, Union[str, int]]] = process_textgrid(TEST_FILES_BASE_DIR)
     assert speech_tier_total_length == len(intervals)
 
 
 def test_textgrid_to_json() -> None:
 
-    utterances: List[Dict[str, Union[str, float]]] = process_textgrid_files(TEST_FILES_BASE_DIR)
+    utterances: List[Dict[str, Union[str, float]]] = process_textgrid(TEST_FILES_BASE_DIR)
 
     result: subprocess.CompletedProcess = subprocess.run(["python", SCRIPT_PATH, "--input_dir", TEST_FILES_BASE_DIR],
                                                          check=True)

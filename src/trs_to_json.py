@@ -37,14 +37,18 @@ def conditional_log(condition: bool, text: str) -> None:
         sys.stderr.flush()
 
 
-def process_trs_file(file_name: str, verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
+def process_trs(file_name: str, verbose_output: bool) -> List[Dict[str, Union[str, float]]]:
 
     """
     Method to process the trs files and return a list of utterances.
     :param file_name: file_name of the .trs file
     :param verbose_output: whether or not output to stdout
-    :return: a list of dictionaries. each dictionary contains key information on utterances, including 
-            speaker_id, audiofile_name, transcript, startMs, stopMs.
+    :return: a list of dictionaries. each dictionary contains key information on utterances in the following format:
+                                     {'speaker_id': <speaker_id>,
+                                    'audio_file_name': <file_name>,
+                                    'transcript': <transcription_label>,
+                                    'start_ms': <start_time_in_milliseconds>,
+                                    'stop_ms': <stop_time_in_milliseconds>}
     """
 
     conditional_log(verbose_output, "Processing transcript '%s'\n" % file_name)
@@ -118,20 +122,19 @@ def main() -> None:
     parser.add_argument("-d", "--input_dir", dest="input_directory", help="Input directory, default='.'", default=".")
     parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
     arguments: argparse.Namespace = parser.parse_args()
-  
+
     if arguments.verbose:
         sys.stderr.write(arguments.input_directory + "\n")
 
     all_files_in_dir: List[str] = list(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
     transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
 
-    '''
-    Iteratively processes all .trs files and outputs a list of dictionaries of the form:
-    {speaker_id: <str>, audio_file_name: <str>, transcript: <str>, start_ms: <float>, stop_ms: <float>}
-    '''
+
+    # Iteratively processes all .trs files and outputs a list of dictionaries of the form:
+    # {speaker_id: <str>, audio_file_name: <str>, transcript: <str>, start_ms: <float>, stop_ms: <float>}
     utterances = []
     for file_name in transcript_names:
-        utterances = utterances + process_trs_file(file_name, arguments.verbose)
+        utterances = utterances + process_trs(file_name, arguments.verbose)
 
     result_base_name, name = os.path.split(arguments.input_directory)
     if not name or name == '.':

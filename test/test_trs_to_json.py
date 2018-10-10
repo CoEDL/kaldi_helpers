@@ -61,7 +61,7 @@ def test_process_trs_file():
         with open(file_name) as f:
             contents: str = f.read()
             count: int = sum(1 for match in regex.finditer(r"\bSync\b", contents, flags=regex.IGNORECASE))
-            utterances: List[Dict[str, Union[str, float]]] = process_trs_file(file_name, False)
+            utterances: List[Dict[str, Union[str, float]]] = process_trs(file_name, False)
             assert count == len(utterances)
 
 
@@ -92,9 +92,10 @@ def test_trs_to_json():
                                                      recursive=True))
     utterances: List[Dict[str, Union[str, float]]] = []
     for file_name in all_files_in_directory:
-        utterances = utterances + process_trs_file(file_name, False)
+        utterances = utterances + process_trs(file_name, False)
 
-    result: subprocess.CompletedProcess = subprocess.run(["python", SCRIPT_PATH, "--input_dir", TEST_FILES_BASE_DIR], check=True)
+    command: List[str] = ["python", SCRIPT_PATH, "--input_dir", TEST_FILES_BASE_DIR]
+    result: subprocess.CompletedProcess = subprocess.run(command, check=True)
     assert result.returncode == 0
 
     parent_directory_name, base_directory_name = os.path.split(TEST_FILES_BASE_DIR)

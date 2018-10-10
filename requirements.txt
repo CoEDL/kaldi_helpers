@@ -7,3 +7,4 @@ praatio
 pydub
 regex
 pyparsing
+subprocess

@@ -18,7 +18,7 @@ from typing import List, Dict, Union, Set
 from src.utilities import *
 
 
-def process_textgrid_files(input_directory: str) -> List[Dict[str, Union[str, int]]]:
+def process_textgrid(input_directory: str) -> List[Dict[str, Union[str, int]]]:
     """
     Traverses through the textgrid files in the given directory and extracts 
     transcription information in each tier and creates a list of dictionaries,
@@ -78,15 +78,16 @@ def main() -> None:
     if not os.path.exists(arguments.output_dir):
         os.makedirs(arguments.output_dir)
 
-    intervals = process_textgrid_files(arguments.input_dir)
+    intervals = process_textgrid(arguments.input_dir)
 
     result_base_name, name = os.path.split(arguments.output_dir)
-    if not name or name == '.':
+    if not name or name == ".":
         outfile_name = "intervals.json"
     else:
-        outfile_name = os.path.join(name + '.json')
+        outfile_name = os.path.join(name + ".json")
+
     output_json = os.path.join(result_base_name, outfile_name)
     write_data_to_json_file(intervals, output_json)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
