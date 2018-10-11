@@ -6,6 +6,8 @@
 # USAGE:
 #    $ task _infer-align
 #
+#    N.B: relies on the go-task task runner and related Taskfile.yml
+#
 #    This script is meant to demonstrate how an already trained GMM-HMM
 #    model and its corresponding HCLG graph, built via Kaldi,
 #    can be used to decode new audio files.
