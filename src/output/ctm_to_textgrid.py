@@ -8,7 +8,7 @@
 from argparse import ArgumentParser
 from csv import reader
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Tuple
 from praatio import tgio
 
 
@@ -18,24 +18,29 @@ def ctm_to_dictionary(ctm_file_name: str,
         ctm_entries = list(reader(file, delimiter=" "))
     textgrid_dictionary = dict()
     for entry in ctm_entries:
-        utterance_id = segments_dictionary[entry[0]]
+        utterance_id, segment_start_time = segments_dictionary[entry[0]]
         if utterance_id not in textgrid_dictionary:
             textgrid_dictionary[utterance_id] = []
-        utterance_segment = (entry[2],                                # Start time
-                             str(float(entry[2]) + float(entry[3])),  # End time (start + duration)
-                             entry[4])                                # Inferred text
+        relative_start_time = float(entry[2])
+        absolute_start_time = segment_start_time + relative_start_time
+        absolute_end_time = absolute_start_time + float(entry[3])
+        inferred_text = entry[4]
+        utterance_segment = (str(absolute_start_time),
+                             str(absolute_end_time),
+                             inferred_text)
         textgrid_dictionary[utterance_id].append(utterance_segment)
     return textgrid_dictionary
 
 
-def get_segment_dictionary(file_name: str) -> Dict[str, str]:
-    with open(file_name, "r") as file:
+def get_segment_dictionary(segment_file_name: str) -> Dict[str, Tuple[str, float]]:
+    with open(segment_file_name, "r") as file:
         segment_entries = list(reader(file, delimiter=" "))
     segment_dictionary = dict()
     for entry in segment_entries:
         segment_id = entry[0]
         utterance_id = entry[1]
-        segment_dictionary[segment_id] = utterance_id
+        start_time = float(entry[2])
+        segment_dictionary[segment_id] = (utterance_id, start_time)
     return segment_dictionary
 
 
