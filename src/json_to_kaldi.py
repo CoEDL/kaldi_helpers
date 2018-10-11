@@ -4,31 +4,15 @@
 Parse json file and extract transcription information which are then processed and output in the desired Kaldi format.
 The output files will be stored in two separate folders training and testing inside the specified output directory.
 
-Kaldi input file structure: 
-    
-corpus:    
-    exp :
-               
-    conf : 
-        mfcc.conf
-        
-    data :
-        train : 
-            text, segments, wav.scp, utt2spk, spk2utt
-        lang :
-            L.fst, L_disambig.fst, oov.int, oov.txt, phones.txt, topo, words.txt
+training : 
+    corpus.txt, text, segments, wav.scp, utt2spk, spk2utt
+testing : 
+    corpus.txt, text, segments, wav.scp, utt2spk, spk2utt
             
-            phones :
-                extra_questions.txt
-        local :
-            lang :
-                lexicon.txt, nosilence_phone.txt, optional_silence.txt, silence_phones.txt, extra_questions.txt
-                
-This script prepares files for the data\train folder only at this point. All other files are prepared either using 
-bash scripts or by hand.
+The training folder is for the model creation using Kaldi, whereas the testing folder is used for verifying the 
+reliability of the model.
             
 Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
-
 """
 
 import argparse
@@ -36,6 +20,7 @@ import json
 import os
 import sys
 import uuid
+import shutil
 import subprocess
 from pyparsing import ParseException
 from typing import Set, List, Tuple, Dict
@@ -45,7 +30,7 @@ from src.utilities import *
 class KaldiInput:
 
     """
-    Class to represent the data structure for the input files of the Kaldi pipeline.
+    Class to store information for the training and testing data sets.     
     """
 
     def __init__(self, output_folder: str) -> None:
@@ -74,8 +59,9 @@ class KaldiInput:
     def add_speaker(self, speaker_id: str) -> str:
         """
         Adds a speaker element if it is not already present.
-        :param speaker_id: 
-        :return: 
+        
+        :param speaker_id: speaker id - could be a name of a uuid code
+        :return: returns the correctly formatted speaker id 
         """
         if speaker_id not in self.speakers:
             self.speakers[speaker_id] = str(uuid.uuid4()) # create speaker id
@@ -85,8 +71,9 @@ class KaldiInput:
     def add_recording(self, audio_file: str) -> str:
         """
         Adds an audio file it is not already present.
-        :param audio_file: 
-        :return: 
+        
+        :param audio_file: name of audio file 
+        :return: returns a correctly formatted audio file description
         """
         if audio_file not in self.recordings:
             self.recordings[audio_file] = str(uuid.uuid4()) # create recording id
@@ -98,13 +85,14 @@ class KaldiInput:
         """
         Appends new items to the transcripts, segments, utt2spk and corpus lists.
         
-        :param recording_id: 
-        :param speaker_id: 
-        :param utterance_id: 
-        :param start_ms: 
-        :param stop_ms: 
-        :param transcript: 
-        :param silence_markers: 
+        :param recording_id: id for the recording file
+        :param speaker_id: id for the speaker who uttered the phrase
+        :param utterance_id: unique id for the uttered phrase
+        :param start_ms: start of the uttered phrase
+        :param stop_ms: stop time of the uttered phrase
+        :param transcript: the uttered phrase
+        :param silence_markers: boolean condition indicating whether to include silence markers
+        
         :return: 
         """
         if silence_markers:
@@ -120,6 +108,7 @@ class KaldiInput:
         """
         After parsing the json file and populating the segments, transcripts, speakers, recordings, utt2spk and corpus 
         lists with data, this function performs the final write to their respective files. 
+        
         :return: 
         """
 
@@ -148,15 +137,22 @@ class KaldiInput:
         self.corpus_file.close()
 
 
-def main():
+def main() -> None:
 
-    """ Run the entire json_to_kaldi.py as a command line utility """
+    """ 
+    Run the entire json_to_kaldi.py as a command line utility. 
+    
+    Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
+    """
     parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input files (in output-folder).")
     parser.add_argument("-i", "--input_json", type=str, help="The input json file", required=False,
                         default=os.path.join(".", "test", "testfiles", "example.json"))
     parser.add_argument("-o", "--output_folder", type=str, help="The output folder", default=os.path.join(".", "data"))
-    # parser.add_argument("-s", "--silence_markers", action="store_true", help="The input json file")
+    parser.add_argument("-s", "--silence_markers", action="store_true", help="The input json file")
     arguments: argparse.Namespace = parser.parse_args()
+
+    if not os.path.isfile(arguments.input_json):
+        sys.exit(1);
 
     try:
         input_file: TextIOWrapper = open(arguments.input_json, "r")
@@ -179,6 +175,7 @@ def main():
         start_ms: int = json_transcript.get("start_ms", 0)
         stop_ms: int = json_transcript.get("stop_ms", 0)
 
+        # Speaker ID is not available in textgrid files
         if "speaker_id" in json_transcript:
             speaker_id: str = json_transcript.get("speaker_id", "")
         else:
@@ -186,21 +183,34 @@ def main():
 
         audio_file: str = json_transcript.get("audio_file_name", "").replace("\\", "/")
 
+        # 10% of the data set is stored away for use as testing data, other 90% is training data
         if i % 10 == 0:
 
             speaker_id = testing_input.add_speaker(speaker_id) # add speaker_id
             recording_id: str = testing_input.add_recording(audio_file) # add audio file name
             utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
-            silence_markers: bool = False
-            testing_input.add(recording_id, speaker_id, utterance_id, start_ms, stop_ms, transcript, silence_markers)
+            #silence_markers: bool = False
+            testing_input.add(recording_id,
+                              speaker_id,
+                              utterance_id,
+                              start_ms,
+                              stop_ms,
+                              transcript,
+                              arguments.silence_markers)
 
         else:
 
             speaker_id = training_input.add_speaker(speaker_id) # add speaker id
             recording_id: str = training_input.add_recording(audio_file) # add audio file name
             utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
-            silence_markers: bool = True
-            training_input.add(recording_id, speaker_id, utterance_id, start_ms, stop_ms, transcript, silence_markers)
+            #silence_markers: bool = True
+            training_input.add(recording_id,
+                               speaker_id,
+                               utterance_id,
+                               start_ms,
+                               stop_ms,
+                               transcript,
+                               arguments.silence_markers)
 
     testing_input.write_and_close()
     training_input.write_and_close()

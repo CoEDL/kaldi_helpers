@@ -7,7 +7,7 @@ def test_process_eaf():
 
     # Using script to extract data from test .eaf files
     input_dir = os.path.join("resources", "corpora", "abui_toy_corpus", "data")
-    output_dir = os.path.join('.', "data")
+    output_dir = os.path.join('.', "test", "testfiles")
     output_json = os.path.join(output_dir, "dirty.json")
     command = ["python", SCRIPT_PATH,
                "--input_dir", input_dir,
@@ -18,7 +18,7 @@ def test_process_eaf():
 
     with open(output_json) as f:
         contents: List[Dict[str, Union[str, float]]] = json.loads(f.read())
-    # os.remove(output_json)
+    os.remove(output_json)
 
     # Manual extraction of transcription data from test .eaf files
     all_files_in_directory: Set[str] = set(glob.glob(os.path.join(input_dir, "*.eaf"),

@@ -4,7 +4,8 @@
 Given a json file with transcript information this tools can perform
 manipulations including generating word lists.
 Optionally provide the output json file name with -o
-Usage: python3 filter_text.py sample.json wordlist.txt
+
+Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
 """
 
 import argparse
@@ -43,11 +44,13 @@ def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
 
 def main():
     """
-    Run the entire make_wordlist.py as a command line utility
+    Run the entire make_wordlist.py as a command line utility.
+    
+    Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--infile", "i", type=str, help="The input file to clean.")
-    parser.add_argument("--outfile", "-o", type=str, help="The input file to clean.")
+    parser.add_argument("-i", "--infile", type=str, required=True, help="The input file to clean.")
+    parser.add_argument("-o", "--outfile", type=str, help="The input file to clean.")
     arguments = parser.parse_args()
 
     data = load_json_file(arguments.infile)

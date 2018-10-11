@@ -3,7 +3,7 @@
 """
 Convert audio to 16 bit 16k mono WAV file
 
-Usage: python3 resample_audio.py [--corpus <DEFAULT_DATA_DIRECTORY>] [--overwrite <true/false>]
+Usage: python3 resample_audio.py [-h] [-c CORPUS] [-o]
 
 @author Ola Olsson 2018
 """
@@ -77,8 +77,9 @@ def join_normalised_path(path1: str, path2: str):
 def main():
 
     """
-    A command line utility to process the audio files in a given directory 
-    Usage: python resample_audio.py [--corpus <DATA_DIRECTORY>] [--overwrite]
+    A command line utility to process the audio files in a given directory.
+     
+    Usage: python3 resample_audio.py [-h] [-c CORPUS] [-o]    
     """
 
     parser = argparse.ArgumentParser(

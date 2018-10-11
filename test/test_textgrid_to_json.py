@@ -25,13 +25,16 @@ def test_process_textgrid_file() -> None:
 def test_textgrid_to_json() -> None:
 
     utterances: List[Dict[str, Union[str, float]]] = process_textgrid(TEST_FILES_BASE_DIR)
-
-    result: subprocess.CompletedProcess = subprocess.run(["python", SCRIPT_PATH, "--input_dir", TEST_FILES_BASE_DIR],
+    output_path: str = os.path.join(".", "test", "testfiles")
+    result: subprocess.CompletedProcess = subprocess.run(["python", SCRIPT_PATH,
+                                                          "--input_dir", TEST_FILES_BASE_DIR,
+                                                          "--output_dir", output_path],
                                                          check=True)
     assert result.returncode == 0
 
     parent_directory_name, base_directory_name = os.path.split(TEST_FILES_BASE_DIR)
     json_name: str = os.path.join(parent_directory_name, base_directory_name + ".json")
+
     with open(json_name) as f:
         contents: List[Dict[str, Union[str, float]]] = json.loads(f.read())
     assert len(contents) == len(utterances)

@@ -3,6 +3,7 @@
 """
 Extracts transcription information and outputs them as json 
 By default dumps json to ../input/output/tmp/dirty.json file
+
 Usage: python3 textgrid_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR]
 """
 
@@ -53,7 +54,7 @@ def process_textgrid(input_directory: str) -> List[Dict[str, Union[str, int]]]:
 
 def second_to_milli(seconds: float) -> int:
     """
-    Converts from seconds to milliseconds 
+    Converts from seconds to milliseconds.
     
     :param seconds: time in seconds
     :return: converted time rounded to nearest millisecond
@@ -65,8 +66,9 @@ def second_to_milli(seconds: float) -> int:
 def main() -> None:
 
     """ 
-    Run the entire textgrid_to_json.py as a command line utility 
-    Usage: python3 textgrid_to_json.py --indir <input_file> [--output_dir output_directory] [--output_json output_file]
+    Run the entire textgrid_to_json.py as a command line utility.
+    
+    Usage: python3 textgrid_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR]
     """
 
     parser = argparse.ArgumentParser(
