@@ -4,7 +4,8 @@
 Parse trs file and extract information from it for json
 Dumps json to sys stdout,
 so you'll need to direct the output to a file when running the script
-Usage: python3 trs_to_json.py --indir ../input/data > ../input/output/tmp/dirty.json
+
+Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
 """
 
 import xml.etree.ElementTree as ET
@@ -25,6 +26,7 @@ from src.utilities import *
 def conditional_log(condition: bool, text: str) -> None:
     """
     Work around for UTF8 file name and the windows console.
+    
     :param condition: condition to indicate whether text should be output to stderr
     :param text: text to output to stderr 
     """
@@ -41,8 +43,9 @@ def process_trs(file_name: str, verbose_output: bool) -> List[Dict[str, Union[st
 
     """
     Method to process the trs files and return a list of utterances.
+    
     :param file_name: file_name of the .trs file
-    :param verbose_output: whether or not output to stdout
+    :param verbose_output: whether or not output to stderr
     :return: a list of dictionaries. each dictionary contains key information on utterances in the following format:
                                      {'speaker_id': <speaker_id>,
                                     'audio_file_name': <file_name>,
@@ -63,16 +66,17 @@ def process_trs(file_name: str, verbose_output: bool) -> List[Dict[str, Union[st
         for turn_node in turn_nodes:
             utterances = utterances + process_turn(wave_name, turn_node, tree)
 
-    except ET.ParseError as err:
+    except ET.ParseError as error:
         conditional_log(True, "XML parser failed to parse '%s'!\n" % file_name)
-        conditional_log(True, str(err))
+        conditional_log(True, str(error))
 
     return utterances
 
 
 def process_turn(wave_name: str, turn_node: ET.Element, tree: ET.ElementTree) -> List[Dict[str, Union[str, float]]]:
     """
-    Helper method to process each turn_node in the .trs file
+    Helper method to process each turn_node in the .trs file.
+    
     :param file_name: name of the file
     :param turn_node: the ElementTree node to be processed
     :param wave_name: name of .wav audio file to be processed
@@ -113,13 +117,16 @@ def process_turn(wave_name: str, turn_node: ET.Element, tree: ET.ElementTree) ->
 def main() -> None:
 
     """ 
-    Run the entire trs_to_json.py as a command line utility 
-    Usage: python3 trs_to_json.py --indir ../input/data > ../input/output/tmp/dirty.json
+    Run the entire trs_to_json.py as a command line utility. It processes the utterances 
+    and outputs to a file in the same directory as the input .trs file. The output files 
+    is named after the basename of the input directory appended with a .json extension. 
+    
+    Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
     """
 
     parser = argparse.ArgumentParser(description="A command line utility to convert .trs files to .json",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("-d", "--input_dir", dest="input_directory", help="Input directory, default='.'", default=".")
+    parser.add_argument("-i", "--input_dir", dest="input_directory", help="Input directory, default='.'", default=".")
     parser.add_argument('-v', '--verbose', dest='verbose', help='More logging to console.', action="store_true")
     arguments: argparse.Namespace = parser.parse_args()
 
@@ -129,9 +136,6 @@ def main() -> None:
     all_files_in_dir: List[str] = list(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
     transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
 
-
-    # Iteratively processes all .trs files and outputs a list of dictionaries of the form:
-    # {speaker_id: <str>, audio_file_name: <str>, transcript: <str>, start_ms: <float>, stop_ms: <float>}
     utterances = []
     for file_name in transcript_names:
         utterances = utterances + process_trs(file_name, arguments.verbose)
@@ -141,7 +145,8 @@ def main() -> None:
         outfile_name = "utterances.json"
     else:
         outfile_name = os.path.join(name + '.json')
-    outfile_path = os.path.join(result_base_name, outfile_name)
+
+    outfile_path = os.path.join(arguments.input_directory, outfile_name)
     write_data_to_json_file(utterances, outfile_path)
 
 if __name__ == '__main__':

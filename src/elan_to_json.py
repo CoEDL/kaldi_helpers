@@ -4,7 +4,7 @@
 Get all files in the repository can use recursive atm as long as we don't need numpy
 pass in corpus path throw an error if matching file wav isn"t found in the corpus directory
 
-Usage: 
+Usage: python3 elan_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR] [-t TIER] [-j OUTPUT_JSON]
 """
 
 import glob
@@ -29,8 +29,9 @@ def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:
                     'transcript': <transcription_label>,
                     'start_ms': <start_time_in_milliseconds>,
                     'stop_ms': <stop_time_in_milliseconds>}
-    :param input_elan_file: 
-    :param tier_name: 
+                    
+    :param input_elan_file: name of input elan file
+    :param tier_name: name of the elan tier to process. these tiers are nodes from the tree structure in the .eaf file.
     :return: 
     """
     # Get paths to files
@@ -74,7 +75,12 @@ def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:
 
 def main():
 
-    """ Run the entire elan_to_json.py as a command line utility """
+    """ 
+    Run the entire elan_to_json.py as a command line utility. It extracts information on speaker, audio file, 
+    transcription etc. from the given tier of the specified .eaf file. 
+    
+    Usage: python3 elan_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR] [-t TIER] [-j OUTPUT_JSON]
+    """
 
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
                             description="This script takes an directory with ELAN files and "

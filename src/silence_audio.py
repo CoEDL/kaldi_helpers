@@ -8,7 +8,7 @@ Assumes eaf file has millisecond offsets
 Assumes do-not-publish annotations are non-overlapping
 Should work whether the Silence tier is a child tier or not
 
-Usage: 
+Usage: python3 silence_audio.py [-h] -c CORPUS [-s SILENCE_TIER] [-o]
 """
 
 import argparse
@@ -83,7 +83,8 @@ def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish
 def main() -> None:
     """
     A command line utility to silence the audio files in a given directory 
-    Usage: python silence_audio.py --corpus <DEFAULT_DATA_DIRECTORY> [--silence_tier ]
+    
+    Usage: python3 silence_audio.py [-h] -c CORPUS [-s SILENCE_TIER] [-o]
     """
 
     global silence_mono

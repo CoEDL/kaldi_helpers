@@ -5,7 +5,7 @@ Given a json file with transcript information these tools can perform
 # manipulations including generating word lists or filtering output to
 # exclude english/punctuation.
 # Optionally provide the output json file name with -j
-# Usage: python clean_json.py --infile file_in.json [--outfile file_out.json] [-re|--removeEng] [-ul|--useLangid]
+# Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
 
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},
@@ -151,11 +151,12 @@ def clean_json_data(json_data: List[Dict[str, str]],
 def main() -> None:
     """
     Run the entire clean_json process as a command line utility.
-    Usage: python clean_json.py --infile file_in.json [--outfile file_out.json] [-re|--removeEng] [-ul|--useLangid]
+    
+    Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
     """
     parser: ArgumentParser = ArgumentParser()
-    parser.add_argument("--infile", type=str, help="The input file to clean.")
-    parser.add_argument("--outfile", type=str, help="The file to write to")  # Default to stdout if not provided
+    parser.add_argument("-i", "--infile", type=str, help="The input file to clean.")
+    parser.add_argument("-o", "--outfile", type=str, help="The file to write to")  # Default to stdout if not provided
     parser.add_argument("-r", "--removeEng", help="Remove english like utterances", action="store_true")
     parser.add_argument("-u", "--useLangId", help="Use langid library to detect English", action="store_true")
     arguments = parser.parse_args()

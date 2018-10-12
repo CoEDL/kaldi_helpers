@@ -79,16 +79,17 @@ def test_clean_json_data_full() -> None:
 def test_clean_json_data_full_file() -> None:
     file_in_name = 'file_in.json'
     file_out_name = 'file_out.json'
-    os.system('touch file_out.json')
+    # os.system('touch file_out.json') # Not Windows compatible
+    open(file_out_name, 'w')
     write_data_to_json_file(EXAMPLE_JSON_DATA, file_in_name)
-    os.system(f"clean_json.py --infile file_in.json --outfile {file_out_name}"
+    os.system(f"clean_json.py --infile {file_in_name} --outfile {file_out_name}"
               f" --removeEng --useLangid")
     # assert load_json_file(file_out_name) == [
     #     {"transcript": "je mappelle françois"},
     #     {"transcript": "vraiment je nai jamais lu ça"}
     # ]
-    os.remove('file_in.json')
-    os.remove('file_out.json')
+    os.remove(file_in_name)
+    os.remove(file_out_name)
 
 
 def test_clean_json_data_full_command_line(capsys: CaptureFixture) -> None:

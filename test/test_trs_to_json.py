@@ -8,6 +8,7 @@ from src.trs_to_json import *
 
 SCRIPT_PATH = os.path.join(".", "src", "trs_to_json.py")
 
+
 def test_find_files_by_extension() -> None:
 
     all_files_in_directory: List[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
@@ -55,6 +56,7 @@ def test_conditional_log() -> None:
 
 
 def test_process_trs_file():
+
     all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.trs"),
                                            recursive=True))
     for file_name in all_files_in_directory:
@@ -66,6 +68,7 @@ def test_process_trs_file():
 
 
 def test_process_turn():
+
     all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.trs"),
                                                      recursive=True))
 
@@ -88,6 +91,7 @@ def test_process_turn():
 
 
 def test_trs_to_json():
+
     all_files_in_directory: Set[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "*.trs"),
                                                      recursive=True))
     utterances: List[Dict[str, Union[str, float]]] = []
@@ -99,7 +103,7 @@ def test_trs_to_json():
     assert result.returncode == 0
 
     parent_directory_name, base_directory_name = os.path.split(TEST_FILES_BASE_DIR)
-    json_name: str = os.path.join(parent_directory_name, base_directory_name+".json")
+    json_name: str = os.path.join(TEST_FILES_BASE_DIR, base_directory_name+".json")
     with open(json_name) as f:
         contents: List[Dict[str, Union[str, float]]] = json.loads(f.read())
     os.remove(json_name)
