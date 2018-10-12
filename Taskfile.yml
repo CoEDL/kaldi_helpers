@@ -35,7 +35,6 @@ _run-textgrid:
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
 
-
 _build:
   desc: "Run through only the build stage with default settings (i.e. not the clean/filter/extract stage)"
   cmds:
@@ -45,6 +44,13 @@ _build:
            gather-wavs extract-wavs
 
     - echo "######################## Build task completed without errors"
+
+_rebuild-no-wav:
+  desc: "Run through only the build stage with default settings (i.e. not the clean/filter/extract stage)"
+    cmds:
+    - task generate-kaldi-files
+           generate-kaldi-configs
+           copy-generated-files copy-phones-configs copy-helper-scripts
 
 _train-test:
   desc: "Run Kaldi train and test stages on default settings"
