@@ -11,7 +11,7 @@ before_install:
 script:
   # Test that you can run _run-elan on abui-toy-corpus
   - docker run -v `pwd`:/src coedl/src:0.2 bash -c
-    'ln -s corpora/abui_toy_corpus input;
+    'ln -s corpora/abui_toy_corpus input_scripts;
     task _run-elan'
 
 # Build only these branches

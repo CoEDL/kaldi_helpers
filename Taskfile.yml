@@ -4,8 +4,8 @@ _run-elan:
   desc: "Run through processing pipeline for Elan transcriptions"
   cmds:
     # Default extract stage, assuming data are cleaned and filtered.
-    # Extracts data from all tiers in input files, which will flow all the way through the pipeline to the lexicon
-    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    # Extracts data from all tiers in input_scripts files, which will flow all the way through the pipeline to the lexicon
+    - task clean-output_scripts-folder tmp-makedir make-kaldi-subfolders
     - task elan-to-json
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
@@ -14,7 +14,7 @@ _run-elan-split:
   desc: "Segment audio and text by Elan annotation start/end times then run through processing pipeline with default settings"
   cmds:
     # Extracts only from 'Phrase' tier, and skips annotations that have a corresponding annotation on a ref tier
-    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    - task clean-output_scripts-folder tmp-makedir make-kaldi-subfolders
     - task split-eafs
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
@@ -22,7 +22,7 @@ _run-elan-split:
 _run-trs:
   desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
-    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    - task clean-output_scripts-folder tmp-makedir make-kaldi-subfolders
     - task trs-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
@@ -30,7 +30,7 @@ _run-trs:
 _run-textgrid:
   desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
-    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    - task clean-output_scripts-folder tmp-makedir make-kaldi-subfolders
     - task textgrid-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
     - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
@@ -54,14 +54,14 @@ _rebuild-no-wav:
 
 _train-test:
   desc: "Run Kaldi train and test stages on default settings"
-  # dir: input/output/kaldi
+  # dir: input_scripts/output_scripts/kaldi
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi; ./run.sh
 
 
 _show-lattice:
   desc: "Create pdf of the lattice graph"
-  dir: input/output/kaldi
+  dir: input_scripts/output_scripts/kaldi
   cmds:
       - |
         for uttid in `cut -f1 -d " "  ../tmp/json_splitted/testing/text`; do
@@ -69,12 +69,12 @@ _show-lattice:
         done
 
 _infer:
-  desc: "Run Kaldi inference on test data"
+  desc: "Run Kaldi inference_scripts on test data"
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode.sh
 
 _infer-align:
-  desc: "Run Kaldi inference on test data and output ctm aligned files"
+  desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode-align.sh
 
@@ -113,7 +113,7 @@ generate-kaldi-configs:
 ##################### Helpers for copying things
 
 copy-generated-files:
-  desc: "Copy generated files to appropriate (sub)directories under /output/kaldi"
+  desc: "Copy generated files to appropriate (sub)directories under /output_scripts/kaldi"
   cmds:
     - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/training/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
     - cp {{ .OUTPUT_PATH }}/tmp/lexicon.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
@@ -139,11 +139,11 @@ copy-helper-scripts:
 copy-phones-configs:
   desc: "Copy provided silence/optional silence configuration files"
   cmds:
-    - cp input/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    - cp input/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp input_scripts/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp input_scripts/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
 
 gather-wavs:
-  desc: "Gather all wav files inside input/data into output/media.zip"
+  desc: "Gather all wav files inside input_scripts/data into output_scripts/media.zip"
   cmds:
     # Tar up .wav files in order to keep folder structure the same
     # because Kaldi's wav.scp data file uses dir structure
@@ -158,7 +158,7 @@ extract-wavs:
 ##################### Helpers for folders stuff
 
 clean-output-folder:
-  desc: "Delete all files and folders inside output directory"
+  desc: "Delete all files and folders inside output_scripts directory"
   cmds:
     - rm -rf {{ .OUTPUT_PATH }}/*
 
@@ -204,14 +204,14 @@ elan-to-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/elan_to_json.py --input_dir {{ .CORPUS_PATH }} --output_dir {{ .OUTPUT_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/elan_to_json.py --input_dir {{ .CORPUS_PATH }} --output_dir {{ .OUTPUT_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 trs-to-json:
   desc: "Convert a folder of .trs files to a single JSON file"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/trs_to_json.py --indir {{ .CORPUS_PATH }}
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/trs_to_json.py --indir {{ .CORPUS_PATH }}
 
 textgrid-to-json:
   desc: "Convert a folder of .textgrid files to a single JSON file"
@@ -219,33 +219,33 @@ textgrid-to-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     # praatio is another that won't install because of the ssl error. use 3.4 for now
-    - python3.4 {{ .SCRIPTS_PATH }}/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
+    - python3.4 {{ .SCRIPTS_PATH }}/input_scripts/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
 
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/json_to_kaldi.py --output-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/json_to_kaldi.py --output_scripts-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/clean_json.py  --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/clean_json.py  --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/make_wordlist.py
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/make_wordlist.py
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/make_prn_dict.py --config {{ .LETTER_TO_SOUND_PATH }}
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/make_prn_dict.py --config {{ .LETTER_TO_SOUND_PATH }}
 
 
 resample-audio:
@@ -253,19 +253,18 @@ resample-audio:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/resample_audio.py --corpus {{ .CORPUS_PATH }}
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/resample_audio.py --corpus {{ .CORPUS_PATH }}
 
 silence-audio:
-  # Using numpy, so stick to Python3 (3.4.2 in the Docker image), but it means we can't be recursive
   desc: "Silence audio that has an annotion in matching Elan file 'Silence' tier"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3 {{ .SCRIPTS_PATH }}/silence_audio.py --corpus {{ .CORPUS_PATH }}
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/silence_audio.py --corpus {{ .CORPUS_PATH }}
 
 split-eafs:
   desc: "Read Elan files, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/split_eafs.py --input_dir {{ .DIRTY_DATA_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --silence_marker {{ .SILENCE_MARKER }} --silence_tier {{ .SILENCE_REF_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json --output_audio_dir {{ .CORPUS_PATH }} --output_text_dir {{ .OUTPUT_PATH }}/tmp/labels
+    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/split_eafs.py --input_dir {{ .DIRTY_DATA_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --silence_marker {{ .SILENCE_MARKER }} --silence_tier {{ .SILENCE_REF_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json --output_audio_dir {{ .CORPUS_PATH }} --output_text_dir {{ .OUTPUT_PATH }}/tmp/labels

@@ -1,5 +1,5 @@
 """
-Collection of utilities for working with JSON files.
+Collection of script_utilities for working with JSON files.
 """
 
 import json
@@ -22,8 +22,8 @@ def load_json_file(file_name: str) -> object:
 def write_data_to_json_file(data: object, output: Union[str, TextIOWrapper]) -> None:
     """
     Writes the given Python dictionary (or list) object to a JSON file at the the given
-    output location (which can either be a file - specified as a string, or
-    directed to an output like sys.stdout or sys.stderr).
+    output_scripts location (which can either be a file - specified as a string, or
+    directed to an output_scripts like sys.stdout or sys.stderr).
     :param data: the Python dictionary to be converted to JSON and written.
     :param output: the file to write the dictionary contents to.
     """

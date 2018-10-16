@@ -1,9 +1,7 @@
 import os
 import glob
 import subprocess
-from src.trs_to_json import find_first_file_by_extension, conditional_log, \
-    process_trs_file, process_turn
-from src.utilities import find_files_by_extension
+from src.script_utilities import find_files_by_extension
 
 TEST_FILES_BASE_DIR = os.path.normpath(os.path.join(os.getcwd(), os.path.join(".", "testfiles")))
 SCRIPT_PATH = os.path.normpath(os.path.join(os.getcwd(), os.path.join("..", "src", "trs_to_json.py")))

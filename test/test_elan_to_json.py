@@ -1,4 +1,4 @@
-from src.elan_to_json import *
+from src.input_scripts.elan_to_json import *
 
 SCRIPT_PATH = os.path.join('.', 'src', 'elan_to_json.py')
 

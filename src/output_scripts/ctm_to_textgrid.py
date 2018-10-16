@@ -72,10 +72,10 @@ def create_textgrid(wav_dictionary: Dict[str, str],
 
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(description="Converts Kaldi CTM format to Praat Textgrid Format.")
-    parser.add_argument("--ctm", type=str, help="The input CTM format file", required=True)
-    parser.add_argument("--wav", type=str, help="The input wav.scp file", required=True)
+    parser.add_argument("--ctm", type=str, help="The input_scripts CTM format file", required=True)
+    parser.add_argument("--wav", type=str, help="The input_scripts wav.scp file", required=True)
     parser.add_argument("--seg", type=str, help="The segment to utterance mapping", default="./segments")
-    parser.add_argument("-o", "--outdir", type=str, help="The directory path for the Praat TextGrid output",
+    parser.add_argument("-o", "--outdir", type=str, help="The directory path for the Praat TextGrid output_scripts",
                         default=".")
     arguments = parser.parse_args()
 

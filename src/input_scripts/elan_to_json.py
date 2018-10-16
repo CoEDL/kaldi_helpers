@@ -16,8 +16,8 @@ import json
 from pympi.Elan import Eaf
 from typing import List, Dict, Set, Union
 from pyparsing import ParseException
-from src.utilities import find_files_by_extension
-from src.utilities import write_data_to_json_file
+from src.script_utilities import find_files_by_extension
+from src.script_utilities import write_data_to_json_file
 
 
 def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:
@@ -30,7 +30,7 @@ def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:
                     'start_ms': <start_time_in_milliseconds>,
                     'stop_ms': <stop_time_in_milliseconds>}
                     
-    :param input_elan_file: name of input elan file
+    :param input_elan_file: name of input_scripts elan file
     :param tier_name: name of the elan tier to process. these tiers are nodes from the tree structure in the .eaf file.
     :return: 
     """
@@ -84,15 +84,15 @@ def main():
 
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
                             description="This script takes an directory with ELAN files and "
-                                        "slices the audio and output text in a format ready "
+                                        "slices the audio and output_scripts text in a format ready "
                                         "for our Kaldi pipeline.")
-    parser.add_argument("-i", "--input_dir", help="Directory of dirty audio and eaf files", default="input/data/")
-    parser.add_argument("-o", "--output_dir", help="Output directory", default="../input/output/tmp/")
+    parser.add_argument("-i", "--input_dir", help="Directory of dirty audio and eaf files", default="input_scripts/data/")
+    parser.add_argument("-o", "--output_dir", help="Output directory", default="../input_scripts/output_scripts/tmp/")
     parser.add_argument("-t", "--tier", help="Target language tier name", default="Phrase")
-    parser.add_argument("-j", "--output_json", help="File name to output json", default="../input/output/tmp/dirty.json")
+    parser.add_argument("-j", "--output_json", help="File name to output_scripts json", default="../input_scripts/output_scripts/tmp/dirty.json")
     arguments: argparse.Namespace = parser.parse_args()
 
-    # Build output directory if needed
+    # Build output_scripts directory if needed
     if not os.path.exists(arguments.output_dir):
         os.makedirs(arguments.output_dir)
 

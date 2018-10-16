@@ -2,9 +2,9 @@
 
 """
 Given a json file with transcript information these tools can perform
-# manipulations including generating word lists or filtering output to
+# manipulations including generating word lists or filtering output_scripts to
 # exclude english/punctuation.
-# Optionally provide the output json file name with -j
+# Optionally provide the output_scripts json file name with -j
 # Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
 
 EXAMPLE_JSON_DATA = [
@@ -24,7 +24,7 @@ from argparse import ArgumentParser
 from langid.langid import LanguageIdentifier, model
 from nltk.corpus import words
 from typing import Dict, List, Set
-from src.utilities import load_json_file, write_data_to_json_file
+from src.script_utilities import load_json_file, write_data_to_json_file
 
 
 def get_english_words() -> Set[str]:
@@ -48,7 +48,7 @@ def clean_utterance(utterance: Dict[str, str],
     :param remove_english: whether or not to remove English words.
     :param english_words: a list of english words to remove from the transcript (we suggest the nltk words corpora).
     :param punctuation: list of punctuation symbols to remove from the transcript.
-    :param special_cases: a list of words to always remove from the output.
+    :param special_cases: a list of words to always remove from the output_scripts.
     :return: a tuple with a list of 'cleaned' words and a number representing the number of English words to remove.
     """
     translation_tags = {"@eng@", "<ind:", "<eng:"}
@@ -155,7 +155,7 @@ def main() -> None:
     Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
     """
     parser: ArgumentParser = ArgumentParser()
-    parser.add_argument("-i", "--infile", type=str, help="The input file to clean.")
+    parser.add_argument("-i", "--infile", type=str, help="The input_scripts file to clean.")
     parser.add_argument("-o", "--outfile", type=str, help="The file to write to")  # Default to stdout if not provided
     parser.add_argument("-r", "--removeEng", help="Remove english like utterances", action="store_true")
     parser.add_argument("-u", "--useLangId", help="Use langid library to detect English", action="store_true")

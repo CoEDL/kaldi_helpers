@@ -3,7 +3,7 @@
 """
 Parse trs file and extract information from it for json
 Dumps json to sys stdout,
-so you'll need to direct the output to a file when running the script
+so you'll need to direct the output_scripts to a file when running the script
 
 Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
 """
@@ -20,15 +20,15 @@ import subprocess
 import regex
 from pyparsing import ParseException
 from typing import List, Dict, Union, Set, Tuple
-from src.utilities import *
+from src.script_utilities import *
 
 
 def conditional_log(condition: bool, text: str) -> None:
     """
     Work around for UTF8 file name and the windows console.
     
-    :param condition: condition to indicate whether text should be output to stderr
-    :param text: text to output to stderr 
+    :param condition: condition to indicate whether text should be output_scripts to stderr
+    :param text: text to output_scripts to stderr
     """
 
     if condition:
@@ -45,7 +45,7 @@ def process_trs(file_name: str, verbose_output: bool) -> List[Dict[str, Union[st
     Method to process the trs files and return a list of utterances.
     
     :param file_name: file_name of the .trs file
-    :param verbose_output: whether or not output to stderr
+    :param verbose_output: whether or not output_scripts to stderr
     :return: a list of dictionaries. each dictionary contains key information on utterances in the following format:
                                      {'speaker_id': <speaker_id>,
                                     'audio_file_name': <file_name>,
@@ -118,8 +118,8 @@ def main() -> None:
 
     """ 
     Run the entire trs_to_json.py as a command line utility. It processes the utterances 
-    and outputs to a file in the same directory as the input .trs file. The output files 
-    is named after the basename of the input directory appended with a .json extension. 
+    and outputs to a file in the same directory as the input_scripts .trs file. The output_scripts files
+    is named after the basename of the input_scripts directory appended with a .json extension.
     
     Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
     """

@@ -44,7 +44,7 @@ def read_eaf(ie, tier, silence_tier, silence_marker, json_data, output_text_dir,
     if silence_tier not in tier_names:
         print('missing silence tier: ' + silence_tier, file=sys.stderr)
 
-    # get the input audio file
+    # get the input_scripts audio file
     inDir, name = os.path.split(ie)
     basename, ext = os.path.splitext(name)
     ia = os.path.join(inDir, basename + ".wav")
@@ -68,7 +68,7 @@ def read_eaf(ie, tier, silence_tier, silence_marker, json_data, output_text_dir,
         skip = False
         start = ann[0]
         end = ann[1]
-        # output new values, not the original clip start end times
+        # output_scripts new values, not the original clip start end times
         clip_start = 0
         clip_end = ann[1] - ann[0]
         annotation = ann[2]
@@ -88,7 +88,7 @@ def read_eaf(ie, tier, silence_tier, silence_marker, json_data, output_text_dir,
         else:
             print("processing" + str(i))
             # print('processing annotation: ' + annotation, start, end)
-            # build the output audio/text filename
+            # build the output_scripts audio/text filename
             fname = basename + "_" + str(i)
             obj = {
                 'audioFileName': os.path.join(".", fname + ".wav"),
@@ -118,18 +118,18 @@ def main():
     parser = argparse.ArgumentParser(
         description="This script will slice a directory of Elan .eaf files and matching .wav files into separate audio and text files by the start and end times of each annotation in a particular tier. Annotations with a particular value can be skipped. Annotations on a ref tier can be used to skip annotations in the target tier.")
     parser.add_argument('-i', '--input_dir', help='Directory of dirty audio and eaf files', type=str,
-                        default='../input/data-dirty')
+                        default='../input_scripts/data-dirty')
     parser.add_argument('-t', '--tier', help='Target language tier name', type=str, default='Phrase')
     parser.add_argument('-m', '--silence_marker', help='Skip annotation with this value on the target language tier',
                         type=str, default='*PUB')
     parser.add_argument('-s', '--silence_tier', help='Silence audio when annotations are found on this ref tier',
                         type=str, default='Silence')
     parser.add_argument('-a', '--output_audio_dir', help='Dir to save the audio files', type=str,
-                        default='../input/data')
+                        default='../input_scripts/data')
     parser.add_argument('-o', '--output_text_dir', help='Directory to save sliced text files', type=str,
-                        default='../input/output/tmp/label')
-    parser.add_argument('-j', '--output_json', help='File name to output json', type=str,
-                        default='../input/output/tmp/dirty.json')
+                        default='../input_scripts/output_scripts/tmp/label')
+    parser.add_argument('-j', '--output_json', help='File name to output_scripts json', type=str,
+                        default='../input_scripts/output_scripts/tmp/dirty.json')
     args = parser.parse_args()
     try:
         input_dir = args.input_dir
@@ -156,7 +156,7 @@ def main():
     for ie in input_eafs:
         read_eaf(ie, tier, silence_tier, silence_marker, json_data, output_text_dir, output_audio_dir)
 
-    # output the json data for the next step in kaldi pipeline
+    # output_scripts the json data for the next step in kaldi pipeline
     write_json(json_data, output_json)
 
 if __name__ == "__main__":

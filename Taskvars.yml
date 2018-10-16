@@ -4,20 +4,23 @@ KALDI_ROOT: "/kaldi"
 HELPERS_PATH: "/src"
 
 # Folders to read/write from, all set relative to HELPERS_PATH
-# i.e., input == /src/input (default)
+# i.e., input_scripts == /src/input_scripts (default)
 # See also src/templates/path.sh
-SCRIPTS_PATH: "scripts"
-INPUT_PATH: "input"
-OUTPUT_PATH: "input/output"
+SCRIPTS_PATH: "src"
+INPUT_SCRIPTS_PATH: "src/input_scripts"
+OUTPUT_SCRIPTS_PATH: "src/output_scripts"
+INFERENCE_SCRIPTS_PATH: "src/inference_scripts"
+INPUT_PATH: "input_scripts"
+OUTPUT_PATH: "input_scripts/output_scripts"
 
-CORPUS_PATH: "input/data"
+CORPUS_PATH: "input_scripts/data"
 CLEANED_FILTERED_DATA: "cleaned_filtered.json"
 
 # For output/kaldi/data/local/dict
 # Relative to HELPERS_PATH
-LETTER_TO_SOUND_PATH: "input/config/letter_to_sound.txt"
-SILENCE_PHONES_PATH: "input/config/silence_phones.txt"
-OPTIONAL_SILENCE_PHONES_PATH: "input/config/optional_silence.txt"
+LETTER_TO_SOUND_PATH: "input_scripts/config/letter_to_sound.txt"
+SILENCE_PHONES_PATH: "input_scripts/config/silence_phones.txt"
+OPTIONAL_SILENCE_PHONES_PATH: "input_scripts/config/optional_silence.txt"
 
 # For output/kaldi/conf/mfcc.conf
 # Template is in src/templates/mfcc.conf
@@ -33,7 +36,7 @@ DECODE_BEAM: 11.0
 DECODE_FIRST_BEAM: 8.0
 
 # For slicing audio and eafs to separate clips and text
-DIRTY_DATA_PATH: "input/dirty-data"
+DIRTY_DATA_PATH: "input_scripts/dirty-data"
 TARGET_LANGUAGE_TIER: "Phrase"
 SILENCE_MARKER: "*PUB"
 SILENCE_REF_TIER: "Silence"

@@ -28,7 +28,7 @@ def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish
         number_of_channels = parameters.nchannels
 
         if parameters.sample_width == 1:
-            raise ValueError("Assumes 16 bit input")
+            raise ValueError("Assumes 16 bit input_scripts")
 
         # Stereo audio file handling
         if (number_of_channels == 1) or (number_of_channels == 2):
@@ -36,7 +36,7 @@ def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish
             samples = numpy.fromstring(raw_audio, dtype=numpy.int16)
             samples.shape = parameters.nframes if number_of_channels == 1 else (parameters.nframes, 2)
         else:
-            raise ValueError("Assumes mono or stereo input")
+            raise ValueError("Assumes mono or stereo input_scripts")
 
     # Silence between annotations
     number_of_samples = 0

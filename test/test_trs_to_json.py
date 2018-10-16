@@ -4,7 +4,7 @@ Test script for validating trs to json conversion methods.
 @author Aninda Saha
 """
 
-from src.trs_to_json import *
+from src.input_scripts.trs_to_json import *
 
 SCRIPT_PATH = os.path.join(".", "src", "trs_to_json.py")
 

@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 #
 # this is a file for automatically build the word->sound dictionary
-# input: text file, config file
-# output: mapping between unique words and their sound, ordered by their appearance
+# input_scripts: text file, config file
+# output_scripts: mapping between unique words and their sound, ordered by their appearance
 
 import argparse
 import sys
 from pyparsing import ParseException
 
 def generate_dictionary(config_file_name):
-    # read the input file
+    # read the input_scripts file
     input_file = sys.stdin
     input_tokens = []
     for line in input_file.readlines():
@@ -85,9 +85,9 @@ def main():
         # output_file_name = ""
 
         parser = argparse.ArgumentParser()
-        # parser.add_argument("--words", help="input file with one word in each line")
+        # parser.add_argument("--words", help="input_scripts file with one word in each line")
         parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
-        # parser.add_argument("--output_file", help="name of the output file")
+        # parser.add_argument("--output_file", help="name of the output_scripts file")
         arguments = parser.parse_args()
 
         generate_dictionary(arguments.config)

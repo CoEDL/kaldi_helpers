@@ -16,10 +16,10 @@ import sys
 from pyparsing import ParseException
 from multiprocessing.dummy import Pool
 from shutil import move
-from src.utilities.file_utilities import find_files_by_extension
+from src.script_utilities.file_utilities import find_files_by_extension
 from typing import Tuple, Set
 from functools import partial
-from src.utilities.globals import *
+from src.script_utilities.globals import *
 
 
 def process_item(audio_file: Tuple[int, str], temporary_folders: Set[str], process_lock, output_step: str) -> str:
@@ -40,7 +40,7 @@ def process_item(audio_file: Tuple[int, str], temporary_folders: Set[str], proce
         print("[%d, %d]%s" % (output_step, input_index, input_audio_file))
         output_step += 1
 
-    # Extracting input directory names and file names
+    # Extracting input_scripts directory names and file names
     input_directory, name = os.path.split(input_audio_file)
     base_name, extension = os.path.splitext(name)
     output_directory: str = os.path.join(input_directory, TEMPORARY_DIRECTORY)

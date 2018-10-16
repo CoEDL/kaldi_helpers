@@ -4,7 +4,7 @@ Test script for validating resample audio script.
 @author Aninda Saha
 """
 
-from src.resample_audio import *
+from src.input_scripts.resample_audio import *
 
 SCRIPT_PATH = os.path.join(".", "src", "resample_audio.py")
 

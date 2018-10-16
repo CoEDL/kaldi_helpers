@@ -1,8 +1,8 @@
 #!/usr/local/bin/python
 
 """
-Parse json file and extract transcription information which are then processed and output in the desired Kaldi format.
-The output files will be stored in two separate folders training and testing inside the specified output directory.
+Parse json file and extract transcription information which are then processed and output_scripts in the desired Kaldi format.
+The output_scripts files will be stored in two separate folders training and testing inside the specified output_scripts directory.
 
 training : 
     corpus.txt, text, segments, wav.scp, utt2spk, spk2utt
@@ -24,7 +24,7 @@ import shutil
 import subprocess
 from pyparsing import ParseException
 from typing import Set, List, Tuple, Dict
-from src.utilities import *
+from src.script_utilities import *
 
 
 class KaldiInput:
@@ -144,11 +144,11 @@ def main() -> None:
     
     Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
     """
-    parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input files (in output-folder).")
-    parser.add_argument("-i", "--input_json", type=str, help="The input json file", required=False,
+    parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input_scripts files (in output_scripts-folder).")
+    parser.add_argument("-i", "--input_json", type=str, help="The input_scripts json file", required=False,
                         default=os.path.join(".", "test", "testfiles", "example.json"))
-    parser.add_argument("-o", "--output_folder", type=str, help="The output folder", default=os.path.join(".", "data"))
-    parser.add_argument("-s", "--silence_markers", action="store_true", help="The input json file")
+    parser.add_argument("-o", "--output_folder", type=str, help="The output_scripts folder", default=os.path.join(".", "data"))
+    parser.add_argument("-s", "--silence_markers", action="store_true", help="The input_scripts json file")
     arguments: argparse.Namespace = parser.parse_args()
 
     if not os.path.isfile(arguments.input_json):

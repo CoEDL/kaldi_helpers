@@ -12,11 +12,11 @@ from pympi import Praat, Elan
 
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(description="Converts Praat TextGrid format to ELAN eaf Format.")
-    parser.add_argument("--tg", "--textgrid", type=str, help="The input TextGrid format file", required=True)
+    parser.add_argument("--tg", "--textgrid", type=str, help="The input_scripts TextGrid format file", required=True)
     parser.add_argument("--wav", type=str, help="The relative path to the .wav file associated with the TextGrid",
                         required=True)
-    parser.add_argument("-o", "--outfile", type=str, help="The file path for the ELAN file output",
-                        default="./inference.eaf")
+    parser.add_argument("-o", "--outfile", type=str, help="The file path for the ELAN file output_scripts",
+                        default="./inference_scripts.eaf")
     arguments = parser.parse_args()
 
     textgrid_file = arguments.tg

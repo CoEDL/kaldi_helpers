@@ -2,7 +2,7 @@
 
 """
 Extracts transcription information and outputs them as json 
-By default dumps json to ../input/output/tmp/dirty.json file
+By default dumps json to ../input_scripts/output_scripts/tmp/dirty.json file
 
 Usage: python3 textgrid_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR]
 """
@@ -16,7 +16,7 @@ import subprocess
 from pyparsing import ParseException
 from praatio import tgio
 from typing import List, Dict, Union, Set
-from src.utilities import *
+from src.script_utilities import *
 
 
 def process_textgrid(input_directory: str) -> List[Dict[str, Union[str, int]]]:
@@ -29,7 +29,7 @@ def process_textgrid(input_directory: str) -> List[Dict[str, Union[str, int]]]:
                         'start_ms': <start_time_in_milliseconds>,
                         'stop_ms': <stop_time_in_milliseconds>}
                         
-    :param input_directory: directory path containing input files from where the method
+    :param input_directory: directory path containing input_scripts files from where the method
     :return: list of interval data in dictionary form
     """
     intervals: List[Dict[str, Union[str, int]]] = []
@@ -72,9 +72,9 @@ def main() -> None:
     """
 
     parser = argparse.ArgumentParser(
-        description="Search input folder for .TextGrid files and convert to JSON on stdout")
-    parser.add_argument("-i", "--input_dir", help="The input data dir", type=str, default="input/data/")
-    parser.add_argument("-o", "--output_dir", help="Output directory", type=str, default="input/output/tmp")
+        description="Search input_scripts folder for .TextGrid files and convert to JSON on stdout")
+    parser.add_argument("-i", "--input_dir", help="The input_scripts data dir", type=str, default="input_scripts/data/")
+    parser.add_argument("-o", "--output_dir", help="Output directory", type=str, default="input_scripts/output_scripts/tmp")
     arguments = parser.parse_args()
 
     if not os.path.exists(arguments.output_dir):

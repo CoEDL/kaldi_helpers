@@ -33,7 +33,7 @@ def test_json_to_kaldi2():
 
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     while process.poll() is None:
-        process.stdout.readline()  # give output from your execution/your own message
+        process.stdout.readline()  # give output_scripts from your execution/your own message
     command_result = process.wait()  # catch return code
     assert command_result != 0 # assert failure
 

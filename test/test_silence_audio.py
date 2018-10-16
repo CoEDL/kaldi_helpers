@@ -4,7 +4,7 @@ Test script for validating silence audio script.
 @author Aninda Saha
 """
 
-from src.silence_audio import *
+from src.input_scripts.silence_audio import *
 
 SCRIPT_PATH = os.path.join(".", "src", "silence_audio.py")
 
