@@ -4,9 +4,9 @@ Test script for validating textgrid to json conversion pipeline.
 @author Aninda Saha
 """
 
-from src.textgrid_to_json import *
+from kaldi_helpers.textgrid_to_json import *
 
-SCRIPT_PATH = os.path.join(".", "src", "textgrid_to_json.py")
+SCRIPT_PATH = os.path.join(".", "kaldi_helpers", "textgrid_to_json.py")
 
 
 def test_process_textgrid_file() -> None:

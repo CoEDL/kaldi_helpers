@@ -1,6 +1,6 @@
-from src.json_to_kaldi import *
+from kaldi_helpers.json_to_kaldi import *
 
-SCRIPT_PATH: str = os.path.join(".", "src", "json_to_kaldi.py")
+SCRIPT_PATH: str = os.path.join(".", "kaldi_helpers", "json_to_kaldi.py")
 
 def test_json_to_kaldi1():
     

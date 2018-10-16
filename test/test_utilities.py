@@ -1,5 +1,5 @@
 import sys
-from src.script_utilities import *
+from kaldi_helpers.script_utilities import *
 from _pytest.capture import CaptureFixture
 
 """

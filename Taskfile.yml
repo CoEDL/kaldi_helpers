@@ -204,14 +204,14 @@ elan-to-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/elan_to_json.py --input_dir {{ .CORPUS_PATH }} --output_dir {{ .OUTPUT_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/elan_to_json.py --input_dir {{ .CORPUS_PATH }} --output_dir {{ .OUTPUT_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 trs-to-json:
   desc: "Convert a folder of .trs files to a single JSON file"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/trs_to_json.py --indir {{ .CORPUS_PATH }}
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/trs_to_json.py --indir {{ .CORPUS_PATH }}
 
 textgrid-to-json:
   desc: "Convert a folder of .textgrid files to a single JSON file"
@@ -219,33 +219,33 @@ textgrid-to-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     # praatio is another that won't install because of the ssl error. use 3.4 for now
-    - python3.4 {{ .SCRIPTS_PATH }}/input_scripts/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
+    - python3.4 {{ .INPUT_SCRIPTS_PATH }}/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
 
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/json_to_kaldi.py --output_scripts-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py --output_scripts-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/clean_json.py  --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py  --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/make_wordlist.py
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/make_prn_dict.py --config {{ .LETTER_TO_SOUND_PATH }}
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_prn_dict.py --config {{ .LETTER_TO_SOUND_PATH }}
 
 
 resample-audio:
@@ -253,18 +253,18 @@ resample-audio:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/resample_audio.py --corpus {{ .CORPUS_PATH }}
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/resample_audio.py --corpus {{ .CORPUS_PATH }}
 
 silence-audio:
   desc: "Silence audio that has an annotion in matching Elan file 'Silence' tier"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/silence_audio.py --corpus {{ .CORPUS_PATH }}
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/silence_audio.py --corpus {{ .CORPUS_PATH }}
 
 split-eafs:
   desc: "Read Elan files, slices matching WAVs by start and end times of annotations on a particular tier, outputting separate clips and text. Skips annotations with value '*PUB' on the main tier, or annotations that have a ref annotation on the 'Silence' tier."
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .SCRIPTS_PATH }}/input_scripts/split_eafs.py --input_dir {{ .DIRTY_DATA_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --silence_marker {{ .SILENCE_MARKER }} --silence_tier {{ .SILENCE_REF_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json --output_audio_dir {{ .CORPUS_PATH }} --output_text_dir {{ .OUTPUT_PATH }}/tmp/labels
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/split_eafs.py --input_dir {{ .DIRTY_DATA_PATH }} --tier {{ .TARGET_LANGUAGE_TIER }} --silence_marker {{ .SILENCE_MARKER }} --silence_tier {{ .SILENCE_REF_TIER }} --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json --output_audio_dir {{ .CORPUS_PATH }} --output_text_dir {{ .OUTPUT_PATH }}/tmp/labels

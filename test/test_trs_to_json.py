@@ -4,9 +4,9 @@ Test script for validating trs to json conversion methods.
 @author Aninda Saha
 """
 
-from src.input_scripts.trs_to_json import *
+from kaldi_helpers.input_scripts.trs_to_json import *
 
-SCRIPT_PATH = os.path.join(".", "src", "trs_to_json.py")
+SCRIPT_PATH = os.path.join(".", "kaldi_helpers", "trs_to_json.py")
 
 
 def test_find_files_by_extension() -> None:

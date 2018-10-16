@@ -24,7 +24,7 @@ import shutil
 import subprocess
 from pyparsing import ParseException
 from typing import Set, List, Tuple, Dict
-from src.script_utilities import *
+from kaldi_helpers.script_utilities import *
 
 
 class KaldiInput:

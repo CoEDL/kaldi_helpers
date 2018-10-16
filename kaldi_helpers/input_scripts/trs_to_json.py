@@ -20,7 +20,7 @@ import subprocess
 import regex
 from pyparsing import ParseException
 from typing import List, Dict, Union, Set, Tuple
-from src.script_utilities import *
+from kaldi_helpers.script_utilities import *
 
 
 def conditional_log(condition: bool, text: str) -> None:

@@ -1,5 +1,5 @@
 import os
-from src.make_wordlist import *
+from kaldi_helpers.make_wordlist import *
 from typing import List
 
 

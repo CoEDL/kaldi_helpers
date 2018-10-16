@@ -16,10 +16,10 @@ import sys
 from pyparsing import ParseException
 from multiprocessing.dummy import Pool
 from shutil import move
-from src.script_utilities.file_utilities import find_files_by_extension
+from kaldi_helpers.script_utilities.file_utilities import find_files_by_extension
 from typing import Tuple, Set
 from functools import partial
-from src.script_utilities.globals import *
+from kaldi_helpers.script_utilities.globals import *
 
 
 def process_item(audio_file: Tuple[int, str], temporary_folders: Set[str], process_lock, output_step: str) -> str:

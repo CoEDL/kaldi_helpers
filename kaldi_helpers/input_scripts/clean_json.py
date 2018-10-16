@@ -24,7 +24,7 @@ from argparse import ArgumentParser
 from langid.langid import LanguageIdentifier, model
 from nltk.corpus import words
 from typing import Dict, List, Set
-from src.script_utilities import load_json_file, write_data_to_json_file
+from kaldi_helpers.script_utilities import load_json_file, write_data_to_json_file
 
 
 def get_english_words() -> Set[str]:

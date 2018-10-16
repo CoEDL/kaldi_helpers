@@ -16,8 +16,8 @@ import json
 from pympi.Elan import Eaf
 from typing import List, Dict, Set, Union
 from pyparsing import ParseException
-from src.script_utilities import find_files_by_extension
-from src.script_utilities import write_data_to_json_file
+from kaldi_helpers.script_utilities import find_files_by_extension
+from kaldi_helpers.script_utilities import write_data_to_json_file
 
 
 def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:

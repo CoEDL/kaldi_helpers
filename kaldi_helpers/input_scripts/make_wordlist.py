@@ -12,7 +12,7 @@ import argparse
 import sys
 from pyparsing import ParseException
 from typing import List, Dict
-from src.script_utilities import load_json_file
+from kaldi_helpers.script_utilities import load_json_file
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:

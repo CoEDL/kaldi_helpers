@@ -4,9 +4,9 @@ Test script for validating resample audio script.
 @author Aninda Saha
 """
 
-from src.input_scripts.resample_audio import *
+from kaldi_helpers.input_scripts.resample_audio import *
 
-SCRIPT_PATH = os.path.join(".", "src", "resample_audio.py")
+SCRIPT_PATH = os.path.join(".", "kaldi_helpers", "resample_audio.py")
 
 
 def test_join_normalised_path() -> None:

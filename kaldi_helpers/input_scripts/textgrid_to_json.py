@@ -16,7 +16,7 @@ import subprocess
 from pyparsing import ParseException
 from praatio import tgio
 from typing import List, Dict, Union, Set
-from src.script_utilities import *
+from kaldi_helpers.script_utilities import *
 
 
 def process_textgrid(input_directory: str) -> List[Dict[str, Union[str, int]]]:

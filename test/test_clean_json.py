@@ -1,7 +1,7 @@
 import os
 from _pytest.capture import CaptureFixture
-from src.clean_json import *
-from src.script_utilities import write_data_to_json_file
+from kaldi_helpers.clean_json import *
+from kaldi_helpers.script_utilities import write_data_to_json_file
 
 EXAMPLE_JSON_DATA = [
     {"transcript": "Comment t'appelles tu?"},

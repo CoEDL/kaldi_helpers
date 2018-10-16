@@ -1,6 +1,6 @@
-from src.input_scripts.elan_to_json import *
+from kaldi_helpers.input_scripts.elan_to_json import *
 
-SCRIPT_PATH = os.path.join('.', 'src', 'elan_to_json.py')
+SCRIPT_PATH = os.path.join('.', 'kaldi_helpers', 'elan_to_json.py')
 
 
 def test_process_eaf():
