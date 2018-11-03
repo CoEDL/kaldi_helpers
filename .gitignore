@@ -205,3 +205,4 @@ pip-selfcheck.json
 
 *.iml
 *.xml
+.DS_Store

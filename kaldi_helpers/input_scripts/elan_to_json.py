@@ -11,11 +11,8 @@ import glob
 import sys
 import os
 import argparse
-import subprocess
-import json
 from pympi.Elan import Eaf
-from typing import List, Dict, Set, Union
-from pyparsing import ParseException
+from typing import List
 from kaldi_helpers.script_utilities import find_files_by_extension
 from kaldi_helpers.script_utilities import write_data_to_json_file
 

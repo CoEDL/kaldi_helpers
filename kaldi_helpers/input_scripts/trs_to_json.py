@@ -9,17 +9,11 @@ Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
 """
 
 import xml.etree.ElementTree as ET
-import glob
 import sys
-import os
 import argparse
-import json
 import platform
 import uuid
-import subprocess
-import regex
-from pyparsing import ParseException
-from typing import List, Dict, Union, Set, Tuple
+from typing import Dict,Tuple
 from kaldi_helpers.script_utilities import *
 
 

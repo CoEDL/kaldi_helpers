@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import sys
 
 requirements = [
     'pytest',
@@ -9,8 +8,6 @@ requirements = [
     'nltk',
     'praatio',
     'pydub',
-    'regex',
-    'pyparsing',
 ]
 
 include_package_data = True
@@ -27,8 +24,5 @@ setup(
     author_email='n.lambourne@uq.edu.au',
     description='Scripts for preparing language data for use with Kaldi ASR',
     entry_points={
-        # 'console_scripts': [
-        #     'kaldi_helpers_ = kadli_helpers.__main__:main',
-        # ],
     },
 )

@@ -7,15 +7,9 @@ By default dumps json to ../input_scripts/output_scripts/tmp/dirty.json file
 Usage: python3 textgrid_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR]
 """
 
-import os
-import sys
 import argparse
-import glob
-import regex
-import subprocess
-from pyparsing import ParseException
 from praatio import tgio
-from typing import List, Dict, Union, Set
+from typing import Dict
 from kaldi_helpers.script_utilities import *
 
 
