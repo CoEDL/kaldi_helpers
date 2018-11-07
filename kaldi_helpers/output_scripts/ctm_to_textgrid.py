@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.6
 
 """
 # Copyright 2018 The University of Queensland (Author: Nicholas Lambourne)

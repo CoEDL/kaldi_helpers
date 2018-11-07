@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.6
 
 """
 # Copyright 2018 The University of Queensland (Author: Nicholas Lambourne)
@@ -16,7 +16,7 @@ def main() -> None:
     parser.add_argument("--wav", type=str, help="The relative path to the .wav file associated with the TextGrid",
                         required=True)
     parser.add_argument("-o", "--outfile", type=str, help="The file path for the ELAN file output_scripts",
-                        default="./inference_scripts.eaf")
+                        default="./inferred-aligned.eaf")
     arguments = parser.parse_args()
 
     textgrid_file = arguments.tg

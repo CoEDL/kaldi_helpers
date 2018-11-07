@@ -20,7 +20,7 @@ setup(
     install_requires=requirements,
     include_package_data=True,
     license='',
-    author='',
+    author='CoEDL',
     author_email='n.lambourne@uq.edu.au',
     description='Scripts for preparing language data for use with Kaldi ASR',
     entry_points={

@@ -64,12 +64,19 @@ cp -R ./exp/tri1 ./exp/tri
 cp ./data/test/* ./data/infer
 rm ./data/infer/text
 
-# CREATE MFCC
-steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
+# CREATE MFCC (mel-frequency cepstral coefficients)
+# args:
+#      nj: number of parallel jobs
+#      data directory:
+#      mfcc directory: the directory in which to put the MFCC
+#
+steps/make_mfcc.sh --nj 1 \
+    data/infer exp/make_mfcc/infer \
+    mfcc
 
 # MFCC + DELTAS --> FEATURE VECTORS
 # args:
-#       -- utt2spk: utterance to speaker mapping
+#       --utt2spk: utterance to speaker mapping
 #       trained CMVN: cepstral mean and variance normalisation
 #       trained MFCC: mel-frequency cepstral coefficients
 #       PIPED INTO add-deltas (adds delta features)
@@ -102,7 +109,7 @@ lattice-1best \
     ark:data/infer/lattices.ark \
     ark,t:data/infer/1best-fst.tra
 
-# LATTICE-FST --> LATTICE W/ WORD BOUNDARIES
+# LATTICE-FST --> LATTICE WITH WORD BOUNDARIES
 # args:
 #       word boundaries file specifier
 #       model input file specifier
@@ -114,7 +121,7 @@ lattice-align-words \
     ark,t:data/infer/1best-fst.tra \
     ark,t:data/infer/1best-fst-word-aligned.tra
 
-# LATTICE W/ WORD BOUNDARIES --> CTM FORMAT (INT-WORDS)
+# LATTICE WITH WORD BOUNDARIES --> CTM FORMAT (INT-WORDS)
 # args:
 #       aligned linear lattice input file specifier
 #       ctm (int) output file specifier
@@ -122,7 +129,7 @@ nbest-to-ctm \
     ark,t:data/infer/1best-fst-word-aligned.tra \
     data/infer/align-words-best-intkeys.ctm
 
-# BEST PATH INTERGERS (CTM) --> BEST PATH WORDS (CTM) // TO FIX
+# BEST PATH INTERGERS (CTM) --> BEST PATH WORDS (CTM)
 # args:
 #       mapping of integer keys to words
 #       ctm file to change integers to words in
@@ -131,10 +138,20 @@ utils/int2sym.pl -f 5- \
     data/infer/align-words-best-intkeys.ctm \
     > data/infer/align-words-best-wordkeys.ctm
 
-### --> Works up to here
-
-# BEST PATH WORDS (CTM) --> ELAN
+# BEST PATH WORDS (CTM) --> TEXTGRID
 # // TODO
+python3.6 ../output_scripts/ctm_to_textgrid.py \
+    --ctm data/infer/align-words-best-wordkeys.ctm \
+    --wav X data/infer/wav.scp \
+    --seg Y \
+    --outdir Z
+
+# TEXTGRID --> ELAN
+# // TODO
+python3.6 ../output_scripts/textgrid_to_elan.pu \
+    --tg X \
+    --wav Y \
+    --outfile Z.elan
 
 # REPORT OUTPUT
 echo "CTM output"

@@ -70,12 +70,24 @@ _show-lattice:
 _infer:
   desc: "Run Kaldi inference_scripts on test data"
   cmds:
-    - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode.sh
+    - cd {{ .OUTPUT_PATH }}/kaldi
+    - ../../../scripts/gmm-decode.sh
 
 _infer-align:
   desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
   cmds:
-    - cd {{ .OUTPUT_PATH }}/kaldi; ../../../scripts/gmm-decode-align.sh
+    - cd {{ .OUTPUT_PATH }}/kaldi
+    - ../../../scripts/gmm-decode-align.sh
+
+_root-infer-prepare:
+  cmds:
+    - mkdir {{ .HELPERS_PATH }}/infer
+    - cp -R
+
+#_infer-align-root:
+#  desc:
+#    -
+
 
 ######################################### HELPER TASKS ############################################
 
@@ -218,7 +230,7 @@ textgrid-to-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     # praatio is another that won't install because of the ssl error. use 3.4 for now
-    - python3.4 {{ .INPUT_SCRIPTS_PATH }}/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/textgrid_to_json.py --input_dir {{ .CORPUS_PATH }}
 
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
@@ -246,7 +258,6 @@ make-prn-dict:
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_prn_dict.py
                 --config {{ .LETTER_TO_SOUND_PATH }}
-
 
 resample-audio:
   desc: "Change audio to 16 bit 44.1kHz mono WAV"

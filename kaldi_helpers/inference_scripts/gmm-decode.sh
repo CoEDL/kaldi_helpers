@@ -54,7 +54,9 @@
 # AUDIO --> FEATURE VECTORS
 steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
 
-apply-cmvn --utt2spk=ark:data/infer/utt2spk scp:mfcc/cmvn_test.scp scp:mfcc/raw_mfcc_infer.1.scp ark:- | add-deltas ark:- ark:data/infer/delta-feats.ark
+apply-cmvn --utt2spk=ark:data/infer/utt2spk \
+    scp:mfcc/cmvn_test.scp scp:mfcc/raw_mfcc_infer.1.scp ark:- | \
+    add-deltas ark:- ark:data/infer/delta-feats.ark
 
 # TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
 gmm-latgen-faster \
@@ -70,7 +72,7 @@ lattice-best-path \
     ark:data/infer/lattices.ark \
     ark,t:data/infer/one-best.tra
 
-# BEST PATH INTERGERS --> BEST PATH WORDS
+# BEST PATH INTEGERS --> BEST PATH WORDS
 utils/int2sym.pl -f 2- \
     exp/tri1/graph/words.txt \
     data/infer/one-best.tra \
