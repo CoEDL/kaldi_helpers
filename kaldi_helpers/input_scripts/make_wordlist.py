@@ -10,7 +10,6 @@ Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
 
 import argparse
 import sys
-from pyparsing import ParseException
 from typing import List, Dict
 from kaldi_helpers.script_utilities import load_json_file
 

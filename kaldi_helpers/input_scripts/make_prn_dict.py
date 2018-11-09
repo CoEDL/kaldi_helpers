@@ -6,7 +6,6 @@
 
 import argparse
 import sys
-from pyparsing import ParseException
 
 def generate_dictionary(config_file_name):
     # read the input_scripts file

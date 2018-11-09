@@ -12,8 +12,6 @@ import argparse
 import glob
 import subprocess
 import threading
-import sys
-from pyparsing import ParseException
 from multiprocessing.dummy import Pool
 from shutil import move
 from kaldi_helpers.script_utilities.file_utilities import find_files_by_extension

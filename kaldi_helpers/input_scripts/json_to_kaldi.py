@@ -16,13 +16,8 @@ Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
 """
 
 import argparse
-import json
-import os
 import sys
 import uuid
-import shutil
-import subprocess
-from pyparsing import ParseException
 from typing import Set, List, Tuple, Dict
 from kaldi_helpers.script_utilities import *
 

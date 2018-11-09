@@ -16,8 +16,6 @@ import glob
 import os
 import wave
 import numpy
-import sys
-from pyparsing import ParseException
 from pympi.Elan import Eaf
 
 def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish):
