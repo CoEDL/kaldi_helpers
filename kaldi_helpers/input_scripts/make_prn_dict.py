@@ -42,28 +42,28 @@ def generate_dictionary(input_file_name: str,
 
     oov_characters = set([])
 
-    output_file = open(output_file_name, "w")
+    output_file = open(output_file_name, "w", encoding='utf-8')
     output_file.write('!SIL sil\n')
     output_file.write('<UNK> spn\n')
     for token in input_tokens:
-        cur = 0
+        current_index = 0
         res = [token]
         token_lower = token.lower()
 
-        while cur < len(token_lower):
+        while current_index < len(token_lower):
             found = False
             for maps in sound_mappings:
-                if token_lower.find(maps[0], cur) == cur:
+                if token_lower.find(maps[0], current_index) == current_index:
                     found = True
                     res.append(maps[1])
-                    cur += len(maps[0])
+                    current_index += len(maps[0])
                     break
 
             if not found:
                 # unknown sound
-                res.append('(' + token_lower[cur] + ')')
-                oov_characters.add(token_lower[cur])
-                cur += 1
+                res.append('(' + token_lower[current_index] + ')')
+                oov_characters.add(token_lower[current_index])
+                current_index += 1
 
         output_file.write(' '.join(res) + '\n')
 
