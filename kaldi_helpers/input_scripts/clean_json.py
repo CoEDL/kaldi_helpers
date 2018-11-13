@@ -182,7 +182,7 @@ def main() -> None:
     write_data_to_json_file(data=list(filtered_data),
                             output=outfile)
 
-    print(f"Finished! Wrote {str(len(filtered_data))} transcriptions.", end="", flush=True, file=outfile)
+    print(f"Finished! Wrote {str(len(filtered_data))} transcriptions.", end="", flush=True)
 
 
 if __name__ == "__main__":
