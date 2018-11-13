@@ -100,24 +100,24 @@ generate-kaldi-files:
     - task make-nonsil-phones > {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt
 
 generate-kaldi-configs:
-  desc: "Generate config files for Kaldi from templates, populate with Taskvars"
+  desc: "Generate config files for Kaldi from KALDI_TEMPLATES, populate with Taskvars"
   cmds:
     # Grab variables from Taskvars.yml and inject into mo command
     - KALDI_ROOT={{ .KALDI_ROOT }}
       HELPERS_PATH={{ .HELPERS_PATH }}
       CORPUS_PATH={{ .CORPUS_PATH }}
-        mo < ./resources/templates/path.sh > {{ .OUTPUT_PATH }}/tmp/path.sh
+        mo < {{ .KALDI_TEMPLATES }}/path.sh > {{ .OUTPUT_PATH }}/tmp/path.sh
 
     - MFCC_SAMPLE_FREQUENCY={{ .MFCC_SAMPLE_FREQUENCY }}
       MFCC_FRAME_LENGTH={{ .MFCC_FRAME_LENGTH }}
       MFCC_LOW_FREQ={{ .MFCC_LOW_FREQ }}
       MFCC_HIGH_FREQ={{ .MFCC_HIGH_FREQ }}
       MFCC_NUM_CEPS={{ .MFCC_NUM_CEPS }}
-        mo < ./resources/templates/mfcc.conf > {{ .OUTPUT_PATH }}/tmp/mfcc.conf
+        mo < {{ .KALDI_TEMPLATES }}/mfcc.conf > {{ .OUTPUT_PATH }}/tmp/mfcc.conf
 
     - DECODE_BEAM={{ .DECODE_BEAM }}
       DECODE_FIRST_BEAM={{ .DECODE_FIRST_BEAM }}
-        mo < ./resources/templates/decode.config > {{ .OUTPUT_PATH }}/tmp/decode.config
+        mo < {{ .KALDI_TEMPLATES }}/decode.config > {{ .OUTPUT_PATH }}/tmp/decode.config
 
 ##################### Helpers for copying things
 
@@ -139,9 +139,9 @@ copy-generated-files:
 copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
   cmds:
-    - cp resources/templates/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp resources/templates/run.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp resources/templates/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
+    - cp {{ .KALDI_TEMPLATES }}/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp {{ .KALDI_TEMPLATES }}/run.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp {{ .KALDI_TEMPLATES }}/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
     - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
     - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
 
