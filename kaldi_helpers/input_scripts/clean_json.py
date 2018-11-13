@@ -173,7 +173,7 @@ def main() -> None:
     data = load_json_file(arguments.infile)
     outfile = arguments.outfile if arguments.outfile else sys.stdout
 
-    print(f"Filtering {str(arguments.infile)}...", end="", flush=True, file=outfile)
+    print(f"Filtering {str(arguments.infile)}...", end="", flush=True)
 
     filtered_data = clean_json_data(list(data),
                                     remove_english=arguments.removeEng,
