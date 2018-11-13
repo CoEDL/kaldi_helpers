@@ -60,12 +60,12 @@ def main():
     arguments = parser.parse_args()
     data = load_json_file(arguments.infile)
 
-    print("Wordlist...", end="", flush=True, file=sys.stderr)
+    print("Wordlist...", flush=True, file=sys.stderr)
 
     word_list = extract_word_list(data)
     print("Done.", file=sys.stderr)
 
-    print(f"Writing out wordlist to stderr", end="", flush=True, file=sys.stderr)
+    print(f"Writing out wordlist to stderr...", flush=True, file=sys.stderr)
     save_word_list(word_list, arguments.outfile)
     print("Done.", file=sys.stderr)
 

@@ -88,8 +88,8 @@ def main():
 
         parser = argparse.ArgumentParser()
         # parser.add_argument("--words", help="input_scripts file with one word in each line")
-        parser.add_argument("--input_file", required=True)
-        parser.add_argument("--output_file", help="name of the output_scripts file", required=True)
+        parser.add_argument("--infile", required=True)
+        parser.add_argument("--outfile", help="name of the output_scripts file", required=True)
         parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
         # parser.add_argument("--output_file", help="name of the output_scripts file")
         arguments = parser.parse_args()
