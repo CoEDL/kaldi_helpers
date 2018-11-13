@@ -28,8 +28,8 @@ def save_word_list(word_list: List[str], file_name: str) -> None:
 
 def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
     """
-    Unpack a dictionary constructed from a json_file containing the key
-    "transcript" into a (Python) list of words.
+    Unpack a dictionary constructed from a json_file - containing the key
+    "transcript" - into a (Python) list of words.
     :param json_data: Python list of dictionaries read from a JSON file.
     :return: list of unique words from data, sorted alphabetically.
     """
@@ -48,8 +48,14 @@ def main():
     Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--infile", type=str, required=True, help="The input_scripts file to clean.")
-    parser.add_argument("-o", "--outfile", type=str, help="The input_scripts file to clean.")
+    parser.add_argument("-i", "--infile",
+                        type=str,
+                        required=True,
+                        help="The json file containing the transcript.")
+    parser.add_argument("-o", "--outfile",
+                        type=str,
+                        required=True,
+                        help="The file to write the wordlist to.")
     arguments = parser.parse_args()
 
     data = load_json_file(arguments.infile)
@@ -60,7 +66,7 @@ def main():
     print("Done.", file=sys.stderr)
 
     print(f"Writing out wordlist to stderr", end="", flush=True, file=sys.stderr)
-    save_word_list(word_list)
+    save_word_list(word_list, arguments.outfile)
     print("Done.", file=sys.stderr)
 
 

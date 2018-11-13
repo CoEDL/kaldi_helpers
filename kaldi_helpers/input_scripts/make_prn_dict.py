@@ -1,15 +1,18 @@
 #!/usr/bin/python3
 #
 # this is a file for automatically build the word->sound dictionary
-# input_scripts: text file, config file
-# output_scripts: mapping between unique words and their sound, ordered by their appearance
+# input: text file, config file
+# output: mapping between unique words and their sound, ordered by their appearance
 
 import argparse
 import sys
 
-def generate_dictionary(config_file_name):
+
+def generate_dictionary(input_file_name: str,
+                        output_file_name: str,
+                        config_file_name: str):
     # read the input_scripts file
-    input_file = sys.stdin
+    input_file = open(input_file_name, "r")
     input_tokens = []
     for line in input_file.readlines():
         token = line.strip()
@@ -20,11 +23,11 @@ def generate_dictionary(config_file_name):
     input_file.close()
 
     # read the config file
-    config_file = open(config_file_name, 'r', encoding='utf-8')
+    config_file = open(config_file_name, "r", encoding='utf-8')
     sound_mappings = []
 
     for line in config_file.readlines():
-        if (line[0] == '#'):
+        if line[0] == '#':
             continue
 
         mapping = list(filter(None, line.strip().split(' ', 1)))
@@ -39,7 +42,7 @@ def generate_dictionary(config_file_name):
 
     oov_characters = set([])
 
-    output_file = sys.stdout
+    output_file = open(output_file_name, "w")
     output_file.write('!SIL sil\n')
     output_file.write('<UNK> spn\n')
     for token in input_tokens:
@@ -47,16 +50,16 @@ def generate_dictionary(config_file_name):
         res = [token]
         token_lower = token.lower()
 
-        while (cur < len(token_lower)):
+        while cur < len(token_lower):
             found = False
             for maps in sound_mappings:
-                if (token_lower.find(maps[0], cur) == cur):
+                if token_lower.find(maps[0], cur) == cur:
                     found = True
                     res.append(maps[1])
                     cur += len(maps[0])
                     break
 
-            if (not found):
+            if not found:
                 # unknown sound
                 res.append('(' + token_lower[cur] + ')')
                 oov_characters.add(token_lower[cur])
@@ -85,11 +88,16 @@ def main():
 
         parser = argparse.ArgumentParser()
         # parser.add_argument("--words", help="input_scripts file with one word in each line")
+        parser.add_argument("--input_file", required=True)
+        parser.add_argument("--output_file", help="name of the output_scripts file", required=True)
         parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
         # parser.add_argument("--output_file", help="name of the output_scripts file")
         arguments = parser.parse_args()
 
-        generate_dictionary(arguments.config)
+        generate_dictionary(input_file_name=arguments.infile,
+                            output_file_name=arguments.outfile,
+                            config_file_name=arguments.config)
+
 
 if __name__ == "__main__":
     main()

@@ -95,10 +95,8 @@ generate-kaldi-files:
   desc: "Generate corpus-related files for Kaldi from JSON data"
   cmds:
     - task json-to-kaldi
-
-    - task make-wordlist < {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }} |
-      task make-prn-dict > {{ .OUTPUT_PATH }}/tmp/lexicon.txt
-
+    - task make-wordlist
+    - task make-prn-dict
     - task make-nonsil-phones > {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt
 
 generate-kaldi-configs:
@@ -258,6 +256,8 @@ make-wordlist:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
+                --infile {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+                --outfile {{ .OUTPUT_PATH }}/tmp/lexicon.txt
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"
@@ -265,6 +265,8 @@ make-prn-dict:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_prn_dict.py
+                --infile
+                --outfile {{ .OUTPUT_PATH }}/tmp/lexicon.txt
                 --config {{ .LETTER_TO_SOUND_PATH }}
 
 resample-audio:
