@@ -216,10 +216,10 @@ elan-to-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/elan_to_json.py
-      --input_dir {{ .CORPUS_PATH }}
-      --output_dir {{ .OUTPUT_PATH }}
-      --tier {{ .TARGET_LANGUAGE_TIER }}
-      --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
+                --input_dir {{ .CORPUS_PATH }}
+                --output_dir {{ .OUTPUT_PATH }}
+                --tier {{ .TARGET_LANGUAGE_TIER }}
+                --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 trs-to-json:
   desc: "Convert a folder of .trs files to a single JSON file"
@@ -240,17 +240,17 @@ json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py
-      --input_json {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
-      --output_folder {{ .OUTPUT_PATH }}/tmp/json_splitted
+                --input_json {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+                --output_folder {{ .OUTPUT_PATH }}/tmp/json_splitted
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py \
-      --infile {{ .OUTPUT_PATH }}/tmp/dirty.json \
-      --outfile {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py
+                --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
+                --outfile {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
