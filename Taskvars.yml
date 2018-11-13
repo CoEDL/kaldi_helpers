@@ -12,7 +12,7 @@ INFERENCE_SCRIPTS_PATH: "kaldi_helpers/inference_scripts"
 INPUT_PATH: "input"
 OUTPUT_PATH: "input/output"
 
-CORPUS_PATH: "scripts/data"
+CORPUS_PATH: "input/data"
 CLEANED_FILTERED_DATA: "cleaned_filtered.json"
 
 # For output/kaldi/data/local/dict

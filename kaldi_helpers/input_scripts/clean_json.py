@@ -155,12 +155,21 @@ def main() -> None:
     Usage: python3 clean_json.py [--i INFILE] [--o OUTFILE] [-r] [-u]
     """
     parser: ArgumentParser = ArgumentParser()
-    parser.add_argument("-i", "--infile", type=str, help="The input_scripts file to clean.")
-    parser.add_argument("-o", "--outfile", type=str, help="The file to write to")  # Default to stdout if not provided
-    parser.add_argument("-r", "--removeEng", help="Remove english like utterances", action="store_true")
-    parser.add_argument("-u", "--useLangId", help="Use langid library to detect English", action="store_true")
-    arguments = parser.parse_args()
+    parser.add_argument("-i", "--infile",
+                        type=str,
+                        help="The input_scripts file to clean.",
+                        required=True)
+    parser.add_argument("-o", "--outfile",
+                        type=str,
+                        help="The file to write to")
+    parser.add_argument("-r", "--removeEng",
+                        help="Remove english like utterances",
+                        action="store_true")
+    parser.add_argument("-u", "--useLangId",
+                        help="Use langid library to detect English",
+                        action="store_true")
 
+    arguments = parser.parse_args()
     data = load_json_file(arguments.infile)
     outfile = arguments.outfile if arguments.outfile else sys.stdout
 
