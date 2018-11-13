@@ -106,18 +106,18 @@ generate-kaldi-configs:
     - KALDI_ROOT={{ .KALDI_ROOT }}
       HELPERS_PATH={{ .HELPERS_PATH }}
       CORPUS_PATH={{ .CORPUS_PATH }}
-        mo < templates/path.sh > {{ .OUTPUT_PATH }}/tmp/path.sh
+        mo < resources/templates/path.sh > {{ .OUTPUT_PATH }}/tmp/path.sh
 
     - MFCC_SAMPLE_FREQUENCY={{ .MFCC_SAMPLE_FREQUENCY }}
       MFCC_FRAME_LENGTH={{ .MFCC_FRAME_LENGTH }}
       MFCC_LOW_FREQ={{ .MFCC_LOW_FREQ }}
       MFCC_HIGH_FREQ={{ .MFCC_HIGH_FREQ }}
       MFCC_NUM_CEPS={{ .MFCC_NUM_CEPS }}
-        mo < templates/mfcc.conf > {{ .OUTPUT_PATH }}/tmp/mfcc.conf
+        mo < resources/templates/mfcc.conf > {{ .OUTPUT_PATH }}/tmp/mfcc.conf
 
     - DECODE_BEAM={{ .DECODE_BEAM }}
       DECODE_FIRST_BEAM={{ .DECODE_FIRST_BEAM }}
-        mo < templates/decode.config > {{ .OUTPUT_PATH }}/tmp/decode.config
+        mo < resources/templates/decode.config > {{ .OUTPUT_PATH }}/tmp/decode.config
 
 ##################### Helpers for copying things
 
