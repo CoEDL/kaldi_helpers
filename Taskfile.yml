@@ -148,8 +148,8 @@ copy-helper-scripts:
 copy-phones-configs:
   desc: "Copy provided silence/optional silence configuration files"
   cmds:
-    - cp input_scripts/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    - cp input_scripts/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp input/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp input/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
 
 gather-wavs:
   desc: "Gather all wav files inside input_scripts/data into output_scripts/media.zip"
