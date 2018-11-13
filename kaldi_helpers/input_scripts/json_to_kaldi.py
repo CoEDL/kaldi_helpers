@@ -18,7 +18,7 @@ Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
 import argparse
 import sys
 import uuid
-from typing import Set, List, Tuple, Dict
+from typing import Dict
 from kaldi_helpers.script_utilities import *
 
 
@@ -139,15 +139,21 @@ def main() -> None:
     
     Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
     """
-    parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input_scripts files (in output_scripts-folder).")
-    parser.add_argument("-i", "--input_json", type=str, help="The input_scripts json file", required=False,
-                        default=os.path.join(".", "test", "testfiles", "example.json"))
-    parser.add_argument("-o", "--output_folder", type=str, help="The output_scripts folder", default=os.path.join(".", "data"))
-    parser.add_argument("-s", "--silence_markers", action="store_true", help="The input_scripts json file")
+    parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input_scripts files "
+                                                 "(in output_scripts-folder).")
+    parser.add_argument("-i", "--input_json",
+                        type=str,
+                        help="The input_scripts json file",
+                        required=True)
+    parser.add_argument("-o", "--output_folder",
+                        type=str,
+                        help="The output_scripts folder",
+                        default=os.path.join(".", "data"))
+    parser.add_argument("-s", "--silence_markers",
+                        action="store_true",
+                        help="The input_scripts json file",
+                        required=False)
     arguments: argparse.Namespace = parser.parse_args()
-
-    if not os.path.isfile(arguments.input_json):
-        sys.exit(1);
 
     try:
         input_file: TextIOWrapper = open(arguments.input_json, "r")

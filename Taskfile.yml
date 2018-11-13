@@ -94,7 +94,7 @@ _root-infer-prepare:
 generate-kaldi-files:
   desc: "Generate corpus-related files for Kaldi from JSON data"
   cmds:
-    - task json-to-kaldi < {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task json-to-kaldi
 
     - task make-wordlist < {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }} |
       task make-prn-dict > {{ .OUTPUT_PATH }}/tmp/lexicon.txt
@@ -235,14 +235,17 @@ textgrid-to-json:
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
-    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py --output_scripts-folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py \
+      --input_json={{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }} \
+      --output_folder="{{ .OUTPUT_PATH }}/tmp/json_splitted"
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py  --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py \
+      --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"

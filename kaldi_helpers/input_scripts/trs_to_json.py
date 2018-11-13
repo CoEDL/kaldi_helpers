@@ -13,7 +13,7 @@ import sys
 import argparse
 import platform
 import uuid
-from typing import Dict,Tuple
+from typing import Dict, Tuple
 from kaldi_helpers.script_utilities import *
 
 
