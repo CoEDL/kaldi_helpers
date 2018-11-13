@@ -139,9 +139,9 @@ copy-generated-files:
 copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
   cmds:
-    - cp {{ .HELPERS_PATH }}/templates/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp {{ .HELPERS_PATH }}/templates/run.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp {{ .HELPERS_PATH }}/templates/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
+    - cp resources/templates/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp resources/templates/run.sh {{ .OUTPUT_PATH }}/kaldi/
+    - cp resources/templates/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
     - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
     - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
 
