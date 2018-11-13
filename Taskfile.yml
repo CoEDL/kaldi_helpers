@@ -7,7 +7,7 @@ _run-elan:
     # Extracts data from all tiers in input_scripts files, which will flow all the way through the pipeline to the lexicon
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task elan-to-json
-    - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task clean-json
     - task _build
 
 _run-elan-split:
@@ -245,8 +245,8 @@ clean-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py \
-      --infile={{ .OUTPUT_PATH }}/tmp/dirty.json \
-      --outfile={{ .CLEANED_FILTERED_DATA }}
+      --infile="{{ .OUTPUT_PATH }}/tmp/dirty.json" \
+      --outfile="{{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}"
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
