@@ -152,7 +152,7 @@ def main() -> None:
     """
     Run the entire clean_json process as a command line utility.
     
-    Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
+    Usage: python3 clean_json.py [--i INFILE] [--o OUTFILE] [-r] [-u]
     """
     parser: ArgumentParser = ArgumentParser()
     parser.add_argument("-i", "--infile", type=str, help="The input_scripts file to clean.")

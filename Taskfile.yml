@@ -245,7 +245,8 @@ clean-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py \
-      --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
+      --infile={{ .OUTPUT_PATH }}/tmp/dirty.json \
+      --outfile={{ .CLEANED_FILTERED_DATA }}
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
