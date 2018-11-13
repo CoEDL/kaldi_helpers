@@ -55,9 +55,9 @@ def main():
     parser.add_argument("-o", "--outfile",
                         type=str,
                         required=True,
-                        help="The file to write the wordlist to.")
-    arguments = parser.parse_args()
+                        help="The path of the file to write the wordlist to.")
 
+    arguments = parser.parse_args()
     data = load_json_file(arguments.infile)
 
     print("Wordlist...", end="", flush=True, file=sys.stderr)

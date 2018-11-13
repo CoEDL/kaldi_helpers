@@ -257,7 +257,7 @@ make-wordlist:
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
                 --infile {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
-                --outfile {{ .OUTPUT_PATH }}/tmp/lexicon.txt
+                --outfile {{ .OUTPUT_PATH }}/tmp/wordlist.txt
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"
@@ -265,7 +265,7 @@ make-prn-dict:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_prn_dict.py
-                --infile
+                --infile {{ .OUTPUT_PATH }}/tmp/wordlist.txt
                 --outfile {{ .OUTPUT_PATH }}/tmp/lexicon.txt
                 --config {{ .LETTER_TO_SOUND_PATH }}
 
