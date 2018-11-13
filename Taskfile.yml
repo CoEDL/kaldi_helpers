@@ -215,11 +215,11 @@ elan-to-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
-    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/elan_to_json.py \
-     --input_dir {{ .CORPUS_PATH }} \
-     --output_dir {{ .OUTPUT_PATH }} \
-     --tier {{ .TARGET_LANGUAGE_TIER }} \
-     --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/elan_to_json.py
+      --input_dir {{ .CORPUS_PATH }}
+      --output_dir {{ .OUTPUT_PATH }}
+      --tier {{ .TARGET_LANGUAGE_TIER }}
+      --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
 
 trs-to-json:
   desc: "Convert a folder of .trs files to a single JSON file"
@@ -239,8 +239,8 @@ textgrid-to-json:
 json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
-    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py \
-      --input_json {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }} \
+    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py
+      --input_json {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
       --output_folder {{ .OUTPUT_PATH }}/tmp/json_splitted
 
 clean-json:
