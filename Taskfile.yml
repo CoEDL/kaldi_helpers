@@ -71,13 +71,13 @@ _infer:
   desc: "Run Kaldi inference_scripts on test data"
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi
-    - ../../../scripts/gmm-decode.sh
+    - ../../../kaldi_helpers/inference_scripts/gmm-decode.sh
 
 _infer-align:
   desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
   cmds:
     - cd {{ .OUTPUT_PATH }}/kaldi
-    - ../../../scripts/gmm-decode-align.sh
+    - ../../../kaldi_helpers/inference_scripts/gmm-decode-align.sh
 
 _root-infer-prepare:
   cmds:
