@@ -11,4 +11,4 @@ SOX_PATH = os.path.join("C:\\", "Program Files (x86)", "sox-14-4-2", "sox.exe")
 #SOX_PATH = os.path.join("..", "usr", "bin", "sox")
 
 # Used by json_to_kaldi
-WAV_FOLDER: str = "wavs/"
+# WAV_FOLDER: str = "wavs/"
