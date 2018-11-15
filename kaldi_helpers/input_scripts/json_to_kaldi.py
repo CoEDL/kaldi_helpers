@@ -72,7 +72,7 @@ class KaldiInput:
         """
         if audio_file not in self.recordings:
             self.recordings[audio_file] = str(uuid.uuid4()) # create recording id
-            self.recordings_list.append(self.recordings[audio_file] + " " + audio_file + "\n")
+            self.recordings_list.append(self.recordings[audio_file] + " ./" + audio_file + "\n")
         return self.recordings[audio_file]
 
     def add(self, recording_id: str, speaker_id: str, utterance_id: str,
