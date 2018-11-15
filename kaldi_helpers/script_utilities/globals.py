@@ -7,8 +7,7 @@ DEFAULT_DATA_DIRECTORY = os.path.join(".", "resources", "corpora", "abui_toy_cor
 # Used by resample_to_audio
 AUDIO_EXTENSIONS = ["*.wav"]
 TEMPORARY_DIRECTORY = "tmp"
-SOX_PATH = os.path.join("C:\\", "Program Files (x86)", "sox-14-4-2", "sox.exe")
-#SOX_PATH = os.path.join("..", "usr", "bin", "sox")
+SOX_PATH = os.path.join("..", "usr", "bin", "sox")
 
 # Used by json_to_kaldi
 # WAV_FOLDER: str = "wavs/"
