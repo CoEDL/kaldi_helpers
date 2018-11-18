@@ -94,7 +94,7 @@ _root-infer-prepare:
 generate-kaldi-files:
   desc: "Generate corpus-related files for Kaldi from JSON data"
   cmds:
-    - task resample
+    - task resample-audio
     - task json-to-kaldi
     - task make-wordlist
     - task make-prn-dict

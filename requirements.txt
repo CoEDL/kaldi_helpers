@@ -5,5 +5,3 @@ langid
 nltk
 praatio
 pydub
-regex
-pyparsing
