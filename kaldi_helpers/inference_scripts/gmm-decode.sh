@@ -90,7 +90,7 @@ cat data/infer/text
 
 echo ""
 echo ""
-echo "Kaldi-generated transcription (hypothesis)"
+echo "Kaldi-generated transcription (Hypothesis)"
 cat data/infer/one-best-hypothesis.txt
 
 echo ""

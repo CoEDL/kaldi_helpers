@@ -149,7 +149,7 @@ utils/int2sym.pl -f 5- \
 # BEST PATH WORDS (CTM) --> TEXTGRID
 # // TODO
 echo "==== Converting CTM to Textgrid ===="
-python3.6 ../output_scripts/ctm_to_textgrid.py \
+python3.6 ../../../kaldi_helpers/output_scripts/ctm_to_textgrid.py \
     --ctm data/infer/align-words-best-wordkeys.ctm \
     --wav data/infer/wav.scp \
     --seg data/infer/segments \
@@ -158,7 +158,7 @@ python3.6 ../output_scripts/ctm_to_textgrid.py \
 # TEXTGRID --> ELAN
 # // TODO
 echo "==== Converting Textgrid to ELAN ===="
-python3.6 ../output_scripts/textgrid_to_elan.pu \
+python3.6 ../../../kaldi_helpers/output_scripts/textgrid_to_elan.pu \
     --tg data/infer/utterance-0.TextGrid \
     --wav data/infer/wav.scp \
     --outfile utterance-0.eaf

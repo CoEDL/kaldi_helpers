@@ -84,10 +84,6 @@ _root-infer-prepare:
     - mkdir {{ .HELPERS_PATH }}/infer
     - cp -R
 
-#_infer-align-root:
-#  desc:
-#    -
-
 
 ######################################### HELPER TASKS ############################################
 
