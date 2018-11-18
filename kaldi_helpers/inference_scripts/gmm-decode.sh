@@ -52,13 +52,16 @@
 # export LC_ALL=C
 
 # AUDIO --> FEATURE VECTORS
+echo "==== Extracting Feature Vectors ===="
 steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
 
+echo "==== Applying CMVN ===="
 apply-cmvn --utt2spk=ark:data/infer/utt2spk \
     scp:mfcc/cmvn_test.scp scp:mfcc/raw_mfcc_infer.1.scp ark:- | \
     add-deltas ark:- ark:data/infer/delta-feats.ark
 
 # TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
+echo "==== Producing Lattice ===="
 gmm-latgen-faster \
     --word-symbol-table=exp/tri1/graph/words.txt \
     exp/tri1/final.mdl \
@@ -67,12 +70,14 @@ gmm-latgen-faster \
     ark,t:data/infer/lattices.ark
 
 # LATTICE --> BEST PATH THROUGH LATTICE
+echo "==== Finding Best Path ===="
 lattice-best-path \
     --word-symbol-table=exp/tri1/graph/words.txt \
     ark:data/infer/lattices.ark \
     ark,t:data/infer/one-best.tra
 
 # BEST PATH INTEGERS --> BEST PATH WORDS
+echo "==== Translating Integers to Words ===="
 utils/int2sym.pl -f 2- \
     exp/tri1/graph/words.txt \
     data/infer/one-best.tra \

@@ -60,6 +60,7 @@
 mkdir ./data/infer
 
 # COPY TRAINED MODEL
+echo "==== Copying Pretrained Model ===="
 cp -R ./exp/tri1 ./exp/tri
 cp ./data/test/* ./data/infer
 rm ./data/infer/text
@@ -70,6 +71,7 @@ rm ./data/infer/text
 #      data directory:
 #      mfcc directory: the directory in which to put the MFCC
 #
+echo "==== Creating Mel-Frequency Cepstral Coefficients (MFCCs) ===="
 steps/make_mfcc.sh --nj 1 \
     data/infer exp/make_mfcc/infer \
     mfcc
@@ -82,6 +84,7 @@ steps/make_mfcc.sh --nj 1 \
 #       PIPED INTO add-deltas (adds delta features)
 #       args:
 #             delta features
+echo "==== Extracting Feature Vectors ===="
 apply-cmvn --utt2spk=ark:data/infer/utt2spk \
     scp:mfcc/cmvn_test.scp \
     scp:mfcc/raw_mfcc_test.1.scp ark:- | \
@@ -94,6 +97,7 @@ apply-cmvn --utt2spk=ark:data/infer/utt2spk \
 #       FST input file specifier
 #       feature input file specifier
 #       lattice output file specifier
+echo "==== Creating Lattice ===="
 gmm-latgen-faster \
     --word-symbol-table=exp/tri/graph/words.txt \
     exp/tri/final.mdl \
@@ -101,10 +105,11 @@ gmm-latgen-faster \
     ark:data/infer/delta-feats.ark \
     ark,t:data/infer/lattices.ark
 
-# LATTICE --> BEST PATH THROUGH LATTICE AS FST
+# LATTICE --> BEST PATH THROUGH LATTICE AS FST (Finite State Transducer)
 # args:
 #       input lattice file specifier
 #       output lattice (FST format) file specifier
+echo "==== Finding Best Path (Transcription) ===="
 lattice-1best \
     ark:data/infer/lattices.ark \
     ark,t:data/infer/1best-fst.tra
@@ -115,6 +120,7 @@ lattice-1best \
 #       model input file specifier
 #       FST lattice input file specifier
 #       lattice output file specifier
+echo "==== Adding Word Boundaries to FST ===="
 lattice-align-words \
     data/lang/phones/word_boundary.int \
     exp/tri/final.mdl \
@@ -125,6 +131,7 @@ lattice-align-words \
 # args:
 #       aligned linear lattice input file specifier
 #       ctm (int) output file specifier
+echo "==== Converting Lattice to CTM Format ===="
 nbest-to-ctm \
     ark,t:data/infer/1best-fst-word-aligned.tra \
     data/infer/align-words-best-intkeys.ctm
@@ -133,6 +140,7 @@ nbest-to-ctm \
 # args:
 #       mapping of integer keys to words
 #       ctm file to change integers to words in
+echo "==== Translating Word Indexes to Words ===="
 utils/int2sym.pl -f 5- \
     exp/tri/graph/words.txt \
     data/infer/align-words-best-intkeys.ctm \
@@ -140,6 +148,7 @@ utils/int2sym.pl -f 5- \
 
 # BEST PATH WORDS (CTM) --> TEXTGRID
 # // TODO
+echo "==== Converting CTM to Textgrid ===="
 python3.6 ../output_scripts/ctm_to_textgrid.py \
     --ctm data/infer/align-words-best-wordkeys.ctm \
     --wav X data/infer/wav.scp \
@@ -148,11 +157,12 @@ python3.6 ../output_scripts/ctm_to_textgrid.py \
 
 # TEXTGRID --> ELAN
 # // TODO
+echo "==== Converting Textgrid to ELAN ===="
 python3.6 ../output_scripts/textgrid_to_elan.pu \
     --tg X \
     --wav Y \
     --outfile Z.elan
 
 # REPORT OUTPUT
-echo "CTM output"
+echo "CTM output:"
 cat ./data/infer/align-words-best-wordkeys.ctm

@@ -94,6 +94,7 @@ _root-infer-prepare:
 generate-kaldi-files:
   desc: "Generate corpus-related files for Kaldi from JSON data"
   cmds:
+    - task resample
     - task json-to-kaldi
     - task make-wordlist
     - task make-prn-dict
@@ -303,3 +304,14 @@ ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
    - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus /kaldi-helpers/input
+
+infer-full:
+  desc: "Prepare and run a test inference (so I don't have to)"
+  cmds:
+    - task ready-example
+    - task _run-elan
+    - task _train-test
+    - cd {{ .OUTPUT_PATH }}/kaldi
+    - cp -R data/train data/infer
+    - task infer
+
