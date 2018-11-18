@@ -79,11 +79,6 @@ _infer-align:
     - cd {{ .OUTPUT_PATH }}/kaldi
     - ../../../kaldi_helpers/inference_scripts/gmm-decode-align.sh
 
-_root-infer-prepare:
-  cmds:
-    - mkdir {{ .HELPERS_PATH }}/infer
-    - cp -R
-
 
 ######################################### HELPER TASKS ############################################
 
