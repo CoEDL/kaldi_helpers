@@ -85,12 +85,12 @@ utils/int2sym.pl -f 2- \
 
 echo ""
 echo ""
-echo "Reference (human-provided golden transription) / Ref"
+echo "Human-provided golden transription (Reference)"
 cat data/infer/text
 
 echo ""
 echo ""
-echo "Machine-generated transcription / Hypothesis / Hyp"
+echo "Kaldi-generated transcription (hypothesis)"
 cat data/infer/one-best-hypothesis.txt
 
 echo ""

@@ -151,18 +151,18 @@ utils/int2sym.pl -f 5- \
 echo "==== Converting CTM to Textgrid ===="
 python3.6 ../output_scripts/ctm_to_textgrid.py \
     --ctm data/infer/align-words-best-wordkeys.ctm \
-    --wav X data/infer/wav.scp \
-    --seg Y \
-    --outdir Z
+    --wav data/infer/wav.scp \
+    --seg data/infer/segments \
+    --outdir data/infer
 
 # TEXTGRID --> ELAN
 # // TODO
 echo "==== Converting Textgrid to ELAN ===="
 python3.6 ../output_scripts/textgrid_to_elan.pu \
-    --tg X \
-    --wav Y \
-    --outfile Z.elan
+    --tg data/infer/utterance-0.TextGrid \
+    --wav data/infer/wav.scp \
+    --outfile utterance-0.eaf
 
-# REPORT OUTPUT
+# REPORT OUTPUT (CTM is the only concise format)
 echo "CTM output:"
 cat ./data/infer/align-words-best-wordkeys.ctm
