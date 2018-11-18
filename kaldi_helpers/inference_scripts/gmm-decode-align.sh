@@ -158,7 +158,7 @@ python3.6 ../../../kaldi_helpers/output_scripts/ctm_to_textgrid.py \
 # TEXTGRID --> ELAN
 # // TODO
 echo "==== Converting Textgrid to ELAN ===="
-python3.6 ../../../kaldi_helpers/output_scripts/textgrid_to_elan.pu \
+python3.6 ../../../kaldi_helpers/output_scripts/textgrid_to_elan.py \
     --tg data/infer/utterance-0.TextGrid \
     --wav data/infer/wav.scp \
     --outfile utterance-0.eaf

@@ -64,8 +64,7 @@ def create_textgrid(wav_dictionary: Dict[str, str],
         tier = tgio.IntervalTier(name='phones',
                                  entryList=ctm_dictionary[utterance_id],
                                  minT=0,
-                                 pairedWav=str(Path(wav_root_directory,
-                                                    wav_dictionary[utterance_id])))
+                                 pairedWav=str(Path(wav_dictionary[utterance_id])))
         textgrid.addTier(tier)
         textgrid.save(str(Path(output_directory, f"utterance-{index}.TextGrid")))
 
@@ -88,7 +87,6 @@ def main() -> None:
         Path.mkdir(output_directory.parent, parents=True)
 
     output_directory = str(output_directory)
-    wav_root_directory = str(Path(arguments.wav).parent)
 
     create_textgrid(wav_dictionary,
                     ctm_dictionary,
