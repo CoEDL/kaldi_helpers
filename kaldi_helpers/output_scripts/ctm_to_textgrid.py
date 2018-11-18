@@ -57,7 +57,6 @@ def wav_scp_to_dictionary(scp_file_name: str) -> dict:
 
 def create_textgrid(wav_dictionary: Dict[str, str],
                     ctm_dictionary: dict,
-                    wav_root_directory: str,
                     output_directory: str) -> None:
     for index, utterance_id in enumerate(wav_dictionary.keys()):
         textgrid = tgio.Textgrid()
@@ -90,7 +89,6 @@ def main() -> None:
 
     create_textgrid(wav_dictionary,
                     ctm_dictionary,
-                    wav_root_directory,
                     output_directory)
 
 
