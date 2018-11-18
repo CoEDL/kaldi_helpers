@@ -312,6 +312,6 @@ infer-full:
     - task _run-elan
     - task _train-test
     - cd {{ .OUTPUT_PATH }}/kaldi
-    - cp -R data/train data/infer
+    - cp -R data/test data/infer
     - task infer
 
