@@ -12,7 +12,7 @@ from pympi import Praat, Elan
 
 def get_first_wav(wav_scp: str) -> str:
     with open(wav_scp, "r") as scp:
-        return scp.readline().split(" ")[1]
+        return scp.readline().strip().split(" ")[1]
 
 
 def main() -> None:
