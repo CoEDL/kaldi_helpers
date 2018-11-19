@@ -17,5 +17,6 @@ Once you've set up kadi_helpers, you can run the various pipeline tasks we've de
 
 
 ## Workflow
-
-![Kaldi pipeline](docs/img/elpis-pipeline.png)
+<p align="center">
+  <img src="docs/img/elpis-pipeline.svg"/>
+</p>
