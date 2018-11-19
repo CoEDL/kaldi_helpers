@@ -10,6 +10,11 @@ from pathlib import Path
 from pympi import Praat, Elan
 
 
+def get_first_wav(wav_scp: str) -> str:
+    with open(wav_scp, "r") as scp:
+        return scp.readline().split(" ")[1]
+
+
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(description="Converts Praat TextGrid format to ELAN eaf Format.")
     parser.add_argument("--tg", "--textgrid", type=str, help="The input_scripts TextGrid format file", required=True)
@@ -20,7 +25,7 @@ def main() -> None:
     arguments = parser.parse_args()
 
     textgrid_file = arguments.tg
-    wav_file = Path(arguments.wav)
+    wav_file = Path(get_first_wav(arguments.wav))
     output_file = Path(arguments.outfile)
 
     if not output_file.parent:
