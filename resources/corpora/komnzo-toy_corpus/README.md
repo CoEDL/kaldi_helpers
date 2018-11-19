@@ -8,7 +8,7 @@ The Komnzo toy corpus gives a more realistic example of data to be processed. No
 
 The data from these ELAN files will first need to be filtered and cleaned before they are similar to those in the Abui Toy Corpus example. Only then can we use the default build pipeline.
 
-![](../../../docs/screenshots/komnzo-toy-corpus-eaf.png)
+![](../../../docs/img/komnzo-toy-corpus-eaf.png)
 
 ## `komnzo-custom-build.sh`
 

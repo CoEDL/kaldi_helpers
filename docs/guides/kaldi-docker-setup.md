@@ -32,7 +32,7 @@ docker run -it --rm coedl/kaldi-helpers:0.2 /bin/bash
 
 Running the `task` command inside the `coedl/kald-helpers` image shows a list of helper tasks available.
 
-![](../screenshots/docker-task.png)
+![](../img/docker-task.png)
 
 See `/corpora/abui_toy_corpus` and `/corpora/komnzo-toy_corpus` in this repository on how to use these helper tasks to prepare corpus data for use with Kaldi.
 
