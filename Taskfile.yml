@@ -75,7 +75,7 @@ _infer:
 
 _infer-align:
   desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
-  dir: {{ .OUTPUT_PATH }}/kaldi
+  dir: /kaldi-helpers/kaldi_helpers/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
 
