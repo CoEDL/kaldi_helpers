@@ -85,7 +85,7 @@ utils/int2sym.pl -f 2- \
 
 echo ""
 echo ""
-echo "Human-provided golden transription (Reference)"
+echo "Human-provided golden transcription (Reference)"
 cat data/infer/text
 
 echo ""

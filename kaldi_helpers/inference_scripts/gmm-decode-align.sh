@@ -45,8 +45,9 @@
 #            lattices.ark
 #            1best-fst.tra
 #            1best-fst-word-aligned.tra
-#            align-words-best-wordkeys.ctm       <= Time aligned output (CTM)
-#            align-words-best-wordkeys.eaf       <= ELAN file //TODO
+#            align-words-best-wordkeys.ctm
+#            utterance-0.TextGrid
+#            utterance-0.eaf
 
 
 
