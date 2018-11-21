@@ -18,7 +18,7 @@
 
 # INPUT:
 #    data/
-#       infer/          <= auto created based on the already trained model
+#       infer/          <= currently copied from test data
 #           wav.scp
 #           utt2spk
 #           spk2utt
