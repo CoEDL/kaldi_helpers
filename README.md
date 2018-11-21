@@ -13,7 +13,7 @@ It also assumes you have Kaldi, sox and [task](https://taskfile.org/) installed.
 
 ## Tasks
 This library uses the [task](https://taskfile.org) tool to run the more complex processes automatically. Once 
-you've set up kadi_helpers, you can run the various pipeline tasks we've developed. You can read about these [here](docs/guides/about-the-tasks.md). 
+you've set up Kaldi Helpers, you can run the various pipeline tasks we've developed. You can read about these [here](https://github.com/CoEDL/elpis/wiki/tasks). 
 
 ## Workflow
 <p align="center">
