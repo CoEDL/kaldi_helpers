@@ -2,7 +2,7 @@
 
 A set of scripts to use in preparing a corpus for speech-to-text processing with the [Kaldi](http://kaldi-asr.org/) Automatic Speech Recognition Library.
 
-Read about [setting up Docker](https://github.com/CoEDL/elpis/wiki/2018-summer-workshop-preparatio) to run all this.
+Read about [setting up Docker](https://github.com/CoEDL/elpis/wiki/2018-summer-workshop-preparation) to run all this.
 
 For more information about data requirements, see the [data guide](https://github.com/CoEDL/elpis/wiki/2018-summer-workshop-preparation).
 
