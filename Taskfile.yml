@@ -16,23 +16,23 @@ _run-elan-split:
     # Extracts only from 'Phrase' tier, and skips annotations that have a corresponding annotation on a ref tier
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task split-eafs
-    - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task clean-json > {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
 
 _run-trs:
   desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
-    - task trs-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
-    - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task trs-to-json > {{ .KALDI_OUTPUT_PATH }}/tmp/dirty.json
+    - task clean-json > {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
 
 _run-textgrid:
   desc: "Run through processing pipeline for TRS transcriptions"
   cmds:
     - task clean-output-folder tmp-makedir make-kaldi-subfolders
-    - task textgrid-to-json > {{ .OUTPUT_PATH }}/tmp/dirty.json
-    - task clean-json > {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+    - task textgrid-to-json > {{ .KALDI_OUTPUT_PATH }}/tmp/dirty.json
+    - task clean-json > {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
     - task _build
 
 _build:
@@ -55,7 +55,7 @@ _train-test:
   desc: "Run Kaldi train and test stages on default settings"
   # dir: input_scripts/output_scripts/kaldi
   cmds:
-    - cd {{ .OUTPUT_PATH }}/kaldi; ./run.sh
+    - cd {{ .KALDI_OUTPUT_PATH }}/kaldi; ./run.sh
 
 
 _show-lattice:
@@ -67,13 +67,13 @@ _show-lattice:
           ./utils/show_lattice.sh $uttid  ./exp/tri1/decode/lat.1.gz  ./data/lang/words.txt
         done
 
-_infer:
+infer:
   desc: "Run Kaldi inference_scripts on test data"
   dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode.sh
 
-_infer-align:
+infer-align:
   desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
   dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
@@ -89,7 +89,7 @@ generate-kaldi-files:
     - task json-to-kaldi
     - task make-wordlist
     - task make-prn-dict
-    - task make-nonsil-phones > {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt
+    - task make-nonsil-phones > {{ .KALDI_OUTPUT_PATH }}/tmp/nonsilence_phones.txt
 
 generate-kaldi-configs:
   desc: "Generate config files for Kaldi from KALDI_TEMPLATES, populate with Taskvars"
@@ -98,92 +98,92 @@ generate-kaldi-configs:
     - KALDI_ROOT={{ .KALDI_ROOT }}
       HELPERS_PATH={{ .HELPERS_PATH }}
       CORPUS_PATH={{ .CORPUS_PATH }}
-        mo < {{ .KALDI_TEMPLATES }}/path.sh > {{ .OUTPUT_PATH }}/tmp/path.sh
+        mo < {{ .KALDI_TEMPLATES }}/path.sh > {{ .KALDI_OUTPUT_PATH }}/tmp/path.sh
 
     - MFCC_SAMPLE_FREQUENCY={{ .MFCC_SAMPLE_FREQUENCY }}
       MFCC_FRAME_LENGTH={{ .MFCC_FRAME_LENGTH }}
       MFCC_LOW_FREQ={{ .MFCC_LOW_FREQ }}
       MFCC_HIGH_FREQ={{ .MFCC_HIGH_FREQ }}
       MFCC_NUM_CEPS={{ .MFCC_NUM_CEPS }}
-        mo < {{ .KALDI_TEMPLATES }}/mfcc.conf > {{ .OUTPUT_PATH }}/tmp/mfcc.conf
+        mo < {{ .KALDI_TEMPLATES }}/mfcc.conf > {{ .KALDI_OUTPUT_PATH }}/tmp/mfcc.conf
 
     - DECODE_BEAM={{ .DECODE_BEAM }}
       DECODE_FIRST_BEAM={{ .DECODE_FIRST_BEAM }}
-        mo < {{ .KALDI_TEMPLATES }}/decode.config > {{ .OUTPUT_PATH }}/tmp/decode.config
+        mo < {{ .KALDI_TEMPLATES }}/decode.config > {{ .KALDI_OUTPUT_PATH }}/tmp/decode.config
 
 ##################### Helpers for copying things
 
 copy-generated-files:
   desc: "Copy generated files to appropriate (sub)directories under /output_scripts/kaldi"
   cmds:
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/training/corpus.txt {{ .OUTPUT_PATH }}/kaldi/data/local/
-    - cp {{ .OUTPUT_PATH }}/tmp/lexicon.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    - cp {{ .OUTPUT_PATH }}/tmp/nonsilence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/training/corpus.txt {{ .KALDI_OUTPUT_PATH }}/kaldi/data/local/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/lexicon.txt {{ .KALDI_OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/nonsilence_phones.txt {{ .KALDI_OUTPUT_PATH }}/kaldi/data/local/dict/
 
-    - cp {{ .OUTPUT_PATH }}/tmp/path.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp {{ .OUTPUT_PATH }}/tmp/mfcc.conf {{ .OUTPUT_PATH }}/kaldi/conf/
-    - cp {{ .OUTPUT_PATH }}/tmp/decode.config {{ .OUTPUT_PATH }}/kaldi/conf/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/path.sh {{ .KALDI_OUTPUT_PATH }}/kaldi/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/mfcc.conf {{ .KALDI_OUTPUT_PATH }}/kaldi/conf/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/decode.config {{ .KALDI_OUTPUT_PATH }}/kaldi/conf/
 
     # Note the default settings make the 'train' and 'test' folders identical (not anymore!)
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/text {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/testing/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/test/
-    - cp {{ .OUTPUT_PATH }}/tmp/json_splitted/training/segments {{ .OUTPUT_PATH }}/tmp/json_splitted/training/text {{ .OUTPUT_PATH }}/tmp/json_splitted/training/utt2spk {{ .OUTPUT_PATH }}/tmp/json_splitted/training/wav.scp {{ .OUTPUT_PATH }}/kaldi/data/train/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/testing/segments {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/testing/text {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/testing/utt2spk {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/testing/wav.scp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test/
+    - cp {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/training/segments {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/training/text {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/training/utt2spk {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/training/wav.scp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/train/
 
 copy-helper-scripts:
   desc: "Copy the necessary scripts from Kaldi"
   cmds:
-    - cp {{ .KALDI_TEMPLATES }}/cmd.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp {{ .KALDI_TEMPLATES }}/run.sh {{ .OUTPUT_PATH }}/kaldi/
-    - cp {{ .KALDI_TEMPLATES }}/score.sh {{ .OUTPUT_PATH }}/kaldi/local/
-    - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/steps {{ .OUTPUT_PATH }}/kaldi/steps
-    - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/utils {{ .OUTPUT_PATH }}/kaldi/utils
+    - cp {{ .KALDI_TEMPLATES }}/cmd.sh {{ .KALDI_OUTPUT_PATH }}/kaldi/
+    - cp {{ .KALDI_TEMPLATES }}/run.sh {{ .KALDI_OUTPUT_PATH }}/kaldi/
+    - cp {{ .KALDI_TEMPLATES }}/score.sh {{ .KALDI_OUTPUT_PATH }}/kaldi/local/
+    - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/steps {{ .KALDI_OUTPUT_PATH }}/kaldi/steps
+    - cp -L -r {{ .KALDI_ROOT }}/egs/wsj/s5/utils {{ .KALDI_OUTPUT_PATH }}/kaldi/utils
 
 copy-phones-configs:
   desc: "Copy provided silence/optional silence configuration files"
   cmds:
-    - cp ./working_dir/input/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    - cp ./working_dir/input/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp ./working_dir/input/config/optional_silence.txt {{ .KALDI_OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp ./working_dir/input/config/silence_phones.txt {{ .KALDI_OUTPUT_PATH }}/kaldi/data/local/dict/
 
 gather-wavs:
   desc: "Gather all wav files inside input_scripts/data into output_scripts/media.zip"
   cmds:
     # Tar up .wav files in order to keep folder structure the same
     # because Kaldi's wav.scp data file uses dir structure
-    - cd {{ .CORPUS_PATH }}; tar cf {{ .HELPERS_PATH }}/{{ .OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
+    - cd {{ .CORPUS_PATH }}; tar cf {{ .HELPERS_PATH }}/{{ .KALDI_OUTPUT_PATH }}/media.tar `find . | grep '\.wav'`
 
 extract-wavs:
   desc: "Extract all wav files into kaldi folder"
   cmds:
-    - tar xf {{ .OUTPUT_PATH }}/media.tar -C {{ .OUTPUT_PATH }}/kaldi
-    - rm {{ .OUTPUT_PATH }}/media.tar
+    - tar xf {{ .KALDI_OUTPUT_PATH }}/media.tar -C {{ .KALDI_OUTPUT_PATH }}/kaldi
+    - rm {{ .KALDI_OUTPUT_PATH }}/media.tar
 
 ##################### Helpers for folders stuff
 
 clean-output-folder:
   desc: "Delete all files and folders inside output_scripts directory"
   cmds:
-    - rm -rf {{ .OUTPUT_PATH }}/*
+    - rm -rf {{ .KALDI_OUTPUT_PATH }}/*
 
 tmp-makedir:
   desc: "Make the tmp directory, if it does not exist"
   cmds:
-    - if [ ! -d {{ .OUTPUT_PATH }}/tmp ]; then mkdir {{ .OUTPUT_PATH }}/tmp; fi
+    - if [ ! -d {{ .KALDI_OUTPUT_PATH }}/tmp ]; then mkdir {{ .KALDI_OUTPUT_PATH }}/tmp; fi
 
 tmp-delete:
   deps: [tmp-makedir]
   desc: "Delete all files in tmp directory"
   cmds:
     # Make directory non-empty, just in case it's just been initialised
-    - cp /dev/null {{ .OUTPUT_PATH }}/null
-    - rm -r {{ .OUTPUT_PATH }}/*
+    - cp /dev/null {{ .KALDI_OUTPUT_PATH }}/null
+    - rm -r {{ .KALDI_OUTPUT_PATH }}/*
 
 make-kaldi-subfolders:
   desc: "Makes subfolder structure which Kaldi expects"
   cmds:
-    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/local/dict
-    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/test
-    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/data/train
-    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/conf
-    - mkdir -p {{ .OUTPUT_PATH }}/kaldi/local
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/local/dict
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/train
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/conf
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/local
 
 ##################### Helpers for generating things (mostly wrappers for Python scripts)
 
@@ -207,9 +207,9 @@ elan-to-json:
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/elan_to_json.py
                 --input_dir {{ .CORPUS_PATH }}
-                --output_dir {{ .OUTPUT_PATH }}
+                --output_dir {{ .KALDI_OUTPUT_PATH }}
                 --tier {{ .TARGET_LANGUAGE_TIER }}
-                --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
+                --output_json {{ .KALDI_OUTPUT_PATH }}/tmp/dirty.json
 
 trs-to-json:
   desc: "Convert a folder of .trs files to a single JSON file"
@@ -230,8 +230,8 @@ json-to-kaldi:
   desc: "Generate files for the Kaldi format"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py
-                --input_json {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
-                --output_folder {{ .OUTPUT_PATH }}/tmp/json_splitted
+                --input_json {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+                --output_folder {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
@@ -239,8 +239,8 @@ clean-json:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/clean_json.py
-                --infile {{ .OUTPUT_PATH }}/tmp/dirty.json
-                --outfile {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+                --infile {{ .KALDI_OUTPUT_PATH }}/tmp/dirty.json
+                --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
 
 make-wordlist:
   desc: "Make a list of unique words that occur in the corpus"
@@ -248,8 +248,8 @@ make-wordlist:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
-                --infile {{ .OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
-                --outfile {{ .OUTPUT_PATH }}/tmp/wordlist.txt
+                --infile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
+                --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"
@@ -257,8 +257,8 @@ make-prn-dict:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_prn_dict.py
-                --infile {{ .OUTPUT_PATH }}/tmp/wordlist.txt
-                --outfile {{ .OUTPUT_PATH }}/tmp/lexicon.txt
+                --infile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
+                --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/lexicon.txt
                 --config {{ .LETTER_TO_SOUND_PATH }}
 
 resample-audio:
@@ -287,9 +287,9 @@ split-eafs:
                 --tier {{ .TARGET_LANGUAGE_TIER }}
                 --silence_marker {{ .SILENCE_MARKER }}
                 --silence_tier {{ .SILENCE_REF_TIER }}
-                --output_json {{ .OUTPUT_PATH }}/tmp/dirty.json
+                --output_json {{ .KALDI_OUTPUT_PATH }}/tmp/dirty.json
                 --output_audio_dir {{ .CORPUS_PATH }}
-                --output_text_dir {{ .OUTPUT_PATH }}/tmp/labels
+                --output_text_dir {{ .KALDI_OUTPUT_PATH }}/tmp/labels
 
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
@@ -303,8 +303,8 @@ demo:
     - task ready-example
     - task _run-elan
     - task _train-test
-    - cp -R {{ .OUTPUT_PATH }}/kaldi/data/test {{ .OUTPUT_PATH }}/kaldi/data/infer
-    - task _infer
+    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - task infer
 
 demo-align:
   desc: "Prepare and run a test inference with aligned (ELAN & Textgrid) output"
@@ -312,12 +312,27 @@ demo-align:
     - task ready-example
     - task _run-elan
     - task _train-test
-    - cp -R {{ .OUTPUT_PATH }}/kaldi/data/test {{ .OUTPUT_PATH }}/kaldi/data/infer
-    - task _infer-align
+    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - task infer-align
 
 copy-output-files:
   dir: /kaldi-helpers
   cmds:
-    - mkdir {{ .OUTPUT_PATH }}
-    - cp -R {{ .OUTPUT_PATH }}/input/output/kaldi/data/infer/* {{ .OUTPUT_PATH }}
+    - mkdir {{ .WORKING_OUTPUT_PATH }}
+    - cp -R {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer/* {{ .WORKING_OUTPUT_PATH }}
+
+_transcribe:
+  dir: /kaldi-helpers
+  cmds:
+   - cp working-dir/input/infer {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer
+   - task infer
+   - task copy-output-files
+
+_transcribe-align:
+  dir: /kaldi-helpers
+  cmds:
+    - cp working-dir/input/infer {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer
+    - task infer-align
+    - task copy-output-files
+
 
