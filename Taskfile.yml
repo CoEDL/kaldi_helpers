@@ -324,14 +324,14 @@ copy-output-files:
 _transcribe:
   dir: /kaldi-helpers
   cmds:
-   - cp working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer
+   - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}kaldi/data/infer
    - task infer
    - task copy-output-files
 
 _transcribe-align:
   dir: /kaldi-helpers
   cmds:
-    - cp working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer
+    - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}kaldi/data/infer
     - task infer-align
     - task copy-output-files
 
