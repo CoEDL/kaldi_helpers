@@ -69,13 +69,13 @@ _show-lattice:
 
 _infer:
   desc: "Run Kaldi inference_scripts on test data"
-  dir: /kaldi-helpers/input/output/kaldi
+  dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode.sh
 
 _infer-align:
   desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
-  dir: /kaldi-helpers/input/output/kaldi
+  dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
 
