@@ -60,7 +60,7 @@ _train-test:
 
 _show-lattice:
   desc: "Create pdf of the lattice graph"
-  dir: input_scripts/output_scripts/kaldi
+  dir: kaldi_helpers/input_scripts/output_scripts/kaldi
   cmds:
       - |
         for uttid in `cut -f1 -d " "  ../tmp/json_splitted/testing/text`; do
@@ -140,8 +140,8 @@ copy-helper-scripts:
 copy-phones-configs:
   desc: "Copy provided silence/optional silence configuration files"
   cmds:
-    - cp input/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
-    - cp input/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp ./working_dir/input/config/optional_silence.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
+    - cp ./working_dir/input/config/silence_phones.txt {{ .OUTPUT_PATH }}/kaldi/data/local/dict/
 
 gather-wavs:
   desc: "Gather all wav files inside input_scripts/data into output_scripts/media.zip"
