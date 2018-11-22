@@ -294,8 +294,8 @@ split-eafs:
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
-   - cp -p /kaldi-helpers/working-dir
-   - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus /kaldi-helpers/input
+   - mkdir /kaldi-helpers/working-dir
+   - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus kaldi-helpers/working-dir/input
 
 demo:
   desc: "Prepare and run a test inference (so I don't have to)"
