@@ -83,10 +83,17 @@ def main():
                             description="This script takes an directory with ELAN files and "
                                         "slices the audio and output_scripts text in a format ready "
                                         "for our Kaldi pipeline.")
-    parser.add_argument("-i", "--input_dir", help="Directory of dirty audio and eaf files", default="input_scripts/data/")
-    parser.add_argument("-o", "--output_dir", help="Output directory", default="../input_scripts/output_scripts/tmp/")
-    parser.add_argument("-t", "--tier", help="Target language tier name", default="Phrase")
-    parser.add_argument("-j", "--output_json", help="File name to output_scripts json", default="../input_scripts/output_scripts/tmp/dirty.json")
+    parser.add_argument("-i", "--input_dir",
+                        help="Directory of dirty audio and eaf files",
+                        default="working_dir/input/data/")
+    parser.add_argument("-o", "--output_dir",
+                        help="Output directory",
+                        default="../input/output/tmp/")
+    parser.add_argument("-t", "--tier",
+                        help="Target language tier name",
+                        default="Phrase")
+    parser.add_argument("-j", "--output_json",
+                        help="File name to output_scripts json")
     arguments: argparse.Namespace = parser.parse_args()
 
     # Build output_scripts directory if needed
