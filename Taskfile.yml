@@ -294,7 +294,7 @@ split-eafs:
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
-   - mkdir /kaldi-helpers/working_dir
+   - mkdir -p /kaldi-helpers/working_dir
    - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus ./working_dir/input
 
 demo:
@@ -318,8 +318,8 @@ demo-align:
 copy-output-files:
   dir: /kaldi-helpers
   cmds:
-    - mkdir {{ .WORKING_OUTPUT_PATH }}
-    - cp -R {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer/* {{ .WORKING_OUTPUT_PATH }}
+    - mkdir -p {{ .WORKING_OUTPUT_PATH }}
+    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/* {{ .WORKING_OUTPUT_PATH }}
 
 _transcribe:
   dir: /kaldi-helpers
@@ -334,5 +334,7 @@ _transcribe-align:
     - cp working-dir/input/infer {{ .KALDI_OUTPUT_PATH }}/input/output/kaldi/data/infer
     - task infer-align
     - task copy-output-files
+
+
 
 
