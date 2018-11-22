@@ -10,8 +10,8 @@ KALDI_TEMPLATES: "/kaldi-helpers/resources/kaldi_templates"  # Relative to
 INPUT_SCRIPTS_PATH: "kaldi_helpers/input_scripts"
 OUTPUT_SCRIPTS_PATH: "kaldi_helpers/output_scripts"
 INFERENCE_SCRIPTS_PATH: "kaldi_helpers/inference_scripts"
-INPUT_PATH: "input"
-OUTPUT_PATH: "input/output"
+INPUT_PATH: "working-dir/input"
+OUTPUT_PATH: "working-dir/input/output"
 
 CORPUS_PATH: "input/data"
 CLEANED_FILTERED_DATA: "cleaned_filtered.json"

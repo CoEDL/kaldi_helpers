@@ -294,9 +294,10 @@ split-eafs:
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
+   - cp -p /kaldi-helpers/working-dir
    - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus /kaldi-helpers/input
 
-infer-full:
+demo:
   desc: "Prepare and run a test inference (so I don't have to)"
   cmds:
     - task ready-example
@@ -305,7 +306,7 @@ infer-full:
     - cp -R {{ .OUTPUT_PATH }}/kaldi/data/test {{ .OUTPUT_PATH }}/kaldi/data/infer
     - task _infer
 
-infer-align-full:
+demo-align:
   desc: ""
   cmds:
     - task ready-example
@@ -313,4 +314,10 @@ infer-align-full:
     - task _train-test
     - cp -R {{ .OUTPUT_PATH }}/kaldi/data/test {{ .OUTPUT_PATH }}/kaldi/data/infer
     - task _infer-align
+
+copy-output-files:
+  dir: /kaldi-helpers
+  cmds:
+    - mkdir {{ .OUTPUT_PATH }}
+    - cp -R {{ .OUTPUT_PATH }}/input/output/kaldi/data/infer/* {{ .OUTPUT_PATH }}
 
