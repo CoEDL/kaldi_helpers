@@ -294,8 +294,8 @@ split-eafs:
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
-   - mkdir /kaldi-helpers/working-dir
-   - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus kaldi-helpers/working-dir/input
+   - mkdir /kaldi-helpers/working_dir
+   - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus ./working_dir/input
 
 demo:
   desc: "Prepare and run a test inference (so I don't have to)"
@@ -307,7 +307,7 @@ demo:
     - task _infer
 
 demo-align:
-  desc: ""
+  desc: "Prepare and run a test inference with aligned (ELAN & Textgrid) output"
   cmds:
     - task ready-example
     - task _run-elan
