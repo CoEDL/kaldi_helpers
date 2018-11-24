@@ -65,6 +65,8 @@ _show-lattice:
         for uttid in `cut -f1 -d " "  ../tmp/json_splitted/testing/text`; do
           ./utils/show_lattice.sh $uttid  ./exp/tri1/decode/lat.1.gz  ./data/lang/words.txt
         done
+      - mkdir -p /kaldi-helpers/working_dir/input/lattices
+      - cp *.pdf /kaldi-helpers/working_dir/input/lattices
 
 _transcribe:
   desc: "This doesn't build the files yet, manually create infer/wav.scp, infer/spk2utt, infer/utt2spk and put infer/audio."
