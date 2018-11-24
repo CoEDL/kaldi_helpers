@@ -348,7 +348,7 @@ split-eafs:
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
-    - mkdir -p /kaldi-helpers/working_dir
+    - mkdir -p /kaldi-helpers/working_dir/input
     - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus/* working_dir/input/
 
 
