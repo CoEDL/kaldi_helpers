@@ -57,7 +57,8 @@ steps/make_mfcc.sh --nj 1 data/infer exp/make_mfcc/infer mfcc
 
 echo "==== Applying CMVN ===="
 apply-cmvn --utt2spk=ark:data/infer/utt2spk \
-    scp:mfcc/cmvn_test.scp scp:mfcc/raw_mfcc_infer.1.scp ark:- | \
+    scp:mfcc/cmvn_test.scp \
+    scp:mfcc/raw_mfcc_infer.1.scp ark:- | \
     add-deltas ark:- ark:data/infer/delta-feats.ark
 
 # TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
