@@ -57,16 +57,14 @@ _train-test:
   cmds:
     - cd {{ .KALDI_OUTPUT_PATH }}/kaldi; ./run.sh
 
-
 _show-lattice:
   desc: "Create pdf of the lattice graph"
-  dir: kaldi_helpers/input_scripts/output_scripts/kaldi
+  dir: kaldi_helpers/working_dir/input/output/kaldi
   cmds:
       - |
         for uttid in `cut -f1 -d " "  ../tmp/json_splitted/testing/text`; do
           ./utils/show_lattice.sh $uttid  ./exp/tri1/decode/lat.1.gz  ./data/lang/words.txt
         done
-
 
 _transcribe:
   desc: "This doesn't build the files yet, manually create infer/wav.scp, infer/spk2utt, infer/utt2spk and put infer/audio."
@@ -86,7 +84,6 @@ _transcribe-align:
     - task infer-align
     - task copy-infer-align-results
 
-
 _demo:
   desc: "Prepare and run a test inference (so I don't have to)"
   cmds:
@@ -102,7 +99,6 @@ _demo-align:
     - task infer-align
     - mkdir working_dir/input/infer
     - task copy-infer-align-results
-
 
 prep-for-demo-infer:
   desc: "Do run, train steps, and build infer files"
@@ -129,7 +125,6 @@ copy-infer-align-results:
     - |
       infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
       cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
-
 
 
 ######################################### HELPER TASKS ############################################
@@ -162,6 +157,7 @@ generate-kaldi-configs:
     - DECODE_BEAM={{ .DECODE_BEAM }}
       DECODE_FIRST_BEAM={{ .DECODE_FIRST_BEAM }}
         mo < {{ .KALDI_TEMPLATES }}/decode.config > {{ .KALDI_OUTPUT_PATH }}/tmp/decode.config
+
 
 ##################### Helpers for copying things
 
@@ -208,6 +204,7 @@ extract-wavs:
     - tar xf {{ .KALDI_OUTPUT_PATH }}/media.tar -C {{ .KALDI_OUTPUT_PATH }}/kaldi
     - rm {{ .KALDI_OUTPUT_PATH }}/media.tar
 
+
 ##################### Helpers for folders stuff
 
 clean-output-folder:
@@ -236,6 +233,7 @@ make-kaldi-subfolders:
     - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/train
     - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/conf
     - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/local
+
 
 ##################### Helpers for generating things (mostly wrappers for Python scripts)
 
@@ -343,6 +341,7 @@ split-eafs:
                 --output_audio_dir {{ .CORPUS_PATH }}
                 --output_text_dir {{ .KALDI_OUTPUT_PATH }}/tmp/labels
 
+
 ##################### Helpers for preparing toy data for demo, and inferencing
 
 ready-example:
@@ -350,7 +349,6 @@ ready-example:
   cmds:
     - mkdir -p /kaldi-helpers/working_dir/input
     - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus/* working_dir/input/
-
 
 infer:
   desc: "Run Kaldi inference_scripts on test data"
@@ -363,5 +361,3 @@ infer-align:
   dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
-
-
