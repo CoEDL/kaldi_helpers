@@ -67,17 +67,69 @@ _show-lattice:
           ./utils/show_lattice.sh $uttid  ./exp/tri1/decode/lat.1.gz  ./data/lang/words.txt
         done
 
-infer:
-  desc: "Run Kaldi inference_scripts on test data"
-  dir: /kaldi-helpers/working_dir/input/output/kaldi
-  cmds:
-    - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode.sh
 
-infer-align:
-  desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
-  dir: /kaldi-helpers/working_dir/input/output/kaldi
+_transcribe:
+  desc: "This doesn't build the files yet, manually create infer/wav.scp, infer/spk2utt, infer/utt2spk and put infer/audio."
+  dir: /kaldi-helpers
   cmds:
-    - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
+    - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/generate-infer-files.sh
+    - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - task infer
+    - task copy-infer-results
+
+_transcribe-align:
+  desc: "This builds context files, just add infer/audio. Only works on single audio."
+  dir: /kaldi-helpers
+  cmds:
+    - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/generate-infer-files.sh
+    - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - task infer-align
+    - task copy-infer-align-results
+
+
+_demo:
+  desc: "Prepare and run a test inference (so I don't have to)"
+  cmds:
+    - task prep-for-demo-infer
+    - task infer
+    - mkdir working_dir/input/infer
+    - task copy-infer-results
+
+_demo-align:
+  desc: "Prepare and run a test inference with aligned (ELAN & Textgrid) output"
+  cmds:
+    - task prep-for-demo-infer
+    - task infer-align
+    - mkdir working_dir/input/infer
+    - task copy-infer-align-results
+
+
+prep-for-demo-infer:
+  desc: "Do run, train steps, and build infer files"
+  cmds:
+    - task ready-example
+    - task _run-elan
+    - task _train-test
+    - mkdir {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test/* {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+
+copy-infer-results:
+  desc: "Copy audio file and infer results back to input dir for easy access"
+  cmds:
+    - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/one-best-hypothesis.txt working_dir/input/infer/
+    # - oh this is gnarly..
+    - |
+      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
+      cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
+
+copy-infer-align-results:
+  desc: "Copy infer-align results back to input dir for easy access"
+  cmds:
+    - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/utterance-0.eaf working_dir/input/infer/
+    - |
+      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
+      cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
+
 
 
 ######################################### HELPER TASKS ############################################
@@ -291,50 +343,25 @@ split-eafs:
                 --output_audio_dir {{ .CORPUS_PATH }}
                 --output_text_dir {{ .KALDI_OUTPUT_PATH }}/tmp/labels
 
+##################### Helpers for preparing toy data for demo, and inferencing
+
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
   cmds:
-   - mkdir -p /kaldi-helpers/working_dir
-   - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus ./working_dir/input
+    - mkdir -p /kaldi-helpers/working_dir
+    - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus/* working_dir/input/
 
-demo:
-  desc: "Prepare and run a test inference (so I don't have to)"
+
+infer:
+  desc: "Run Kaldi inference_scripts on test data"
+  dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
-    - task ready-example
-    - task _run-elan
-    - task _train-test
-    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
-    - task infer
+    - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode.sh
 
-demo-align:
-  desc: "Prepare and run a test inference with aligned (ELAN & Textgrid) output"
+infer-align:
+  desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
+  dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
-    - task ready-example
-    - task _run-elan
-    - task _train-test
-    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
-    - task infer-align
-
-copy-output-files:
-  dir: /kaldi-helpers
-  cmds:
-    - mkdir -p {{ .WORKING_OUTPUT_PATH }}
-    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/* {{ .WORKING_OUTPUT_PATH }}
-
-_transcribe:
-  dir: /kaldi-helpers
-  cmds:
-   - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
-   - task infer
-   - task copy-output-files
-
-_transcribe-align:
-  dir: /kaldi-helpers
-  cmds:
-    - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
-    - task infer-align
-    - task copy-output-files
-
-
+    - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
 
 

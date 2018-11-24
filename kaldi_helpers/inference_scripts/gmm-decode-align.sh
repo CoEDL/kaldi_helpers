@@ -58,13 +58,13 @@
 # export LC_ALL=C
 
 # CREATE REQUIRED DIRECTORIES
-mkdir ./data/infer
+# mkdir ./data/infer
 
 # COPY TRAINED MODEL
 echo "==== Copying Pretrained Model ===="
 cp -R ./exp/tri1 ./exp/tri
-cp ./data/test/* ./data/infer
-rm ./data/infer/text
+# cp ./data/test/* ./data/infer
+# rm ./data/infer/text
 
 # CREATE MFCC (mel-frequency cepstral coefficients)
 # args:
@@ -88,7 +88,7 @@ steps/make_mfcc.sh --nj 1 \
 echo "==== Extracting Feature Vectors ===="
 apply-cmvn --utt2spk=ark:data/infer/utt2spk \
     scp:mfcc/cmvn_test.scp \
-    scp:mfcc/raw_mfcc_test.1.scp ark:- | \
+    scp:mfcc/raw_mfcc_infer.1.scp ark:- | \
     add-deltas ark:- ark:data/infer/delta-feats.ark
 
 # TRAINED GMM-HMM + FEATURE VECTORS --> LATTICE
