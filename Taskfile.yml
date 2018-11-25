@@ -57,16 +57,28 @@ _train-test:
   cmds:
     - cd {{ .KALDI_OUTPUT_PATH }}/kaldi; ./run.sh
 
-_show-lattice:
-  desc: "Create pdf of the lattice graph"
+
+_show-lattice-test:
+  desc: "Create pdf of the lattice graph with the testing data"
   dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
       - |
         for uttid in `cut -f1 -d " "  ../tmp/json_splitted/testing/text`; do
           ./utils/show_lattice.sh $uttid  ./exp/tri1/decode/lat.1.gz  ./data/lang/words.txt
         done
-      - mkdir -p /kaldi-helpers/working_dir/input/lattices
-      - cp *.pdf /kaldi-helpers/working_dir/input/lattices
+      - mkdir -p /kaldi-helpers/working_dir/input/lattices/testing
+      - cp *.pdf /kaldi-helpers/working_dir/input/lattices/testing
+
+_show-lattice-infer:
+  desc: "Create pdf of the lattice graph with infer data"
+  dir: /kaldi-helpers/working_dir/input/output/kaldi
+  cmds:
+      - |
+        for uttid in `cut -f1 -d " "  ../tmp/json_splitted/testing/text`; do
+          ./utils/show_lattice.sh $uttid  ./exp/tri1/decode/lat.1.gz  ./data/lang/words.txt
+        done
+      - mkdir -p /kaldi-helpers/working_dir/input/lattices/infer
+      - cp *.pdf /kaldi-helpers/working_dir/input/lattices/infer
 
 _transcribe:
   desc: "This doesn't build the files yet, manually create infer/wav.scp, infer/spk2utt, infer/utt2spk and put infer/audio."
@@ -101,33 +113,6 @@ _demo-align:
     - task infer-align
     - mkdir -p working_dir/input/infer
     - task copy-infer-align-results
-
-prep-for-demo-infer:
-  desc: "Do run, train steps, and build infer files"
-  cmds:
-    - rm -rf /kaldi-helpers/working_dir/input/infer
-    - task ready-example
-    - task _run-elan
-    - task _train-test
-    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
-    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test/* {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
-
-copy-infer-results:
-  desc: "Copy audio file and infer results back to input dir for easy access"
-  cmds:
-    - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/one-best-hypothesis.txt working_dir/input/infer/
-    # - oh this is gnarly..
-    - |
-      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
-      cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
-
-copy-infer-align-results:
-  desc: "Copy infer-align results back to input dir for easy access"
-  cmds:
-    - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/utterance-0.eaf working_dir/input/infer/
-    - |
-      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
-      cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
 
 
 ######################################### HELPER TASKS ############################################
@@ -365,3 +350,30 @@ infer-align:
   dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
+
+prep-for-demo-infer:
+  desc: "Do run, train steps, and build infer files"
+  cmds:
+    - rm -rf /kaldi-helpers/working_dir/input/infer
+    - task ready-example
+    - task _run-elan
+    - task _train-test
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test/* {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+
+copy-infer-results:
+  desc: "Copy audio file and infer results back to input dir for easy access"
+  cmds:
+    - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/one-best-hypothesis.txt working_dir/input/infer/
+    # - oh this is gnarly..
+    - |
+      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
+      cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
+
+copy-infer-align-results:
+  desc: "Copy infer-align results back to input dir for easy access"
+  cmds:
+    - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/utterance-0.eaf working_dir/input/infer/
+    - |
+      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
+      cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
