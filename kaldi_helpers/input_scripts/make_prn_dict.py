@@ -17,7 +17,7 @@ def generate_dictionary(input_file_name: str,
     for line in input_file.readlines():
         token = line.strip()
 
-        if (len(token) > 0):
+        if len(token) > 0:
             input_tokens.append(token)
 
     input_file.close()
