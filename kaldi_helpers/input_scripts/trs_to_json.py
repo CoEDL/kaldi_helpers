@@ -40,8 +40,8 @@ def process_trs(file_name: str, verbose_output: bool) -> List[Dict[str, Union[st
 
     :param file_name: file_name of the .trs file
     :param verbose_output: whether or not output_scripts to stderr
-    :return: a list of dictionaries. each dictionary contains key information on utterances in the following format:
-                                     {'speaker_id': <speaker_id>,
+    :return: a list of dictionaries. Each dictionary contains key information on utterances in the following format:
+                                   {'speaker_id': <speaker_id>,
                                     'audio_file_name': <file_name>,
                                     'transcript': <transcription_label>,
                                     'start_ms': <start_time_in_milliseconds>,
@@ -137,8 +137,8 @@ def main() -> None:
     if arguments.verbose:
         sys.stderr.write(arguments.input_directory + "\n")
 
-    all_files_in_dir: List[str] = list(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
-    transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, list(["*.trs"]))
+    all_files_in_dir: Set[str] = {glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True)}
+    transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, {"*.trs"})
 
     utterances = []
     for file_name in transcript_names:
@@ -153,6 +153,7 @@ def main() -> None:
     # outfile_path = os.path.join(arguments.input_directory, outfile_name)
 
     write_data_to_json_file(utterances, arguments.output_json)
+
 
 if __name__ == '__main__':
     main()
