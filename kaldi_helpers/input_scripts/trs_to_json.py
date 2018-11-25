@@ -137,7 +137,7 @@ def main() -> None:
     if arguments.verbose:
         sys.stderr.write(arguments.input_directory + "\n")
 
-    all_files_in_dir: Set[str] = {glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True)}
+    all_files_in_dir: Set[str] = set(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
     transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, {"*.trs"})
 
     utterances = []
