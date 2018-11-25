@@ -91,7 +91,7 @@ _demo:
   cmds:
     - task prep-for-demo-infer
     - task infer
-    - mkdir working_dir/input/infer
+    - mkdir -p working_dir/input/infer
     - task copy-infer-results
 
 _demo-align:
@@ -99,16 +99,17 @@ _demo-align:
   cmds:
     - task prep-for-demo-infer
     - task infer-align
-    - mkdir working_dir/input/infer
+    - mkdir -p working_dir/input/infer
     - task copy-infer-align-results
 
 prep-for-demo-infer:
   desc: "Do run, train steps, and build infer files"
   cmds:
+    - rm -rf /kaldi-helpers/working_dir/input/infer
     - task ready-example
     - task _run-elan
     - task _train-test
-    - mkdir {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
     - cp -R {{ .KALDI_OUTPUT_PATH }}/kaldi/data/test/* {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
 
 copy-infer-results:
