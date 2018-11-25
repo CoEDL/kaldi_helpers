@@ -20,9 +20,9 @@ def save_word_list(word_list: List[str], file_name: str) -> None:
     :param word_list: list of words to write.
     :param file_name: name of file to write word list to.
     """
-    with open(file_name, "w") as f:
+    with open(file_name, "w", encoding='utf-8') as f:
         for word in word_list:
-            f.write(word + "\n")
+            f.write(word + "\n",)
         print(f"Wrote word list to {file_name}")
 
 

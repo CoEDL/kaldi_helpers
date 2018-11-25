@@ -144,14 +144,6 @@ def main() -> None:
     for file_name in transcript_names:
         utterances = utterances + process_trs(file_name, arguments.verbose)
 
-    # result_base_name, name = os.path.split(arguments.input_directory)
-    # if not name or name == '.':
-    #     outfile_name = "utterances.json"
-    # else:
-    #     outfile_name = os.path.join(name + '.json')
-
-    # outfile_path = os.path.join(arguments.input_directory, outfile_name)
-
     write_data_to_json_file(utterances, arguments.output_json)
 
 

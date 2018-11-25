@@ -170,12 +170,12 @@ def main() -> None:
                         action="store_true")
 
     arguments = parser.parse_args()
-    data = load_json_file(arguments.infile)
+    dirty_json_data = load_json_file(arguments.infile)
     outfile = arguments.outfile if arguments.outfile else sys.stdout
 
     print(f"Filtering {str(arguments.infile)}...", end="", flush=True)
 
-    filtered_data = clean_json_data(list(data),
+    filtered_data = clean_json_data(list(dirty_json_data),
                                     remove_english=arguments.removeEng,
                                     use_langid=arguments.useLangId)
 
