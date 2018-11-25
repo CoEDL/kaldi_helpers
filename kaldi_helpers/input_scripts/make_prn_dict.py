@@ -12,7 +12,7 @@ def generate_dictionary(input_file_name: str,
                         output_file_name: str,
                         config_file_name: str):
     # read the input_scripts file
-    input_file = open(input_file_name, "r")
+    input_file = open(input_file_name, "r", encoding='utf-8')
     input_tokens = []
     for line in input_file.readlines():
         token = line.strip()
@@ -32,7 +32,7 @@ def generate_dictionary(input_file_name: str,
 
         mapping = list(filter(None, line.strip().split(' ', 1)))
 
-        if (len(mapping) > 1):
+        if len(mapping) > 1:
             sound_mappings.append((mapping[0], mapping[1]))
 
     config_file.close()
