@@ -269,6 +269,7 @@ trs-to-json:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
+    - mkdir -p {{ .KALDI_OUTPUT_PATH }}/tmp
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/trs_to_json.py --input_dir {{ .CORPUS_PATH }} --output_json {{ .KALDI_OUTPUT_PATH }}/tmp/dirty.json
 
 textgrid-to-json:
