@@ -12,7 +12,7 @@ mv working_dir/input/infer/*.wav working_dir/input/infer/audio.wav
 
 rec_id="decode"
 
-spk_id=$(cat working_dir/input/output/kaldi/data/test/spk2utt | awk '{print $1}')
+spk_id=$(head -n 1 working_dir/input/output/kaldi/data/test/spk2utt | awk '{print $1}')
 
 utt_id="$spk_id-utterance0"
 

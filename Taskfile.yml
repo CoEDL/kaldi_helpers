@@ -118,7 +118,7 @@ copy-infer-results:
     - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/one-best-hypothesis.txt working_dir/input/infer/
     # - oh this is gnarly..
     - |
-      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
+      infer_audio_filename=$(head -n 1 working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
       cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
 
 copy-infer-align-results:
@@ -126,7 +126,7 @@ copy-infer-align-results:
   cmds:
     - cp {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer/utterance-0.eaf working_dir/input/infer/
     - |
-      infer_audio_filename=$(cat working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
+      infer_audio_filename=$(head -n 1 working_dir/input/output/kaldi/data/test/wav.scp | awk '{print $2}' |  cut -c 3- ) &&
       cp "working_dir/input/output/kaldi/$infer_audio_filename" working_dir/input/infer/
 
 
