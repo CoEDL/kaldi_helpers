@@ -63,6 +63,10 @@ def main():
     print("Wordlist...", flush=True, file=sys.stderr)
 
     word_list = extract_word_list(data)
+    with open("/kaldi_helpers/working_dir/input/data/number.txt", "w", encoding="utf-8") as file:
+        for line in file.readlines():
+            word_list.extend(line.split(" "))
+    list(set(word_list))
     print("Done.", file=sys.stderr)
 
     print(f"Writing out wordlist to stderr...", flush=True, file=sys.stderr)
