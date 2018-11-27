@@ -10,11 +10,12 @@ from csv import reader
 from pathlib import Path
 from typing import Dict, Tuple
 from praatio import tgio
+import codecs
 
 
 def ctm_to_dictionary(ctm_file_name: str,
                       segments_dictionary: Dict[str, str]) -> dict:
-    with open(ctm_file_name, "r") as file:
+    with codecs.open(ctm_file_name, encoding="utf8") as file:
         ctm_entries = list(reader(file, delimiter=" "))
     textgrid_dictionary = dict()
     for entry in ctm_entries:
