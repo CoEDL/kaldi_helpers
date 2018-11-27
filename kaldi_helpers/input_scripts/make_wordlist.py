@@ -63,9 +63,11 @@ def main():
     print("Wordlist...", flush=True, file=sys.stderr)
 
     word_list = extract_word_list(data)
-    with open("/kaldi_helpers/working_dir/input/data/number.txt", "w", encoding="utf-8") as file:
-        for line in file.readlines():
-            word_list.extend(line.split(" "))
+    with open("/kaldi-helpers/working_dir/input/data/number.txt", "r") as f:
+        for line in f.readlines():
+            new_words = line.split()
+            print(new_words)
+            word_list.extend(new_words)
     list(set(word_list))
     print("Done.", file=sys.stderr)
 
