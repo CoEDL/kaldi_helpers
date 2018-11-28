@@ -8,13 +8,16 @@ so you'll need to direct the output_scripts to a file when running the script
 Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
 """
 
-import xml.etree.ElementTree as ET
+
+import os
 import sys
 import argparse
 import platform
 import uuid
-from typing import Dict, Tuple
-from kaldi_helpers.script_utilities import *
+import glob
+import xml.etree.ElementTree as ET
+from typing import Dict, List, Set, Tuple, Union
+from kaldi_helpers.script_utilities import find_files_by_extension, write_data_to_json_file
 
 
 def conditional_log(condition: bool, text: str) -> None:
@@ -56,10 +59,8 @@ def process_trs(file_name: str, verbose_output: bool) -> List[Dict[str, Union[st
         root: ET.Element = tree.getroot()
         wave_name: str = root.attrib["audio_filename"] + ".wav"
         turn_nodes: List[ET.Element] = tree.findall(".//Turn")
-
         for turn_node in turn_nodes:
             utterances = utterances + process_turn(wave_name, turn_node, tree)
-
     except ET.ParseError as error:
         conditional_log(True, "XML parser failed to parse '%s'!\n" % file_name)
         conditional_log(True, str(error))
@@ -111,8 +112,8 @@ def main() -> None:
 
     """
     Run the entire trs_to_json.py as a command line utility. It processes the utterances
-    and outputs to a file in the same directory as the input_scripts .trs file. The output_scripts files
-    is named after the basename of the input_scripts directory appended with a .json extension.
+    and outputs to a file in the same directory as the input_scripts .trs file. The output
+    files is named after the basename of the input directory appended with a .json extension.
 
     Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
     """

@@ -304,6 +304,7 @@ make-wordlist:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
                 --infile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
+                --wordlist {{ .INPUT_PATH }}/config/more_words.txt
 
 make-prn-dict:
   desc: "Make pronunciation dictionary"

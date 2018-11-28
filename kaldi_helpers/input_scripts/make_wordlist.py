@@ -9,6 +9,7 @@ Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
 """
 
 import argparse
+import os
 import sys
 from typing import List, Dict
 from kaldi_helpers.script_utilities import load_json_file
@@ -41,6 +42,24 @@ def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
     return sorted(result)
 
 
+def extract_additional_words(file_name) -> List[str]:
+    """
+    Extracts additional words from an additional text file for the purpose
+    of extending the lexicon to words that there is no sound data for.
+    :param file_name: the name of the file to extract words from.
+    :return: a list of words
+    """
+    words = []
+    if os.path.exists(file_name):
+        with open(file_name, "r") as f:
+            for line in f.readlines():
+                new_words = line.split(" ")
+                words.extend(new_words)
+    else:
+        print("WARNING: Additional word list file does not exist, skipping!")
+    return words
+
+
 def main():
     """
     Run the entire make_wordlist.py as a command line utility.
@@ -56,23 +75,33 @@ def main():
                         type=str,
                         required=True,
                         help="The path of the file to write the wordlist to.")
+    parser.add_argument("-w", "--wordlist",
+                        type=str,
+                        required=False,
+                        help="An optional additional word list file (path)")
 
     arguments = parser.parse_args()
-    data = load_json_file(arguments.infile)
+    json_data: List[Dict[str, str]] = load_json_file(arguments.infile)
 
-    print("Wordlist...", flush=True, file=sys.stderr)
+    if arguments.wordlist:
+        additional_words = extract_additional_words(arguments.wordlist)
+    else:
+        additional_words = []
 
-    word_list = extract_word_list(data)
-    with open("/kaldi-helpers/working_dir/input/data/number.txt", "r") as f:
-        for line in f.readlines():
-            new_words = line.split()
-            print(new_words)
-            word_list.extend(new_words)
-    list(set(word_list))
-    print("Done.", file=sys.stderr)
+    print("Extracting word list(s)...", flush=True, file=sys.stderr)
 
-    print(f"Writing out wordlist to stderr...", flush=True, file=sys.stderr)
+    # Retrieve ELAN word data
+    word_list = extract_word_list(json_data)
+
+    # Add additional words to lexicon if required
+    word_list.extend(additional_words)
+
+    # Remove duplicates
+    word_list = list(set(word_list))
+
+    print(f"Writing wordlist to file...", flush=True, file=sys.stderr)
     save_word_list(word_list, arguments.outfile)
+
     print("Done.", file=sys.stderr)
 
 
