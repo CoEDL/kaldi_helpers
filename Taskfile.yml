@@ -17,7 +17,7 @@ _rerun-elan:
     # Default extract stage, assuming data are cleaned and filtered.
     # Extracts data from all tiers in input_scripts files, which will flow all the way through the pipeline to the lexicon
     # Skips moving audio
-    - task clean-output-folder tmp-makedir make-kaldi-subfolders
+    # - task clean-output-folder tmp-makedir make-kaldi-subfolders
     - task elan-to-json
     - task clean-json
     - task build
