@@ -70,6 +70,7 @@ _transcribe:
   desc: "This doesn't build the files yet, manually create infer/wav.scp, infer/spk2utt, infer/utt2spk and put infer/audio."
   dir: /kaldi-helpers
   cmds:
+    - python3.6 {{ .HELPERS_PATH }}/{{ .INPUT_SCRIPTS_PATH }}/resample_audio.py -c {{ .INFER_PATH }}
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/generate-infer-files.sh
     - rm -rf {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
     - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
