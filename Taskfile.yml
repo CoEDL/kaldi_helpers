@@ -388,6 +388,6 @@ task split-inferences:
     - python3.6 python3.6 {{ .INPUT_SCRIPTS_PATH }}/split_on_silence.py \
                           --input_dir {{ .INFER_PATH }}
                           --output_dir {{ .INFER_PATH }}
-                          --silence_length200
+                          --silence_length 180
                           --threshold 20
-                          --added_silence=100
+                          --added_silence 100
