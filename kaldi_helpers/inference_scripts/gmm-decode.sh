@@ -15,7 +15,8 @@
 #    files, consult the official Kaldi documentation.
 
 # INPUT:
-#    data/
+#       audio.wav
+#       data/
 #       infer/          <= these need to be created
 #           wav.scp
 #           utt2spk
@@ -46,6 +47,8 @@
 
 
 . ./path.sh
+
+export DATA_ROOT="/kaldi-helpers/working_dir/input/infer"
 # make sure you include the path to the gmm bin(s)
 # the following two export commands are what my path.sh script contains:
 # export PATH=$PWD/utils/:$PWD/../../../src/bin:$PWD/../../../tools/openfst/bin:$PWD/../../../src/fstbin/:$PWD/../../../src/gmmbin/:$PWD/../../../src/featbin/:$PWD/../../../src/lm/:$PWD/../../../src/sgmmbin/:$PWD/../../../src/fgmmbin/:$PWD/../../../src/latbin/:$PWD/../../../src/nnet2bin/:$PWD:$PATH
