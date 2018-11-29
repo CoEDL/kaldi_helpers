@@ -41,8 +41,7 @@ echo -e "$utt_id $rec_id $start_ms $stop_ms" > working_dir/input/infer/segments
 # wav.scp
 # Format is <recording_id> <path/to/audio.file>
 
-echo -e "decode data/infer/audio.wav" > working_dir/input/infer/wav.scp
-
+echo -e "decode ./audio.wav" > working_dir/input/infer/wav.scp
 
 # Clear out previous infer data in Kaldi
 
