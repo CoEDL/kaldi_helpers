@@ -4,17 +4,20 @@ KALDI_ROOT: "/kaldi"
 HELPERS_PATH: "/kaldi-helpers"
 KALDI_TEMPLATES: "/kaldi-helpers/resources/kaldi_templates"
 
-# Folders to read/write from, all set relative to HELPERS_PATH
+# Folders to read/write from, all set relative to .HELPERS_PATH
 # i.e., input_scripts == /kaldi-helpers/input_scripts (default)
 # See also kaldi-helpers/kaldi_templates/path.sh
 INPUT_SCRIPTS_PATH: "kaldi_helpers/input_scripts"
 OUTPUT_SCRIPTS_PATH: "kaldi_helpers/output_scripts"
 INFERENCE_SCRIPTS_PATH: "kaldi_helpers/inference_scripts"
+
+# Working directory paths (also relative to .HELPERS_PATH)
 INPUT_PATH: "working_dir/input"
 KALDI_OUTPUT_PATH: "working_dir/input/output"
 WORKING_OUTPUT_PATH: "working_dir/output"
-
 CORPUS_PATH: "working_dir/input/data"
+INFER_PATH: "working_dir/input/infer"
+
 CLEANED_FILTERED_DATA: "cleaned_filtered.json"
 
 # For output/kaldi/data/local/dict

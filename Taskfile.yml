@@ -73,6 +73,7 @@ _transcribe:
   dir: /kaldi-helpers
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/generate-infer-files.sh
+    - rm -rf {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
     - cp -R working_dir/input/infer {{ .KALDI_OUTPUT_PATH }}/kaldi/data/infer
     - task infer
     - task copy-infer-results
@@ -366,3 +367,15 @@ infer-align:
   dir: /kaldi-helpers/working_dir/input/output/kaldi
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
+
+task split-inferences:
+  desc: ""
+  dir: /kaldi-helpers/working_dir/input/infer
+  cmds:
+    - mkdir -p {{ .INFER_PATH }}
+    - python3.6 python3.6 {{ .INPUT_SCRIPTS_PATH }}/split_on_silence.py \
+                          --input_dir {{ .INFER_PATH }}
+                          --output_dir {{ .INFER_PATH }}
+                          --silence_length200
+                          --threshold 20
+                          --added_silence=100

@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-#
-# Copyright Ben Foley ben@cbmm.io 30 Jan 2018
-#
-# Split Elan .eaf and .wav audio file by the start and end times of annotations on a particular tier
-# Don't worry about 'Parsing unknown version of ELAN spec... ' warnings,
-# pympi is looking for v 2.7 or 2.8 of elan schema
+
+"""
+Copyright Ben Foley ben@cbmm.io 30 Jan 2018
+
+Split Elan .eaf and .wav audio file by the start and end times of annotations on a particular tier
+Don't worry about 'Parsing unknown version of ELAN spec... ' warnings,
+pympi is looking for v 2.7 or 2.8 of elan schema
+"""
 
 
 import argparse
@@ -116,19 +118,37 @@ def findFilesByExt(setOfAllFiles, exts):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="This script will slice a directory of Elan .eaf files and matching .wav files into separate audio and text files by the start and end times of each annotation in a particular tier. Annotations with a particular value can be skipped. Annotations on a ref tier can be used to skip annotations in the target tier.")
-    parser.add_argument('-i', '--input_dir', help='Directory of dirty audio and eaf files', type=str,
+        description="Slices a directory of Elan .eaf files and matching .wav files into separate "
+                    "audio and text files by the start and end times of each annotation in a particular tier. "
+                    "Annotations with a particular value can be skipped. Annotations on a ref tier can be used"
+                    " to skip annotations in the target tier.")
+    parser.add_argument('-i', '--input_dir',
+                        help='Directory of dirty audio and eaf files',
+                        type=str,
                         default='../input_scripts/data-dirty')
-    parser.add_argument('-t', '--tier', help='Target language tier name', type=str, default='Phrase')
-    parser.add_argument('-m', '--silence_marker', help='Skip annotation with this value on the target language tier',
-                        type=str, default='*PUB')
-    parser.add_argument('-s', '--silence_tier', help='Silence audio when annotations are found on this ref tier',
-                        type=str, default='Silence')
-    parser.add_argument('-a', '--output_audio_dir', help='Dir to save the audio files', type=str,
+    parser.add_argument('-t', '--tier',
+                        help='Target language tier name',
+                        type=str,
+                        default='Phrase')
+    parser.add_argument('-m', '--silence_marker',
+                        help='Skip annotation with this value on the target language tier',
+                        type=str,
+                        default='*PUB')
+    parser.add_argument('-s', '--silence_tier',
+                        help='Silence audio when annotations are found on this ref tier',
+                        type=str,
+                        default='Silence')
+    parser.add_argument('-a', '--output_audio_dir',
+                        help='Dir to save the audio files',
+                        type=str,
                         default='../input_scripts/data')
-    parser.add_argument('-o', '--output_text_dir', help='Directory to save sliced text files', type=str,
+    parser.add_argument('-o', '--output_text_dir',
+                        help='Directory to save sliced text files',
+                        type=str,
                         default='../input_scripts/output_scripts/tmp/label')
-    parser.add_argument('-j', '--output_json', help='File name to output_scripts json', type=str,
+    parser.add_argument('-j', '--output_json',
+                        help='File name to output_scripts json',
+                        type=str,
                         default='../input_scripts/output_scripts/tmp/dirty.json')
     args = parser.parse_args()
     try:

@@ -76,27 +76,15 @@ def generate_dictionary(input_file_name: str,
 
 
 def main():
-    # TODO
-    # Accept komnzo_words.txt from --words_file
-    # accept Komnzo_Letter_to_Sound from --config_file
-    # accept test.txt from --output_file
-    if __name__ == "__main__":
-        # argv = sys.argv[1:]
-        # input_file_name = ""
-        # config_file_name = ""
-        # output_file_name = ""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--infile", required=True)
+    parser.add_argument("--outfile", help="name of the output_scripts file", required=True)
+    parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
+    arguments = parser.parse_args()
 
-        parser = argparse.ArgumentParser()
-        # parser.add_argument("--words", help="input_scripts file with one word in each line")
-        parser.add_argument("--infile", required=True)
-        parser.add_argument("--outfile", help="name of the output_scripts file", required=True)
-        parser.add_argument("--config", help="configuration file with one letter -> sound mapping in each line")
-        # parser.add_argument("--output_file", help="name of the output_scripts file")
-        arguments = parser.parse_args()
-
-        generate_dictionary(input_file_name=arguments.infile,
-                            output_file_name=arguments.outfile,
-                            config_file_name=arguments.config)
+    generate_dictionary(input_file_name=arguments.infile,
+                        output_file_name=arguments.outfile,
+                        config_file_name=arguments.config)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@
 
 # Rename the audio file to conform to expectations
 #
-mv working_dir/input/infer/*.wav working_dir/input/infer/audio.wav
+# mv working_dir/input/infer/*.wav working_dir/input/infer/audio.wav
 
 # make ids
 
@@ -46,5 +46,7 @@ echo -e "decode data/infer/audio.wav" > working_dir/input/infer/wav.scp
 
 # Clear out previous infer data in Kaldi
 
-rm -rf working_dir/input/infer/results working_dir/input/output/kaldi/data/infer
+# rm -rf working_dir/input/infer/results working_dir/input/output/kaldi/data/infer
+
+rm -rf working_dir/input/output/kaldi/data/infer
 
