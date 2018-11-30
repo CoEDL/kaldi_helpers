@@ -1,7 +1,7 @@
 import os
 import glob
 import subprocess
-from kaldi_helpers.script_utilities import find_files_by_extension
+from kaldi_helpers.script_utilities import find_files_by_extensions
 
 TEST_FILES_BASE_DIR = os.path.normpath(os.path.join(os.getcwd(), os.path.join(".", "testfiles")))
 SCRIPT_PATH = os.path.normpath(os.path.join(os.getcwd(), os.path.join("..", "kaldi_helpers", "trs_to_json.py")))

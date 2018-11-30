@@ -12,7 +12,7 @@ import argparse
 import os
 import sys
 from typing import List, Dict
-from kaldi_helpers.script_utilities import load_json_file
+from kaldi_helpers.script_utilities import load_json_file, find_all_files_by_extensions
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:
@@ -70,14 +70,14 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     if not os.path.exists(kaldi_corpus):
         print(f"Failed to find corpus.txt file at {kaldi_corpus}.")
     else:
-        with open(kaldi_corpus, "a") as kaldi_corpus_file_:
+        with open(kaldi_corpus, "a") as kaldi_corpus_file:
             if os.path.exists(file_name):
+                print(f"Extracting corpus examples from: {file_name}")
                 with open(file_name, "r", encoding="utf-8",) as file_:
                     for line in file_:
-                        kaldi_corpus_file_.writelines(line)
+                        kaldi_corpus_file.writelines(line)
             else:
                 print("Provided additional text corpus invalid")
-
 
 
 def main():
@@ -100,7 +100,7 @@ def main():
                         required=False,
                         help="File path to an optional additional word list")
     parser.add_argument("-t", "--text_corpus",
-                        help="File path to an additional text-only corpus file to include in corpus.txt",
+                        help="File path to a folder of text-only corpus files to include in corpus.txt",
                         required=False)
     parser.add_argument("-c", "--kaldi_corpus",
                         type=str,
@@ -118,8 +118,9 @@ def main():
 
     if arguments.text_corpus:
         print(f"Using additional text corpus at {arguments.text_corpus}")
-        additional_words = additional_words.extend(extract_additional_words(arguments.text_corpus))
-        extract_additional_corpora(arguments.text_corpus, arguments.kaldi_corpus)
+        for corpora_file in find_all_files_by_extensions(arguments.text, {"txt"}):
+            additional_words = additional_words.extend(extract_additional_words(corpora_file))
+            extract_additional_corpora(corpora_file, arguments.kaldi_corpus)
     else:
         print("No additional text corpus provided.")
 

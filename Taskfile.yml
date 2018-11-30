@@ -320,7 +320,7 @@ make-wordlist:
                 --infile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
                 --wordlist {{ .INPUT_PATH }}/config/additional_words.txt
-                --text_corpus {{ .INPUT_PATH }}/config/text_corpus.txt
+                --text_corpus {{ .INPUT_PATH }}/config/text_corpora/
                 --kaldi_corpus {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/corpus.txt
 
 make-prn-dict:

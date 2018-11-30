@@ -13,21 +13,21 @@ def test_find_files_by_extension() -> None:
 
     all_files_in_directory: List[str] = set(glob.glob(os.path.join(TEST_FILES_BASE_DIR, "**"), recursive=True))
 
-    first_test: List[str] = find_files_by_extension(all_files_in_directory, set(["*.xlsx"]))
+    first_test: List[str] = find_files_by_extensions(all_files_in_directory, set(["*.xlsx"]))
     files = set([os.path.split(i)[1] for i in first_test])
     assert len(first_test) == 3 # Number of .xlsx files stored in testfiles folder
     for file in first_test:
         assert file.endswith(".xlsx")
     assert {"python.xlsx", "test.xlsx", "charm.xlsx"}.issubset(files)
 
-    second_test: List[str] = find_files_by_extension(all_files_in_directory, set(["*.py"]))
+    second_test: List[str] = find_files_by_extensions(all_files_in_directory, set(["*.py"]))
     files = set([os.path.split(i)[1] for i in second_test])
     assert len(second_test) == 1 # Number of .py files stored in testfiles folder
     for file in second_test:
         assert file.endswith(".py")
     assert {"test.py"}.issubset(files)
 
-    third_test: List[str] = find_files_by_extension(all_files_in_directory, set(["*.py", "*.txt"]))
+    third_test: List[str] = find_files_by_extensions(all_files_in_directory, set(["*.py", "*.txt"]))
     files = set([os.path.split(i)[1] for i in third_test])
     assert len(third_test) == 3 # Total number of .py and .txt files stored in testfiles folder
     for file in third_test:

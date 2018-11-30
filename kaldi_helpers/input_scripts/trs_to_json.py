@@ -17,7 +17,7 @@ import uuid
 import glob
 import xml.etree.ElementTree as ET
 from typing import Dict, List, Set, Tuple, Union
-from kaldi_helpers.script_utilities import find_files_by_extension, write_data_to_json_file
+from kaldi_helpers.script_utilities import find_files_by_extensions, write_data_to_json_file
 
 
 def conditional_log(condition: bool, text: str) -> None:
@@ -139,7 +139,7 @@ def main() -> None:
         sys.stderr.write(arguments.input_directory + "\n")
 
     all_files_in_dir: Set[str] = set(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
-    transcript_names: Set[str] = find_files_by_extension(all_files_in_dir, {"*.trs"})
+    transcript_names: Set[str] = find_files_by_extensions(all_files_in_dir, {"*.trs"})
 
     utterances = []
     for file_name in transcript_names:

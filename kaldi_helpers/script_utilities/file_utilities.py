@@ -4,7 +4,7 @@ from typing import Set, List
 from pathlib import Path
 
 
-def find_files_by_extension(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
+def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
     """
     Searches for all files in the set of files with the given extensions.
     :param set_of_all_files: set of file names in string format
@@ -43,4 +43,4 @@ def find_all_files_by_extensions(directory_path: str, extensions: Set[str]) -> S
     :return: a set of file paths
     """
     all_files_in_dir: Set[str] = set(glob.glob(Path(directory_path), recursive=True))
-    return find_files_by_extension(all_files_in_dir, extensions)
+    return find_files_by_extensions(all_files_in_dir, extensions)

@@ -13,7 +13,7 @@ import os
 import argparse
 from pympi.Elan import Eaf
 from typing import List
-from kaldi_helpers.script_utilities import find_files_by_extension
+from kaldi_helpers.script_utilities import find_files_by_extensions
 from kaldi_helpers.script_utilities import write_data_to_json_file
 
 
@@ -101,7 +101,7 @@ def main():
         os.makedirs(arguments.output_dir)
 
     all_files_in_directory = set(glob.glob(os.path.join(arguments.input_dir, "**"), recursive=True))
-    input_eafs_files = find_files_by_extension(all_files_in_directory, {"*.eaf"})
+    input_eafs_files = find_files_by_extensions(all_files_in_directory, {"*.eaf"})
 
     annotations_data = []
 
