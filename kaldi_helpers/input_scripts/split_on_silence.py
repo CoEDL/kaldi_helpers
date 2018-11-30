@@ -13,7 +13,7 @@ from pydub.silence import split_on_silence
 from kaldi_helpers.script_utilities import find_all_files_by_extensions
 
 
-def match_target_amplitude(segment: AudioSegment, target_dbfs):
+def match_target_amplitude(segment: AudioSegment, target_dbfs) -> AudioSegment:
     """
     Matches an AudioSegment to a specified dBFS level.
     :param segment: AudioSegment to modify
@@ -29,16 +29,15 @@ def split_audio_file_on_silence(file_path: str,
                                 min_silence_length: int,
                                 threshold: int,
                                 added_silence: int,
-                                file_index: int):
+                                file_index: int) -> None:
     """
     Splits an AudioSegment into sub-segments based on silence detected by pydub.
     :param file_path: file path of audiofile to split
     :param output_directory: path to directory in which to write output files
     :param min_silence_length: the minimum length (in ms) of silence that indicates a break
-    :param threshold:
-    :param added_silence:
-    :param file_index:
-    :return:
+    :param threshold: the level below the norm (in dBFS) to consider silence
+    :param added_silence: silence to be added to the beginning and end of each split utterance
+    :param file_index: the number of the file in the directory (recursive) to mark each sub-utterance with.
     """
     audio = AudioSegment(file_path)
     segments = split_on_silence(audio_segment=audio,
@@ -53,7 +52,7 @@ def split_audio_file_on_silence(file_path: str,
         normalised_segment.export(Path(output_directory, export_file_name))
 
 
-def main():
+def main() -> None:
     parser = ArgumentParser(description="Splits a directory of audio (.wav) files into short segments")
     parser.add_argument("-i", "--input_dir",
                         help="Directory containing audio to be split",

@@ -75,8 +75,13 @@ class KaldiInput:
             self.recordings_list.append(self.recordings[audio_file] + " ./" + audio_file + "\n")
         return self.recordings[audio_file]
 
-    def add(self, recording_id: str, speaker_id: str, utterance_id: str,
-            start_ms: int, stop_ms: int, transcript: str, silence_markers: bool) -> None:
+    def add(self, recording_id: str,
+            speaker_id: str,
+            utterance_id: str,
+            start_ms: int,
+            stop_ms: int,
+            transcript: str,
+            silence_markers: bool) -> None:
         """
         Appends new items to the transcripts, segments, utt2spk and corpus lists.
         
@@ -87,8 +92,6 @@ class KaldiInput:
         :param stop_ms: stop time of the uttered phrase
         :param transcript: the uttered phrase
         :param silence_markers: boolean condition indicating whether to include silence markers
-        
-        :return: 
         """
         if silence_markers:
             self.transcripts_list.append(utterance_id + " !SIL " + transcript + " !SIL\n")
@@ -102,9 +105,7 @@ class KaldiInput:
 
         """
         After parsing the json file and populating the segments, transcripts, speakers, recordings, utt2spk and corpus 
-        lists with data, this function performs the final write to their respective files. 
-        
-        :return: 
+        lists with data, this function performs the final write to their respective files.
         """
 
         self.segments_list.sort()
@@ -161,7 +162,7 @@ def main() -> None:
         input_file.close()
     except FileNotFoundError:
         print(f"JSON file could not be found: {arguments.input_json}")
-    except:
+    except Exception:
         print("Unexpected error", sys.exc_info()[0])
         raise
 
@@ -200,7 +201,6 @@ def main() -> None:
                               arguments.silence_markers)
 
         else:
-
             speaker_id = training_input.add_speaker(speaker_id) # add speaker id
             recording_id: str = training_input.add_recording(audio_file) # add audio file name
             utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
@@ -213,8 +213,10 @@ def main() -> None:
                                transcript,
                                arguments.silence_markers)
 
+
     testing_input.write_and_close()
     training_input.write_and_close()
+
 
 if __name__ == "__main__":
     main()

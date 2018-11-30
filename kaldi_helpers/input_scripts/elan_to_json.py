@@ -93,7 +93,7 @@ def main():
                         help="Target language tier name",
                         default="Phrase")
     parser.add_argument("-j", "--output_json",
-                        help="File name to output_scripts json")
+                        help="File path to output json")
     arguments: argparse.Namespace = parser.parse_args()
 
     # Build output_scripts directory if needed
