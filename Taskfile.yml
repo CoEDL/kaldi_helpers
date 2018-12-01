@@ -321,7 +321,7 @@ make-wordlist:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
                 --infile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
-                --wordlist {{ .INPUT_PATH }}/config/additional_words.txt
+                --word_list {{ .INPUT_PATH }}/config/additional_words.txt
                 --text_corpus {{ .INPUT_PATH }}/config/text_corpora/
                 --kaldi_corpus {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted/corpus.txt
 
