@@ -155,7 +155,7 @@ def main():
     arguments = parser.parse_args()
 
     generate_word_list(transcription_file=arguments.infile,
-                       word_list_file=arguments.wordlist,
+                       word_list_file=arguments.word_list,
                        text_corpus_directory=arguments.text_corpus,
                        output_file=arguments.outfile,
                        kaldi_corpus_file=arguments.kaldi_corpus)
