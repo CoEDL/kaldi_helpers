@@ -318,6 +318,7 @@ make-wordlist:
   env:
     PYTHONIOENCODING: "utf-8"
   cmds:
+    - mkdir -p /kaldi-helpers/working_dir/input/config/text_corpora/
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/make_wordlist.py
                 --infile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
