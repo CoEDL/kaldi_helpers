@@ -151,7 +151,6 @@ def main() -> None:
                         help="The output_scripts folder",
                         default=os.path.join(".", "data"))
     parser.add_argument("-s", "--silence_markers",
-                        type=bool,
                         action="store_true",
                         help="The input_scripts json file",
                         required=False)
