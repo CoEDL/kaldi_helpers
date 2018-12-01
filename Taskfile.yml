@@ -69,6 +69,8 @@ _show-lattice:
 _transcribe:
   desc: "This doesn't build the files yet, manually create infer/wav.scp, infer/spk2utt, infer/utt2spk and put infer/audio."
   dir: /kaldi-helpers
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .HELPERS_PATH }}/{{ .INPUT_SCRIPTS_PATH }}/resample_audio.py -c {{ .INFER_PATH }}
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/generate-infer-files.sh
@@ -368,6 +370,8 @@ split-eafs:
 
 ready-example:
   desc: "Prepares the Abui toy corpus for use with Kaldi/kaldi-helpers"
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
     - mkdir -p /kaldi-helpers/working_dir/input
     - cp -R /kaldi-helpers/resources/corpora/abui_toy_corpus/* working_dir/input/
@@ -375,18 +379,24 @@ ready-example:
 infer:
   desc: "Run Kaldi inference_scripts on test data"
   dir: /kaldi-helpers/working_dir/input/output/kaldi
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode.sh
 
 infer-align:
   desc: "Run Kaldi inference_scripts on test data and output_scripts ctm aligned files"
   dir: /kaldi-helpers/working_dir/input/output/kaldi
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
 
 task split-inferences:
   desc: "split all audio "
   dir: /kaldi-helpers/working_dir/input/infer
+  env:
+    PYTHONIOENCODING: "utf-8"
   cmds:
     - mkdir -p {{ .INFER_PATH }}
     - python3.6 python3.6 {{ .INPUT_SCRIPTS_PATH }}/split_on_silence.py \
