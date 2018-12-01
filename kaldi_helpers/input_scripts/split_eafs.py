@@ -115,7 +115,6 @@ def findFilesByExt(setOfAllFiles, exts):
     return res
 
 
-
 def main():
     parser = argparse.ArgumentParser(
         description="Slices a directory of Elan .eaf files and matching .wav files into separate "

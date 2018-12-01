@@ -12,7 +12,7 @@ import argparse
 import os
 import sys
 from typing import List, Dict
-from kaldi_helpers.script_utilities import load_json_file, find_all_files_by_extensions
+from kaldi_helpers.script_utilities import load_json_file, find_all_files_in_dir_by_extensions
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:
@@ -64,8 +64,7 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     """
     Takes a text file, extracts all sentences and writes them to the corpus file.
     :param file_name: the path to a plaintext file to extract additional sentences/lines from
-    :param kaldi_corpus: the path to kaldi corpus.txt file created by
-    :return: a list of additional example sentences with no associated audio data
+    :param kaldi_corpus: the path to kaldi corpus.txt file created by json_to_kaldi.py.
     """
     if not os.path.exists(kaldi_corpus):
         print(f"Failed to find corpus.txt file at {kaldi_corpus}.")
@@ -80,11 +79,58 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
                 print("Provided additional text corpus invalid")
 
 
+def generate_word_list(transcription_file: str,
+                       word_list_file: str,
+                       text_corpus_directory: str,
+                       output_file: str,
+                       kaldi_corpus_file: str) -> None:
+    """
+    Generates the wordlist.txt file used to populate the Kaldi file structure and generate
+    the lexicon.txt file.
+    :param transcription_file: path to the json file containing the transcriptions
+    :param word_list_file: the path of the file to write the word list to
+    :param text_corpus_directory: file path to a folder of text-only corpus files to include in corpus.txt
+    :param output_file: the path of the file to write the word list to
+    :param kaldi_corpus_file: file path to the corpus.txt created by json_to_kaldi.py
+    :return:
+    """
+    json_data: List[Dict[str, str]] = load_json_file(transcription_file)
+
+    if word_list_file and os.path.exists(word_list_file):
+        print(f"Using additional word list at {word_list_file}")
+        additional_words = extract_additional_words(word_list_file)
+    else:
+        print("No additional word list provided or provided list invalid...")
+        additional_words = []
+
+    if text_corpus_directory:
+        print(f"Using additional text corpus at {text_corpus_directory}")
+        for corpora_file in find_all_files_in_dir_by_extensions(text_corpus_directory, {"txt"}):
+            additional_words = additional_words.extend(extract_additional_words(corpora_file))
+            extract_additional_corpora(corpora_file, kaldi_corpus_file)
+    else:
+        print("No additional text corpus provided.")
+
+    print("Extracting word list(s)...", flush=True, file=sys.stderr)
+
+    # Retrieve ELAN word data
+    word_list_file = extract_word_list(json_data)
+
+    # Add additional words to lexicon if required
+    word_list_file.extend(additional_words)
+
+    # Remove duplicates
+    word_list_file = list(set(word_list_file))
+
+    print(f"Writing wordlist to file...", flush=True, file=sys.stderr)
+    save_word_list(word_list_file, output_file)
+
+
 def main():
     """
     Run the entire make_wordlist.py as a command line utility.
     
-    Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE] [-w WORDLIST] [-t TEXTCORPUS]
+    Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE] [-w WORDLIST] [-t TEXTCORPUS] [-c KALDICORPUS]
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--infile",
@@ -95,48 +141,24 @@ def main():
                         type=str,
                         required=True,
                         help="The path of the file to write the word list to.")
-    parser.add_argument("-w", "--wordlist",
+    parser.add_argument("-w", "--word_list",
                         type=str,
                         required=False,
-                        help="File path to an optional additional word list")
+                        help="File path to an optional additional word list.")
     parser.add_argument("-t", "--text_corpus",
-                        help="File path to a folder of text-only corpus files to include in corpus.txt",
+                        help="File path to a folder of text-only corpus files to include in corpus.txt.",
                         required=False)
     parser.add_argument("-c", "--kaldi_corpus",
                         type=str,
-                        help="File path to the corpus.txt created by json_to_kaldi.py",
+                        help="File path to the corpus.txt created by json_to_kaldi.py.",
                         required=True)
     arguments = parser.parse_args()
-    json_data: List[Dict[str, str]] = load_json_file(arguments.infile)
 
-    if arguments.wordlist and os.path.exists(arguments.wordlist):
-        print(f"Using additional word list at {arguments.wordlist}")
-        additional_words = extract_additional_words(arguments.wordlist)
-    else:
-        print("No additional word list provided or provided list invalid...")
-        additional_words = []
-
-    if arguments.text_corpus:
-        print(f"Using additional text corpus at {arguments.text_corpus}")
-        for corpora_file in find_all_files_by_extensions(arguments.text, {"txt"}):
-            additional_words = additional_words.extend(extract_additional_words(corpora_file))
-            extract_additional_corpora(corpora_file, arguments.kaldi_corpus)
-    else:
-        print("No additional text corpus provided.")
-
-    print("Extracting word list(s)...", flush=True, file=sys.stderr)
-
-    # Retrieve ELAN word data
-    word_list = extract_word_list(json_data)
-
-    # Add additional words to lexicon if required
-    word_list.extend(additional_words)
-
-    # Remove duplicates
-    word_list = list(set(word_list))
-
-    print(f"Writing wordlist to file...", flush=True, file=sys.stderr)
-    save_word_list(word_list, arguments.outfile)
+    generate_word_list(transcription_file=arguments.infile,
+                       word_list_file=arguments.wordlist,
+                       text_corpus_directory=arguments.text_corpus,
+                       output_file=arguments.outfile,
+                       kaldi_corpus_file=arguments.kaldi_corpus)
 
     print("Done.", file=sys.stderr)
 

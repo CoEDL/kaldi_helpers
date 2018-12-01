@@ -1,3 +1,7 @@
+"""
+Collection of utilities for finding and working with files.
+"""
+
 import glob
 import os
 from typing import Set, List
@@ -35,7 +39,7 @@ def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[s
     return ""
 
 
-def find_all_files_by_extensions(directory_path: str, extensions: Set[str]) -> Set[str]:
+def find_all_files_in_dir_by_extensions(directory_path: str, extensions: Set[str]) -> Set[str]:
     """
     Find all files with given extensions in a directory recursively
     :param directory_path: path to directory to recursively search

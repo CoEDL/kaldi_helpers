@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python3
 
 """
 Parse json file and extract transcription information which are then processed and output_scripts in the desired Kaldi format.
@@ -60,7 +60,7 @@ class KaldiInput:
         """
         if speaker_id not in self.speakers:
             self.speakers[speaker_id] = str(uuid.uuid4()) # create speaker id
-            self.speakers_list.append(self.speakers[speaker_id] + " " + "f\n") # writing gender
+            self.speakers_list.append(self.speakers[speaker_id] + " " + "f\n")  # writing gender
         return self.speakers[speaker_id]
 
     def add_recording(self, audio_file: str) -> str:
@@ -71,7 +71,7 @@ class KaldiInput:
         :return: returns a correctly formatted audio file description
         """
         if audio_file not in self.recordings:
-            self.recordings[audio_file] = str(uuid.uuid4()) # create recording id
+            self.recordings[audio_file] = str(uuid.uuid4())  # Create recording id
             self.recordings_list.append(self.recordings[audio_file] + " ./" + audio_file + "\n")
         return self.recordings[audio_file]
 
@@ -151,6 +151,7 @@ def main() -> None:
                         help="The output_scripts folder",
                         default=os.path.join(".", "data"))
     parser.add_argument("-s", "--silence_markers",
+                        type=bool,
                         action="store_true",
                         help="The input_scripts json file",
                         required=False)
@@ -162,9 +163,9 @@ def main() -> None:
         input_file.close()
     except FileNotFoundError:
         print(f"JSON file could not be found: {arguments.input_json}")
-    except Exception:
+    except Exception as e:
         print("Unexpected error", sys.exc_info()[0])
-        raise
+        raise e
 
     if not os.path.exists(arguments.output_folder):
         os.makedirs(arguments.output_folder)
@@ -191,7 +192,6 @@ def main() -> None:
             speaker_id = testing_input.add_speaker(speaker_id) # add speaker_id
             recording_id: str = testing_input.add_recording(audio_file) # add audio file name
             utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
-            #silence_markers: bool = False
             testing_input.add(recording_id,
                               speaker_id,
                               utterance_id,
@@ -204,7 +204,6 @@ def main() -> None:
             speaker_id = training_input.add_speaker(speaker_id) # add speaker id
             recording_id: str = training_input.add_recording(audio_file) # add audio file name
             utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
-            #silence_markers: bool = True
             training_input.add(recording_id,
                                speaker_id,
                                utterance_id,
@@ -212,7 +211,6 @@ def main() -> None:
                                stop_ms,
                                transcript,
                                arguments.silence_markers)
-
 
     testing_input.write_and_close()
     training_input.write_and_close()

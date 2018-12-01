@@ -1,5 +1,5 @@
 """
-Collection of script_utilities for working with JSON files.
+Collection of utilities for working with JSON files.
 """
 
 import json

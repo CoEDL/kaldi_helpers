@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3
 
 """
 # Copyright 2018 The University of Queensland (Author: Nicholas Lambourne)
@@ -13,9 +13,9 @@ from praatio import tgio
 import codecs
 
 
-def ctm_to_dictionary(ctm_file_name: str,
+def ctm_to_dictionary(ctm_file_path: str,
                       segments_dictionary: Dict[str, str]) -> dict:
-    with codecs.open(ctm_file_name, encoding="utf8") as file:
+    with codecs.open(ctm_file_path, encoding="utf8") as file:
         ctm_entries = list(reader(file, delimiter=" "))
     textgrid_dictionary = dict()
     for entry in ctm_entries:
@@ -71,10 +71,21 @@ def create_textgrid(wav_dictionary: Dict[str, str],
 
 def main() -> None:
     parser: ArgumentParser = ArgumentParser(description="Converts Kaldi CTM format to Praat Textgrid Format.")
-    parser.add_argument("--ctm", type=str, help="The input_scripts CTM format file", required=True)
-    parser.add_argument("--wav", type=str, help="The input_scripts wav.scp file", required=True)
-    parser.add_argument("--seg", type=str, help="The segment to utterance mapping", default="./segments")
-    parser.add_argument("-o", "--outdir", type=str, help="The directory path for the Praat TextGrid output_scripts",
+    parser.add_argument("-c", "--ctm",
+                        type=str,
+                        help="The input_scripts CTM format file",
+                        required=True)
+    parser.add_argument("-w", "--wav",
+                        type=str,
+                        help="The input_scripts wav.scp file",
+                        required=True)
+    parser.add_argument("-s", "--seg",
+                        type=str,
+                        help="The segment to utterance mapping",
+                        default="./segments")
+    parser.add_argument("-o", "--outdir",
+                        type=str,
+                        help="The directory path for the Praat TextGrid output_scripts",
                         default=".")
     arguments = parser.parse_args()
 

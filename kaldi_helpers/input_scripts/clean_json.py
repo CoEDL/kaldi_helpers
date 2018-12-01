@@ -157,32 +157,33 @@ def main() -> None:
     parser: ArgumentParser = ArgumentParser()
     parser.add_argument("-i", "--infile",
                         type=str,
-                        help="The input_scripts file to clean.",
+                        help="The path to the dirty json file to clean.",
                         required=True)
     parser.add_argument("-o", "--outfile",
                         type=str,
-                        help="The file to write to")
-    parser.add_argument("-r", "--removeEng",
+                        help="The path to the clean json file to write to",
+                        required=True)
+    parser.add_argument("-r", "--remove_eng",
                         help="Remove english like utterances",
                         action="store_true")
-    parser.add_argument("-u", "--useLangId",
+    parser.add_argument("-u", "--use_lang_id",
                         help="Use langid library to detect English",
                         action="store_true")
 
     arguments = parser.parse_args()
-    dirty_json_data = load_json_file(arguments.infile)
+    dirty_json_data: List[Dict[str, str]] = load_json_file(arguments.infile)
     outfile = arguments.outfile if arguments.outfile else sys.stdout
 
-    print(f"Filtering {str(arguments.infile)}...", end="", flush=True)
+    print(f"Filtering dirty json data {arguments.infile}...")
 
-    filtered_data = clean_json_data(list(dirty_json_data),
-                                    remove_english=arguments.removeEng,
-                                    use_langid=arguments.useLangId)
+    filtered_data = clean_json_data(json_data=dirty_json_data,
+                                    remove_english=arguments.remove_eng,
+                                    use_langid=arguments.use_lang_id)
 
     write_data_to_json_file(data=list(filtered_data),
                             output=outfile)
 
-    # print(f"Finished! Wrote {str(len(filtered_data))} transcriptions.", end="", flush=True)
+    print(f"Finished! Wrote {str(len(filtered_data))} transcriptions.")
 
 
 if __name__ == "__main__":

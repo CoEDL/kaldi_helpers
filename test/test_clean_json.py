@@ -1,6 +1,6 @@
 import os
 from _pytest.capture import CaptureFixture
-from kaldi_helpers.clean_json import *
+from kaldi_helpers.input_scripts.clean_json import *
 from kaldi_helpers.script_utilities import write_data_to_json_file
 
 EXAMPLE_JSON_DATA = [

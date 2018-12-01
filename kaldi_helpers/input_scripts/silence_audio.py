@@ -18,8 +18,8 @@ import wave
 import numpy
 from pympi.Elan import Eaf
 
-def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish):
 
+def silence_audio(eaf_file, output, silence_mono, silence_stereo, do_not_publish):
     # Load the audio file
     with wave.open(input, "rb") as audio:
         parameters = audio.getparams()

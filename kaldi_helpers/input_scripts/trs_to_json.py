@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 """
-Parse trs file and extract information from it for json
+Parse trs file and extract information from it and export in json format.
 Dumps json to sys stdout,
 so you'll need to direct the output_scripts to a file when running the script
 
@@ -109,7 +109,6 @@ def process_turn(wave_name: str, turn_node: ET.Element, tree: ET.ElementTree) ->
 
 
 def main() -> None:
-
     """
     Run the entire trs_to_json.py as a command line utility. It processes the utterances
     and outputs to a file in the same directory as the input_scripts .trs file. The output
@@ -121,15 +120,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="A command line utility to convert .trs files to .json",
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-i", "--input_dir",
-                        dest="input_directory",
+                        type=str,
                         help="Input directory, default='working_dir/input/data'",
                         default="working_dir/input/data/")
     parser.add_argument('-v', '--verbose',
-                        dest='verbose',
+                        type=str,
                         help='More logging to console.',
                         action="store_true")
-    parser.add_argument("-j", "--output_json",
-                        dest="output_json",
+    parser.add_argument("-o", "--output_json",
+                        type=str,
                         help="File name to output_scripts json",
                         default="working_dir/input/output/tmp/")
 
@@ -138,7 +137,7 @@ def main() -> None:
     if arguments.verbose:
         sys.stderr.write(arguments.input_directory + "\n")
 
-    all_files_in_dir: Set[str] = set(glob.glob(os.path.join(arguments.input_directory, "**"), recursive=True))
+    all_files_in_dir: Set[str] = set(glob.glob(os.path.join(arguments.input_dir, "**"), recursive=True))
     transcript_names: Set[str] = find_files_by_extensions(all_files_in_dir, {"*.trs"})
 
     utterances = []

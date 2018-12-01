@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 
 """
 Extracts transcription information and outputs them as json 
@@ -39,21 +39,19 @@ def process_textgrid(input_directory: str) -> List[Dict[str, Union[str, int]]]:
                     intervals.append({
                         "audio_file_name": os.path.join(".", basename + ".wav"),
                         "transcript": label_word,
-                        "start_ms": second_to_milli(float(start)),
-                        "stop_ms": second_to_milli(float(stop))
+                        "start_ms": seconds_to_milliseconds(float(start)),
+                        "stop_ms": seconds_to_milliseconds(float(stop))
                     })
-
     return intervals
 
 
-def second_to_milli(seconds: float) -> int:
+def seconds_to_milliseconds(seconds: float) -> int:
     """
     Converts from seconds to milliseconds.
     
     :param seconds: time in seconds
     :return: converted time rounded to nearest millisecond
     """
-
     return int(seconds * 1000)
 
 
@@ -84,6 +82,7 @@ def main() -> None:
 
     output_json = os.path.join(result_base_name, outfile_name)
     write_data_to_json_file(intervals, output_json)
+
 
 if __name__ == "__main__":
     main()

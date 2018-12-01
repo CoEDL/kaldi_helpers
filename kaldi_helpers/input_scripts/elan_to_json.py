@@ -29,7 +29,7 @@ def process_eaf(input_elan_file: str, tier_name: str) -> List[dict]:
                     
     :param input_elan_file: name of input_scripts elan file
     :param tier_name: name of the elan tier to process. these tiers are nodes from the tree structure in the .eaf file.
-    :return: 
+    :return: a list of dictionaries, where each dictionary is an annotation
     """
     # Get paths to files
     input_directory, full_file_name = os.path.split(input_elan_file)
