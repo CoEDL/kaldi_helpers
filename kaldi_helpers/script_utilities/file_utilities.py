@@ -46,5 +46,5 @@ def find_all_files_in_dir_by_extensions(directory_path: str, extensions: Set[str
     :param extensions: the set of allowed extensions
     :return: a set of file paths
     """
-    all_files_in_dir: Set[str] = set(glob.glob(os.path.join(directory_path, "**"), recursive=True))
+    all_files_in_dir: Set[str] = set(glob.glob(str(os.path.join(directory_path, "**")), recursive=True))
     return find_files_by_extensions(all_files_in_dir, extensions)
