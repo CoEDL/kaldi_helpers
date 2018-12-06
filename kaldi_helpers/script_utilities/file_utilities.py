@@ -5,7 +5,6 @@ Collection of utilities for finding and working with files.
 import glob
 import os
 from typing import Set, List
-from pathlib import Path
 
 
 def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -> Set[str]:
@@ -46,5 +45,7 @@ def find_all_files_in_dir_by_extensions(directory_path: str, extensions: Set[str
     :param extensions: the set of allowed extensions
     :return: a set of file paths
     """
-    all_files_in_dir: Set[str] = set(glob.glob(str(os.path.join(directory_path, "**")), recursive=True))
+    path = str(os.path.join(directory_path, "**"))
+    print(path)
+    all_files_in_dir: Set[str] = set(glob.glob(path, recursive=True))
     return find_files_by_extensions(all_files_in_dir, extensions)
