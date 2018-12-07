@@ -393,7 +393,7 @@ infer-align:
   cmds:
     - sh {{ .HELPERS_PATH }}/{{ .INFERENCE_SCRIPTS_PATH }}/gmm-decode-align.sh
 
-task split-inferences:
+split-inferences:
   desc: "split all audio "
   dir: /kaldi-helpers/working_dir/input/infer
   env:
