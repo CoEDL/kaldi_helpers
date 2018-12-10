@@ -59,8 +59,8 @@ class KaldiInput:
         :return: returns the correctly formatted speaker id 
         """
         if speaker_id not in self.speakers:
-            self.speakers[speaker_id] = str(uuid.uuid4()) # create speaker id
-            self.speakers_list.append(self.speakers[speaker_id] + " " + "f\n")  # writing gender
+            self.speakers[speaker_id] = str(uuid.uuid4())  # create speaker id
+            self.speakers_list.append(f"{self.speakers[speaker_id]} \n")  # writing gender
         return self.speakers[speaker_id]
 
     def add_recording(self, audio_file: str) -> str:
@@ -72,7 +72,7 @@ class KaldiInput:
         """
         if audio_file not in self.recordings:
             self.recordings[audio_file] = str(uuid.uuid4())  # Create recording id
-            self.recordings_list.append(self.recordings[audio_file] + " ./" + audio_file + "\n")
+            self.recordings_list.append(f"{self.recordings[audio_file]} ./{audio_file}\n")
         return self.recordings[audio_file]
 
     def add(self, recording_id: str,
@@ -162,6 +162,7 @@ def main() -> None:
         input_file.close()
     except FileNotFoundError:
         print(f"JSON file could not be found: {arguments.input_json}")
+        return
     except Exception as e:
         print("Unexpected error", sys.exc_info()[0])
         raise e
@@ -169,8 +170,8 @@ def main() -> None:
     if not os.path.exists(arguments.output_folder):
         os.makedirs(arguments.output_folder)
 
-    testing_input: KaldiInput = KaldiInput(arguments.output_folder + "/testing")
-    training_input: KaldiInput = KaldiInput(arguments.output_folder + "/training")
+    testing_input: KaldiInput = KaldiInput(output_folder=f"{arguments.output_folder}/testing")
+    training_input: KaldiInput = KaldiInput(output_folder=f"{arguments.output_folder}/training")
 
     for i, json_transcript in enumerate(json_transcripts):
         transcript: str = json_transcript.get("transcript", "")
