@@ -262,7 +262,8 @@ def main() -> None:
         print(f"Using additional text corpus at {text_corpus_directory}")
         all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
         print(all_files_in_dir)
-        for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
+        for corpora_file in find_files_by_extensions(set_of_all_files=all_files_in_dir,
+                                                     extensions={".txt"}):
             print(f"Extracting corpora examples from {corpora_file}")
             extract_additional_corpora(corpora_file, arguments.corpus_file)
             training_input.corpus_list.extend(clean_corpus_file(corpora_file))
