@@ -56,7 +56,7 @@ def extract_additional_words(file_name: str) -> List[str]:
                 new_words = line.split(" ")
                 words.extend(new_words)
     else:
-        print("WARNING: Additional word list file does not exist, skipping!")
+        print(f"WARNING: Additional word list file at {file_name} does not exist, skipping!")
     return words
 
 
