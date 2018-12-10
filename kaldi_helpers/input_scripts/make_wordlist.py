@@ -69,35 +69,27 @@ def generate_word_list(transcription_file: str,
     the lexicon.txt file.
     :param transcription_file: path to the json file containing the transcriptions
     :param word_list_file: the path of the file to write the word list to
-    :param text_corpus_directory: file path to a folder of text-only corpus files to include in corpus.txt
     :param output_file: the path of the file to write the word list to
     :param kaldi_corpus_file: file path to the corpus.txt created by json_to_kaldi.py
     :return:
     """
     json_data: List[Dict[str, str]] = load_json_file(transcription_file)
 
-    if word_list_file and os.path.exists(word_list_file):
-        print(f"Using additional word list at {word_list_file}")
-        additional_words = extract_additional_words(word_list_file)
-    else:
-        print("No additional word list provided or provided list invalid...")
-        additional_words = []
-
     print("Extracting word list(s)...", flush=True, file=sys.stderr)
 
     # Retrieve ELAN word data
-    word_list_file = extract_word_list(json_data)
+    word_list = extract_word_list(json_data)
 
     # Add additional words to lexicon if required
     if kaldi_corpus_file:
-        additional_words = extract_additional_words(kaldi_corpus_file)
-        word_list_file.extend(additional_words)
+        additional_words = extract_additional_words(word_list_file)
+        word_list.extend(additional_words)
 
     # Remove duplicates
-    word_list_file = list(set(word_list_file))
+    word_list = list(set(word_list_file))
 
     print(f"Writing wordlist to file...", flush=True, file=sys.stderr)
-    save_word_list(word_list_file, output_file)
+    save_word_list(word_list, output_file)
 
 
 def main():
