@@ -9,10 +9,11 @@ Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
 """
 
 import argparse
+import glob
 import os
 import sys
 from typing import List, Dict
-from kaldi_helpers.script_utilities import load_json_file, find_all_files_in_dir_by_extensions
+from kaldi_helpers.script_utilities import load_json_file, find_files_by_extensions
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:
@@ -105,7 +106,8 @@ def generate_word_list(transcription_file: str,
 
     if text_corpus_directory:
         print(f"Using additional text corpus at {text_corpus_directory}")
-        for corpora_file in find_all_files_in_dir_by_extensions(text_corpus_directory, {"txt"}):
+        all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
+        for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
             additional_words = additional_words.extend(extract_additional_words(corpora_file))
             extract_additional_corpora(corpora_file, kaldi_corpus_file)
     else:
