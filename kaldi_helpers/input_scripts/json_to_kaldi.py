@@ -32,7 +32,7 @@ def clean_corpus_file(corpus_file_path: str) -> List[str]:
     :return: a list of cleaned corpus examples
     """
     examples = []
-    with open(corpus_file_path, "w") as file_:
+    with open(corpus_file_path, "r") as file_:
         for line in file_.readlines():
             examples.append(re.sub(r"[^a-zA-Z0-9\s]", "", line))
     return examples
