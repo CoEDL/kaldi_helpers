@@ -235,7 +235,7 @@ clean-output-folder:
 tmp-makedir:
   desc: "Make the tmp directory, if it does not exist"
   cmds:
-    - if [ ! -d {{ .KALDI_OUTPUT_PATH }}/tmp ]; then mkdir {{ .KALDI_OUTPUT_PATH }}/tmp; fi
+    - if [ ! -d {{ .KALDI_OUTPUT_PATH }}/tmp ]; then mkdir -p {{ .KALDI_OUTPUT_PATH }}/tmp; fi
 
 tmp-delete:
   deps: [tmp-makedir]
