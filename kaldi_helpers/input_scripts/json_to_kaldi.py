@@ -16,10 +16,26 @@ Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
 """
 
 import argparse
+import json
+import os
+import re
 import sys
 import uuid
-from typing import Dict
-from kaldi_helpers.script_utilities import *
+from typing import Dict, List
+from _io import TextIOWrapper
+
+
+def clean_corpus_file(corpus_file_path: str) -> List[str]:
+    """
+    Opens the given file, removes punctuation and returns a list of cleaned lines.
+    :param corpus_file_path: file path to additional corpus examples
+    :return: a list of cleaned corpus examples
+    """
+    examples = []
+    with open(corpus_file_path, "w") as file_:
+        for line in file_:
+            examples.append(re.sub(r"[^a-zA-Z0-9\s]", "", line))
+    return examples
 
 
 class KaldiInput:
@@ -44,12 +60,12 @@ class KaldiInput:
         self.utt2spk_list: List[str] = []
         self.corpus_list: List[str] = []
 
-        self.segments_file: TextIOWrapper = open(output_folder + "/segments", "w", encoding="utf-8")
-        self.transcripts_file: TextIOWrapper = open(output_folder + "/text", "w", encoding="utf-8")
-        self.speakers_file: TextIOWrapper = open(output_folder + "/spk2gender", "w", encoding="utf-8")
-        self.recordings_file: TextIOWrapper = open(output_folder + "/wav.scp", "w", encoding="utf-8")
-        self.utt2spk_file: TextIOWrapper = open(output_folder + "/utt2spk", "w", encoding="utf-8")
-        self.corpus_file: TextIOWrapper = open(output_folder + "/corpus.txt", "w", encoding="utf-8")
+        self.segments_file: TextIOWrapper = open(f"{output_folder}/segments", "w", encoding="utf-8")
+        self.transcripts_file: TextIOWrapper = open(f"{output_folder}/text", "w", encoding="utf-8")
+        self.speakers_file: TextIOWrapper = open(f"{output_folder}/spk2gender", "w", encoding="utf-8")
+        self.recordings_file: TextIOWrapper = open(f"{output_folder}/wav.scp", "w", encoding="utf-8")
+        self.utt2spk_file: TextIOWrapper = open(f"{output_folder}/utt2spk", "w", encoding="utf-8")
+        self.corpus_file: TextIOWrapper = open(f"{output_folder}/corpus.txt", "w", encoding="utf-8")
 
     def add_speaker(self, speaker_id: str) -> str:
         """
@@ -94,12 +110,12 @@ class KaldiInput:
         :param silence_markers: boolean condition indicating whether to include silence markers
         """
         if silence_markers:
-            self.transcripts_list.append(utterance_id + " !SIL " + transcript + " !SIL\n")
+            self.transcripts_list.append(f"{utterance_id} !SIL {transcript} !SIL\n")
         else:
-            self.transcripts_list.append(utterance_id + " " + transcript + "\n")
-        self.segments_list.append(utterance_id + " " + recording_id + " " + f"{start_ms/1000.0} {stop_ms/1000.0}\n")
-        self.utt2spk_list.append(utterance_id + " " + speaker_id + "\n")
-        self.corpus_list.append(transcript + "\n")
+            self.transcripts_list.append(f"{utterance_id} {transcript} \n")
+        self.segments_list.append(f"{utterance_id} {recording_id} {start_ms/1000.0} {stop_ms/1000.0}\n")
+        self.utt2spk_list.append(f"{utterance_id} {speaker_id}\n")
+        self.corpus_list.append(f"{transcript}\n")
 
     def write_and_close(self) -> None:
 
@@ -138,7 +154,7 @@ def main() -> None:
     """ 
     Run the entire json_to_kaldi.py as a command line utility. 
     
-    Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
+    Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s] [-c corpus_file]
     """
     parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input_scripts files "
                                                  "(in output_scripts-folder).")
@@ -153,6 +169,10 @@ def main() -> None:
     parser.add_argument("-s", "--silence_markers",
                         action="store_true",
                         help="The input_scripts json file",
+                        required=False)
+    parser.add_argument("-c", "--corpus_file",
+                        type=str,
+                        help="Path to the corpus.txt file of text examples",
                         required=False)
     arguments: argparse.Namespace = parser.parse_args()
 
@@ -211,6 +231,9 @@ def main() -> None:
                                stop_ms,
                                transcript,
                                arguments.silence_markers)
+
+    if arguments.corpus_file:
+        training_input.corpus_list.extend(clean_corpus_file(arguments.corpus_file))
 
     testing_input.write_and_close()
     training_input.write_and_close()

@@ -303,6 +303,7 @@ json-to-kaldi:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/json_to_kaldi.py
                 --input_json {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --output_folder {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted
+                --corpus_file {{ .KALDI_OUTPUT_PATH }}/tmp/corpus.txt
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
