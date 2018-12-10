@@ -36,7 +36,7 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     if not os.path.exists(kaldi_corpus):
         print(f"Failed to find corpus.txt file at {kaldi_corpus}.")
     else:
-        with open(kaldi_corpus, "w") as kaldi_corpus_file:
+        with open(kaldi_corpus, "a") as kaldi_corpus_file:
             if os.path.exists(file_name):
                 print(f"Extracting corpus examples from: {file_name}")
                 with open(file_name, "r", encoding="utf-8",) as file_:
@@ -258,6 +258,7 @@ def main() -> None:
 
     if arguments.text_corpus:
         text_corpus_directory = arguments.text_corpus
+        extract_additional_corpora(text_corpus_directory)
         print(f"Using additional text corpus at {text_corpus_directory}")
         all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
         for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
