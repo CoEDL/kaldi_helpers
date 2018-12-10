@@ -33,12 +33,12 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     :param file_name: the path to a plaintext file to extract additional sentences/lines from
     :param kaldi_corpus: the path to kaldi corpus.txt file created by json_to_kaldi.py.
     """
-    with open(kaldi_corpus, "a") as kaldi_corpus_file:
+    with open(kaldi_corpus, "w") as kaldi_corpus_file:
         if os.path.exists(file_name):
             print(f"Extracting corpus examples from: {file_name}")
             with open(file_name, "r", encoding="utf-8",) as file_:
                 for line in file_:
-                    kaldi_corpus_file.writelines(line)
+                    kaldi_corpus_file.writelines(re.sub(r"[^a-zA-Z0-9\s]", "", line))
         else:
             print("Provided additional text corpus invalid")
 
@@ -52,7 +52,7 @@ def clean_corpus_file(corpus_file_path: str) -> List[str]:
     examples = []
     with open(corpus_file_path, "r") as file_:
         for line in file_.readlines():
-            examples.append(re.sub(r"[^a-zA-Z0-9\s]", "", line))
+            examples.extend(re.sub(r"[^a-zA-Z0-9\s]", "", line))
     return examples
 
 
