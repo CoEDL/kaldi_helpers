@@ -18,7 +18,7 @@ def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -
 
     for file_ in set_of_all_files:
         name, extension = os.path.splitext(file_)
-        if ("*" + extension.lower()) in extensions:
+        if extension.lower() in extensions:
             results.add(file_)
     return results
 
