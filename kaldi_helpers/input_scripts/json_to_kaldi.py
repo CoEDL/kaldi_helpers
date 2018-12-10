@@ -33,7 +33,7 @@ def clean_corpus_file(corpus_file_path: str) -> List[str]:
     """
     examples = []
     with open(corpus_file_path, "w") as file_:
-        for line in file_:
+        for line in file_.readlines():
             examples.append(re.sub(r"[^a-zA-Z0-9\s]", "", line))
     return examples
 
