@@ -16,6 +16,7 @@ Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
 """
 
 import argparse
+import glob
 import json
 import os
 import re
@@ -23,6 +24,26 @@ import sys
 import uuid
 from typing import Dict, List
 from _io import TextIOWrapper
+from kaldi_helpers.script_utilities import find_files_by_extensions
+
+
+def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
+    """
+    Takes a text file, extracts all sentences and writes them to the corpus file.
+    :param file_name: the path to a plaintext file to extract additional sentences/lines from
+    :param kaldi_corpus: the path to kaldi corpus.txt file created by json_to_kaldi.py.
+    """
+    if not os.path.exists(kaldi_corpus):
+        print(f"Failed to find corpus.txt file at {kaldi_corpus}.")
+    else:
+        with open(kaldi_corpus, "w") as kaldi_corpus_file:
+            if os.path.exists(file_name):
+                print(f"Extracting corpus examples from: {file_name}")
+                with open(file_name, "r", encoding="utf-8",) as file_:
+                    for line in file_:
+                        kaldi_corpus_file.writelines(line)
+            else:
+                print("Provided additional text corpus invalid")
 
 
 def clean_corpus_file(corpus_file_path: str) -> List[str]:
@@ -170,9 +191,12 @@ def main() -> None:
                         action="store_true",
                         help="The input_scripts json file",
                         required=False)
+    parser.add_argument("-t", "--text_corpus",
+                        help="File path to a folder of text-only corpus files to include in corpus.txt.",
+                        required=False)
     parser.add_argument("-c", "--corpus_file",
                         type=str,
-                        help="Path to the corpus.txt file of text examples",
+                        help="Path to the corpus.txt file to write text examples to",
                         required=False)
     arguments: argparse.Namespace = parser.parse_args()
 
@@ -232,8 +256,14 @@ def main() -> None:
                                transcript,
                                arguments.silence_markers)
 
-    if arguments.corpus_file:
-        training_input.corpus_list.extend(clean_corpus_file(arguments.corpus_file))
+    if arguments.text_corpus:
+        text_corpus_directory = arguments.text_corpus
+        print(f"Using additional text corpus at {text_corpus_directory}")
+        all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
+        for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
+            training_input.corpus_list.extend(clean_corpus_file(corpora_file))
+    else:
+        print("No additional text corpus provided.")
 
     testing_input.write_and_close()
     training_input.write_and_close()

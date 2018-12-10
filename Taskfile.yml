@@ -304,6 +304,7 @@ json-to-kaldi:
                 --input_json {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --output_folder {{ .KALDI_OUTPUT_PATH }}/tmp/json_splitted
                 --corpus_file {{ .KALDI_OUTPUT_PATH }}/tmp/corpus.txt
+                --text_corpus {{ .INPUT_PATH }}/config/text_corpora/
 
 clean-json:
   desc: "Clean corpus of problematic characters before passing data to Kaldi"
@@ -324,7 +325,6 @@ make-wordlist:
                 --infile {{ .KALDI_OUTPUT_PATH }}/tmp/{{ .CLEANED_FILTERED_DATA }}
                 --outfile {{ .KALDI_OUTPUT_PATH }}/tmp/wordlist.txt
                 --word_list {{ .INPUT_PATH }}/config/additional_words.txt
-                --text_corpus {{ .INPUT_PATH }}/config/text_corpora/
                 --kaldi_corpus {{ .KALDI_OUTPUT_PATH }}/tmp/corpus.txt
 
 make-prn-dict:

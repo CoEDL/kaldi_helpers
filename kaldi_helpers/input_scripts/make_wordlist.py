@@ -9,7 +9,6 @@ Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
 """
 
 import argparse
-import glob
 import os
 import sys
 from typing import List, Dict
@@ -61,28 +60,8 @@ def extract_additional_words(file_name: str) -> List[str]:
     return words
 
 
-def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
-    """
-    Takes a text file, extracts all sentences and writes them to the corpus file.
-    :param file_name: the path to a plaintext file to extract additional sentences/lines from
-    :param kaldi_corpus: the path to kaldi corpus.txt file created by json_to_kaldi.py.
-    """
-    if not os.path.exists(kaldi_corpus):
-        print(f"Failed to find corpus.txt file at {kaldi_corpus}.")
-    else:
-        with open(kaldi_corpus, "w") as kaldi_corpus_file:
-            if os.path.exists(file_name):
-                print(f"Extracting corpus examples from: {file_name}")
-                with open(file_name, "r", encoding="utf-8",) as file_:
-                    for line in file_:
-                        kaldi_corpus_file.writelines(line)
-            else:
-                print("Provided additional text corpus invalid")
-
-
 def generate_word_list(transcription_file: str,
                        word_list_file: str,
-                       text_corpus_directory: str,
                        output_file: str,
                        kaldi_corpus_file: str) -> None:
     """
@@ -104,22 +83,15 @@ def generate_word_list(transcription_file: str,
         print("No additional word list provided or provided list invalid...")
         additional_words = []
 
-    if text_corpus_directory:
-        print(f"Using additional text corpus at {text_corpus_directory}")
-        all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
-        for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
-            additional_words = additional_words.extend(extract_additional_words(corpora_file))
-            extract_additional_corpora(corpora_file, kaldi_corpus_file)
-    else:
-        print("No additional text corpus provided.")
-
     print("Extracting word list(s)...", flush=True, file=sys.stderr)
 
     # Retrieve ELAN word data
     word_list_file = extract_word_list(json_data)
 
     # Add additional words to lexicon if required
-    word_list_file.extend(additional_words)
+    if kaldi_corpus_file:
+        additional_words = extract_additional_words(kaldi_corpus_file)
+        word_list_file.extend(additional_words)
 
     # Remove duplicates
     word_list_file = list(set(word_list_file))
@@ -147,9 +119,6 @@ def main():
                         type=str,
                         required=False,
                         help="File path to an optional additional word list.")
-    parser.add_argument("-t", "--text_corpus",
-                        help="File path to a folder of text-only corpus files to include in corpus.txt.",
-                        required=False)
     parser.add_argument("-c", "--kaldi_corpus",
                         type=str,
                         help="File path to the corpus.txt created by json_to_kaldi.py.",
@@ -158,7 +127,6 @@ def main():
 
     generate_word_list(transcription_file=arguments.infile,
                        word_list_file=arguments.word_list,
-                       text_corpus_directory=arguments.text_corpus,
                        output_file=arguments.outfile,
                        kaldi_corpus_file=arguments.kaldi_corpus)
 
