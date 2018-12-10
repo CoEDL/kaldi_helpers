@@ -33,7 +33,7 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     :param file_name: the path to a plaintext file to extract additional sentences/lines from
     :param kaldi_corpus: the path to kaldi corpus.txt file created by json_to_kaldi.py.
     """
-    if os.path.exists(file_name):
+    if os.path.exists(kaldi_corpus):
         append_write = 'a'  # append if already exists
     else:
         append_write = 'w'  # make a new file if not
