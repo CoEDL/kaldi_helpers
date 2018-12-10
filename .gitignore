@@ -1,9 +1,9 @@
 tmp
 input
 
-tmp
-input
-
+docs/_build
+docs/_static
+docs/_templates
 
 # Created by https://www.gitignore.io/api/python,pycharm
 
