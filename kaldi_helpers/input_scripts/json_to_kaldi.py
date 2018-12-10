@@ -33,7 +33,11 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     :param file_name: the path to a plaintext file to extract additional sentences/lines from
     :param kaldi_corpus: the path to kaldi corpus.txt file created by json_to_kaldi.py.
     """
-    with open(kaldi_corpus, "w") as kaldi_corpus_file:
+    if os.path.exists(file_name):
+        append_write = 'a'  # append if already exists
+    else:
+        append_write = 'w'  # make a new file if not
+    with open(kaldi_corpus, append_write) as kaldi_corpus_file:
         if os.path.exists(file_name):
             print(f"Extracting corpus examples from: {file_name}")
             with open(file_name, "r", encoding="utf-8",) as file_:
@@ -255,10 +259,10 @@ def main() -> None:
 
     if arguments.text_corpus:
         text_corpus_directory = arguments.text_corpus
-        extract_additional_corpora(text_corpus_directory, arguments.corpus_file)
         print(f"Using additional text corpus at {text_corpus_directory}")
         all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
         for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
+            extract_additional_corpora(text_corpus_directory, arguments.corpus_file)
             training_input.corpus_list.extend(clean_corpus_file(corpora_file))
     else:
         print("No additional text corpus provided.")
