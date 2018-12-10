@@ -258,7 +258,7 @@ def main() -> None:
 
     if arguments.text_corpus:
         text_corpus_directory = arguments.text_corpus
-        extract_additional_corpora(text_corpus_directory)
+        extract_additional_corpora(text_corpus_directory, arguments.corpus_file)
         print(f"Using additional text corpus at {text_corpus_directory}")
         all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
         for corpora_file in find_files_by_extensions(all_files_in_dir, {"txt"}):
