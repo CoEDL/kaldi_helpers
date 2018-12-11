@@ -27,7 +27,6 @@ def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -
 def find_first_file_by_extension(set_of_all_files: List[str], extensions: List[str]) -> str:
     """
     Searches for the first file with a given extension in a set of files.
-
     :param set_of_all_files: set of file names in string format
     :param extensions: file extension being searched for
     :return: name of the first file_name that is matched, if any. otherwise, this method returns an empty string
@@ -47,6 +46,5 @@ def find_all_files_in_dir_by_extensions(directory_path: str, extensions: Set[str
     :return: a set of file paths
     """
     path = str(os.path.join(directory_path, "**"))
-    print(path)
     all_files_in_dir: Set[str] = set(glob.glob(path, recursive=True))
     return find_files_by_extensions(all_files_in_dir, extensions)
