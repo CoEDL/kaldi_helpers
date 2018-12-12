@@ -15,10 +15,8 @@ def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -
     :return: list of file_names matched with given extension. if none exists, returns an empty list.
     """
     results = set()
-
     for file_ in set_of_all_files:
         name, extension = os.path.splitext(file_)
-        print(extension)
         if extension in extensions:
             results.add(file_)
     return results
