@@ -5,6 +5,9 @@ docs/_build
 docs/_static
 docs/_templates
 
+resources/corpora/*
+!resources/corpora/.keep
+
 # Created by https://www.gitignore.io/api/python,pycharm
 
 ### PyCharm ###

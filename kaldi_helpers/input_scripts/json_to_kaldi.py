@@ -41,10 +41,10 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
         if os.path.exists(file_name):
             print(f"Extracting corpus examples from: {file_name}")
             with open(file_name, "r", encoding="utf-8",) as file_:
-                for line in file_:
+                for line in file_.readlines():
                     kaldi_corpus_file.writelines(re.sub(r"[^a-zA-Z0-9\s]", "", line))
         else:
-            print("Provided additional text corpus invalid")
+            print(f"Provided additional text corpus file path invalid: {file_name}")
 
 
 def clean_corpus_file(corpus_file_path: str) -> List[str]:
@@ -56,7 +56,8 @@ def clean_corpus_file(corpus_file_path: str) -> List[str]:
     examples = []
     with open(corpus_file_path, "r") as file_:
         for line in file_.readlines():
-            examples.extend(re.sub(r"[^a-zA-Z0-9\s]", "", line))
+            clean_line = re.sub(r"[^a-zA-Z0-9\s]", "", line)
+            examples.append(clean_line)
     return examples
 
 
@@ -261,13 +262,17 @@ def main() -> None:
         text_corpus_directory = arguments.text_corpus
         print(f"Using additional text corpus at {text_corpus_directory}")
         all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
-        for corpora_file in find_files_by_extensions(all_files_in_dir, {".txt"}):
-            print(f"Extracting corpora examples from {corpora_file}")
+        only_text = []
+        for file_ in all_files_in_dir:
+            file_name, extension = os.path.splitext(file_)
+            if extension == ".txt":
+                only_text.append(file_)
+        for corpora_file in only_text:
             extract_additional_corpora(corpora_file, arguments.corpus_file)
             training_input.corpus_list.extend(clean_corpus_file(corpora_file))
     else:
         print("No additional text corpus provided.")
-
+    print(training_input.corpus_list)
     testing_input.write_and_close()
     training_input.write_and_close()
 

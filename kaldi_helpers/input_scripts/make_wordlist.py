@@ -54,7 +54,7 @@ def extract_additional_words(file_name: str) -> List[str]:
         with open(file_name, "r") as f:
             for line in f.readlines():
                 new_words = line.split(" ")
-                words.extend(new_words)
+                words.extend([word.strip() for word in new_words])
     else:
         print(f"WARNING: Additional word list file at {file_name} does not exist, skipping!")
     return words
@@ -86,7 +86,9 @@ def generate_word_list(transcription_file: str,
         word_list.extend(additional_words)
 
     # Remove duplicates
-    word_list = list(set(word_list_file))
+    word_list = list(set(word_list))
+
+    print(word_list)
 
     print(f"Writing wordlist to file...", flush=True, file=sys.stderr)
     save_word_list(word_list, output_file)

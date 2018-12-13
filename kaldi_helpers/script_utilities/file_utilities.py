@@ -12,13 +12,16 @@ def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -
     Searches for all files in the set of files with the given extensions.
     :param set_of_all_files: set of file names in string format
     :param extensions: file extension being searched for
-    :return: list of file_names matched with given extension. if none exists, returns an empty list.
+    :return: set of file_names matched with given extension. if none exists, returns an empty set.
     """
     results = set()
-    for file_ in set_of_all_files:
-        name, extension = os.path.splitext(file_)
+    print(set_of_all_files)
+    for file_path in set_of_all_files:
+        name, extension = os.path.splitext(file_path)
+        print(extension)
         if extension in extensions:
-            results.add(file_)
+            results.add(file_path)
+    results.add('.')
     return results
 
 
