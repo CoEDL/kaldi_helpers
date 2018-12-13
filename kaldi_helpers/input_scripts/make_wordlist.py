@@ -44,7 +44,7 @@ def extract_word_list(json_data: List[Dict[str, str]]) -> List[str]:
 
 def extract_additional_words(file_name: str) -> List[str]:
     """
-    Extracts additional words from an additional text file for the purpose
+    Extracts words from an additional text file for the purpose
     of extending the lexicon to words that there is no sound data for.
     :param file_name: the name of the file to extract words from.
     :return: a list of words
@@ -52,9 +52,10 @@ def extract_additional_words(file_name: str) -> List[str]:
     words = []
     if os.path.exists(file_name):
         with open(file_name, "r") as f:
+            print(f"Extracting additional words from {file_name}")
             for line in f.readlines():
-                new_words = line.split(" ")
-                words.extend([word.strip() for word in new_words])
+                new_words = line.strip().split(" ")
+                words += [word for word in new_words]
     else:
         print(f"WARNING: Additional word list file at {file_name} does not exist, skipping!")
     return words
@@ -81,14 +82,18 @@ def generate_word_list(transcription_file: str,
     word_list = extract_word_list(json_data)
 
     # Add additional words to lexicon if required
-    if kaldi_corpus_file:
+    if word_list_file:
         additional_words = extract_additional_words(word_list_file)
         word_list.extend(additional_words)
+
+    if kaldi_corpus_file:
+        corpus_file_words = extract_additional_words(kaldi_corpus_file)
+        word_list.extend(corpus_file_words)
 
     # Remove duplicates
     word_list = list(set(word_list))
 
-    print(word_list)
+    print(sorted(word_list))
 
     print(f"Writing wordlist to file...", flush=True, file=sys.stderr)
     save_word_list(word_list, output_file)
