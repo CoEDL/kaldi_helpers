@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
 """
-Copyright Ola Olsson 2018
-Convert audio to 16 bit 16k mono WAV
+Converts audio to 16 bit 16k mono WAV
 """
 
 import argparse

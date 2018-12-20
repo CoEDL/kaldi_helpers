@@ -3,9 +3,6 @@
 """
 Given a json file with transcript information this tools can perform
 manipulations including generating word lists.
-Optionally provide the output_scripts json file name with -o
-
-Usage: python3 make_wordlist.py [-h] -i INFILE [-o OUTFILE]
 """
 
 import argparse

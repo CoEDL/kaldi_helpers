@@ -11,8 +11,6 @@ testing :
             
 The training folder is for the model creation using Kaldi, whereas the testing folder is used for verifying the 
 reliability of the model.
-            
-Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s]
 """
 
 import argparse
@@ -20,11 +18,9 @@ import glob
 import json
 import os
 import re
-import sys
 import uuid
 from typing import Dict, List
 from _io import TextIOWrapper
-from kaldi_helpers.script_utilities import find_files_by_extensions
 
 
 def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
@@ -40,7 +36,7 @@ def extract_additional_corpora(file_name: str, kaldi_corpus: str) -> None:
     with open(kaldi_corpus, append_write) as kaldi_corpus_file:
         if os.path.exists(file_name):
             print(f"Extracting corpus examples from: {file_name}")
-            with open(file_name, "r", encoding="utf-8",) as file_:
+            with open(file_name, "r", encoding="utf-8", ) as file_:
                 for line in file_.readlines():
                     kaldi_corpus_file.writelines(re.sub(r"[^a-zA-Z0-9\s]", "", line))
         else:
@@ -62,7 +58,6 @@ def clean_corpus_file(corpus_file_path: str) -> List[str]:
 
 
 class KaldiInput:
-
     """
     Class to store information for the training and testing data sets.     
     """
@@ -141,7 +136,6 @@ class KaldiInput:
         self.corpus_list.append(f"{transcript}\n")
 
     def write_and_close(self) -> None:
-
         """
         After parsing the json file and populating the segments, transcripts, speakers, recordings, utt2spk and corpus 
         lists with data, this function performs the final write to their respective files.
@@ -172,12 +166,100 @@ class KaldiInput:
         self.corpus_file.close()
 
 
-def main() -> None:
+def extract_transcript(input_set: KaldiInput,
+                       json_transcript: dict,
+                       silence_markers: bool) -> None:
+    """
+    Extract a single transcript from json and add its contents to the given output set.
+    :param input_set: the set to add the data from the transcript to (e.g. testing or training data)
+    :param json_transcript:
+    :param silence_markers: boolean condition indicating whether to include silence markers
+    """
+    transcript: str = json_transcript.get("transcript", "")
+    start_ms: int = json_transcript.get("start_ms", 0)
+    stop_ms: int = json_transcript.get("stop_ms", 0)
 
+    # Speaker ID is not available in textgrid files
+    if "speaker_id" in json_transcript:
+        speaker_id: str = json_transcript.get("speaker_id", "")
+    else:
+        speaker_id: str = str(uuid.uuid4())
+
+    audio_file: str = json_transcript.get("audio_file_name", "").replace("\\", "/")
+
+    speaker_id = input_set.add_speaker(speaker_id)  # add speaker id
+    recording_id: str = input_set.add_recording(audio_file)  # add audio file name
+    utterance_id: str = speaker_id + "-" + str(uuid.uuid4())  # add utterance id
+    input_set.add(recording_id,
+                  speaker_id,
+                  utterance_id,
+                  start_ms,
+                  stop_ms,
+                  transcript,
+                  silence_markers)
+
+
+def create_kaldi_structure(input_json: str,
+                           output_folder: str,
+                           silence_markers: bool,
+                           text_corpus: str,
+                           corpus_file: str) -> None:
+    """
+    Create a full Kaldi input structure based upon a json list of transcriptions and an optional
+    text corpus.
+    :param input_json: the path to a json file with a list of transcriptions
+    :param output_folder: the folder in which to create the kaldi file stucture
+    :param silence_markers: boolean condition indicating whether to include silence markers
+    :param text_corpus: path to the directory containing the text corpus
+    :param corpus_file: the path to the file to write all corpus examples to
+    """
+    testing_input = KaldiInput(output_folder=f"{output_folder}/testing")
+    training_input = KaldiInput(output_folder=f"{output_folder}/training")
+
+    try:
+        with open(input_json, "r") as input_file:
+            json_transcripts: str = json.loads(input_file.read())
+    except FileNotFoundError:
+        print(f"JSON file could not be found: {input_json}")
+        return
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    for i, json_transcript in enumerate(json_transcripts):
+        if i % 10 == 0:
+            extract_transcript(input_set=testing_input,
+                               json_transcript=json_transcript,
+                               silence_markers=silence_markers)
+        else:
+            extract_transcript(input_set=training_input,
+                               json_transcript=json_transcript,
+                               silence_markers=silence_markers)
+
+    if text_corpus:
+        text_corpus_directory = text_corpus
+        print(f"Using additional text corpus at {text_corpus_directory}")
+        all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
+        only_text = []
+        for file_ in all_files_in_dir:
+            file_name, extension = os.path.splitext(file_)
+            if extension == ".txt":
+                only_text.append(file_)
+        for corpora_file in only_text:
+            extract_additional_corpora(corpora_file, corpus_file)
+            training_input.corpus_list.extend(clean_corpus_file(corpora_file))
+    else:
+        print("No additional text corpus provided.")
+
+    testing_input.write_and_close()
+    training_input.write_and_close()
+
+
+def main() -> None:
     """ 
     Run the entire json_to_kaldi.py as a command line utility. 
     
-    Usage: python3 json_to_kaldi.py [-h] -i INPUT_JSON [-o OUTPUT_FOLDER] [-s] [-c corpus_file]
+    Usage: python3 json_to_kaldi.py -i INPUT_JSON -o OUTPUT_FOLDER [-s] [-t TEXT_CORPUS] [-c CORPUS_FILE]
     """
     parser = argparse.ArgumentParser(description="Convert json from stdin to Kaldi input_scripts files "
                                                  "(in output_scripts-folder).")
@@ -200,81 +282,13 @@ def main() -> None:
                         type=str,
                         help="Path to the corpus.txt file to write text examples to",
                         required=False)
-    arguments: argparse.Namespace = parser.parse_args()
+    arguments = parser.parse_args()
 
-    try:
-        input_file: TextIOWrapper = open(arguments.input_json, "r")
-        json_transcripts: str = json.loads(input_file.read())
-        input_file.close()
-    except FileNotFoundError:
-        print(f"JSON file could not be found: {arguments.input_json}")
-        return
-    except Exception as e:
-        print("Unexpected error", sys.exc_info()[0])
-        raise e
-
-    if not os.path.exists(arguments.output_folder):
-        os.makedirs(arguments.output_folder)
-
-    testing_input: KaldiInput = KaldiInput(output_folder=f"{arguments.output_folder}/testing")
-    training_input: KaldiInput = KaldiInput(output_folder=f"{arguments.output_folder}/training")
-
-    for i, json_transcript in enumerate(json_transcripts):
-        transcript: str = json_transcript.get("transcript", "")
-        start_ms: int = json_transcript.get("start_ms", 0)
-        stop_ms: int = json_transcript.get("stop_ms", 0)
-
-        # Speaker ID is not available in textgrid files
-        if "speaker_id" in json_transcript:
-            speaker_id: str = json_transcript.get("speaker_id", "")
-        else:
-            speaker_id: str = str(uuid.uuid4())
-
-        audio_file: str = json_transcript.get("audio_file_name", "").replace("\\", "/")
-
-        # 10% of the data set is stored away for use as testing data, other 90% is training data
-        if i % 10 == 0:
-
-            speaker_id = testing_input.add_speaker(speaker_id) # add speaker_id
-            recording_id: str = testing_input.add_recording(audio_file) # add audio file name
-            utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
-            testing_input.add(recording_id,
-                              speaker_id,
-                              utterance_id,
-                              start_ms,
-                              stop_ms,
-                              transcript,
-                              arguments.silence_markers)
-
-        else:
-            speaker_id = training_input.add_speaker(speaker_id) # add speaker id
-            recording_id: str = training_input.add_recording(audio_file) # add audio file name
-            utterance_id: str = speaker_id + "-" + str(uuid.uuid4()) # add utterance id
-            training_input.add(recording_id,
-                               speaker_id,
-                               utterance_id,
-                               start_ms,
-                               stop_ms,
-                               transcript,
-                               arguments.silence_markers)
-
-    if arguments.text_corpus:
-        text_corpus_directory = arguments.text_corpus
-        print(f"Using additional text corpus at {text_corpus_directory}")
-        all_files_in_dir = set(glob.glob(os.path.join(text_corpus_directory, "**"), recursive=True))
-        only_text = []
-        for file_ in all_files_in_dir:
-            file_name, extension = os.path.splitext(file_)
-            if extension == ".txt":
-                only_text.append(file_)
-        for corpora_file in only_text:
-            extract_additional_corpora(corpora_file, arguments.corpus_file)
-            training_input.corpus_list.extend(clean_corpus_file(corpora_file))
-    else:
-        print("No additional text corpus provided.")
-    print(training_input.corpus_list)
-    testing_input.write_and_close()
-    training_input.write_and_close()
+    create_kaldi_structure(input_json=arguments.input_json,
+                           output_folder=arguments.output_folder,
+                           silence_markers=arguments.silence_markers,
+                           text_corpus=arguments.text_corpus,
+                           corpus_file=arguments.corpus_file)
 
 
 if __name__ == "__main__":

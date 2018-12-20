@@ -45,18 +45,18 @@ def clean_utterance(utterance: Dict[str, str],
     """
     Takes an utterance and cleans it based on the rules established by the provided parameters.
     :param utterance: a dictionary with a "transcript" key-value pair.
-    :param remove_english: whether or not to remove English words.
-    :param english_words: a list of english words to remove from the transcript (we suggest the nltk words corpora).
+    :param remove_english: whether or not to remove English dirty_words.
+    :param english_words: a list of english dirty_words to remove from the transcript (we suggest the nltk dirty_words corpora).
     :param punctuation: list of punctuation symbols to remove from the transcript.
-    :param special_cases: a list of words to always remove from the output_scripts.
-    :return: a tuple with a list of 'cleaned' words and a number representing the number of English words to remove.
+    :param special_cases: a list of dirty_words to always remove from the output_scripts.
+    :return: a tuple with a list of 'cleaned' dirty_words and a number representing the number of English dirty_words to remove.
     """
     translation_tags = {"@eng@", "<ind:", "<eng:"}
     utterance_string = utterance.get("transcript").lower()
-    words = utterance_string.split()
+    dirty_words = utterance_string.split()
     clean_words = []
     english_word_count = 0
-    for word in words:
+    for word in dirty_words:
         if special_cases and word in special_cases:
             continue
         if word in translation_tags:  # Translations / ignore

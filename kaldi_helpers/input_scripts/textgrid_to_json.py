@@ -1,10 +1,7 @@
 #!/usr/bin/python3
 
 """
-Extracts transcription information and outputs them as json 
-By default dumps json to ../input_scripts/output_scripts/tmp/dirty.json file
-
-Usage: python3 textgrid_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR]
+Extracts transcription information from Praat (*.TextGrid) transcription files and outputs them in json format
 """
 
 import argparse

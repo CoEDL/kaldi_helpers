@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
 """
-# Copyright 2018 The University of Queensland (Author: Nicholas Lambourne)
-# LICENCE: MIT
+
+
+# Author: Nicholas Lambourne (University of Queensland, 2018)
+# Licence: MIT
 """
 
 from argparse import ArgumentParser

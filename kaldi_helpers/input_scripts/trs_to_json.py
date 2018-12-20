@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 
 """
-Parse trs file and extract information from it and export in json format.
-Dumps json to sys stdout,
-so you'll need to direct the output_scripts to a file when running the script
-
-Usage: python3 trs_to_json.py [-h] [-d INPUT_DIRECTORY] [-v] > {OUTPUT_FILE]
+Parse a Transcriber (*.trs) file and extract information from it and export in json format.
 """
 
 

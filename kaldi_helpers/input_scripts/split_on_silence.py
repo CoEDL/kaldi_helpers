@@ -2,7 +2,7 @@
 
 """
 Splits a directory of audio (.wav) files into short segments based on silence
-Author: Nicholas Lambourne - 2018
+Author: Nicholas Lambourne - (The University of Queensland, 2018)
 Licence: MIT
 """
 

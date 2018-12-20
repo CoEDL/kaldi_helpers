@@ -7,8 +7,6 @@ Adapted for mono/stero and kaldi_helpers pipeline by Ben Foley Jan 2018
 Assumes eaf file has millisecond offsets
 Assumes do-not-publish annotations are non-overlapping
 Should work whether the Silence tier is a child tier or not
-
-Usage: python3 silence_audio.py [-h] -c CORPUS [-s SILENCE_TIER] [-o]
 """
 
 import argparse

@@ -2,8 +2,6 @@
 
 """
 This is script automatically builds a pronunciation (word->sounds) dictionary
-input: dictionary (one word per line), config file (mapping of letters/symbols -> sounds)
-output: mapping between unique words and their sound, ordered by their appearance
 """
 
 import argparse
