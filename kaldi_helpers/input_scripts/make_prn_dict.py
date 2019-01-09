@@ -2,6 +2,10 @@
 
 """
 This is script automatically builds a pronunciation (word->sounds) dictionary
+
+Copyright: University of Queensland, 2019
+Contributors:
+
 """
 
 import argparse
@@ -101,7 +105,7 @@ def generate_pronunciation_dictionary(word_list: str,
                                    missing_characters=missing_characters)
 
     for character in missing_characters:
-        print("Unexpected character: %s" % character, file=sys.stderr)
+        print(f"Unexpected character: {character}", file=sys.stderr)
 
     print("Done", file=sys.stderr)
 

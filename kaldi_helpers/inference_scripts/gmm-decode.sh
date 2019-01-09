@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Original author Joshua Meyer (2016)
-# modified by CoEDLers (2018)
+# Copyright: University of Queensland, 2019
+# Contributors:
+#               Joshua Meyer - (2016)
+#               Scott Heath - (University of Queensland, 2018)
+#               Nicholas Lambourne - (University of Queensland, 2018)
 
 # USAGE:
 #    $ kaldi/egs/your-model/your-model-1/gmm-decode.sh

@@ -2,8 +2,10 @@
 
 """
 Splits a directory of audio (.wav) files into short segments based on silence
-Author: Nicholas Lambourne - (The University of Queensland, 2018)
-Licence: MIT
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Nicholas Lambourne - (The University of Queensland, 2019)
 """
 
 from argparse import ArgumentParser

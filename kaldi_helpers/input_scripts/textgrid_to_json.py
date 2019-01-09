@@ -2,6 +2,11 @@
 
 """
 Extracts transcription information from Praat (*.TextGrid) transcription files and outputs them in json format
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Scott Heath - (University of Queensland, 2018)
+              Nicholas Lambourne - (University of Queensland, 2019)
 """
 
 import argparse

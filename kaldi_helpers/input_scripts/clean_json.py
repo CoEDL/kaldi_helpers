@@ -2,18 +2,17 @@
 
 """
 Given a json file with transcript information these tools can perform
-# manipulations including generating word lists or filtering output_scripts to
-# exclude english/punctuation.
-# Optionally provide the output_scripts json file name with -j
-# Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
+- manipulations including generating word lists or filtering output_scripts to
+- exclude english/punctuation.
+- Optionally provide the output_scripts json file name with -j
 
-EXAMPLE_JSON_DATA = [
-    {"transcript": "Comment t'appelles tu?"},
-    {"transcript": "Je m'appelle François."},
-    {"transcript": "Est-ce tu a une livre préférér."},
-    {"transcript": "Oui, j'adore L'Histoire Secrète par Donna Tartt."},
-    {"transcript": "Vraiment? Je n'ai jamais lu ça."},
-]
+Usage: python3 clean_json.py [-h] [--i INFILE] [--o OUTFILE] [-r] [-u]
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Josh Arnold - (The University of Queensland, 2017)
+              Ben Foley - (The University of Queensland, 2018)
+              Nicholas Lambourne - (The University of Queensland, 2019)
 """
 
 import re

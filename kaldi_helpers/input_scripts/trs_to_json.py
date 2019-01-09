@@ -2,6 +2,11 @@
 
 """
 Parse a Transcriber (*.trs) file and extract information from it and export in json format.
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Aninda Saha (University of Queensland, 2018)
+              Nicholas Lambourne (University of Queensland, 2019)
 """
 
 

@@ -5,6 +5,10 @@ Get all files in the repository can use recursive atm as long as we don't need n
 pass in corpus path throw an error if matching file wav isn"t found in the corpus directory
 
 Usage: python3 elan_to_json.py [-h] [-i INPUT_DIR] [-o OUTPUT_DIR] [-t TIER] [-j OUTPUT_JSON]
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Nicholas Lambourne - (The University of Queensland, 2018)
 """
 
 import glob

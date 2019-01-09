@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 """
+Takes a CTM (time aligned) file and produces an equivalent Praat TextGrid file.
 
-
-# Author: Nicholas Lambourne (University of Queensland, 2018)
-# Licence: MIT
+Copyright: University of Queensland, 2019
+Contributors:
+             Nicholas Lambourne - (University of Queensland, 2018)
 """
 
 from argparse import ArgumentParser

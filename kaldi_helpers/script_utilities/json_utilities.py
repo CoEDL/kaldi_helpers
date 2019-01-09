@@ -1,5 +1,9 @@
 """
 Collection of utilities for working with JSON files.
+
+Copyright: University of Queensland, 2019
+Contributors:
+             Nicholas Lambourne - (University of Queensland, 2018)
 """
 
 import json

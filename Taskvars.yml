@@ -1,3 +1,5 @@
+# Copyright: University of Queensland, 2019
+
 # Default path configuration
 # No trailing slashes please!
 KALDI_ROOT: "/kaldi"

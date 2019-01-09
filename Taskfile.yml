@@ -1,3 +1,5 @@
+# Copyright: University of Queensland, 2019
+
 ######################################### DRIVER TASKS ############################################
 
 _run-elan:
@@ -343,14 +345,6 @@ resample-audio:
     PYTHONIOENCODING: "utf-8"
   cmds:
     - python3.6 {{ .INPUT_SCRIPTS_PATH }}/resample_audio.py
-                --corpus {{ .CORPUS_PATH }}
-
-silence-audio:
-  desc: "Silence audio that has an annotion in matching Elan file 'Silence' tier"
-  env:
-    PYTHONIOENCODING: "utf-8"
-  cmds:
-    - python3.6 {{ .INPUT_SCRIPTS_PATH }}/silence_audio.py
                 --corpus {{ .CORPUS_PATH }}
 
 split-eafs:

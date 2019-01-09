@@ -11,6 +11,11 @@ testing :
             
 The training folder is for the model creation using Kaldi, whereas the testing folder is used for verifying the 
 reliability of the model.
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Scott Heath - (University of Queensland, 2017)
+              Nicholas Lambourne - (University of Queensland, 2019)
 """
 
 import argparse

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Original author Joshua Meyer (2016)
-# Modified for CTM/TextGrid/ELAN output by Nicholas Lambourne & CoEDL (2018)
+# Copyright: University of Queensland, 2019
+# Contributors:
+#               Nicholas Lambourne - (University of Queensland, 2019)
 
 # USAGE:
 #    $ task _infer-align

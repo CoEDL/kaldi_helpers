@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Copyright: University of Queensland, 2019
+# Contributors:
+#               Ben Foley (University of Queensland, 2018)
+
 # prepare files needed for infer-align script
 # this expects test-train to have been run
 # single audio file only for now..

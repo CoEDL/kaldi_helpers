@@ -2,6 +2,11 @@
 
 """
 Converts audio to 16 bit 16k mono WAV
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Scott Heath - (The University of Queensland, 2017)
+              Oliver Adams - (The University of Melbourne, 2018)
 """
 
 import argparse

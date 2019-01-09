@@ -3,13 +3,19 @@
 """
 Given a json file with transcript information this tools can perform
 manipulations including generating word lists.
+
+Copyright: University of Queensland, 2019
+Contributors:
+              Josh Arnold - (The University of Queensland, 2017)
+              Ben Foley - (The University of Queensland, 2018)
+              Nicholas Lambourne - (The University of Queensland, 2019)
 """
 
 import argparse
 import os
 import sys
 from typing import List, Dict
-from kaldi_helpers.script_utilities import load_json_file, find_files_by_extensions
+from kaldi_helpers.script_utilities import load_json_file
 
 
 def save_word_list(word_list: List[str], file_name: str) -> None:

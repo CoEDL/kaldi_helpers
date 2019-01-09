@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 
 """
-# Copyright 2018 The University of Queensland (Author: Nicholas Lambourne)
-# LICENCE: MIT
+Takes a Praat TextGrid file and converts it to an ELAN (.eaf) file format.
+
+Copyright: University of Queensland, 2019
+Contributors:
+             Nicholas Lambourne - (University of Queensland, 2018)
 """
 
 from argparse import ArgumentParser

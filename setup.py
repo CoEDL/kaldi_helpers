@@ -1,3 +1,9 @@
+"""
+Copyright: University of Queensland, 2019
+Contributors:
+             Nicholas Lambourne - (University of Queensland, 2018)
+"""
+
 from setuptools import setup, find_packages
 
 requirements = [
