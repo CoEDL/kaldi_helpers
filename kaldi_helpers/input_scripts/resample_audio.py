@@ -21,12 +21,12 @@ from kaldi_helpers.script_utilities import find_files_by_extensions
 from kaldi_helpers.script_utilities.globals import SOX_PATH
 
 
-def join_norm(p1, p2):
+def join_norm(p1, p2) -> str:
     tmp = os.path.join(os.path.normpath(p1), os.path.normpath(p2))
     return os.path.normpath(tmp)
 
 
-def process_item(sox_arguments: Tuple[int, str, threading.Lock, Set[str], str]):
+def process_item(sox_arguments: Tuple[int, str, threading.Lock, Set[str], str]) -> str:
     index, input_audio, lock, temporary_directories, parent_temporary_directory = sox_arguments
 
     input_name = os.path.normpath(input_audio)
