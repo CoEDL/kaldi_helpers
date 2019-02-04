@@ -91,6 +91,14 @@ _transcribe-align:
     - task infer-align
     - task copy-infer-align-results
 
+_transcribe-long:
+  desc: ""
+  dir: /kaldi-helpers
+  cmds:
+    - task _run-elan
+    - task _train-test
+    - task copy-infer-align-results
+
 _demo:
   desc: "Prepare and run a test inference (so I don't have to)"
   cmds:
