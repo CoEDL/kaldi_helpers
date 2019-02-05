@@ -18,7 +18,8 @@ requirements = [
 ]
 
 package_data = {
-    'kaldi_helpers/inference_scripts': ['*']
+    'kaldi_helpers/inference_scripts': ['*'],
+    'inference_scripts': ['*']
 }
 
 with open('README.md', 'r') as fh:
@@ -26,7 +27,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='kaldi_helpers',
-    version='0.22',
+    version='0.23',
     packages=find_packages(),
     url='https://github.com/CoEDL/kaldi_helpers',
     install_requires=requirements,
