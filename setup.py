@@ -17,11 +17,6 @@ requirements = [
     'pydub',
 ]
 
-package_data = {
-    'kaldi_helpers/inference_scripts': ['*'],
-    'inference_scripts': ['*']
-}
-
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 

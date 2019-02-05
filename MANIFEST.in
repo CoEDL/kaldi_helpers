@@ -1,0 +1,1 @@
+include kaldi_helpers/inference_scripts/*.sh
