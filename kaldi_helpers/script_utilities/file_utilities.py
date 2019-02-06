@@ -25,7 +25,6 @@ def find_files_by_extensions(set_of_all_files: Set[str], extensions: Set[str]) -
         print(extension)
         if extension in extensions:
             results.add(file_path)
-    results.add('.')
     return results
 
 

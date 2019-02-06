@@ -105,7 +105,7 @@ def main():
         os.makedirs(arguments.output_dir)
 
     all_files_in_directory = set(glob.glob(os.path.join(arguments.input_dir, "**"), recursive=True))
-    input_eafs_files = find_files_by_extensions(all_files_in_directory, {"*.eaf"})
+    input_eafs_files = [ file_ for file_ in all_files_in_directory if file_.endswith(".eaf") ]
 
     annotations_data = []
 
