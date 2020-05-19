@@ -1,0 +1,64 @@
+{
+    "description": "<p>Code release for Zara Maxwell-Smith's studies</p>", 
+    "license": "Apache 2.0", 
+    "title": "CoEDL/kaldi_helpers: ZMS", 
+    "version": "v0.3", 
+    "upload_type": "software", 
+    "publication_date": "2020-05-19", 
+    "creators": [
+        {
+            "affiliation": "The University of Queensland", 
+            "name": "Nicholas Lambourne"
+        }, 
+        {
+            "affiliation": "The University of Queensland", 
+            "name": "Ben Foley"
+        }, 
+        {
+            "affiliation": "Stanford University", 
+            "name": "Nay San"
+        }, 
+        {
+            "name": "Aninda Saha"
+        }, 
+        {
+            "name": "Joshua Arnold"
+        }, 
+        {
+            "name": "tyrannomark"
+        }, 
+        {
+            "name": "scott--"
+        }, 
+        {
+            "affiliation": "Appen", 
+            "name": "Simon Hammond"
+        }, 
+        {
+            "name": "Oliver Adams"
+        }, 
+        {
+            "affiliation": "abaX Data", 
+            "name": "Paul te Braak"
+        }, 
+        {
+            "name": "swilmoth"
+        }, 
+        {
+            "name": "gdurantin"
+        }
+    ], 
+    "access_right": "open", 
+    "related_identifiers": [
+        {
+            "scheme": "url", 
+            "identifier": "https://github.com/CoEDL/kaldi_helpers/tree/v0.3", 
+            "relation": "isSupplementTo"
+        }, 
+        {
+            "scheme": "doi", 
+            "identifier": "10.5281/zenodo.3833887", 
+            "relation": "isVersionOf"
+        }
+    ]
+}
