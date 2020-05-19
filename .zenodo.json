@@ -1,6 +1,6 @@
 {
     "description": "<p>Code release for Zara Maxwell-Smith's studies</p>", 
-    "license": "Apache 2.0", 
+    "license": "Apache License 2.0", 
     "title": "CoEDL/kaldi_helpers: ZMS", 
     "version": "v0.3", 
     "upload_type": "software", 
